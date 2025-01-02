@@ -3,4 +3,4 @@ seaborn
 streamlit
 matplotlib
 numpy
-scipy.stats
+scipy
