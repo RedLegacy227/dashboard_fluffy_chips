@@ -411,8 +411,8 @@ try:
                     away_lambda = (match_data['Media_Golos_Marcados_Away'].values[0] + 
                                 match_data['Media_Golos_Sofridos_Home'].values[0])
                     
-                    home_lambda = min(max(home_lambda, 0.1), 2.5)
-                    away_lambda = min(max(away_lambda, 0.1), 2.5)                        
+                    home_lambda = min(max(home_lambda, 0), 2.5)
+                    away_lambda = min(max(away_lambda, 0), 2.5)                        
                     return home_lambda, away_lambda
                 except KeyError as e:
                     raise ValueError(f"Erro ao acessar os dados: {e}")
