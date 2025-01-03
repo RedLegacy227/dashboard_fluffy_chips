@@ -399,6 +399,39 @@ try:
                 
             st.divider()
             
+            # Adicionar cálculo de poder de ataque e defesa
+            elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/refs/heads/main/df_elo_tilt.csv"
+            try:
+                elo_tilt_data = pd.read_csv(elo_tilt_url)
+                
+                # Seleção dos times
+                home_team = selected_home
+                away_team = selected_away
+                
+                # Filtro para os times
+                home_team_data = elo_tilt_data[elo_tilt_data['team'] == home_team]
+                away_team_data = elo_tilt_data[elo_tilt_data['team'] == away_team]
+                
+                # Verifica se os dados dos times foram encontrados
+                if not home_team_data.empty and not away_team_data.empty:
+                    # Obtém valores de Elo e Tilt
+                    home_elo = home_team_data.iloc[0]['Elo']
+                    home_tilt = home_team_data.iloc[0]['Tilt']
+                    away_elo = away_team_data.iloc[0]['Elo']
+                    away_tilt = away_team_data.iloc[0]['Tilt']
+                    
+                    # Exibe os valores no Streamlit   
+                    st.subheader(f"_The Elo for *{home_team}* is {home_elo}")
+                    st.subheader(f"_The Tilt for *{home_team}* is {home_tilt}")
+                    st.subheader(f"_The Elo for *{away_team}* is {away_elo}")
+                    st.subheader(f"_The Tilt for *{away_team}* is {away_tilt}")
+                else:
+                    st.error("Os dados de um ou ambos os times não foram encontrados Elo e o Tilt")
+            except Exception as e:
+                st.error(f"Erro ao carregar ou processar o Elo e o Tilt: {e}")
+                
+            st.divider()
+            
             # Função para calcular o lambda (média esperada de gols) para os times
             def drop_reset_index(df):
                 df = df.dropna()
