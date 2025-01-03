@@ -419,12 +419,21 @@ try:
                 return results
             
             def top_results_df(simulated_results, top_n):
-                result_counts = simulated_results.value.counts().head(top_n).reset_index()
-                result_counts.columns = ['Home_Goals', 'Away_Goals', 'Count']
+                # Criar uma coluna para representar o resultado como string ou tupla
+                simulated_results['Result'] = simulated_results.apply(
+                    lambda row: (row['Home_Goals'], row['Away_Goals']), axis=1
+                    )
+                # Contar as ocorrências de cada combinação única
+                result_counts = simulated_results['Result'].value_counts().head(top_n).reset_index()
+                result_counts.columns = ['Home_Goals_Away_Goals', 'Count']
                 
+                # Separar a coluna de tupla novamente em duas colunas para clareza
+                result_counts[['Home_Goals', 'Away_Goals']] = pd.DataFrame(result_counts['Home_Goals_Away_Goals'].tolist())
+                result_counts = result_counts.drop(columns=['Home_Goals_Away_Goals'])
+                
+                # Calcular probabilidades
                 sum_top_counts = result_counts['Count'].sum()
                 result_counts['Probability'] = result_counts['Count'] / sum_top_counts
-                
                 return result_counts
             
             # Seleção dos times
