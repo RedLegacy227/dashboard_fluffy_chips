@@ -399,71 +399,99 @@ try:
                 
             st.divider()
             
-            # Adicionar Elo e Tilt
+            def calculate_probabilities(home_elo, away_elo):
+                """
+                Calcula as probabilidades de vitória, empate e derrota com base nos Elos.
+                """
+                # Diferença de Elo
+                elo_diff = home_elo - away_elo
+            
+                # Probabilidade base de empate e fator de ajuste
+                base_draw_chance = 0.25  # 25% como base
+                adjustment_factor = 0.005
+            
+                # Calcular probabilidade de empate
+                p_draw = base_draw_chance * math.exp(-adjustment_factor * abs(elo_diff))
+            
+                # Calcular probabilidades de vitória
+                p_home = 1 / (10 ** (-elo_diff / 400) + 1)
+                p_away = 1 - p_home
+            
+                # Ajustar probabilidades para incluir empate
+                p_home -= p_draw / 2
+                p_away -= p_draw / 2
+            
+                # Garantir que as probabilidades somem 1 (100%)
+                p_home = max(0, min(p_home, 1))
+                p_away = max(0, min(p_away, 1))
+                p_draw = max(0, min(p_draw, 1))
+            
+                return {
+                    "Home_Win": round(p_home * 100, 2),
+                    "Draw": round(p_draw * 100, 2),
+                    "Away_Win": round(p_away * 100, 2)
+                }
+            
+            # URL dos dados de Elo e Tilt
             elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/refs/heads/main/df_elo_tilt.csv"
+            
             try:
+                # Carregar os dados de Elo e Tilt
                 elo_tilt_data = pd.read_csv(elo_tilt_url)
                 
-                # Seleção dos times
-                home_team = selected_home
-                away_team = selected_away
+                # Seleção dos times (exemplo de seleção dinâmica no Streamlit)
+                selected_home = st.text_input("Enter the Home Team:")
+                selected_away = st.text_input("Enter the Away Team:")
                 
-                # Filtro para os times
-                home_team_data = elo_tilt_data[elo_tilt_data['Team'] == home_team]
-                away_team_data = elo_tilt_data[elo_tilt_data['Team'] == away_team]
-                
-                # Verifica se os dados dos times foram encontrados
-                if not home_team_data.empty and not away_team_data.empty:
-                    # Obtém valores de Elo e Tilt
-                    home_elo = home_team_data.iloc[0]['Elo']
-                    home_tilt = home_team_data.iloc[0]['Tilt']
-                    away_elo = away_team_data.iloc[0]['Elo']
-                    away_tilt = away_team_data.iloc[0]['Tilt']
+                if selected_home and selected_away:
+                    # Filtro para os times
+                    home_team_data = elo_tilt_data[elo_tilt_data['Team'] == selected_home]
+                    away_team_data = elo_tilt_data[elo_tilt_data['Team'] == selected_away]
                     
-                    # Exibe os valores no Streamlit 
-                    st.markdown("### _Elo and Tilt_") 
-                    st.markdown(f"The Elo for **{home_team}** is **{home_elo}**")
-                    st.markdown(f"The Tilt for **{home_team}** is **{home_tilt}**")
-                    st.markdown(f"The Elo for **{away_team}** is **{away_elo}**")
-                    st.markdown(f"The Tilt for **{away_team}** is **{away_tilt}**")
-                    
-                    # Calcular as probabilidades de vitória, empate e derrota
-                    elo_diff = home_elo - away_elo
-                    p_home = 1 / (10 ** (-elo_diff / 400) + 1)
-                    p_away = 1 - p_home
-                    p_draw = 0.1  # Estimativa estática para empate
-            
-                    # Ajustar as probabilidades
-                    p_home -= p_draw / 2
-                    p_away -= p_draw / 2
-            
-                    # Exibir as previsões
-                    st.markdown("### Predictions of Match Odds")
-                    st.markdown(f"Prediction for *{home_team}* to win is **{round(p_home * 100, 2)}%**")
-                    st.markdown(f"Prediction for *{away_team}* to win is **{round(p_away * 100, 2)}%**")
-                    st.markdown(f"Prediction for *Draw* is **{round(p_draw * 100, 2)}%**")
-                    
-                    # Interpretation of Tilt
-                    st.markdown("### Interpretation of Tilt")
-                    st.markdown("""
-                                - **Low Tilt Values (< 1.0):**
-                                - Indicate that the matches of this team have fewer goals than expected, based on Elo and goal expectations.
-                                - Example: Teams with solid defenses or that play more conservatively may have low Tilt values.
-                                    
-                                - **Values Around 1.0:**
-                                - Indicate that the team aligns with the average expected offensive and defensive performance in terms of goals scored and conceded.
+                    # Verifica se os dados dos times foram encontrados
+                    if not home_team_data.empty and not away_team_data.empty:
+                        # Obtém valores de Elo e Tilt
+                        home_elo = home_team_data.iloc[0]['Elo']
+                        home_tilt = home_team_data.iloc[0]['Tilt']
+                        away_elo = away_team_data.iloc[0]['Elo']
+                        away_tilt = away_team_data.iloc[0]['Tilt']
+                        
+                        # Exibe os valores no Streamlit
+                        st.markdown(f"_The Elo for *{selected_home}* is *{home_elo}*_")
+                        st.markdown(f"_The Tilt for *{selected_home}* is *{home_tilt}*_")
+                        st.markdown(f"_The Elo for *{selected_away}* is *{away_elo}*_")
+                        st.markdown(f"_The Tilt for *{selected_away}* is *{away_tilt}*_")
+                        
+                        # Calcular as probabilidades de vitória, empate e derrota
+                        probabilities = calculate_probabilities(home_elo, away_elo)
+                        
+                        # Exibir as previsões
+                        st.markdown("### Predictions:")
+                        st.markdown(f"Prediction for *{selected_home}* to win is **{probabilities['Home_Win']}%**")
+                        st.markdown(f"Prediction for *{selected_away}* to win is **{probabilities['Away_Win']}%**")
+                        st.markdown(f"Prediction for *Draw* is **{probabilities['Draw']}%**")
+                        
+                        # Interpretation of Tilt
+                        st.markdown("### Interpretation of Tilt:")
+                        st.markdown("""
+                                    - **Low Tilt Values (< 1.0):**
+                                    - Indicate that the matches of this team have fewer goals than expected, based on Elo and goal expectations.
+                                    - Example: Teams with solid defenses or that play more conservatively may have low Tilt values.
                                         
-                                - **High Tilt Values (> 1.0):**
-                                - Represent teams whose matches frequently have more goals than expected.
-                                - Example: Offensive teams or teams with weak defenses, leading to more open matches with many goals.
-                                """)
-                    
-                else:
-                    st.error("Os dados de um ou ambos os times não foram encontrados Elo e o Tilt")
+                                    - **Values Around 1.0:**
+                                    - Indicate that the team aligns with the average expected offensive and defensive performance in terms of goals scored and conceded.
+                                            
+                                    - **High Tilt Values (> 1.0):**
+                                    - Represent teams whose matches frequently have more goals than expected.
+                                    - Example: Offensive teams or teams with weak defenses, leading to more open matches with many goals.
+                                    """)
+                    else:
+                        st.error("The data for one or both teams could not be found.")
             except Exception as e:
-                st.error(f"Erro ao carregar ou processar o Elo e o Tilt: {e}")
+                st.error(f"Error loading or processing Elo and Tilt data: {e}")
             
             st.divider()
+
 
             
             # Função para calcular o lambda (média esperada de gols) para os times
