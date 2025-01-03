@@ -465,6 +465,7 @@ try:
                         away_tilt = away_team_data.iloc[0]['Tilt']
                         
                         # Exibe os valores no Streamlit
+                        st.markdown("### Elo and Tilt for this Game:")
                         st.markdown(f"_The Elo for *{selected_home}* is *{home_elo}*_")
                         st.markdown(f"_The Tilt for *{selected_home}* is *{home_tilt}*_")
                         st.markdown(f"_The Elo for *{selected_away}* is *{away_elo}*_")
@@ -474,7 +475,7 @@ try:
                         probabilities = calculate_probabilities(home_elo, away_elo)
                         
                         # Exibir as previsões
-                        st.markdown("### Predictions:")
+                        st.markdown("### Predictions for Match Odds:")
                         st.markdown(f"Prediction for *{selected_home}* to win is **{probabilities['Home_Win']}%**")
                         st.markdown(f"Prediction for *{selected_away}* to win is **{probabilities['Away_Win']}%**")
                         st.markdown(f"Prediction for *Draw* is **{probabilities['Draw']}%**")
@@ -603,6 +604,7 @@ try:
             st.subheader(f"Correct Score Simulation for **{home_team}** vs **{away_team}**")
             # Exibir a tabela completa estilizada no Streamlit
             st.write(styled_results.to_html(), unsafe_allow_html=True)
+            st.divider()
             
         except Exception as e:
             st.error(f"Erro ao carregar os dados históricos: {e}")
