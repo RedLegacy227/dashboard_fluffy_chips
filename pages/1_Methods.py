@@ -2,6 +2,7 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 import os
+import base64
 from datetime import datetime
 
 # Configuração inicial
@@ -9,7 +10,16 @@ st.title('_Fluffy Chips Web Analyzer_')
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.subheader('_Methods for Today_')
-st.image(os.path.join(os.getcwd(), 'static', 'analises001.png'))
+image_path = os.path.join(os.getcwd(), 'static', 'analises001.png')
+# HTML e CSS para centralizar
+st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Analysis" width="50%">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 st.divider()
 
 # URL base do GitHub para os arquivos CSV
