@@ -399,7 +399,7 @@ try:
                 
             st.divider()
             
-            # Adicionar cálculo de poder de ataque e defesa
+            # Adicionar Elo e Tilt
             elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/refs/heads/main/df_elo_tilt.csv"
             try:
                 elo_tilt_data = pd.read_csv(elo_tilt_url)
@@ -420,17 +420,50 @@ try:
                     away_elo = away_team_data.iloc[0]['Elo']
                     away_tilt = away_team_data.iloc[0]['Tilt']
                     
-                    # Exibe os valores no Streamlit   
-                    st.subheader(f"_The Elo for *{home_team}* is {home_elo}")
-                    st.subheader(f"_The Tilt for *{home_team}* is {home_tilt}")
-                    st.subheader(f"_The Elo for *{away_team}* is {away_elo}")
-                    st.subheader(f"_The Tilt for *{away_team}* is {away_tilt}")
+                    # Exibe os valores no Streamlit  
+                    st.markdown(f"_The Elo for *{home_team}* is *{home_elo}*_")
+                    st.markdown(f"_The Tilt for *{home_team}* is *{home_tilt}*_")
+                    st.markdown(f"_The Elo for *{away_team}* is *{away_elo}*_")
+                    st.markdown(f"_The Tilt for *{away_team}* is *{away_tilt}*_")
+                    
+                    # Calcular as probabilidades de vitória, empate e derrota
+                    elo_diff = home_elo - away_elo
+                    p_home = 1 / (10 ** (-elo_diff / 400) + 1)
+                    p_away = 1 - p_home
+                    p_draw = 0.1  # Estimativa estática para empate
+            
+                    # Ajustar as probabilidades
+                    p_home -= p_draw / 2
+                    p_away -= p_draw / 2
+            
+                    # Exibir as previsões
+                    st.markdown("### Predictions:")
+                    st.markdown(f"Prediction for *{home_team}* to win is **{round(p_home * 100, 2)}%**")
+                    st.markdown(f"Prediction for *{away_team}* to win is **{round(p_away * 100, 2)}%**")
+                    st.markdown(f"Prediction for *Draw* is **{round(p_draw * 100, 2)}%**")
+                    
+                    # Interpretation of Tilt
+                    st.markdown("### Interpretation of Tilt:")
+                    st.markdown("""
+                                - **Low Tilt Values (< 1.0):**
+                                - Indicate that the matches of this team have fewer goals than expected, based on Elo and goal expectations.
+                                - Example: Teams with solid defenses or that play more conservatively may have low Tilt values.
+                                    
+                                - **Values Around 1.0:**
+                                - Indicate that the team aligns with the average expected offensive and defensive performance in terms of goals scored and conceded.
+                                        
+                                - **High Tilt Values (> 1.0):**
+                                - Represent teams whose matches frequently have more goals than expected.
+                                - Example: Offensive teams or teams with weak defenses, leading to more open matches with many goals.
+                                """)
+                    
                 else:
                     st.error("Os dados de um ou ambos os times não foram encontrados Elo e o Tilt")
             except Exception as e:
                 st.error(f"Erro ao carregar ou processar o Elo e o Tilt: {e}")
-                
+            
             st.divider()
+
             
             # Função para calcular o lambda (média esperada de gols) para os times
             def drop_reset_index(df):
