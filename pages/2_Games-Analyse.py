@@ -151,13 +151,13 @@ try:
                         top_scores = filtered_data["Score"].value_counts().head(3)
                         
                         # Exibir informações adicionais
-                        st.subheader("**_Tendency of the H2H_**")
-                        st.markdown(f"**Tendency Over 0.5 HT:** {tendency_over_ht:.2f}%")
-                        st.markdown(f"**Tendency Over 2.5 Goals:** {tendency_over:.2f}%")
-                        st.markdown(f"**Tendency BTTS (Both Teams to Score):** {tendency_btts:.2f}%")
-                        st.markdown("**Most Frequent Scores:**")
+                        st.subheader("**Tendency of the H2H**")
+                        st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht:.2f}%**")
+                        st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over:.2f}%**")
+                        st.markdown(f"Tendency BTTS (Both Teams to Score): **{tendency_btts:.2f}%**")
+                        st.markdown("Most Frequent Scores:")
                         for score, count in top_scores.items():
-                            st.markdown(f"- {score}: {count} times")
+                            st.markdown(f"- **{score}**: **{count}** times")
                             
                 else:
                     st.info(f"Não foram encontrados jogos passados entre {selected_home} e {selected_away} no mesmo mando de campo.")
@@ -223,13 +223,13 @@ try:
                 
                 home_last_7["Score"] = home_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + home_last_7["FT_Goals_A"].astype(int).astype(str)
                 top_scores_home = home_last_7["Score"].value_counts().head(7)
-                st.subheader("**_Tendency of Last 7 Games_**")
-                st.markdown(f"**Tendency Over 0.5 HT:** {tendency_over_ht_home:.2f}%")
-                st.markdown(f"**Tendency Over 2.5 Goals:** {tendency_over_home:.2f}%")
-                st.markdown(f"**Tendency BTTS:** {tendency_btts_home:.2f}%")
-                st.markdown("**Most Frequent Scores:**")
+                st.subheader("**Tendency of Last 7 Games**")
+                st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_home:.2f}%**")
+                st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_home:.2f}%**")
+                st.markdown(f"Tendency BTTS: **{tendency_btts_home:.2f}%**")
+                st.markdown("Most Frequent Scores:")
                 for score, count in top_scores_home.items():
-                    st.markdown(f"- {score}: {count} times")
+                    st.markdown(f"- **{score}**: **{count}** times")
                 
             with col2:
                 # Gráfico de Barras
@@ -297,13 +297,13 @@ try:
                 
                 away_last_7["Score"] = away_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + away_last_7["FT_Goals_A"].astype(int).astype(str)
                 top_scores_away = away_last_7["Score"].value_counts().head(7)
-                st.subheader("**_Tendency of Last 7 Games_**")
-                st.markdown(f"**Tendency Over 0.5 HT:** {tendency_over_ht_away:.2f}%")
-                st.markdown(f"**Tendency Over 2.5 Goals:** {tendency_over_away:.2f}%")
-                st.markdown(f"**Tendency BTTS:** {tendency_btts_away:.2f}%")
-                st.markdown("**Most Frequent Scores:**")
+                st.subheader("**Tendency of Last 7 Games**")
+                st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_away:.2f}%**")
+                st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_away:.2f}%**")
+                st.markdown(f"Tendency BTTS: **{tendency_btts_away:.2f}%**")
+                st.markdown("Most Frequent Scores:")
                 for score, count in top_scores_away.items():
-                    st.markdown(f"- {score}: {count} times")
+                    st.markdown(f"- **{score}**: **{count}** times")
                 
                 
             with col2:
@@ -362,11 +362,11 @@ try:
                     
                     
                     # Exibir os resultados no Streamlit
-                    st.subheader("**_Power Strength Analysis_**")
-                    st.markdown('_**Power of Attack > 1**: The Team has a Superior Attack than the League Average (Strong Attack)_')
-                    st.markdown('_**Power of Attack < 1**: The Team has an Inferior Attack than the League Average (Weak Attack)_')
-                    st.markdown('_**Power of Defense > 1**: The Team has a Inferior Defense than the League Average (Weak Defense)_')
-                    st.markdown('_**Power of Defense < 1**: The Team has an Superior Defense than the League Average (Strong Defense)_')
+                    st.subheader("**Power Strength Analysis**")
+                    st.markdown('**Power of Attack > 1**: The Team has a Superior Attack than the League Average (Strong Attack)')
+                    st.markdown('**Power of Attack < 1**: The Team has an Inferior Attack than the League Average (Weak Attack)')
+                    st.markdown('**Power of Defense > 1**: The Team has a Inferior Defense than the League Average (Weak Defense)')
+                    st.markdown('**Power of Defense < 1**: The Team has an Superior Defense than the League Average (Strong Defense)')
                     st.markdown(f"- **Power of Attack for {selected_home}:** {attack_power_home:.2f}")
                     st.markdown(f"- **Power of Attack for {selected_away}:** {attack_power_away:.2f}")
                     st.markdown(f"- **Power of Defense for {selected_home}:** {defense_power_home:.2f}")
@@ -389,11 +389,11 @@ try:
                 prob_goals_taken_away = data['Probabilidade_Goals_Taken_Away'].mean()
                 
                 # Exibir os resultados no Streamlit
-                st.subheader("**_Predicted Goals for This Game_**")
-                st.markdown(f"- **Predicted Goals Scored for {selected_home}:** {prob_goals_scored_home:.2f}")
-                st.markdown(f"- **Predicted Goals Taken for {selected_home}:** {prob_goals_taken_home:.2f}")
-                st.markdown(f"- **Predicted Goals Scored for {selected_away}:** {prob_goals_scored_away:.2f}")
-                st.markdown(f"- **Predicted Goals Taken for {selected_away}:** {prob_goals_taken_away:.2f}")
+                st.subheader("**Predicted Goals for This Game**")
+                st.markdown(f"- Predicted Goals Scored for {selected_home}: **{prob_goals_scored_home:.2f}**")
+                st.markdown(f"- Predicted Goals Taken for {selected_home}: **{prob_goals_taken_home:.2f}**")
+                st.markdown(f"- Predicted Goals Scored for {selected_away}: **{prob_goals_scored_away:.2f}**")
+                st.markdown(f"- Predicted Goals Taken for {selected_away}: **{prob_goals_taken_away:.2f}**")
             else:
                 st.error("As colunas de probabilidades de gols não estão disponíveis nos dados filtrados.")
                 
@@ -420,11 +420,12 @@ try:
                     away_elo = away_team_data.iloc[0]['Elo']
                     away_tilt = away_team_data.iloc[0]['Tilt']
                     
-                    # Exibe os valores no Streamlit  
-                    st.markdown(f"_The Elo for *{home_team}* is *{home_elo}*_")
-                    st.markdown(f"_The Tilt for *{home_team}* is *{home_tilt}*_")
-                    st.markdown(f"_The Elo for *{away_team}* is *{away_elo}*_")
-                    st.markdown(f"_The Tilt for *{away_team}* is *{away_tilt}*_")
+                    # Exibe os valores no Streamlit 
+                    st.markdown("### _Elo and Tilt_") 
+                    st.markdown(f"The Elo for **{home_team}** is **{home_elo}**")
+                    st.markdown(f"The Tilt for **{home_team}** is **{home_tilt}**")
+                    st.markdown(f"The Elo for **{away_team}** is **{away_elo}**")
+                    st.markdown(f"The Tilt for **{away_team}** is **{away_tilt}**")
                     
                     # Calcular as probabilidades de vitória, empate e derrota
                     elo_diff = home_elo - away_elo
@@ -437,13 +438,13 @@ try:
                     p_away -= p_draw / 2
             
                     # Exibir as previsões
-                    st.markdown("### Predictions:")
+                    st.markdown("### Predictions")
                     st.markdown(f"Prediction for *{home_team}* to win is **{round(p_home * 100, 2)}%**")
                     st.markdown(f"Prediction for *{away_team}* to win is **{round(p_away * 100, 2)}%**")
                     st.markdown(f"Prediction for *Draw* is **{round(p_draw * 100, 2)}%**")
                     
                     # Interpretation of Tilt
-                    st.markdown("### Interpretation of Tilt:")
+                    st.markdown("### Interpretation of Tilt")
                     st.markdown("""
                                 - **Low Tilt Values (< 1.0):**
                                 - Indicate that the matches of this team have fewer goals than expected, based on Elo and goal expectations.
@@ -563,7 +564,7 @@ try:
                     dict(selector='th', props=[('text-align', 'center')])
                     ])
             # Configuração do Streamlit
-            st.subheader(f"_Correct Score Simulation for *{home_team}* vs *{away_team}*_")
+            st.subheader(f"Correct Score Simulation for **{home_team}** vs *{away_team}**")
             # Exibir a tabela completa estilizada no Streamlit
             st.write(styled_results.to_html(), unsafe_allow_html=True)
             
