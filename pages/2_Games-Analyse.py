@@ -398,110 +398,68 @@ try:
             st.divider()
             
             # Função para calcular o lambda (média esperada de gols) para os times
-            def calculate_lambda(filtered_data, home_team, away_team):
-                try:
-                    # Filtrar os dados do DataFrame para o jogo selecionado
-                    match_data = filtered_data[(filtered_data['Home'] == home_team) & (data['Away'] == away_team)]
-                    if match_data.empty:
-                        raise ValueError(f"Jogo entre {home_team} e {away_team} não encontrado no DataFrame.")
-                    
-                    # Calcular lambdas
-                    home_lambda = (match_data['Media_Golos_Marcados_Home'].values[0] + 
-                                match_data['Media_Golos_Sofridos_Away'].values[0])
-                    away_lambda = (match_data['Media_Golos_Marcados_Away'].values[0] + 
-                                match_data['Media_Golos_Sofridos_Home'].values[0])
-                    
-                    home_lambda = min(max(home_lambda, 0), 2.5)
-                    away_lambda = min(max(away_lambda, 0), 2.5)                        
-                    return home_lambda, away_lambda
-                except KeyError as e:
-                    raise ValueError(f"Erro ao acessar os dados: {e}")
-                except Exception as e:
-                    raise ValueError(f"Ocorreu um erro ao calcular os lambdas: {e}")
+            def drop_reset_index(df):
+                df = df.dropna()
+                df = df.reset_index(drop=True)
+                df.index += 1
+                return df
             
-            # Função para prever os resultados com distribuição de Poisson
-            def predict_results(filtered_data, home_team, away_team, max_goals=5):
-                try:
-                    home_lambda, away_lambda = calculate_lambda(filtered_data, home_team, away_team)
-                    prob_matrix = np.zeros((max_goals, max_goals))
-                    
-                    for home_goals in range(max_goals):
-                        for away_goals in range(max_goals):
-                            prob_matrix[home_goals, away_goals] = (
-                                poisson.pmf(home_goals, home_lambda) * poisson.pmf(away_goals, away_lambda)
-                            )
-                    return prob_matrix
-                except Exception as e:
-                    raise ValueError(f"Ocorreu um erro ao prever os resultados: {e}")
+            def simulate_match(home_goals_for, home_goals_against,away_goals_for,away_goals_against,num_simulations=10000,random_seed=42):
+                np.random.seed(random_seed)
+                estimated_home_goals = (home_goals_for + away_goals_against) / 2
+                estimated_away_goals = (away_goals_for + home_goals_against) / 2
+                
+                home_goals = poisson(estimated_home_goals).rvs(num_simulations)
+                away_goals = poisson(estimated_away_goals).rvs(num_simulations)
+                
+                results = pd.DataFrame({
+                    'Home_Goals':home_goals,
+                    'Away_Goals': away_goals
+                })
+                return results
             
-            # Função para exibir a matriz formatada com 4 casas decimais e valores centralizados
-            def display_probability_matrix(probabilities, home_team, away_team):
-                max_goals = probabilities.shape[0]
-                prob_df = pd.DataFrame(
-                    probabilities, 
-                    index=[f"{i} gols {home_team}" for i in range(max_goals)],
-                    columns=[f"{i} gols {away_team}" for i in range(max_goals)]
-                )
+            def top_results_df(simulated_results, top_n):
+                result_counts = simulated_results.value.counts().head(top_n).reset_index()
+                result_counts.columns = ['Home_Goals', 'Away_Goals', 'Count']
                 
-                # Formatar os valores para 4 casas decimais
-                styled_df = prob_df.style.format("{:.4f}").set_properties(**{
-                    'text-align': 'center'
-                }).set_table_styles([{
-                    'selector': 'th',
-                    'props': [('text-align', 'center')]
-                }])
+                sum_top_counts = result_counts['Count'].sum()
+                result_counts['Probability'] = result_counts['Count'] / sum_top_counts
                 
-                return styled_df
-            
-            def display_sorted_probabilities(probabilities, home_team, away_team):
-                max_goals = probabilities.shape[0]
-                prob_list = []
-            
-                # Criar uma lista com todos os resultados possíveis e suas probabilidades
-                for home_goals in range(max_goals):
-                    for away_goals in range(max_goals):
-                        prob_list.append({
-                            'Placar': f"{home_goals}-{away_goals}",
-                            'Probabilidade': probabilities[home_goals, away_goals]
-                        })
-                
-                # Converter para DataFrame e ordenar do mais provável para o menos provável
-                prob_df = pd.DataFrame(prob_list)
-                prob_df = prob_df.sort_values(by='Probabilidade', ascending=False)
-                
-                return prob_df
+                return result_counts
             
             # Seleção dos times
             home_team = selected_home
             away_team = selected_away
             
-            # Garantir que os times sejam diferentes
-            if home_team == away_team:
-                st.warning("Selecione times diferentes para a previsão.")
-            else:
-                try:
-                    # Prever os resultados
-                    st.subheader(f"_Predict of Correct Score for {home_team} vs {away_team}_")
-                    probabilities = predict_results(data, home_team, away_team)
-                    
-                    # Exibir matriz de probabilidades
-                    st.write("_*Probability matrix (Poisson):*_")
-                    styled_df = display_probability_matrix(probabilities, home_team, away_team)
-                    st.write(styled_df)
-                    
-                    # Exibir probabilidades ordenadas de cada placar
-                    st.write("_*Probability of Scores (sorted):*_")
-                    sorted_probabilities = display_sorted_probabilities(probabilities, home_team, away_team)
-                    
-                    # Exibir as probabilidades ordenadas
-                    for _, row in sorted_probabilities.iterrows():
-                        st.write(f"{row['Placar']}: {row['Probabilidade']:.4f}")
-                    st.divider()
-                
-                except ValueError as ve:
-                    st.error(f"Erro nos cálculos: {ve}")
-                except Exception as e:
-                    st.error(f"Ocorreu um erro inesperado: {e}")
+            home_goals_for = data['Media_Golos_Marcados_Home']
+            home_goals_against = data['Media_Golos_Sofridos_Home']
+            away_goals_for = data['Media_Golos_Marcados_Away']
+            away_goals_against = data['Media_Golos_Sofridos_Away']
+            
+            simulated_results = simulate_match(home_goals_for,home_goals_against,away_goals_scored,away_goals_against)
+            simulated_results = drop_reset_index(simulated_results)
+            
+            results = top_results_df(simulated_results,100)
+            results = drop_reset_index(results)
+            
+            results['Score_Board'] = results.apply(
+                lambda row: 'Any_Other_Home_Win' if (row['Home_Goals'] >= 4 and row['Home_Goals'] > row['Away_Goals'])
+                else 'Any_Other_Away_Win' if (row['Away_Goals'] >= 4 and row['Away_Goals'] > row['Home_Goals'])
+                else 'Any_Other_Draw' if (row['Home_Goals'] >= 4 and row['Away_Goals'] >= 4 and row['Home_Goals'] == row['Away_Goals'])
+                else f'{int(row['Home_Goals'])}X{int(row['Away_Goals'])}', axis=1
+            )
+            
+            results = results.head(8)
+            results = results.head(8)
+            
+            # Configuração do Streamlit
+            st.title("Simulação de Resultados de Partidas de Futebol")
+            st.subheader(f"Simulação para {home_team} vs {away_team}")
+            st.write("Aqui estão os resultados simulados mais prováveis:")
+            
+            # Exibir resultados no Streamlit
+            st.dataframe(results)
+            
         except Exception as e:
             st.error(f"Erro ao carregar os dados históricos: {e}")
 except Exception as e:
