@@ -440,10 +440,6 @@ try:
                 # Carregar os dados de Elo e Tilt
                 elo_tilt_data = pd.read_csv(elo_tilt_url)
                 
-                # Seleção dos times (exemplo de seleção dinâmica no Streamlit)
-                selected_home = st.text_input("Enter the Home Team:")
-                selected_away = st.text_input("Enter the Away Team:")
-                
                 if selected_home and selected_away:
                     # Filtro para os times
                     home_team_data = elo_tilt_data[elo_tilt_data['Team'] == selected_home]
