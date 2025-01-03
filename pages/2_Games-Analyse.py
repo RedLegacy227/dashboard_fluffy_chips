@@ -9,6 +9,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Configuração inicial
+# Configurar a página para largura total
+st.set_page_config(layout="wide")
 st.title('_Fluffy Chips Web Analyzer_')
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
@@ -458,24 +460,39 @@ try:
                 else f'{int(row['Home_Goals'])}X{int(row['Away_Goals'])}', axis=1
             )
             
+            # Aplicar CSS para garantir que a tabela seja exibida completamente
+            st.markdown(
+                """
+                <style>
+                .dataframe tbody tr th, .dataframe tbody tr td {
+                    text-align: center !important;
+                    }
+                    .dataframe {
+                        width: 100% !important;
+                        }
+                        </style>
+                        """,
+                        unsafe_allow_html=True
+                        )
+            
+            # Exibir os resultados
             results = results.head(19)
+            
             # Manter apenas as colunas desejadas
             results = results[['Score_Board', 'Probability']]
             
             # Formatar a coluna Probability com 4 casas decimais
             results['Probability'] = results['Probability'].apply(lambda x: f"{x:.4f}")
             
-            # Centralizar todas as colunas
+            # Centralizar e estilizar os resultados
             styled_results = results.style.set_properties(**{
                 'text-align': 'center'
                 }).set_table_styles([
                     dict(selector='th', props=[('text-align', 'center')])
                     ])
-                # Configuração do Streamlit
-            st.subheader(f"Correct Score Simulation for {home_team} vs {away_team}")
                 
-            # Exibir resultados estilizados no Streamlit
-            st.write(styled_results, unsafe_allow_html=True)
+            # Exibir a tabela completa estilizada no Streamlit
+            st.write(styled_results.to_html(), unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"Erro ao carregar os dados históricos: {e}")
