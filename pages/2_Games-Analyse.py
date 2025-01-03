@@ -5,6 +5,7 @@ import streamlit as st
 from PIL import Image
 from scipy.stats import poisson
 import os
+import base64
 from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
@@ -16,7 +17,17 @@ st.title('_Fluffy Chips Web Analyzer_')
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.subheader('_Games of the Day_')
-st.image(os.path.join(os.getcwd(), 'static', 'analises002.png'))
+# Caminho para a imagem
+image_path = os.path.join(os.getcwd(), 'static', 'analises002.png')
+# HTML e CSS para centralizar
+st.markdown(
+    f"""
+    <div style="text-align: center;">
+        <img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Analysis" width="50%">
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 st.divider()
 
 # URL base do GitHub para os arquivos CSV
