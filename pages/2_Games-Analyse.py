@@ -23,7 +23,7 @@ image_path = os.path.join(os.getcwd(), 'static', 'analises002.png')
 st.markdown(
     f"""
     <div style="text-align: center;">
-        <img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Analysis" width="50%">
+        <img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Analysis" width="100%">
     </div>
     """,
     unsafe_allow_html=True
