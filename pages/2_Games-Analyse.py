@@ -458,7 +458,7 @@ try:
                 else f'{int(row['Home_Goals'])}X{int(row['Away_Goals'])}', axis=1
             )
             
-            results = results.head(8)
+            results = results.head(19)
             # Manter apenas as colunas desejadas
             results = results[['Score_Board', 'Probability']]
             
