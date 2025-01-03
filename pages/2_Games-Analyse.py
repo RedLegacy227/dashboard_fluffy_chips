@@ -484,6 +484,12 @@ try:
             # Formatar a coluna Probability com 4 casas decimais
             results['Probability'] = results['Probability'].apply(lambda x: f"{x:.4f}")
             
+            # Consolidar valores repetidos na coluna `Score_Board`
+            results = results.groupby('Score_Board', as_index=False).agg({'Probability': 'sum'})
+            
+            # Ordenar pelo valor da probabilidade em ordem decrescente
+            results = results.sort_values(by='Probability', ascending=False).reset_index(drop=True)
+            
             # Centralizar e estilizar os resultados
             styled_results = results.style.set_properties(**{
                 'text-align': 'center'
