@@ -438,7 +438,7 @@ try:
                     p_away -= p_draw / 2
             
                     # Exibir as previsões
-                    st.markdown("### Predictions")
+                    st.markdown("### Predictions of Match Odds")
                     st.markdown(f"Prediction for *{home_team}* to win is **{round(p_home * 100, 2)}%**")
                     st.markdown(f"Prediction for *{away_team}* to win is **{round(p_away * 100, 2)}%**")
                     st.markdown(f"Prediction for *Draw* is **{round(p_draw * 100, 2)}%**")
@@ -564,7 +564,7 @@ try:
                     dict(selector='th', props=[('text-align', 'center')])
                     ])
             # Configuração do Streamlit
-            st.subheader(f"Correct Score Simulation for **{home_team}** vs *{away_team}**")
+            st.subheader(f"Correct Score Simulation for **{home_team}** vs **{away_team}**")
             # Exibir a tabela completa estilizada no Streamlit
             st.write(styled_results.to_html(), unsafe_allow_html=True)
             
