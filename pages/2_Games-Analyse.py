@@ -409,8 +409,8 @@ try:
                 away_team = selected_away
                 
                 # Filtro para os times
-                home_team_data = elo_tilt_data[elo_tilt_data['team'] == home_team]
-                away_team_data = elo_tilt_data[elo_tilt_data['team'] == away_team]
+                home_team_data = elo_tilt_data[elo_tilt_data['Team'] == home_team]
+                away_team_data = elo_tilt_data[elo_tilt_data['Team'] == away_team]
                 
                 # Verifica se os dados dos times foram encontrados
                 if not home_team_data.empty and not away_team_data.empty:
