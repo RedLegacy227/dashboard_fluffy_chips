@@ -459,15 +459,23 @@ try:
             )
             
             results = results.head(8)
-            results = results.head(8)
+            # Manter apenas as colunas desejadas
+            results = results[['Score_Board', 'Probability']]
             
-            # Configuração do Streamlit
-            st.title("Simulação de Resultados de Partidas de Futebol")
-            st.subheader(f"Simulação para {home_team} vs {away_team}")
-            st.write("Aqui estão os resultados simulados mais prováveis:")
+            # Formatar a coluna Probability com 4 casas decimais
+            results['Probability'] = results['Probability'].apply(lambda x: f"{x:.4f}")
             
-            # Exibir resultados no Streamlit
-            st.dataframe(results)
+            # Centralizar todas as colunas
+            styled_results = results.style.set_properties(**{
+                'text-align': 'center'
+                }).set_table_styles([
+                    dict(selector='th', props=[('text-align', 'center')])
+                    ])
+                # Configuração do Streamlit
+            st.subheader(f"Correct Score Simulation for {home_team} vs {away_team}")
+                
+            # Exibir resultados estilizados no Streamlit
+            st.write(styled_results, unsafe_allow_html=True)
             
         except Exception as e:
             st.error(f"Erro ao carregar os dados históricos: {e}")
