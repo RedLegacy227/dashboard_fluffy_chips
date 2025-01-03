@@ -491,7 +491,7 @@ try:
                     dict(selector='th', props=[('text-align', 'center')])
                     ])
             # Configuração do Streamlit
-            st.subheader(f"Correct Score Simulation for {home_team} vs {away_team}")
+            st.subheader(f"_Correct Score Simulation for *{home_team}* vs *{away_team}*_")
             # Exibir a tabela completa estilizada no Streamlit
             st.write(styled_results.to_html(), unsafe_allow_html=True)
             
