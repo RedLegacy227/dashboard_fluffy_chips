@@ -431,10 +431,10 @@ try:
             home_team = selected_home
             away_team = selected_away
             
-            home_goals_for = data['Media_Golos_Marcados_Home']
-            home_goals_against = data['Media_Golos_Sofridos_Home']
-            away_goals_for = data['Media_Golos_Marcados_Away']
-            away_goals_against = data['Media_Golos_Sofridos_Away']
+            home_goals_for = data['Media_Golos_Marcados_Home'].iloc[0]
+            home_goals_against = data['Media_Golos_Sofridos_Home'].iloc[0]
+            away_goals_for = data['Media_Golos_Marcados_Away'].iloc[0]
+            away_goals_against = data['Media_Golos_Sofridos_Away'].iloc[0]
             
             simulated_results = simulate_match(home_goals_for,home_goals_against,away_goals_scored,away_goals_against)
             simulated_results = drop_reset_index(simulated_results)
