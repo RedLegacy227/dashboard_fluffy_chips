@@ -148,10 +148,32 @@ with tab4:
                 # Ordenar os dados
                 back_home_flt = back_home_flt.sort_values(by='Time', ascending=True)
                 
+                # Calcular as odds justas
+                if {'Elo_Home', 'Elo_Away'}.issubset(data.columns):
+                    # Calcular a diferença de Elo ajustada para o Home Field Advantage (HFA)
+                    HFA = 60  # Valor padrão para HFA; ajuste conforme necessário
+                    data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
+                    
+                    # Calcular as probabilidades usando a fórmula do Elo
+                    data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
+                    data['P_Away'] = 1 - data['P_Home']
+                    data['P_Draw'] = 1 - (data['P_Home'] + data['P_Away'])  # Ajuste básico
+                    
+                    # Garantir que P_Draw não seja negativa (caso haja inconsistências)
+                    data['P_Draw'] = data['P_Draw'].clip(lower=0)
+                    
+                    # Calcular as odds justas
+                    data['Odd_Home'] = 1 / data['P_Home']
+                    data['Odd_Draw'] = 1 / data['P_Draw']
+                    data['Odd_Away'] = 1 / data['P_Away']
+                    
+                else:
+                    st.error("As colunas de Elo não estão disponíveis no dataframe.")
+                
                 # Exibir os dados filtrados
                 if not back_home_flt.empty:
                     # Selecionar as colunas relevantes para exibição
-                    st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away' ]])
+                    st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Draw_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away' ]])
                 else:
                     st.info("Nenhum jogo encontrado com diferença de Elo superior a 100.")
             else:
@@ -174,10 +196,31 @@ with tab5:
                 # Ordenar os dados
                 back_away_flt = back_away_flt.sort_values(by='Time', ascending=True)
                 
+                # Calcular as odds justas
+                if {'Elo_Home', 'Elo_Away'}.issubset(data.columns):
+                    # Calcular a diferença de Elo ajustada para o Home Field Advantage (HFA)
+                    HFA = 60  # Valor padrão para HFA; ajuste conforme necessário
+                    data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
+                    
+                    # Calcular as probabilidades usando a fórmula do Elo
+                    data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
+                    data['P_Away'] = 1 - data['P_Home']
+                    data['P_Draw'] = 1 - (data['P_Home'] + data['P_Away'])  # Ajuste básico
+                    
+                    # Garantir que P_Draw não seja negativa (caso haja inconsistências)
+                    data['P_Draw'] = data['P_Draw'].clip(lower=0)
+                    
+                    # Calcular as odds justas
+                    data['Odd_Home_Justa'] = 1 / data['P_Home']
+                    data['Odd_Draw_Justa'] = 1 / data['P_Draw']
+                    data['Odd_Away_Justa'] = 1 / data['P_Away']
+                else:
+                    st.error("As colunas de Elo não estão disponíveis no dataframe.")
+                
                 # Exibir os dados filtrados
                 if not back_away_flt.empty:
                     # Selecionar as colunas relevantes para exibição
-                    st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away' ]])
+                    st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Draw_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away' ]])
                 else:
                     st.info("Nenhum jogo encontrado com diferença de Elo menor ou igual a -100.")
             else:
