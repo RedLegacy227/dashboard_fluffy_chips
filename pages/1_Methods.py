@@ -145,7 +145,6 @@ with tab4:
             data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
             data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
             data['P_Away'] = 1 - data['P_Home']
-            data['P_Draw'] = data['P_Draw'].clip(lower=0)
             data['Odd_Home_Justa'] = 1 / data['P_Home']
             data['Odd_Away_Justa'] = 1 / data['P_Away']
             
@@ -174,7 +173,6 @@ with tab5:
                 data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
                 data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
                 data['P_Away'] = 1 - data['P_Home']
-                data['P_Draw'] = data['P_Draw'].clip(lower=0)
                 data['Odd_Home_Justa'] = 1 / data['P_Home']
                 data['Odd_Away_Justa'] = 1 / data['P_Away']
             
