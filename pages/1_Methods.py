@@ -151,7 +151,7 @@ with tab4:
             data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Wins_FT_Home"] >= 80)& (data["FT_Odd_H"] <= 3.00) & (data['Tilt_Home'] > 0.75)]
+            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Wins_FT_Home"] >= 80)& (data["FT_Odd_H"] <= 3.00) & (data['Media_Golos_Sofridos_Away'] > 1)]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
@@ -179,7 +179,7 @@ with tab5:
                 data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Away
-            back_away_flt = data[(data['Elo_Difference'] < -75) & (data["Perc_Wins_FT_Away"] >= 80) & (data["FT_Odd_A"] <= 3.00) & (data['Tilt_Away'] > 0.75  )]
+            back_away_flt = data[(data['Elo_Difference'] < -75) & (data["Perc_Wins_FT_Away"] >= 80) & (data["FT_Odd_A"] <= 3.00) & (data['Media_Golos_Sofridos_Home'] > 1  )]
             
             # Exibir dados filtrados
             if not back_away_flt.empty:
