@@ -182,7 +182,7 @@ with tab5:
                 data['Elo_Difference'] = data['Elo_Home'] - data['Elo_Away']
                 
                 # Aplicar o filtro
-                back_away_flt = data[data['Elo_Difference'] < 100]
+                back_away_flt = data[data['Elo_Difference'] <= -100]
                 
                 # Ordenar os dados
                 back_away_flt = back_away_flt.sort_values(by='Time', ascending=True)
