@@ -181,7 +181,7 @@ with tab5:
                 # Calcular a diferença de Elo
                 data['Elo_Difference'] = data['Elo_Home'] - data['Elo_Away']
                 
-                # Aplicar o filtro
+                # Aplicar o filtro para Back Away (diferença de Elo <= -100)
                 back_away_flt = data[data['Elo_Difference'] <= -100]
                 
                 # Ordenar os dados
@@ -192,7 +192,7 @@ with tab5:
                     # Selecionar as colunas relevantes para exibição
                     st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
                 else:
-                    st.info("Nenhum jogo encontrado com diferença de Elo superior a 100.")
+                    st.info("Nenhum jogo encontrado com diferença de Elo menor ou igual a -100.")
             else:
                 st.error("Dados de Elo e Tilt não estão no formato esperado. Verifique se as colunas 'Team', 'Elo' e 'Tilt' estão presentes.")
         except Exception as e:
