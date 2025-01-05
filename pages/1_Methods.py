@@ -49,11 +49,10 @@ with tab1:
     if data is not None:
         # Aplicar os filtros
         lay_0_x_1_flt = data[
-            (data["FT_Odd_H"] >= 1.50) &
-            (data["FT_Odd_H"] <= 2.20) &
+            (data["FT_Odd_H"] <= 3) &
             (data["Probabilidade_Goals_Scored_Home"] >= 1.2) &
-            (data["Probabilidade_Goals_Taken_Away"] >= 1.2) &
-            (data["Media_CG_01_Marcados_Home"] >= 3.5) &
+            (data["Perc_Took_at_least_1_Goal_Away"] >= 60) &
+            (data["Media_CG_01_Marcados_Home"] <= 4) &
             (data["Media_CG_02_Marcados_Home"] >= 0.8) &
             (data["CV_Media_CG_02_Marcados_Home"] <= 0.8) &
             (data["FT_Odd_Ov25"] <= 2.20) &
@@ -75,11 +74,10 @@ with tab2:
     if data is not None:
         # Aplicar os filtros
         lay_1_x_0_flt = data[
-            (data["FT_Odd_A"] >= 1.50) &
-            (data["FT_Odd_A"] <= 2.20) &
+            (data["FT_Odd_A"] <= 3) &
             (data["Probabilidade_Goals_Scored_Away"] >= 1.2) &
-            (data["Probabilidade_Goals_Taken_Home"] >= 1.2) &
-            (data["Media_CG_01_Marcados_Away"] >= 3.5) &
+            (data["Perc_Took_at_least_1_Goal_Home"] >= 60) &
+            (data["Media_CG_01_Marcados_Away"] <= 4) &
             (data["Media_CG_02_Marcados_Away"] >= 0.8) &
             (data["CV_Media_CG_02_Marcados_Away"] <= 0.8) &
             (data["FT_Odd_Ov25"] <= 2.20) &
@@ -155,7 +153,7 @@ with tab4:
             data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 70) & (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 3.00) & (data['Media_Saldo_Golos_Home'] > data['Media_Saldo_Golos_Away']) & (data['Media_Ptos_Home']> data['Media_Ptos_Away'])]
+            back_home_flt = data[(data['Elo_Difference'] > 70) & (data["FT_Odd_H"] <= 3.00) & (data['Media_Saldo_Golos_Home'] > data['Media_Saldo_Golos_Away']) & (data['Media_Ptos_Home']> data['Media_Ptos_Away'])]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
