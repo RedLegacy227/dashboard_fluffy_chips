@@ -151,7 +151,7 @@ with tab4:
             data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Scored_1_Goal_1st_Half_Home"] > data['Perc_Scored_1_Goal_1st_Half_Away']) & (data["FT_Odd_H"] <= 3.00) & (data['Media_First_Goal_Home'] < data['Media_First_Goal_Away'])]
+            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Scored_1_Goal_1st_Half_Home"] > data['Perc_Scored_1_Goal_1st_Half_Away']) & (data["FT_Odd_H"] < data['FT_Odd_A']) & (data['Media_First_Goal_Home'] < data['Media_First_Goal_Away'])]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
@@ -179,7 +179,7 @@ with tab5:
                 data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Away
-            back_away_flt = data[(data['Elo_Difference'] < -75) & (data["Perc_Scored_1_Goal_1st_Half_Away"] > data['Perc_Scored_1_Goal_1st_Half_Home']) & (data["FT_Odd_A"] <= 3.00) & (data['Media_First_Goal_Away'] < data['Media_First_Goal_Home'])]
+            back_away_flt = data[(data['Elo_Difference'] < -75) & (data["Perc_Scored_1_Goal_1st_Half_Away"] > data['Perc_Scored_1_Goal_1st_Half_Home']) & (data["FT_Odd_A"] < data['FT_Odd_H']) & (data['Media_First_Goal_Away'] < data['Media_First_Goal_Home'])]
             
             # Exibir dados filtrados
             if not back_away_flt.empty:
