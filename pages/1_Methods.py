@@ -155,13 +155,13 @@ with tab4:
             data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 70) & (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 3.00) & (data['Media_Saldo_Golos_Home'] > data['Media_Saldo_Golos_Away']) & (data['Media_Ptos_Home']> data['Media_Ptos_Away']) & (data['CV_Media_Ptos_Home'] < 0.9)]
+            back_home_flt = data[(data['Elo_Difference'] > 70) & (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 3.00) & (data['Media_Saldo_Golos_Home'] > data['Media_Saldo_Golos_Away']) & (data['Media_Ptos_Home']> data['Media_Ptos_Away'])]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
                 st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
             else:
-                st.info("Nenhum jogo encontrado com diferença de Elo superior a 100.")
+                st.info("Nenhum jogo encontrado.")
         except Exception as e:
             st.error(f"Erro ao carregar ou processar os dados para Back Home: {e}")
     else:
@@ -183,13 +183,13 @@ with tab5:
                 data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Away
-            back_away_flt = data[(data['Elo_Difference'] < -70) & (data["FT_Odd_A"] >= 1.50) & (data["FT_Odd_A"] <= 3.00) & (data['Media_Saldo_Golos_Away'] > data['Media_Saldo_Golos_Home']) & (data['Media_Ptos_Away']> data['Media_Ptos_Home']) & (data['CV_Media_Ptos_Away'] < 0.9)]
+            back_away_flt = data[(data['Elo_Difference'] < -70) & (data["FT_Odd_A"] >= 1.50) & (data["FT_Odd_A"] <= 3.00) & (data['Media_Saldo_Golos_Away'] > data['Media_Saldo_Golos_Home']) & (data['Media_Ptos_Away']> data['Media_Ptos_Home'])]
             
             # Exibir dados filtrados
             if not back_away_flt.empty:
                 st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
             else:
-                st.info("Nenhum jogo encontrado com diferença de Elo menor ou igual a -100.")
+                st.info("Nenhum jogo encontrado.")
         except Exception as e:
             st.error(f"Erro ao processar os dados para Back Away: {e}")
     else:
