@@ -50,7 +50,6 @@ with tab1:
         # Aplicar os filtros
         lay_0_x_1_flt = data[
             (data["FT_Odd_H"] <= 3) &
-            #(data["Perc_Scored_1_Goal_1st_Half_Home"] >= 55) &
             (data["Perc_Over_15_FT_Away"] >= 80) &
             (data["Media_CG_01_Marcados_Home"] <= 4) &
             (data["Media_CG_02_Marcados_Home"] >= 0.8) &
@@ -75,7 +74,6 @@ with tab2:
         # Aplicar os filtros
         lay_1_x_0_flt = data[
             (data["FT_Odd_A"] <= 3) &
-            #(data["Perc_Scored_1_Goal_1st_Half_Away"] >= 55) &
             (data["Perc_Over_15_FT_Home"] >= 80) &
             (data["Media_CG_01_Marcados_Away"] <= 4) &
             (data["Media_CG_02_Marcados_Away"] >= 0.8) &
