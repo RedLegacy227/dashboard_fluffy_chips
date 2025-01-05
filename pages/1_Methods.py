@@ -145,10 +145,8 @@ with tab4:
             data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
             data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
             data['P_Away'] = 1 - data['P_Home']
-            data['P_Draw'] = 1 - (data['P_Home'] + data['P_Away'])
             data['P_Draw'] = data['P_Draw'].clip(lower=0)
             data['Odd_Home_Justa'] = 1 / data['P_Home']
-            data['Odd_Draw_Justa'] = 1 / data['P_Draw']
             data['Odd_Away_Justa'] = 1 / data['P_Away']
             
             # Filtro para Back Home
@@ -156,7 +154,7 @@ with tab4:
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
-                st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Draw_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
+                st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
             else:
                 st.info("Nenhum jogo encontrado com diferença de Elo superior a 100.")
         except Exception as e:
@@ -176,18 +174,16 @@ with tab5:
                 data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
                 data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
                 data['P_Away'] = 1 - data['P_Home']
-                data['P_Draw'] = 1 - (data['P_Home'] + data['P_Away'])
                 data['P_Draw'] = data['P_Draw'].clip(lower=0)
                 data['Odd_Home_Justa'] = 1 / data['P_Home']
-                data['Odd_Draw_Justa'] = 1 / data['P_Draw']
                 data['Odd_Away_Justa'] = 1 / data['P_Away']
             
             # Filtro para Back Away
-            back_away_flt = data[data['Elo_Difference'] <= -100]
+            back_away_flt = data[data['Elo_Difference'] < -100]
             
             # Exibir dados filtrados
             if not back_away_flt.empty:
-                st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Draw_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
+                st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
             else:
                 st.info("Nenhum jogo encontrado com diferença de Elo menor ou igual a -100.")
         except Exception as e:
