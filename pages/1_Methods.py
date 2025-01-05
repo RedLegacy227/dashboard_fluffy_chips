@@ -166,21 +166,8 @@ with tab5:
     
     if data is not None:
         try:
-            # Carregar os dados de Elo e Tilt
-            df_elo_tilt = pd.read_csv(elo_tilt_url)
-            
-            # Garantir que os nomes de colunas estão consistentes
-            if 'Team' in df_elo_tilt.columns and 'Elo' in df_elo_tilt.columns and 'Tilt' in df_elo_tilt.columns:
-                # Fazer o merge para adicionar os dados de Elo e Tilt das equipes
-                data = data.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left', suffixes=('', '_Home'))
-                data = data.rename(columns={'Elo': 'Elo_Home', 'Tilt': 'Tilt_Home'})
-                
-                data = data.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Away', right_on='Team', how='left', suffixes=('', '_Away'))
-                data = data.rename(columns={'Elo': 'Elo_Away', 'Tilt': 'Tilt_Away'})
-                
-                # Calcular a diferença de Elo
-                data['Elo_Difference'] = data['Elo_Home'] - data['Elo_Away']
-                
+            # Verificar se as colunas Elo e Tilt já estão no dataframe
+            if {'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away'}.issubset(data.columns):
                 # Aplicar o filtro para Back Away (diferença de Elo <= -100)
                 back_away_flt = data[data['Elo_Difference'] <= -100]
                 
@@ -194,8 +181,8 @@ with tab5:
                 else:
                     st.info("Nenhum jogo encontrado com diferença de Elo menor ou igual a -100.")
             else:
-                st.error("Dados de Elo e Tilt não estão no formato esperado. Verifique se as colunas 'Team', 'Elo' e 'Tilt' estão presentes.")
+                st.error("As colunas de Elo e Tilt não estão disponíveis no dataframe. Verifique a execução do tab4.")
         except Exception as e:
-            st.error(f"Erro ao carregar os dados de Elo e Tilt: {e}")
+            st.error(f"Erro ao processar os dados para Back Away: {e}")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
