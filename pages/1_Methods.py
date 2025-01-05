@@ -140,9 +140,6 @@ with tab4:
                 # Calcular a diferença de Elo
                 data['Elo_Difference'] = data['Elo_Home'] - data['Elo_Away']
             
-            # Filtro para Back Home
-            back_home_flt = data[data['Elo_Difference'] > 100]
-
             # Calcular as odds justas
             HFA = 60
             data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
@@ -153,6 +150,9 @@ with tab4:
             data['Odd_Home_Justa'] = 1 / data['P_Home']
             data['Odd_Draw_Justa'] = 1 / data['P_Draw']
             data['Odd_Away_Justa'] = 1 / data['P_Away']
+            
+            # Filtro para Back Home
+            back_home_flt = data[data['Elo_Difference'] > 100]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
@@ -169,6 +169,19 @@ with tab5:
     
     if data is not None:
         try:
+            # Verificar se as colunas já foram calculadas
+            if 'Odd_Home_Justa' not in data.columns:
+                # Calcular as odds justas, caso ainda não estejam calculadas
+                HFA = 60
+                data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
+                data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
+                data['P_Away'] = 1 - data['P_Home']
+                data['P_Draw'] = 1 - (data['P_Home'] + data['P_Away'])
+                data['P_Draw'] = data['P_Draw'].clip(lower=0)
+                data['Odd_Home_Justa'] = 1 / data['P_Home']
+                data['Odd_Draw_Justa'] = 1 / data['P_Draw']
+                data['Odd_Away_Justa'] = 1 / data['P_Away']
+            
             # Filtro para Back Away
             back_away_flt = data[data['Elo_Difference'] <= -100]
             
@@ -181,4 +194,3 @@ with tab5:
             st.error(f"Erro ao processar os dados para Back Away: {e}")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-
