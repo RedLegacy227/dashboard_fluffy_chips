@@ -151,7 +151,7 @@ with tab4:
                 # Exibir os dados filtrados
                 if not back_home_flt.empty:
                     # Selecionar as colunas relevantes para exibição
-                    st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_SG_H', 'Media_SG_A', 'Media_Ptos_H', 'CV_Ptos_H', 'Media_Ptos_A', 'CV_Ptos_A', 'Media_CGM_H_02', 'CV_CGM_H_02', 'Media_CGM_A_02', 'CV_CGM_A_02' ]])
+                    st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away' ]])
                 else:
                     st.info("Nenhum jogo encontrado com diferença de Elo superior a 100.")
             else:
@@ -177,7 +177,7 @@ with tab5:
                 # Exibir os dados filtrados
                 if not back_away_flt.empty:
                     # Selecionar as colunas relevantes para exibição
-                    st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_SG_H', 'Media_SG_A', 'Media_Ptos_H', 'CV_Ptos_H', 'Media_Ptos_A', 'CV_Ptos_A', 'Media_CGM_H_02', 'CV_CGM_H_02', 'Media_CGM_A_02', 'CV_CGM_A_02' ]])
+                    st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away',  'Elo_Difference', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away' ]])
                 else:
                     st.info("Nenhum jogo encontrado com diferença de Elo menor ou igual a -100.")
             else:
