@@ -153,7 +153,7 @@ with tab4:
             data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["FT_Odd_H"] >= 1.50)& (data["FT_Odd_H"] <= 3.00) & (data['Media_Saldo_Golos_Home'] > data['Media_Saldo_Golos_Away']) & (data['Media_Ptos_Home']> data['Media_Ptos_Away'])]
+            back_home_flt = data[(data['Elo_Difference'] > 55) & (data["FT_Odd_H"] >= 1.50)& (data["FT_Odd_H"] <= 3.00) & (data['Media_Saldo_Golos_Home'] > data['Media_Saldo_Golos_Away']) & (data['Media_Ptos_Home']> data['Media_Ptos_Away'])]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
@@ -181,7 +181,7 @@ with tab5:
                 data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Away
-            back_away_flt = data[(data['Elo_Difference'] < -75) & (data["FT_Odd_A"] >= 1.50) & (data["FT_Odd_A"] <= 3.00) & (data['Media_Saldo_Golos_Away'] > data['Media_Saldo_Golos_Home']) & (data['Media_Ptos_Away']> data['Media_Ptos_Home'])]
+            back_away_flt = data[(data['Elo_Difference'] < -55) & (data["FT_Odd_A"] >= 1.50) & (data["FT_Odd_A"] <= 3.00) & (data['Media_Saldo_Golos_Away'] > data['Media_Saldo_Golos_Home']) & (data['Media_Ptos_Away']> data['Media_Ptos_Home'])]
             
             # Exibir dados filtrados
             if not back_away_flt.empty:
