@@ -42,7 +42,7 @@ except Exception as e:
     data = None
 
 # Criação das abas
-tab1, tab2, tab3 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 1,5 FT'])
+tab1, tab2, tab3, tab4 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 1,5 FT', 'Back Home'])
 
 with tab1:
     st.subheader('Todays Games for Lay 0 x 1')
@@ -116,5 +116,48 @@ with tab3:
             st.dataframe(over_15_ft_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+        
+# URL dos dados de Elo e Tilt
+elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/main/df_elo_tilt.csv"
+
+with tab4:
+    st.subheader("Todays Games for Back Home")
+    
+    if data is not None:
+        try:
+            # Carregar os dados de Elo e Tilt
+            df_elo_tilt = pd.read_csv(elo_tilt_url)
+            st.success("Dados de Elo e Tilt carregados com sucesso!")
+            
+            # Garantir que os nomes de colunas estão consistentes
+            if 'Team' in df_elo_tilt.columns and 'Elo' in df_elo_tilt.columns and 'Tilt' in df_elo_tilt.columns:
+                # Fazer o merge para adicionar os dados de Elo e Tilt das equipes
+                data = data.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left', suffixes=('', '_Home'))
+                data = data.rename(columns={'Elo': 'Elo_Home', 'Tilt': 'Tilt_Home'})
+                
+                data = data.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Away', right_on='Team', how='left', suffixes=('', '_Away'))
+                data = data.rename(columns={'Elo': 'Elo_Away', 'Tilt': 'Tilt_Away'})
+                
+                # Calcular a diferença de Elo
+                data['Elo_Difference'] = data['Elo_Home'] - data['Elo_Away']
+                
+                # Aplicar o filtro
+                back_home_flt = data[data['Elo_Difference'] > 100]
+                
+                # Ordenar os dados
+                back_home_flt = back_home_flt.sort_values(by='Time', ascending=True)
+                
+                # Exibir os dados filtrados
+                if not back_home_flt.empty:
+                    # Selecionar as colunas relevantes para exibição
+                    st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
+                else:
+                    st.info("Nenhum jogo encontrado com diferença de Elo superior a 100.")
+            else:
+                st.error("Dados de Elo e Tilt não estão no formato esperado. Verifique se as colunas 'Team', 'Elo' e 'Tilt' estão presentes.")
+        except Exception as e:
+            st.error(f"Erro ao carregar os dados de Elo e Tilt: {e}")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
