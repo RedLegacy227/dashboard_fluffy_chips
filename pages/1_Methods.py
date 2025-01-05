@@ -151,7 +151,7 @@ with tab4:
             data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Wins_FT_Home"] >= 80)& (data["FT_Odd_H"] <= 3.00) & (data['Tilt_Home'] < data['Tilt_Home'])]
+            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Wins_FT_Home"] >= 75)& (data["FT_Odd_H"] <= 3.00) & (data['Tilt_Home'] < data['Tilt_Home'])]
             
             # Exibir dados filtrados
             if not back_home_flt.empty:
