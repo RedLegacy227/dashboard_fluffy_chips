@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 import streamlit as st
 from PIL import Image
 import os
@@ -125,37 +126,41 @@ with tab3:
 elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/main/df_elo_tilt.csv"
 
 with tab4:
-    st.subheader("Todays Games for Back Home")
+    st.subheader("Todays Games for Lay Home")
+    lay_home = data.copy()
+    lay_home['VAR1'] = np.sqrt((lay_home['FT_Odd_H'] - lay_home['FT_Odd_A'])**2)
+    lay_home['VAR2'] = np.degrees(np.arctan((lay_home['FT_Odd_A'] - lay_home['FT_Odd_H']) / 2))
+    lay_home['VAR3'] = np.degrees(np.arctan((lay_home['FT_Odd_D'] - lay_home['FT_Odd_A']) / 2))
     
-    if data is not None:
+    if lay_home is not None:
         try:
             # Carregar os dados de Elo e Tilt apenas uma vez
-            if 'Elo_Home' not in data.columns or 'Elo_Away' not in data.columns:
+            if 'Elo_Home' not in lay_home.columns or 'Elo_Away' not in lay_home.columns:
                 df_elo_tilt = pd.read_csv(elo_tilt_url)
                 
                 # Merge para adicionar dados de Elo e Tilt
-                data = data.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left')
-                data = data.rename(columns={'Elo': 'Elo_Home', 'Tilt': 'Tilt_Home'})
-                data = data.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Away', right_on='Team', how='left')
-                data = data.rename(columns={'Elo': 'Elo_Away', 'Tilt': 'Tilt_Away'})
+                lay_home = lay_home.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left')
+                lay_home = lay_home.rename(columns={'Elo': 'Elo_Home', 'Tilt': 'Tilt_Home'})
+                lay_home = lay_home.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Away', right_on='Team', how='left')
+                lay_home = lay_home.rename(columns={'Elo': 'Elo_Away', 'Tilt': 'Tilt_Away'})
                 
                 # Calcular a diferença de Elo
-                data['Elo_Difference'] = data['Elo_Home'] - data['Elo_Away']
+                lay_home['Elo_Difference'] = lay_home['Elo_Home'] - lay_home['Elo_Away']
             
             # Calcular as odds justas
-            HFA = 60
-            data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
-            data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
-            data['P_Away'] = 1 - data['P_Home']
-            data['Odd_Home_Justa'] = (1 / data['P_Home']).round(2)
-            data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
+            HFA = 50
+            lay_home['dr'] = (lay_home['Elo_Home'] + HFA) - lay_home['Elo_Away']
+            lay_home['P_Home'] = 1 / (10 ** (-lay_home['dr'] / 400) + 1)
+            lay_home['P_Away'] = 1 - lay_home['P_Home']
+            lay_home['Odd_Home_Justa'] = (1 / lay_home['P_Home']).round(2)
+            lay_home['Odd_Away_Justa'] = (1 / lay_home['P_Away']).round(2)
             
             # Filtro para Back Home
-            back_home_flt = data[(data['Elo_Difference'] > 75) & (data["Perc_Scored_1_Goal_1st_Half_Home"] > data['Perc_Scored_1_Goal_1st_Half_Away']) & (data["FT_Odd_H"] < data['FT_Odd_A']) & (data['Media_First_Goal_Home'] < data['Media_First_Goal_Away'])]
+            lay_home_flt = lay_home[(lay_home['VAR1'] >= 2.5) & (lay_home["VAR2"] <= -30) & (lay_home["VAR3"] >= 30)]
             
             # Exibir dados filtrados
-            if not back_home_flt.empty:
-                st.dataframe(back_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
+            if not lay_home_flt.empty:
+                st.dataframe(lay_home_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -164,26 +169,41 @@ with tab4:
         st.info("Dados indisponíveis para a data selecionada.")
 
 with tab5:
-    st.subheader("Todays Games for Back Away")
+    st.subheader("Todays Games for Lay Away")
+    lay_away = data.copy()
+    lay_away['VAR1'] = np.sqrt((lay_away['FT_Odd_H'] - lay_away['FT_Odd_A'])**2)
+    lay_away['VAR2'] = np.degrees(np.arctan((lay_away['FT_Odd_A'] - lay_away['FT_Odd_H']) / 2))
+    lay_away['VAR3'] = np.degrees(np.arctan((lay_away['FT_Odd_D'] - lay_away['FT_Odd_A']) / 2))
     
-    if data is not None:
+    if lay_away is not None:
         try:
-            # Verificar se as colunas já foram calculadas
-            if 'Odd_Home_Justa' not in data.columns:
-                # Calcular as odds justas, caso ainda não estejam calculadas
-                HFA = 60
-                data['dr'] = (data['Elo_Home'] + HFA) - data['Elo_Away']
-                data['P_Home'] = 1 / (10 ** (-data['dr'] / 400) + 1)
-                data['P_Away'] = 1 - data['P_Home']
-                data['Odd_Home_Justa'] = (1 / data['P_Home']).round(2)
-                data['Odd_Away_Justa'] = (1 / data['P_Away']).round(2)
+            # Carregar os dados de Elo e Tilt apenas uma vez
+            if 'Elo_Home' not in lay_away.columns or 'Elo_Away' not in lay_away.columns:
+                df_elo_tilt = pd.read_csv(elo_tilt_url)
+                
+                # Merge para adicionar dados de Elo e Tilt
+                lay_away = lay_away.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left')
+                lay_away = lay_away.rename(columns={'Elo': 'Elo_Home', 'Tilt': 'Tilt_Home'})
+                lay_away = lay_away.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Away', right_on='Team', how='left')
+                lay_away = lay_away.rename(columns={'Elo': 'Elo_Away', 'Tilt': 'Tilt_Away'})
+                
+                # Calcular a diferença de Elo
+                lay_away['Elo_Difference'] = lay_away['Elo_Home'] - lay_away['Elo_Away']
+                
+            # Calcular as odds justas, caso ainda não estejam calculadas
+            HFA = 50
+            lay_away['dr'] = (lay_away['Elo_Home'] + HFA) - lay_away['Elo_Away']
+            lay_away['P_Home'] = 1 / (10 ** (-lay_away['dr'] / 400) + 1)
+            lay_away['P_Away'] = 1 - lay_away['P_Home']
+            lay_away['Odd_Home_Justa'] = (1 / lay_away['P_Home']).round(2)
+            lay_away['Odd_Away_Justa'] = (1 / lay_away['P_Away']).round(2)
             
-            # Filtro para Back Away
-            back_away_flt = data[(data['Elo_Difference'] < -75) & (data["Perc_Scored_1_Goal_1st_Half_Away"] > data['Perc_Scored_1_Goal_1st_Half_Home']) & (data["FT_Odd_A"] < data['FT_Odd_H']) & (data['Media_First_Goal_Away'] < data['Media_First_Goal_Home'])]
+            # Filtro para Lay Away
+            lay_away_flt = lay_away[(lay_away['VAR1'] >=5) & (lay_away["VAR2"] >= 60) & (lay_away["VAR3"] <= -60)]
             
             # Exibir dados filtrados
-            if not back_away_flt.empty:
-                st.dataframe(back_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
+            if not lay_away_flt.empty:
+                st.dataframe(lay_away_flt[['Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference']])
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
