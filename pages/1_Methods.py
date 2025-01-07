@@ -43,7 +43,7 @@ except Exception as e:
     data = None
 
 # Criação das abas
-tab1, tab2, tab3, tab4, tab5 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 1,5 FT', 'Lay Home', 'Lay Away'])
+tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away'])
 
 with tab1:
     st.subheader('Todays Games for Lay 0 x 1')
@@ -94,6 +94,33 @@ with tab2:
         st.info("Dados indisponíveis para a data selecionada.")
 
 with tab3:
+    st.subheader('Todays Games for Over 0,5 HT')
+    st.markdown('If the Odd is less than 1.54, you must wait for it to reach minimum 1.54')
+    if data is not None:
+        # Aplicar os filtros
+        over_05_ht_flt = data[
+            (data["Perc_Over_05_HT_Home"] + data["Perc_Over_05_HT_Away"] > 75) &
+            (data["Perc_Over_25_FT_Home"] + data["Perc_Over_25_FT_Away"] > 50) &
+            (data["Media_Golos_Marcados_Home_HT"] > 1) &
+            (data["CV_Media_Golos_Marcados_Home_HT"] < 1) &
+            (data["Media_Golos_Marcados_Away_HT"] > 1) &
+            (data["CV_Media_Golos_Marcados_Away_HT"] < 1) &
+            (data["Media_Golos_Sofridos_Home_HT"] > 1) &
+            (data["CV_Media_Golos_Sofridos_Home_HT"] < 1) &
+            (data["Media_Golos_Sofridos_Away_HT"] > 1) &
+            (data["CV_Media_Golos_Sofridos_Away_HT"] < 1)
+        ]
+        over_05_ht_flt = over_05_ht_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not over_05_ht_flt.empty:
+            st.dataframe(over_05_ht_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+
+with tab4:
     st.subheader('Todays Games for Over 1,5 FT')
     st.markdown('If the Odd is less than 1.42, you must wait for it to reach minimum 1.42')
     if data is not None:
@@ -125,7 +152,7 @@ with tab3:
 # URL dos dados de Elo e Tilt
 elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/main/df_elo_tilt.csv"
 
-with tab4:
+with tab5:
     st.subheader("Todays Games for Lay Home")
     lay_home = data.copy()
     lay_home['VAR1'] = np.sqrt((lay_home['FT_Odd_H'] - lay_home['FT_Odd_A'])**2)
@@ -156,7 +183,7 @@ with tab4:
             lay_home['Odd_Away_Justa'] = (1 / lay_home['P_Away']).round(2)
             
             # Filtro para Back Home
-            lay_home_flt = lay_home[(lay_home['VAR1'] >= 2.5) & (lay_home["VAR2"] <= -30) & (lay_home["VAR3"] >= 30)]
+            lay_home_flt = lay_home[(lay_home['VAR1'] >= 3) & (lay_home["VAR2"] <= -30) & (lay_home["VAR3"] >= 30) & (lay_home['FT_Odd_H'] > 2)]
             
             # Exibir dados filtrados
             if not lay_home_flt.empty:
@@ -168,7 +195,7 @@ with tab4:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-with tab5:
+with tab6:
     st.subheader("Todays Games for Lay Away")
     lay_away = data.copy()
     lay_away['VAR1'] = np.sqrt((lay_away['FT_Odd_H'] - lay_away['FT_Odd_A'])**2)
@@ -199,7 +226,7 @@ with tab5:
             lay_away['Odd_Away_Justa'] = (1 / lay_away['P_Away']).round(2)
             
             # Filtro para Lay Away
-            lay_away_flt = lay_away[(lay_away['VAR1'] >=5) & (lay_away["VAR2"] >= 60) & (lay_away["VAR3"] <= -60)]
+            lay_away_flt = lay_away[(lay_away['VAR1'] >=4) & (lay_away["VAR2"] >= 60) & (lay_away["VAR3"] <= -60) & (lay_away['FT_Odd_A'] > 2)]
             
             # Exibir dados filtrados
             if not lay_away_flt.empty:
