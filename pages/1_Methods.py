@@ -175,7 +175,7 @@ with tab5:
                 lay_home['Elo_Difference'] = lay_home['Elo_Home'] - lay_home['Elo_Away']
             
             # Calcular as odds justas
-            HFA = 50
+            HFA = 50 * 0.15
             lay_home['dr'] = (lay_home['Elo_Home'] + HFA) - lay_home['Elo_Away']
             lay_home['P_Home'] = 1 / (10 ** (-lay_home['dr'] / 400) + 1)
             lay_home['P_Away'] = 1 - lay_home['P_Home']
@@ -218,7 +218,7 @@ with tab6:
                 lay_away['Elo_Difference'] = lay_away['Elo_Home'] - lay_away['Elo_Away']
                 
             # Calcular as odds justas, caso ainda não estejam calculadas
-            HFA = 50
+            HFA = 50 * 0.15
             lay_away['dr'] = (lay_away['Elo_Home'] + HFA) - lay_away['Elo_Away']
             lay_away['P_Home'] = 1 / (10 ** (-lay_away['dr'] / 400) + 1)
             lay_away['P_Away'] = 1 - lay_away['P_Home']
