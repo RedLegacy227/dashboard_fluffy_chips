@@ -101,10 +101,10 @@ with tab3:
         over_05_ht_flt = data[
             (data["Perc_Over_05_HT_Home"] + data["Perc_Over_05_HT_Away"] > 75) &
             (data["Perc_Over_25_FT_Home"] + data["Perc_Over_25_FT_Away"] > 50) &
-            (data["Media_Golos_Marcados_Home_HT"] > 1) &
-            (data["CV_Media_Golos_Marcados_Home_HT"] < 1) &
-            (data["Media_Golos_Marcados_Away_HT"] > 1) &
-            (data["CV_Media_Golos_Marcados_Away_HT"] < 1) &
+            #(data["Media_Golos_Marcados_Home_HT"] > 1) &
+            #(data["CV_Media_Golos_Marcados_Home_HT"] < 1) &
+            #(data["Media_Golos_Marcados_Away_HT"] > 1) &
+            #(data["CV_Media_Golos_Marcados_Away_HT"] < 1) &
             (data["Media_Golos_Sofridos_Home_HT"] > 1) &
             (data["CV_Media_Golos_Sofridos_Home_HT"] < 1) &
             (data["Media_Golos_Sofridos_Away_HT"] > 1) &
