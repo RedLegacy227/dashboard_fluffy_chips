@@ -43,7 +43,7 @@ except Exception as e:
     data = None
 
 # Criação das abas
-tab1, tab2, tab3, tab4, tab5 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 1,5 FT', 'Back Home', 'Back Away'])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 1,5 FT', 'Lay Home', 'Lay Away'])
 
 with tab1:
     st.subheader('Todays Games for Lay 0 x 1')
