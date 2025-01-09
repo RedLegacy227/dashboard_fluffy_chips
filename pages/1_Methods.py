@@ -98,18 +98,25 @@ with tab3:
     st.markdown('If the Odd is less than 1.54, you must wait for it to reach minimum 1.54')
     if data is not None:
         # Aplicar os filtros
+        # Conditions
+        home_over_05_ht = data["Perc_Over_05_HT_Home"]
+        away_over_05_ht = data["Perc_Over_05_HT_Away"]
+        avg_over_05_ht = (home_over_05_ht + away_over_05_ht) / 2 > 75
+        
+        home_over_25_ft = data["Perc_Over_25_FT_Home"]
+        away_over_25_ft = data["Perc_Over_25_FT_Away"]
+        avg_over_25_ft = (home_over_25_ft + away_over_25_ft) / 2 > 50
+        
+        home_ht_goals = (data["Media_Golos_Marcados_Home_HT"] > 1) & (data["CV_Media_Golos_Marcados_Home_HT"] < 1)
+        away_ht_goals = (data["Media_Golos_Marcados_Away_HT"] > 1) & (data["CV_Media_Golos_Marcados_Away_HT"] < 1)
+        
+        # Filter
         over_05_ht_flt = data[
-            (data["Perc_Over_05_HT_Home"] + data["Perc_Over_05_HT_Away"] > 75) &
-            (data["Perc_Over_25_FT_Home"] + data["Perc_Over_25_FT_Away"] > 50) &
-            #(data["Media_Golos_Marcados_Home_HT"] > 1) &
-            #(data["CV_Media_Golos_Marcados_Home_HT"] < 1) &
-            #(data["Media_Golos_Marcados_Away_HT"] > 1) &
-            #(data["CV_Media_Golos_Marcados_Away_HT"] < 1) &
-            (data["Media_Golos_Sofridos_Home_HT"] > 1) &
-            (data["CV_Media_Golos_Sofridos_Home_HT"] < 1) &
-            (data["Media_Golos_Sofridos_Away_HT"] > 1) &
-            (data["CV_Media_Golos_Sofridos_Away_HT"] < 1)
-        ]
+            avg_over_05_ht &
+            avg_over_25_ft &
+            home_ht_goals &
+            away_ht_goals
+            ]
         over_05_ht_flt = over_05_ht_flt.sort_values(by='Time', ascending=True)
 
         # Exibir os dados filtrados
@@ -126,10 +133,8 @@ with tab4:
     if data is not None:
         # Aplicar os filtros
         over_15_ft_flt = data[
-            (data["Perc_Over_15_FT_Home"] > 57) &
-            (data["Perc_Over_15_FT_Away"] > 57) &
-            (data["Perc_of_Games_BTTS_Yes_Home"] > 57) &
-            (data["Perc_of_Games_BTTS_Yes_Away"] > 57) &
+            ((data["Perc_Over_15_FT_Home"] + data["Perc_Over_15_FT_Away"]) / 2 > 60) &
+            ((data["Perc_of_Games_BTTS_Yes_Home"] + data["Perc_of_Games_BTTS_Yes_Away"]) / 2 > 60) &
             (data["Media_Golos_Marcados_Home"] > 1) &
             (data["CV_Media_Golos_Marcados_Home"] < 1) &
             (data["Media_Golos_Marcados_Away"] > 1) &
