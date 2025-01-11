@@ -100,8 +100,8 @@ with tab3:
     st.markdown('If the Odd is less than 1.54, you must wait for it to reach minimum 1.54')
     if data is not None:
         over_05_ht_flt = data[
-            (data["Perc_Over_15_HT_Home"] >= 75) & 
-            (data["Perc_Over_15_HT_Away"] >= 75) &
+            (data["Perc_Over_05_HT_Home"] >= 75) & 
+            (data["Perc_Over_05_HT_Away"] >= 75) &
             (data["Media_CG_02_Marcados_Home"] >= 1) &
             (data["Media_CG_02_Marcados_Away"] >= 1) &
             (data["CV_Media_CG_02_Marcados_Home"] <= 0.5)
