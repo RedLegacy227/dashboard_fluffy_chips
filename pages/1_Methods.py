@@ -43,7 +43,7 @@ except Exception as e:
     data = None
 
 # Criação das abas
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away'])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT'])
 
 with tab1:
     st.subheader('Todays Games for Lay 0 x 1')
@@ -240,5 +240,71 @@ with tab6:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
             st.error(f"Erro ao processar os dados para Back Away: {e}")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+        
+with tab7:
+    st.subheader('Todays Games for Under 1,5 FT')
+    st.markdown('Croatia Method 1')
+    if data is not None:
+        # Aplicar os filtros
+        under_15_croatia_01_ft_flt = data[
+            (data["League"] == 'CROATIA - HNL') &
+            (data["Points"] == 'Points_Home') &
+            (data["RPS_OVUnd"] == 'Bigger_Away') &
+            (data["Poisson_2_GS_Home"] > 0.1660) &
+            (data["Poisson_2_GS_Home"] < 0.2610) &
+            (data["Media_CG_02_Marcados_Away"] > 0.5550) &
+            (data["Media_CG_02_Marcados_Away"] < 0.8390)
+        ]
+        under_15_croatia_01_ft_flt = under_15_croatia_01_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not under_15_croatia_01_ft_flt.empty:
+            st.dataframe(under_15_croatia_01_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('Croatia Method 2')
+    if data is not None:
+        # Aplicar os filtros
+        under_15_croatia_02_ft_flt = data[
+            (data["League"] == 'CROATIA - HNL') &
+            (data["Points"] == 'Points_Home') &
+            (data["RPS_OVUnd"] == 'Bigger_Away') &
+            (data["Poisson_2_GS_Home"] > 0.1660) &
+            (data["Poisson_2_GS_Home"] < 0.2610) &
+            (data["Media_CG_02_Sofridos_Home"] > 0.7080) &
+            (data["Media_CG_02_Sofridos_Home"] < 0.9270)
+        ]
+        under_15_croatia_02_ft_flt = under_15_croatia_02_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not under_15_croatia_02_ft_flt.empty:
+            st.dataframe(under_15_croatia_02_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('Croatia Method 3')
+    if data is not None:
+        # Aplicar os filtros
+        under_15_croatia_03_ft_flt = data[
+            (data["League"] == 'CROATIA - HNL') &
+            (data["Points"] == 'Points_Home') &
+            (data["RPS_OVUnd"] == 'Bigger_Away') &
+            (data["Probabilidade_Goals_Scored_Home"] > 0.9020) &
+            (data["Probabilidade_Goals_Scored_Home"] < 1.5720) &
+            (data["Probabilidade_Goals_Taken_Home"] > 0.9370) &
+            (data["Probabilidade_Goals_Taken_Home"] < 1.3880)
+        ]
+        under_15_croatia_03_ft_flt = under_15_croatia_03_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not under_15_croatia_03_ft_flt.empty:
+            st.dataframe(under_15_croatia_03_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
