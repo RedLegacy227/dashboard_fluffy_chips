@@ -122,8 +122,8 @@ with tab4:
     if data is not None:
         # Aplicar os filtros
         over_15_ft_flt = data[
-            ((data["Perc_Over_15_FT_Home"] + data["Perc_Over_15_FT_Away"]) / 2 > 60) &
-            ((data["Perc_of_Games_BTTS_Yes_Home"] + data["Perc_of_Games_BTTS_Yes_Away"]) / 2 > 60) &
+            ((data["Perc_Over_15_FT_Home"] + data["Perc_Over_15_FT_Away"]) / 2 > 65) &
+            ((data["Perc_of_Games_BTTS_Yes_Home"] + data["Perc_of_Games_BTTS_Yes_Away"]) / 2 > 65) &
             (data["Media_Golos_Marcados_Home"] > 1) &
             (data["CV_Media_Golos_Marcados_Home"] < 1) &
             (data["Media_Golos_Marcados_Away"] > 1) &
