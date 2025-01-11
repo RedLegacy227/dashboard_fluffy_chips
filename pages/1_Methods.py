@@ -51,8 +51,8 @@ with tab1:
         # Aplicar os filtros
         lay_0_x_1_flt = data[
             (data["FT_Odd_H"] <= 3) &
-            (data["Perc_Scored_at_least_1_Goal_Home"] >= 80) &
-            (data["Perc_Took_at_least_1_Goal_Away"] >= 70) &
+            (data["Perc_Scored_at_least_1_Goal_Home"] >= 70) &
+            (data["Perc_Took_at_least_1_Goal_Away"] >= 65) &
             (data["Media_CG_01_Marcados_Home"] >= 3) &
             (data["Media_CG_02_Marcados_Home"] >= 0.8) &
             (data["CV_Media_CG_02_Marcados_Home"] <= 0.8) &
