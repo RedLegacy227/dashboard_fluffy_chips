@@ -104,7 +104,7 @@ with tab3:
             (data["Perc_Over_05_HT_Away"] >= 75) &
             (data["Media_CG_02_Marcados_Home"] >= 1) &
             (data["Media_CG_02_Marcados_Away"] >= 1) &
-            (data["CV_Media_CG_02_Marcados_Home"] <= 0.5)
+            (data["CV_Media_CG_02_Marcados_Home"] <= 0.7)
         ]
         over_05_ht_flt = over_05_ht_flt.sort_values(by='Time', ascending=True)
 
