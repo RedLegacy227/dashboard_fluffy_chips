@@ -51,8 +51,9 @@ with tab1:
         # Aplicar os filtros
         lay_0_x_1_flt = data[
             (data["FT_Odd_H"] <= 3) &
-            (data["Perc_Over_15_FT_Away"] >= 80) &
-            (data["Media_CG_01_Marcados_Home"] <= 4) &
+            (data["Perc_Scored_at_least_1_Goal_Home"] >= 85) &
+            (data["Perc_Took_at_least_1_Goal_Away"] >= 75) &
+            (data["Media_CG_01_Marcados_Home"] >= 3) &
             (data["Media_CG_02_Marcados_Home"] >= 0.8) &
             (data["CV_Media_CG_02_Marcados_Home"] <= 0.8) &
             (data["FT_Odd_Ov25"] <= 2.20) &
@@ -75,8 +76,9 @@ with tab2:
         # Aplicar os filtros
         lay_1_x_0_flt = data[
             (data["FT_Odd_A"] <= 3) &
-            (data["Perc_Over_15_FT_Home"] >= 80) &
-            (data["Media_CG_01_Marcados_Away"] <= 4) &
+            (data["Perc_Scored_at_least_1_Goal_Away"] >= 85) &
+            (data["Perc_Took_at_least_1_Goal_Home"] >= 75) &
+            (data["Media_CG_01_Marcados_Away"] >= 3) &
             (data["Media_CG_02_Marcados_Away"] >= 0.8) &
             (data["CV_Media_CG_02_Marcados_Away"] <= 0.8) &
             (data["FT_Odd_Ov25"] <= 2.20) &
@@ -97,26 +99,13 @@ with tab3:
     st.subheader('Todays Games for Over 0,5 HT')
     st.markdown('If the Odd is less than 1.54, you must wait for it to reach minimum 1.54')
     if data is not None:
-        # Aplicar os filtros
-        # Conditions
-        home_over_05_ht = data["Perc_Over_05_HT_Home"]
-        away_over_05_ht = data["Perc_Over_05_HT_Away"]
-        avg_over_05_ht = (home_over_05_ht + away_over_05_ht) / 2 > 75
-        
-        home_over_25_ft = data["Perc_Over_25_FT_Home"]
-        away_over_25_ft = data["Perc_Over_25_FT_Away"]
-        avg_over_25_ft = (home_over_25_ft + away_over_25_ft) / 2 > 50
-        
-        home_ht_goals = (data["Media_Golos_Marcados_Home_HT"] > 1) & (data["CV_Media_Golos_Marcados_Home_HT"] < 1)
-        away_ht_goals = (data["Media_Golos_Marcados_Away_HT"] > 1) & (data["CV_Media_Golos_Marcados_Away_HT"] < 1)
-        
-        # Filter
         over_05_ht_flt = data[
-            avg_over_05_ht &
-            avg_over_25_ft &
-            home_ht_goals &
-            away_ht_goals
-            ]
+            (data["Perc_Over_15_HT_Home"] >= 75) & 
+            (data["Perc_Over_15_HT_Away"] >= 75) &
+            (data["Media_CG_02_Marcados_Home"] >= 1) &
+            (data["Media_CG_02_Marcados_Away"] >= 1) &
+            (data["CV_Media_CG_02_Marcados_Home"] <= 0.5)
+        ]
         over_05_ht_flt = over_05_ht_flt.sort_values(by='Time', ascending=True)
 
         # Exibir os dados filtrados
