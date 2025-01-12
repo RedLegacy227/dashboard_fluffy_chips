@@ -53,7 +53,7 @@ with tab1:
             (data["FT_Odd_H"] <= 3) &
             (data["Perc_Scored_at_least_1_Goal_Home"] >= 60) &
             (data["Perc_Over_15_FT_Away"] >= 75) &
-            (data["Media_CG_01_Marcados_Home"] >= 3) &
+            (data["Media_CG_01_Marcados_Home"] >= 3.2) &
             (data["Media_CG_02_Marcados_Home"] >= 0.8) &
             (data["CV_Media_CG_02_Marcados_Home"] <= 0.8) &
             (data["FT_Odd_Ov25"] <= 2.20) &
