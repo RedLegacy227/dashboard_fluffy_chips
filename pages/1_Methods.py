@@ -69,6 +69,26 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+    st.subheader('Todays Games for Lay 0X1 - Fluffy Method ')
+    st.markdown('Croatia - HNL')
+    if data is not None:
+        # Aplicar os filtros
+        lay_0x1_hr_flt = data[
+            (data["League"] == 'CROATIA - HNL') &
+            (data["Probability_Away"] == 'No') &
+            (data["Prob_H"] > -0.5501) &
+            (data["Prob_A"] < 0.0,25)
+            (data['Poisson_1_GM_Home'] < 0,35)
+        ]
+        lay_0x1_hr_flt = lay_0x1_hr_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_0x1_hr_flt.empty:
+            st.dataframe(lay_0x1_hr_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
 
 with tab2:
     st.subheader('Todays Games for Lay 1 x 0')
