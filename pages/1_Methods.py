@@ -43,7 +43,7 @@ except Exception as e:
     data = None
 
 # Criação das abas
-tab1, tab2, tab3, tab4, tab5, tab6, tab7 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT'])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home'])
 
 with tab1:
     st.subheader('Todays Games for Lay 0 x 1')
@@ -293,6 +293,70 @@ with tab7:
         # Exibir os dados filtrados
         if not under_15_croatia_03_ft_flt.empty:
             st.dataframe(under_15_croatia_03_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+        
+with tab8:
+    st.subheader('Todays Games for Back_Home')
+    st.markdown('Portugal - Liga Portugal 1 - Method 1')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_Port_01_01_ft_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["Home_Score_Take"] == 'No') &
+            (data["Away_Score_Take"] == 'Yes') &
+            (data["Media_Saldo_Golos_Away"] > -0.0900) &
+            (data["Media_Saldo_Golos_Away"] < 0.0250)
+        ]
+        back_home_Port_01_01_ft_flt = back_home_Port_01_01_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not back_home_Port_01_01_ft_flt.empty:
+            st.dataframe(back_home_Port_01_01_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('Portugal - Liga Portugal 1 - Method 2')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_Port_01_02_ft_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["Home_Score_Take"] == 'No') &
+            (data["Away_Score_Take"] == 'Yes') &
+            (data["Poisson_2_GS_Away"] > 0.2520) &
+            (data["Poisson_2_GS_Away"] < 0.2710) &
+            (data["Media_Ptos_Away"] > 0.9780) &
+            (data["Media_Ptos_Away"] < 1.6950)
+        ]
+        back_home_Port_01_02_ft_flt = back_home_Port_01_02_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not back_home_Port_01_02_ft_flt.empty:
+            st.dataframe(back_home_Port_01_02_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('Portugal - Liga Portugal 1 - Method 3')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_Port_01_03_ft_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["Home_Score_Take"] == 'No') &
+            (data["Away_Score_Take"] == 'Yes') &
+            (data["Media_Ptos_Away"] > 0.9780) &
+            (data["Media_Ptos_Away"] < 1.6950) &
+            (data["Media_Golos_Sofridos_Away"] > 1.5120) &
+            (data["Media_Golos_Sofridos_Away"] < 4.0670)
+        ]
+        back_home_Port_01_03_ft_flt = back_home_Port_01_03_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not back_home_Port_01_03_ft_flt.empty:
+            st.dataframe(back_home_Port_01_03_ft_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
