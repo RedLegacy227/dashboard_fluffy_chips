@@ -77,8 +77,8 @@ with tab1:
             (data["League"] == 'CROATIA - HNL') &
             (data["Probability_Away"] == 'No') &
             (data["Prob_H"] > -0.5501) &
-            (data["Prob_A"] < 0.0,25)
-            (data['Poisson_1_GM_Home'] < 0,35)
+            (data["Prob_A"] < 0.25) &
+            (data['Poisson_1_GM_Home'] < 0.35)
         ]
         lay_0x1_hr_flt = lay_0x1_hr_flt.sort_values(by='Time', ascending=True)
 
