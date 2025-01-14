@@ -77,9 +77,9 @@ with tab1:
         lay_0x1_hr_flt = data[
             (data["League"] == 'CROATIA - HNL') &
             (data["Probability_Away"] == 'Media_Bigger') &
-            (data["Prob_H"] > 0.5501) &
-            (data["Prob_A"] < 0.25) &
-            (data['Poisson_1_GM_Home'] < 0.35)
+            (data["Prob_H"] >= 0.5501) &
+            (data["Prob_A"] <= 0.25) &
+            (data['Poisson_1_GM_Home'] <= 0.35)
         ]
         lay_0x1_hr_flt = lay_0x1_hr_flt.sort_values(by='Time', ascending=True)
 
@@ -97,9 +97,9 @@ with tab1:
         lay_0x1_pt1_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Probability_Away"] == 'Media_Bigger') &
-            (data["Prob_H"] > 0.4501) &
-            (data["Prob_A"] < 0.30) &
-            (data['Poisson_3_GM_Away'] < 0.10)
+            (data["Prob_H"] >= 0.4501) &
+            (data["Prob_A"] <= 0.30) &
+            (data['Poisson_3_GM_Away'] <= 0.10)
         ]
         lay_0x1_pt1_flt = lay_0x1_pt1_flt.sort_values(by='Time', ascending=True)
 
@@ -117,9 +117,9 @@ with tab1:
         lay_0x1_ger1_flt = data[
             (data["League"] == 'GERMANY - BUNDESLIGA') &
             (data["Probability_Away"] == 'Media_Bigger') &
-            (data["Poisson_2_GS_Away"] > 0.1501) &
-            (data["Prob_H"] > 0.4501) &
-            (data["Prob_H"] < 0.95)
+            (data["Poisson_2_GS_Away"] >= 0.1501) &
+            (data["Prob_H"] >= 0.4501) &
+            (data["Prob_H"] <= 0.95)
         ]
         lay_0x1_ger1_flt = lay_0x1_ger1_flt.sort_values(by='Time', ascending=True)
 
@@ -137,8 +137,8 @@ with tab1:
         lay_0x1_eng1_flt = data[
             (data["League"] == 'ENGLAND - PREMIER LEAGUE') &
             (data["Probability_Home"] == 'p_Bigger') &
-            (data["Poisson_1_GM_Home"] > 0.1501) &
-            (data["Prob_D"] < 0.30)
+            (data["Poisson_1_GM_Home"] >= 0.1501) &
+            (data["Prob_D"] <= 0.30)
         ]
         lay_0x1_eng1_flt = lay_0x1_eng1_flt.sort_values(by='Time', ascending=True)
 
