@@ -149,6 +149,25 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('ITALY - SERIE A')
+    st.markdown('Odd Justa - 23')
+    if data is not None:
+        # Aplicar os filtros
+        lay_0x1_ita1_flt = data[
+            (data["League"] == 'ITALY - SERIE A') &
+            (data["Probability_Home"] == 'p_Bigger') &
+            (data["Poisson_3_GS_Away"] >= 0.1001) &
+            (data["Prob_H"] >= 0.3501)
+        ]
+        lay_0x1_ita1_flt = lay_0x1_ita1_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_0x1_ita1_flt.empty:
+            st.dataframe(lay_0x1_ita1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
 
 with tab2:
     st.subheader('Todays Games for Lay 1 x 0')
