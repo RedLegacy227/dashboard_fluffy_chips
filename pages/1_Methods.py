@@ -155,7 +155,7 @@ with tab1:
         # Aplicar os filtros
         lay_0x1_ita1_flt = data[
             (data["League"] == 'ITALY - SERIE A') &
-            (data["Probability_Home"] == 'p_Bigger') &
+            (data["Probability_Away"] == 'Media_Bigger') &
             (data["Poisson_3_GS_Away"] >= 0.1001) &
             (data["Prob_H"] >= 0.3501)
         ]
