@@ -110,6 +110,26 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('GERMANY - BUNDESLIGA')
+    st.markdown('Odd Justa - 50')
+    if data is not None:
+        # Aplicar os filtros
+        lay_0x1_ger1_flt = data[
+            (data["League"] == 'GERMANY - BUNDESLIGA') &
+            (data["Probability_Away"] == 'Media_Bigger') &
+            (data["Poisson_2_GS_Away"] > 0.1501) &
+            (data["Prob_H"] > 0.4501) &
+            (data["Prob_H"] < 0.95)
+        ]
+        lay_0x1_ger1_flt = lay_0x1_ger1_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_0x1_ger1_flt.empty:
+            st.dataframe(lay_0x1_ger1_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
 
 with tab2:
     st.subheader('Todays Games for Lay 1 x 0')
