@@ -64,7 +64,7 @@ with tab1:
 
         # Exibir os dados filtrados
         if not lay_0_x_1_flt.empty:
-            st.dataframe(lay_0_x_1_flt)
+            st.dataframe(lay_0_x_1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -85,7 +85,7 @@ with tab1:
 
         # Exibir os dados filtrados
         if not lay_0x1_hr_flt.empty:
-            st.dataframe(lay_0x1_hr_flt)
+            st.dataframe(lay_0x1_hr_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -105,7 +105,7 @@ with tab1:
 
         # Exibir os dados filtrados
         if not lay_0x1_pt1_flt.empty:
-            st.dataframe(lay_0x1_pt1_flt)
+            st.dataframe(lay_0x1_pt1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -125,7 +125,7 @@ with tab1:
 
         # Exibir os dados filtrados
         if not lay_0x1_ger1_flt.empty:
-            st.dataframe(lay_0x1_ger1_flt)
+            st.dataframe(lay_0x1_ger1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -150,7 +150,7 @@ with tab2:
 
         # Exibir os dados filtrados
         if not lay_1_x_0_flt.empty:
-            st.dataframe(lay_1_x_0_flt)
+            st.dataframe(lay_1_x_0_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
