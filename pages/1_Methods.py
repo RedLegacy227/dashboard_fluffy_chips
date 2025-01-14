@@ -71,7 +71,7 @@ with tab1:
         st.info("Dados indisponíveis para a data selecionada.")
     st.subheader('Todays Games for Lay 0X1 - Fluffy Method ')
     st.markdown('Croatia - HNL')
-    st.markdown('Odd Justa - 110')
+    st.markdown('Odd Justa - 50')
     if data is not None:
         # Aplicar os filtros
         lay_0x1_hr_flt = data[
@@ -91,7 +91,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
     st.markdown('PORTUGAL - LIGA PORTUGAL')
-    st.markdown('Odd Justa - 36')
+    st.markdown('Odd Justa - 30')
     if data is not None:
         # Aplicar os filtros
         lay_0x1_pt1_flt = data[
@@ -111,7 +111,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
     st.markdown('GERMANY - BUNDESLIGA')
-    st.markdown('Odd Justa - 50')
+    st.markdown('Odd Justa - 48')
     if data is not None:
         # Aplicar os filtros
         lay_0x1_ger1_flt = data[
@@ -126,6 +126,25 @@ with tab1:
         # Exibir os dados filtrados
         if not lay_0x1_ger1_flt.empty:
             st.dataframe(lay_0x1_ger1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('ENGLAND - PREMIER LEAGUE')
+    st.markdown('Odd Justa - 26')
+    if data is not None:
+        # Aplicar os filtros
+        lay_0x1_eng1_flt = data[
+            (data["League"] == 'ENGLAND - PREMIER LEAGUE') &
+            (data["Probability_Home"] == 'p_Bigger') &
+            (data["Poisson_1_GM_Home"] > 0.1501) &
+            (data["Prob_D"] < 0.30)
+        ]
+        lay_0x1_eng1_flt = lay_0x1_eng1_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_0x1_eng1_flt.empty:
+            st.dataframe(lay_0x1_eng1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
