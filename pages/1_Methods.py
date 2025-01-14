@@ -75,8 +75,8 @@ with tab1:
         # Aplicar os filtros
         lay_0x1_hr_flt = data[
             (data["League"] == 'CROATIA - HNL') &
-            (data["Probability_Away"] == 'No') &
-            (data["Prob_H"] > -0.5501) &
+            (data["Probability_Away"] == 'Media_Bigger') &
+            (data["Prob_H"] > 0.5501) &
             (data["Prob_A"] < 0.25) &
             (data['Poisson_1_GM_Home'] < 0.35)
         ]
@@ -85,6 +85,25 @@ with tab1:
         # Exibir os dados filtrados
         if not lay_0x1_hr_flt.empty:
             st.dataframe(lay_0x1_hr_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('PORTUGAL - LIGA PORTUGAL')
+    if data is not None:
+        # Aplicar os filtros
+        lay_0x1_pt1_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["Probability_Away"] == 'Media_Bigger') &
+            (data["Prob_H"] > 0.4501) &
+            (data["Prob_A"] < 0.30) &
+            (data['Poisson_3_GM_Away'] < 0.10)
+        ]
+        lay_0x1_pt1_flt = lay_0x1_pt1_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_0x1_pt1_flt.empty:
+            st.dataframe(lay_0x1_pt1_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
