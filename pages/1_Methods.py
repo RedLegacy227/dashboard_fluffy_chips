@@ -71,6 +71,7 @@ with tab1:
         st.info("Dados indisponíveis para a data selecionada.")
     st.subheader('Todays Games for Lay 0X1 - Fluffy Method ')
     st.markdown('Croatia - HNL')
+    st.markdown('Odd Justa - 110')
     if data is not None:
         # Aplicar os filtros
         lay_0x1_hr_flt = data[
@@ -90,6 +91,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
     st.markdown('PORTUGAL - LIGA PORTUGAL')
+    st.markdown('Odd Justa - 36')
     if data is not None:
         # Aplicar os filtros
         lay_0x1_pt1_flt = data[
