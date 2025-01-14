@@ -131,24 +131,52 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
     st.markdown('ENGLAND - PREMIER LEAGUE')
-    st.markdown('Odd Justa - 26')
+
+    # Criar a coluna 'Odd_Justa_Lay_0x1' com base nas condições fornecidas
+    def calcular_odd_justa(row):
+        cv_match_odds = row['CV_Match_Odds']
+        ft_odd_h = row['FT_Odd_H']
+        
+        if cv_match_odds < 0.45 and 1.7001 <= ft_odd_h <= 1.9000:
+            return '<22'
+        elif cv_match_odds < 0.45 and ft_odd_h > 1.9001:
+            return '<32'
+        elif 0.4501 <= cv_match_odds <= 0.6500 and ft_odd_h < 1.50:
+            return '<26'
+        elif 0.4501 <= cv_match_odds <= 0.6500 and 1.5001 <= ft_odd_h <= 1.7000:
+            return '<23'
+        elif 0.4501 <= cv_match_odds <= 0.6500 and 1.7001 <= ft_odd_h <= 1.9000:
+            return '<26'
+        elif 0.4501 <= cv_match_odds <= 0.6500 and ft_odd_h > 1.9001:
+            return '<31'
+        elif cv_match_odds > 0.6501 and ft_odd_h < 1.50:
+            return '<30'
+        else:
+            return 'Sem valores'
+    
     if data is not None:
         # Aplicar os filtros
         lay_0x1_eng1_flt = data[
             (data["League"] == 'ENGLAND - PREMIER LEAGUE') &
             (data["Probability_Home"] == 'p_Bigger') &
-            (data["Poisson_1_GM_Home"] >= 0.1501) &
+            (data["Poisson_1_GM_Home"] <= 0.40) &
             (data["Prob_D"] <= 0.30)
         ]
         lay_0x1_eng1_flt = lay_0x1_eng1_flt.sort_values(by='Time', ascending=True)
-
+        
+        # Aplicar a função para calcular 'Odd_Justa_Lay_0x1'
+        lay_0x1_eng1_flt['Odd_Justa_Lay_0x1'] = lay_0x1_eng1_flt.apply(calcular_odd_justa, axis=1)
+    
         # Exibir os dados filtrados
         if not lay_0x1_eng1_flt.empty:
-            st.dataframe(lay_0x1_eng1_flt[['Time','League','Home','Away','FT_Odd_H','FT_Odd_D','FT_Odd_A','CV_Match_Odds','CV_Match_Type','Perc_Over_15_FT_Home','Perc_Over_15_FT_Away']])
+            st.dataframe(lay_0x1_eng1_flt[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 
+                                        'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds', 
+                                        'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+
     st.markdown('ITALY - SERIE A')
     st.markdown('Odd Justa - 23')
     if data is not None:
