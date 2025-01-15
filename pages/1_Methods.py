@@ -180,10 +180,10 @@ with tab1:
         # DataFrame de referências
         df_referencias = pd.DataFrame({
             "Intervalo CV": ["<0.4500", "0.4501 - 0.6500", ">0.6501"],
-            "<1.5000": ["0", "<26", "<30"],
-            "1.5001 - 1.7000": ["0", "<23", "0"],
-            "1.7001 - 1.9000": ["<22", "<27", "0"],
-            ">1.9001": ["<32", "<31", "0"]
+            "<1.3400": ["0", "0", "<33"],
+            "1.3401 - 1.6000": ["0", "<27", "<25"],
+            "1.6001 - 1.9800": ["<31", "<20", "0"],
+            ">1.9801": ["<27", "<26", "0"]
         })
         
         # Função para determinar a referência com base nos intervalos
@@ -199,14 +199,14 @@ with tab1:
                 return "Sem valores"
         
             # Determinar a coluna (intervalo de FT_Odd_H)
-            if ft_odd_h < 1.5000:
-                coluna = "<1.5000"
-            elif 1.5001 <= ft_odd_h <= 1.7000:
-                coluna = "1.5001 - 1.7000"
-            elif 1.7001 <= ft_odd_h <= 1.9000:
-                coluna = "1.7001 - 1.9000"
-            elif ft_odd_h > 1.9001:
-                coluna = ">1.9001"
+            if ft_odd_h < 1.3400:
+                coluna = "<1.3400"
+            elif 1.3401 <= ft_odd_h <= 1.6000:
+                coluna = "1.3401 - 1.6000"
+            elif 1.6001 <= ft_odd_h <= 1.9800:
+                coluna = "1.6001 - 1.9800"
+            elif ft_odd_h > 1.9801:
+                coluna = ">1.9801"
             else:
                 return "Sem valores"
         
