@@ -257,7 +257,6 @@ with tab1:
     
     st.markdown('ENGLAND - PREMIER LEAGUE')
     if data is not None:
-        st.markdown('ENGLAND - PREMIER LEAGUE')
         # DataFrame de referências
         df_referencias = pd.DataFrame({
             "Intervalo CV": ["<0.4500", "0.4501 - 0.6500", ">0.6501"],
