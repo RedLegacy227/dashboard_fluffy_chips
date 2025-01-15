@@ -70,7 +70,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
     st.subheader('Todays Games for Lay 0X1 - Fluffy Method ')
-    st.markdown('Croatia - HNL')
+    st.markdown('Croatia - HNL - 97,58%')
     
     if data is not None:
         # DataFrame de referências
@@ -129,7 +129,7 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-    st.markdown('PORTUGAL - LIGA PORTUGAL')
+    st.markdown('PORTUGAL - LIGA PORTUGAL - 97,07%')
     
     if data is not None:
         # DataFrame de referências
@@ -191,7 +191,7 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-    st.markdown('GERMANY - BUNDESLIGA')
+    st.markdown('GERMANY - BUNDESLIGA - 98,11%')
     
     if data is not None:
         # DataFrame de referências
@@ -255,7 +255,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")    
     
-    st.markdown('ENGLAND - PREMIER LEAGUE')
+    st.markdown('ENGLAND - PREMIER LEAGUE - 96,43%')
     if data is not None:
         # DataFrame de referências
         df_referencias = pd.DataFrame({
@@ -317,7 +317,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-    st.markdown('ITALY - SERIE A')
+    st.markdown('ITALY - SERIE A - 96,15%')
     
     if data is not None:
         df_referencias = pd.DataFrame({
