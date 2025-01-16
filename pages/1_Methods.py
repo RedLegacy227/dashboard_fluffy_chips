@@ -362,7 +362,7 @@ with tab1:
         # Aplicar os filtros
         lay_0x1_spa1_flt = data[
             (data["League"] == 'SPAIN - LALIGA') &
-            (data["Probability_Home"] == 'Media_Bigger') &
+            (data["Probability_Home"] == 'p_Bigger') &
             (data["Poisson_2_GM_Away"] <=0.25) &
             (data["Poisson_0_GS_Away"] <=0.35) &
             (data["Prob_H"] >= 0.4001)
