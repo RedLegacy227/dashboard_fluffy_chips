@@ -325,6 +325,63 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('SPAIN - LALIGA - 95,44%')
+    
+    if data is not None:
+        df_referencias = pd.DataFrame({
+            "Intervalo CV": ["<0.3500", "0.3501 - 0.6000", ">0.6001"],
+            "<1.4300": ["0", "0", "<36"],
+            "1.4301 - 1.7000": ["0", "<33", "<13"],
+            "1.7001 - 1.9500": ["<43", "<19", "0"],
+            ">1.9501": ["<17", "0", "0"]
+        })
+        # Função para determinar a referência com base nos intervalos
+        def obter_referencia(cv_match_odds, ft_odd_h):
+            # Determinar a linha (intervalo de CV_Match_Odds)
+            if cv_match_odds < 0.3500:
+                linha = 0
+            elif 0.3501 <= cv_match_odds <= 0.6000:
+                linha = 1
+            elif cv_match_odds > 0.6001:
+                linha = 2
+            else:
+                return "Sem valores"
+            # Determinar a coluna (intervalo de FT_Odd_H)
+            if ft_odd_h < 1.4300:
+                coluna = "<1.4300"
+            elif 1.4301 <= ft_odd_h <= 1.7000:
+                coluna = "1.4301 - 1.7000"
+            elif 1.5001 <= ft_odd_h <= 1.7500:
+                coluna = "1.7001 - 1.9500"
+            elif ft_odd_h > 1.9501:
+                coluna = ">1.9501"
+            else:
+                return "Sem valores"
+            # Buscar e retornar o valor correspondente no DataFrame de referências
+            return df_referencias.at[linha, coluna]
+        # Aplicar os filtros
+        lay_0x1_spa1_flt = data[
+            (data["League"] == 'SPAIN - LALIGA') &
+            (data["Probability_Home"] == 'Media_Bigger') &
+            (data["Poisson_2_GM_Away"] <=0.25) &
+            (data["Poisson_0_GS_Away"] <=0.35) &
+            (data["Prob_H"] >= 0.4001)
+        ]
+        lay_0x1_spa1_flt = lay_0x1_spa1_flt.sort_values(by='Time', ascending=True)
+        # Aplicar a função para calcular 'Odd_Justa_Lay_0x1'
+        lay_0x1_spa1_flt['Odd_Justa_Lay_0x1'] = lay_0x1_spa1_flt.apply(
+            lambda row: obter_referencia(row['CV_Match_Odds'], row['FT_Odd_H']),
+            axis=1
+        )
+        # Exibir os dados filtrados
+        if not lay_0x1_spa1_flt.empty:
+            st.dataframe(lay_0x1_spa1_flt[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
+                                            'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
+                                            'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
 
 with tab2:
     st.subheader('Todays Games for Lay 1X0 - Fluffy Method ')
