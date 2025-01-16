@@ -351,7 +351,7 @@ with tab1:
                 coluna = "<1.4300"
             elif 1.4301 <= ft_odd_h <= 1.7000:
                 coluna = "1.4301 - 1.7000"
-            elif 1.5001 <= ft_odd_h <= 1.7500:
+            elif 1.7001 <= ft_odd_h <= 1.9500:
                 coluna = "1.7001 - 1.9500"
             elif ft_odd_h > 1.9501:
                 coluna = ">1.9501"
