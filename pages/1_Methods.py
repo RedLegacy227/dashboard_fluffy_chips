@@ -338,7 +338,7 @@ with tab2:
             ">1.7901": ["< 43", "< 14.5", "< 6"]
         })
         # Função para determinar a referência com base nos intervalos
-        def obter_referencia(cv_match_odds, ft_odd_h):
+        def obter_referencia(cv_match_odds, ft_odd_a):
             # Determinar a linha (intervalo de CV_Match_Odds)
             if cv_match_odds < 0.2000:
                 linha = 0
@@ -348,12 +348,12 @@ with tab2:
                 linha = 2
             else:
                 return "Sem valores"
-            # Determinar a coluna (intervalo de FT_Odd_H)
-            if ft_odd_h < 1.7900:
+            # Determinar a coluna (intervalo de FT_Odd_A)
+            if ft_odd_a < 1.7900:
                 coluna = "<1.7900"
-            elif 1.7901 <= ft_odd_h <= 2.7000:
+            elif 1.7901 <= ft_odd_a <= 2.7000:
                 coluna = "1.7901 - 2.7000"
-            elif ft_odd_h > 2.7001:
+            elif ft_odd_a > 2.7001:
                 coluna = ">2.7001"
             else:
                 return "Sem valores"
