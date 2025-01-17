@@ -156,6 +156,65 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('PORTUGAL - LIGA PORTUGAL 2 - 95,37%')
+    if data is not None:
+        # DataFrame de referências
+        df_referencias = pd.DataFrame({
+            "Intervalo CV": ["<0.2000", "0.2001 - 0.4000", ">0.4001"],
+            "<1.6500": ["0", "0", "<58"],
+            "1.6501 - 1.9500": ["0", "<31", "<8"],
+            "1.9501 - 2.2000": ["<14", "<16", "0"],
+            ">2.2001": ["<22", "0", "0"]
+        })
+        # Função para determinar a referência com base nos intervalos
+        def obter_referencia(cv_match_odds, ft_odd_h):
+            # Determinar a linha (intervalo de CV_Match_Odds)
+            if cv_match_odds < 0.2000:
+                linha = 0
+            elif 0.2001 <= cv_match_odds <= 0.4000:
+                linha = 1
+            elif cv_match_odds > 0.4001:
+                linha = 2
+            else:
+                return "Sem valores"
+            # Determinar a coluna (intervalo de FT_Odd_H)
+            if ft_odd_h < 1.6500:
+                coluna = "<1.6500"
+            elif 1.6501 <= ft_odd_h <= 1.9500:
+                coluna = "1.6501 - 1.9500"
+            elif 1.3601 <= ft_odd_h <= 1.6500:
+                coluna = "1.9501 - 2.2000"
+            elif ft_odd_h > 2.2001:
+                coluna = ">2.2001"
+            else:
+                return "Sem valores"
+            # Buscar e retornar o valor correspondente no DataFrame de referências
+            return df_referencias.at[linha, coluna]
+        # Aplicar os filtros
+        lay_0x1_pt2_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL 2') &
+            (data["Conceded_Goals"] == 'Bigger_Away') &
+            (data["Prob_H"] >= 0.3501) &
+            (data['Poisson_2_GM_Away'] >= 0.0501) &
+            (data['Poisson_2_GM_Away'] <= 0.25) &
+            (data['Poisson_2_GS_Away'] >= 0.2001)
+            
+        ]
+        lay_0x1_pt2_flt = lay_0x1_pt2_flt.sort_values(by='Time', ascending=True)
+        # Aplicar a função para calcular 'Odd_Justa_Lay_0x1'
+        lay_0x1_pt2_flt['Odd_Justa_Lay_0x1'] = lay_0x1_pt2_flt.apply(
+            lambda row: obter_referencia(row['CV_Match_Odds'], row['FT_Odd_H']),
+            axis=1
+        )
+        # Exibir os dados filtrados
+        if not lay_0x1_pt2_flt.empty:
+            st.dataframe(lay_0x1_pt2_flt[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
+                                            'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
+                                            'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
     st.markdown('GERMANY - BUNDESLIGA - 98,11%')
     if data is not None:
         # DataFrame de referências
