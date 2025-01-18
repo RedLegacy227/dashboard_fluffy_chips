@@ -494,7 +494,7 @@ with tab1:
         )
         # Exibir os dados filtrados
         if not lay_0x1_tur1_flt.empty:
-            st.dataframe(lay_0x1_spa1_flt[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
+            st.dataframe(lay_0x1_tur1_flt[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
                                             'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
                                             'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
         else:
