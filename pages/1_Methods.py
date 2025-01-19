@@ -311,7 +311,7 @@ with tab1:
             (data["League"] == 'GERMANY - 2. BUNDESLIGA') &
             (data["Probability_Away"] == 'Media_Bigger') &
             (data["Media_CG_02_Sofridos_Home"] >= 0.2001) &
-            (data["Media_CG_02_Sofridos_Home"] <= 1.000)
+            (data["Media_CG_02_Sofridos_Home"] <= 1.000) &
             (data["Prob_D"] <= 0.3000)
         ]
         lay_0x1_ger2_flt = lay_0x1_ger2_flt.sort_values(by='Time', ascending=True)
