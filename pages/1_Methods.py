@@ -272,7 +272,7 @@ with tab1:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.") 
-        st.markdown('GERMANY - 2. BUNDESLIGA - 97,23%')
+    st.markdown('GERMANY - 2. BUNDESLIGA - 97,23%')
     if data is not None:
         # DataFrame de referências
         df_referencias = pd.DataFrame({
