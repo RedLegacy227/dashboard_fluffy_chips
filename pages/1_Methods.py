@@ -44,6 +44,9 @@ except Exception as e:
 
 # Criação das abas
 tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home'])
+import pandas as pd
+import streamlit as st
+
 def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
     """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
     try:
@@ -57,6 +60,8 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
         # Determinar a linha correta baseada no intervalo de CV_Match_Odds
         linha = None
         for i, intervalo in enumerate(df_referencias.index):
+            intervalo = intervalo.strip()  # Remover espaços extras
+
             if "<=" in intervalo:
                 limite = float(intervalo.replace("<= ", "").strip())
                 if cv_match_odds <= limite:
@@ -78,6 +83,8 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
 
         # Determinar a coluna correta baseada no intervalo de FT_Odd_H
         for coluna in df_referencias.columns:
+            coluna = coluna.strip()  # Remover espaços extras
+
             if "<=" in coluna:
                 limite = float(coluna.replace("<= ", "").strip())
                 if ft_odd_h <= limite:
@@ -95,8 +102,6 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
     except Exception as e:
         st.error(f"Erro ao obter referência: {e}")
         return None
-
-
 
 # Configurações de ligas e seus filtros
 leagues_config = {
