@@ -47,6 +47,62 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0
 
 with tab1:
     st.subheader('Todays Games for Lay 0X1 - Fluffy Method ')
+    st.markdown('EUROPE - CHAMPIONS LEAGUE - 96,27%')
+    if data is not None:
+        # DataFrame de referências
+        df_referencias = pd.DataFrame({
+            "Intervalo CV": ["<0.5000", "0.5001 - 0.8000", ">0.8001"],
+            "<1.2500": ["0", "0", "<1000"],
+            "1.2501 - 1.4500": ["0", "<43", "<51"],
+            "1.4501 - 1.7000": ["<11", "<18", "0"],
+            ">1.7001": ["<13", "0", "0"]
+        })
+        # Função para determinar a referência com base nos intervalos
+        def obter_referencia(cv_match_odds, ft_odd_h):
+            # Determinar a linha (intervalo de CV_Match_Odds)
+            if cv_match_odds < 0.5000:
+                linha = 0
+            elif 0.5001 <= cv_match_odds <= 0.8000:
+                linha = 1
+            elif cv_match_odds > 0.8001:
+                linha = 2
+            else:
+                return "Sem valores"
+            # Determinar a coluna (intervalo de FT_Odd_H)
+            if ft_odd_h < 1.2500:
+                coluna = "<1.2500"
+            elif 1.2501 <= ft_odd_h <= 1.4500:
+                coluna = "1.2501 - 1.4500"
+            elif 1.4501 <= ft_odd_h <= 1.7000:
+                coluna = "1.4501 - 1.7000"
+            elif ft_odd_h > 1.7001:
+                coluna = ">1.7001"
+            else:
+                return "Sem valores"
+            # Buscar e retornar o valor correspondente no DataFrame de referências
+            return df_referencias.at[linha, coluna]
+        # Aplicar os filtros
+        lay_0x1_uefa1_flt = data[
+            (data["League"] == 'EUROPE - CHAMPIONS LEAGUE') &
+            (data["Probability_Away"] == 'Media_Bigger') &
+            (data["Prob_H"] >= 0.4001) &
+            (data["Prob_D"] <= 0.30)
+        ]
+        lay_0x1_uefa1_flt = lay_0x1_uefa1_flt.sort_values(by='Time', ascending=True)
+        # Aplicar a função para calcular 'Odd_Justa_Lay_0x1'
+        lay_0x1_uefa1_flt['Odd_Justa_Lay_0x1'] = lay_0x1_uefa1_flt.apply(
+            lambda row: obter_referencia(row['CV_Match_Odds'], row['FT_Odd_H']),
+            axis=1
+        )
+        # Exibir os dados filtrados
+        if not lay_0x1_uefa1_flt.empty:
+            st.dataframe(lay_0x1_uefa1_flt[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
+                                            'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
+                                            'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
     st.markdown('ARGENTINA - TORNEO BETANO - 93,59%')
     
     if data is not None:
