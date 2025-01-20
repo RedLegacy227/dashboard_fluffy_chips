@@ -44,8 +44,20 @@ except Exception as e:
 
 # Criação das abas
 tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home'])
-import pandas as pd
-import streamlit as st
+
+def parse_interval(interval):
+    """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um formato numérico."""
+    interval = interval.strip()
+
+    if "<=" in interval:
+        return (-float('inf'), float(interval.replace("<= ", "").strip()))
+    elif ">=" in interval:
+        return (float(interval.replace(">= ", "").strip()), float('inf'))
+    elif "-" in interval:
+        limites = [float(x.strip()) for x in interval.split(" - ")]
+        return (limites[0], limites[1])
+    else:
+        raise ValueError(f"Formato de intervalo desconhecido: {interval}")
 
 def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
     """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
@@ -60,48 +72,27 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
         # Determinar a linha correta baseada no intervalo de CV_Match_Odds
         linha = None
         for i, intervalo in enumerate(df_referencias.index):
-            intervalo = intervalo.strip()  # Remover espaços extras
+            min_val, max_val = parse_interval(intervalo)
 
-            if "<=" in intervalo:
-                limite = float(intervalo.replace("<= ", "").strip())
-                if cv_match_odds <= limite:
-                    linha = i
-                    break
-            elif ">=" in intervalo:
-                limite = float(intervalo.replace(">= ", "").strip())
-                if cv_match_odds >= limite:
-                    linha = i
-                    break
-            elif "-" in intervalo:
-                limites = [float(x.strip()) for x in intervalo.split(" - ")]
-                if limites[0] <= cv_match_odds <= limites[1]:
-                    linha = i
-                    break
+            if min_val <= cv_match_odds <= max_val:
+                linha = i
+                break
 
         if linha is None:
             return None  # Caso não encontre um intervalo correspondente
 
         # Determinar a coluna correta baseada no intervalo de FT_Odd_H
         for coluna in df_referencias.columns:
-            coluna = coluna.strip()  # Remover espaços extras
+            min_val, max_val = parse_interval(coluna)
 
-            if "<=" in coluna:
-                limite = float(coluna.replace("<= ", "").strip())
-                if ft_odd_h <= limite:
-                    return df_referencias.iloc[linha][coluna]
-            elif ">=" in coluna:
-                limite = float(coluna.replace(">= ", "").strip())
-                if ft_odd_h >= limite:
-                    return df_referencias.iloc[linha][coluna]
-            elif "-" in coluna:
-                limites = [float(x.strip()) for x in coluna.split(" - ")]
-                if limites[0] <= ft_odd_h <= limites[1]:
-                    return df_referencias.iloc[linha][coluna]
+            if min_val <= ft_odd_h <= max_val:
+                return df_referencias.iloc[linha][coluna]
 
         return None  # Retorna None se não houver correspondência
     except Exception as e:
         st.error(f"Erro ao obter referência: {e}")
         return None
+
 
 # Configurações de ligas e seus filtros
 leagues_config = {
