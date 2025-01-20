@@ -153,6 +153,20 @@ leagues_config = {
             ">=1.5501": ["< 20", "< 60", "0"]
             }).set_index("Intervalo CV")
     },
+    "COSTA RICA - PRIMERA DIVISION": {
+        "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+        "additional_filters": [
+            ("Prob_Un25_FT	", ">=", 0.5001),
+            ("Prob_H", ">=", 0.4001)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3000", "0.3001 - 0.5500", ">=0.5501"],
+            "<=1.4500": ["0", "0", "<38"],
+            "1.4501 - 1.7000": ["0", "<23", "<35"],
+            "1.7001 - 2.0000": ["<19", "<31", "0"],
+            ">=2.0001": ["<17", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "ENGLAND - PREMIER LEAGUE": {
         "prob_filter": ("Probability_Home", "p_Bigger"),
         "additional_filters": [
@@ -382,9 +396,6 @@ with tab1:
                 st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-
-
-
 
 with tab2:
     st.subheader('Todays Games for Lay 1X0 - Fluffy Method ')
