@@ -120,7 +120,6 @@ leagues_config = {
 }
 
 # Exibir dados para cada liga
-tab1 = st.container()
 with tab1:
     st.subheader("Today's Games for Lay 0X1 - Fluffy Method")
     
