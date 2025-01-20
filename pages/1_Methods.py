@@ -139,6 +139,19 @@ leagues_config = {
             "1.9501 - 2.3000": ["<39", "<29", "0"],
             ">=2.3001": ["<13", "<31", "0"]
             }).set_index("Intervalo CV")
+    },
+    "CROATIA - HNL": {
+        "prob_filter": ("Probability_Away", "Media_Bigger"),
+        "additional_filters": [
+            ("Prob_BTTS_N_FT", ">=", 0.5001),
+            ("Poisson_0_GM_Home", "<=", 0.30),
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.5000", "0.5001 - 0.8000", ">=0.8001"],
+            "<=1.2500": ["0", "< 105", "< 100"],
+            "1.2501 - 1.5500": ["0", "< 88", "< 22"],
+            ">=1.5501": ["< 20", "< 60", "0"]
+            }).set_index("Intervalo CV")
     }
 
     
