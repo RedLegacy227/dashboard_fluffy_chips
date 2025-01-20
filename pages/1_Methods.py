@@ -128,20 +128,6 @@ leagues_config = {
             ">=2.1001": ["<13", "<15", "0"]
         }).set_index("Intervalo CV")
     },
-    "ARGENTINA - TORNEO BETANO": {
-        "prob_filter": ("Probability_Home", "p_Bigger"),
-        "additional_filters": [
-            ("Prob_Un25_FT", "<=", 0.75),
-            ("Poisson_2_GM_Home", ">=", 0.1501)
-        ],
-        "df_referencias": pd.DataFrame({
-            "Intervalo CV": ["<=0.3000", "0.3001 - 0.5000", ">=0.5001"],
-            "<=1.6500": ["0", "<17", "<21"],
-            "1.6501 - 1.8500": ["0", "<20", "<6"],
-            "1.8501 - 2.1000": ["<14", "<13", "0"],
-            ">=2.1001": ["<13", "<15", "0"]
-        }).set_index("Intervalo CV")
-    },
     "AUSTRALIA - A-LEAGUE": {
         "prob_filter": ("Goal_Difference", "Bigger_Home"),
         "additional_filters": [
