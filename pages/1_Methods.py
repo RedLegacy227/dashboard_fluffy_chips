@@ -44,9 +44,6 @@ except Exception as e:
 
 # Criação das abas
 tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home'])
-import streamlit as st
-import pandas as pd
-
 def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
     """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
     if cv_match_odds <= df_referencias.index[0]:
@@ -68,7 +65,6 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
         elif len(intervalo) == 1 and ft_odd_h >= intervalo[0]:
             return df_referencias.at[linha, coluna]
     return "Sem valores"
-
 # Configurações de ligas e seus filtros
 leagues_config = {
     "EUROPE - CHAMPIONS LEAGUE": {
@@ -134,8 +130,8 @@ with tab1:
             # Exibir os dados filtrados
             if not filtered_data.empty:
                 st.dataframe(filtered_data[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
-                                           'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
-                                           'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
+                                        'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
+                                        'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
             else:
                 st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -234,8 +230,6 @@ with tab1:
                 st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-
-
 # with tab1:
 #     st.subheader('Todays Games for Lay 0X1 - Fluffy Method ')
 #     st.markdown('EUROPE - CHAMPIONS LEAGUE - 96,27%')
