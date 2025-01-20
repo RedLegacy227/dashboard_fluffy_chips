@@ -647,7 +647,7 @@ with tab1:
         # Aplicar os filtros
         lay_0x1_gre2_flt = data[
             (data["League"] == 'GREECE - SUPER LEAGUE') &
-            (data["Goal_Difference	"] == 'Bigger_Home') &
+            (data["Goal_Difference"] == 'Bigger_Home') &
             (data["Media_CG_02_Sofridos_Away"] >= 0.6001) &
             (data["Prob_H"] >= 0.4001)
         ]
