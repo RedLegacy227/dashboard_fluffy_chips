@@ -223,6 +223,20 @@ leagues_config = {
             ">=2.0001": ["<18", "<19", "<31"]
             }).set_index("Intervalo CV")
     },
+    "FRANCE - LIGUE 2": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Poisson_1_GS_Away", ">=", 0.3001),
+            ("Prob_H", ">=", 0.4001)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.2500", "0.2501 - 0.4500", ">=0.4501"],
+            "<=1.6500": ["0", "0", "<20"],
+            "1.6501 - 1.8500": ["0", "<28", "<16"],
+            "1.8501 - 2.0500": ["<8", "<11", "0"],
+            ">=2.0501": ["<17", "<17", "0"]
+            }).set_index("Intervalo CV")
+    },
     "GERMANY - BUNDESLIGA": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
