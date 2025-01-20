@@ -46,16 +46,16 @@ except Exception as e:
 tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home'])
 
 def parse_interval(interval):
-    """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um formato numérico."""
-    interval = interval.strip()
+    """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um par de valores numéricos."""
+    interval = interval.strip().replace(" ", "")  # Remover espaços extras
 
-    if "<=" in interval:
-        return (-float('inf'), float(interval.replace("<= ", "").strip()))
-    elif ">=" in interval:
-        return (float(interval.replace(">= ", "").strip()), float('inf'))
+    if interval.startswith("<="):
+        return (-float('inf'), float(interval[2:]))  # Exemplo: '<=0.2000' → (-inf, 0.2000)
+    elif interval.startswith(">="):
+        return (float(interval[2:]), float('inf'))  # Exemplo: '>=0.4001' → (0.4001, inf)
     elif "-" in interval:
-        limites = [float(x.strip()) for x in interval.split(" - ")]
-        return (limites[0], limites[1])
+        limites = [float(x) for x in interval.split("-")]
+        return (limites[0], limites[1])  # Exemplo: '0.2001 - 0.4000' → (0.2001, 0.4000)
     else:
         raise ValueError(f"Formato de intervalo desconhecido: {interval}")
 
@@ -92,6 +92,7 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
     except Exception as e:
         st.error(f"Erro ao obter referência: {e}")
         return None
+
 
 
 # Configurações de ligas e seus filtros
