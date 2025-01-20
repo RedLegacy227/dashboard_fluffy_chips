@@ -47,6 +47,17 @@ tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0
 def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
     """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
     try:
+        # Ensure numeric values
+        cv_match_odds = float(cv_match_odds) if not pd.isna(cv_match_odds) else None
+        ft_odd_h = float(ft_odd_h) if not pd.isna(ft_odd_h) else None
+
+        if cv_match_odds is None or ft_odd_h is None:
+            return None  # Handle missing values properly
+        
+        # Convert index to float (if necessary)
+        df_referencias.index = df_referencias.index.astype(float)
+
+        # Determine the correct row based on CV_Match_Odds
         if cv_match_odds <= df_referencias.index[0]:
             linha = 0
         elif df_referencias.index[0] < cv_match_odds <= df_referencias.index[1]:
@@ -54,20 +65,26 @@ def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
         elif cv_match_odds >= df_referencias.index[1]:
             linha = 2
         else:
-            return None  # <-- Change from "Sem valores" to None
+            return None
 
+        # Check the column (FT_Odd_H range)
         for coluna in df_referencias.columns:
-            intervalo = [float(x) for x in coluna.replace('>=', '').replace('<=', '').split(' - ')]
+            try:
+                intervalo = [float(x) for x in coluna.replace('>=', '').replace('<=', '').split(' - ')]
+            except ValueError:
+                continue  # Skip columns with non-numeric labels
+
             if len(intervalo) == 1 and ft_odd_h <= intervalo[0]:
                 return df_referencias.at[linha, coluna]
             elif len(intervalo) == 2 and intervalo[0] <= ft_odd_h <= intervalo[1]:
                 return df_referencias.at[linha, coluna]
             elif len(intervalo) == 1 and ft_odd_h >= intervalo[0]:
                 return df_referencias.at[linha, coluna]
-        return None  # <-- Change from "Sem valores" to None
+        return None
     except Exception as e:
         st.error(f"Erro ao obter referência: {e}")
         return None
+
 
 # Configurações de ligas e seus filtros
 leagues_config = {
