@@ -156,7 +156,7 @@ leagues_config = {
     "COSTA RICA - PRIMERA DIVISION": {
         "prob_filter": ("Conceded_Goals", "Bigger_Away"),
         "additional_filters": [
-            ("Prob_Un25_FT	", ">=", 0.5001),
+            ("Prob_Un25_FT", ">=", 0.5001),
             ("Prob_H", ">=", 0.4001)
             ],
         "df_referencias": pd.DataFrame({
