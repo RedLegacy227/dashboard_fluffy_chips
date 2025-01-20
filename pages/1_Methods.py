@@ -152,8 +152,26 @@ leagues_config = {
             "1.2501 - 1.5500": ["0", "< 88", "< 22"],
             ">=1.5501": ["< 20", "< 60", "0"]
             }).set_index("Intervalo CV")
-    }
+    },
+    "ENGLAND - PREMIER LEAGUE": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Poisson_1_GM_Home", "<=", 0.40),
+            ("Prob_D", "<=", 0.40)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.4500", "0.4501 - 0.6500", ">=0.6501"],
+            "<=1.3400": ["0", "0", "<33"],
+            "1.3401 - 1.6000": ["0", "<27", "<25"],
+            "1.6001 - 1.9800": ["<31", "<20", "0"],
+            ">=1.9801": ["<27", "<26", "0"]
+            }).set_index("Intervalo CV")
+    },
 
+
+#             
+#             
+#             
     
     # Adicione outras ligas aqui
 }
