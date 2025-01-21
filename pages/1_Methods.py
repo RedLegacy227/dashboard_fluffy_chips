@@ -167,7 +167,7 @@ leagues_config = {
             ">=2.0001": ["<17", "0", "0"]
             }).set_index("Intervalo CV")
     },
-    "EGYPT - PREMIER LEAGUE": {
+    " EGYPT - PREMIER LEAGUE": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
             ("Prob_Ov25_FT", ">=", 0.4001),
