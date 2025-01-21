@@ -295,6 +295,20 @@ leagues_config = {
             ">=1.7501": ["<14", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "MEXICO - LIGA MX": {
+        "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+        "additional_filters": [
+            ("Poisson_0_GM_Home", "<=", 0.3500),
+            ("Prob_H", ">=", 0.4501)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3500", "0.3501 - 0.5500", ">=0.5501"],
+            "<=1.5000": ["0", "0", "<36"],
+            "1.5001 - 1.7000": ["0", "<24", "<50"],
+            "1.7001 - 1.9500": ["<27", "<33", "0"],
+            ">=1.9501": ["<16", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "NETHERLANDS - EREDIVISIE": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
