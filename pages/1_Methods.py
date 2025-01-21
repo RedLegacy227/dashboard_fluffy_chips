@@ -295,6 +295,22 @@ leagues_config = {
             ">=1.9001": ["<28", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "INDONESIA - LIGA 1": {
+        "prob_filter": ("Probability_Away", "Media_Bigger"),
+        "additional_filters": [
+            ("Prob_BTTS_Y_FT", ">=", 0.5001),
+            ("Prob_BTTS_Y_FT", "<=", 0.6500),
+            ("Prob_H", ">=", 0.4001),
+            ("Prob_H", "<=", 0.8000)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3000", "0.3001 - 0.5500", ">=0.5501"],
+            "<=1.4500": ["0", "0", "<37"],
+            "1.4501 - 1.6500": ["0", "<31", "<51"],
+            "1.6501 - 1.9500": ["<19", "<27", "0"],
+            ">=1.9501": ["<13", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "ITALY - SERIE A": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
