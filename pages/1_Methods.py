@@ -367,6 +367,21 @@ leagues_config = {
             ">=2.2001": ["<22", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "SAUDI ARABIA - SAUDI PROFESSIONAL LEAGUE": {
+        "prob_filter": ("Scored_Goals", "Bigger_Home"),
+        "additional_filters": [
+            ("Poisson_2_GS_Away", ">=", 0.1501),
+            ("Poisson_2_GS_Away", "<=", 0.3000),
+            ("Prob_H", ">=", 0.3001)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.2000", "0.2001 - 0.5000", ">=0.5001"],
+            "<=1.4000": ["0", "0", "<48"],
+            "1.4001 - 1.8000": ["0", "<25", "<18"],
+            "1.8001 - 2.2500": ["<18", "<31", "0"],
+            ">=2.2501": ["<13", "<11", "0"]
+            }).set_index("Intervalo CV")
+    },
     "SPAIN - LALIGA": {
         "prob_filter": ("Probability_Home", "p_Bigger"),
         "additional_filters": [
