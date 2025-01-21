@@ -167,6 +167,20 @@ leagues_config = {
             ">=2.0001": ["<17", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "EGYPT - PREMIER LEAGUE": {
+        "prob_filter": ("Probability_Away", "Media_Bigger"),
+        "additional_filters": [
+            ("Prob_Ov25_FT", ">=", 0.4001),
+            ("Prob_BTTS_N_FT", ">=", 0.5001)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3000", "0.3001 - 0.6000", ">=0.6001"],
+            "<=1.4500": ["0", "0", "<160"],
+            "1.4501 - 1.8000": ["0", "<33", "<36"],
+            "1.8001 - 2.3000": ["<26", "<9", "0"],
+            ">=2.3001": ["<22", "<17", "<5"]
+            }).set_index("Intervalo CV")
+    },
     "ENGLAND - PREMIER LEAGUE": {
         "prob_filter": ("Probability_Home", "p_Bigger"),
         "additional_filters": [
