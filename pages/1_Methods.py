@@ -311,6 +311,20 @@ leagues_config = {
             ">=1.9501": ["<13", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "ISRAEL - LIGAT HA'AL": {
+        "prob_filter": ("Probability_Away", "Media_Bigger"),
+        "additional_filters": [
+            ("Prob_Un25_FT", "<=", 0.6000),
+            ("Prob_Ov25_FT", ">=", 0.4501)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.4000", "0.4001 - 0.7000", ">=0.7001"],
+            "<=1.3500": ["0", "0", "<58"],
+            "1.3501 - 1.6000": ["0", "<45", "<52"],
+            "1.6001 - 2.0000": ["<20", "<52", "0"],
+            ">=2.0001": ["<15", "<48", "0"]
+            }).set_index("Intervalo CV")
+    },
     "ITALY - SERIE A": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
