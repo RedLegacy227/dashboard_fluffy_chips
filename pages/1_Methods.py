@@ -469,6 +469,22 @@ leagues_config = {
             ">=2.0001": ["<19", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "THAILAND - THAI LEAGUE 1": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Media_CG_02_Marcados_Away", ">=", 0.3001),
+            ("Media_CG_02_Marcados_Away", "<=", 0.9500),
+            ("Media_CG_02_Sofridos_Away", ">=", 0.5001),
+            ("Media_CG_02_Sofridos_Away", "<=", 1.6000)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.2500", "0.2501 - 0.5000", ">=0.5001"],
+            "<=1.4000": ["0", "0", "<69"],
+            "1.4001 - 1.6500": ["0", "<41", "<41"],
+            "1.6501 - 2.0000": ["<14", "<15", "0"],
+            ">=2.0001": ["<80", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "TURKEY - SUPER LIG": {
         "prob_filter": ("Goal_Difference", "Bigger_Home"),
         "additional_filters": [
