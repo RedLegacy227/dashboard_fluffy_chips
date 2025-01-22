@@ -411,6 +411,20 @@ leagues_config = {
             ">=2.2001": ["<22", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "ROMANIA - SUPERLIGA": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Prob_Ov25_FT", ">=", 0.4001),
+            ("Prob_H", ">=", 0.4501)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.4000", "0.4001 - 0.6000", ">=0.6001"],
+            "<=1.4000": ["0", "0", "<33"],
+            "1.4001 - 1.6000": ["0", "<7", "<25"],
+            "1.6001 - 1.8000": ["<23", "<19", "0"],
+            ">=1.8001": ["<21", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "SAUDI ARABIA - SAUDI PROFESSIONAL LEAGUE": {
         "prob_filter": ("Scored_Goals", "Bigger_Home"),
         "additional_filters": [
