@@ -455,6 +455,20 @@ leagues_config = {
             ">=1.9501": ["<17", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "SPAIN - LALIGA2": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Media_CG_02_Marcados_Home", ">=", 0.7501),
+            ("Media_CG_02_Marcados_Home", "<=", 1.2000)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3000", "0.3001 - 0.4500", ">=0.4501"],
+            "<=1.6600": ["0", "0", "<21"],
+            "1.6601 - 1.8000": ["0", "<11", "<12"],
+            "1.8001 - 2.0000": ["<10", "<21", "0"],
+            ">=2.0001": ["<19", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "TURKEY - SUPER LIG": {
         "prob_filter": ("Goal_Difference", "Bigger_Home"),
         "additional_filters": [
