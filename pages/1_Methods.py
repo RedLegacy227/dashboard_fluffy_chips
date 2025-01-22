@@ -501,6 +501,19 @@ leagues_config = {
             "1.9501 - 2.3500": ["<17", "<18", "0"],
             ">=2.3501": ["<18", "<19", "<31"]
             }).set_index("Intervalo CV")
+    },
+    "TURKEY - 1. LIG": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Poisson_2_GM_Home", ">=", 0.1501),
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3500", "0.3501 - 0.6000", ">=0.6001"],
+            "<=1.4000": ["0", "0", "<28"],
+            "1.4001 - 1.6500": ["0", "<21", "<29"],
+            "1.6501 - 1.9000": ["<21", "<11", "0"],
+            ">=1.9001": ["<12", "0", "0"]
+            }).set_index("Intervalo CV")
     }
 }
 
