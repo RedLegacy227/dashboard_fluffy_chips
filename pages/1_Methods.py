@@ -367,6 +367,20 @@ leagues_config = {
             ">=1.6501": ["<79", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "NETHERLANDS - EERSTE DIVISIE": {
+        "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+        "additional_filters": [
+            ("Poisson_2_GS_Away", ">=", 0.2001),
+            ("Prob_H", ">=", 0.4501)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3500", "0.3501 - 0.6000", ">=0.6001"],
+            "<=1.3500": ["0", "0", "<54"],
+            "1.3501 - 1.6000": ["0", "<16", "<30"],
+            "1.6001 - 1.9000": ["<17", "<24", "0"],
+            ">=1.9001": ["<19", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "PORTUGAL - LIGA PORTUGAL": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
