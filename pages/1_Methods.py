@@ -295,6 +295,19 @@ leagues_config = {
             ">=1.9001": ["<28", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "INDIA - ISL": {
+        "prob_filter": ("Probability_Home", "p_Bigger"),
+        "additional_filters": [
+            ("Poisson_2_GS_Away", ">=", 0.2501)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.3000", "0.3001 - 0.5000", ">=0.5001"],
+            "<=1.5000": ["0", "0", "<21"],
+            "1.5001 - 1.7000": ["0", "<30", "<36"],
+            "1.7001 - 2.0000": ["<14", "<40", "0"],
+            ">=2.0001": ["<49", "0", "0"]
+            }).set_index("Intervalo CV")
+    },
     "INDONESIA - LIGA 1": {
         "prob_filter": ("Probability_Away", "Media_Bigger"),
         "additional_filters": [
