@@ -424,6 +424,20 @@ leagues_config = {
             ">=2.2001": ["<22", "0", "0"]
             }).set_index("Intervalo CV")
     },
+    "QATAR - QSL": {
+        "prob_filter": ("Probability_Away", "Media_Bigger"),
+        "additional_filters": [
+            ("Poisson_1_GM_Home", ">=", 0.1001),
+            ("Prob_D", "<=", 0.3000)
+            ],
+        "df_referencias": pd.DataFrame({
+            "Intervalo CV": ["<=0.4000", "0.4001 - 0.6000", ">=0.6001"],
+            "<=1.4000": ["0", "0", "<66"],
+            "1.4001 - 1.6500": ["0", "<51", "<15"],
+            "1.6501 - 2.0000": ["<44", "<69", "0"],
+            ">=2.2001": ["<17", "<50", "<9"]
+            }).set_index("Intervalo CV")
+    },
     "ROMANIA - SUPERLIGA": {
         "prob_filter": ("Probability_Home", "p_Bigger"),
         "additional_filters": [
