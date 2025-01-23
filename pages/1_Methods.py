@@ -354,6 +354,21 @@ with tab1:
                 ">=1.7501": ["<14", "0", "0"]
                 }).set_index("Intervalo CV")
         },
+        "ITALY - SERIE B": {
+            "prob_filter": ("Goal_Difference", "Bigger_Home"),
+            "additional_filters": [
+                ("Poisson_2_GM_Home", ">=", 0.1501),
+                ("Prob_A", ">=", 0.1001),
+                ("Prob_A", "<=", 0.3500)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.2000", "0.2001 - 0.4000", ">=0.4001"],
+                "<=1.7500": ["0", "<21", "<22"],
+                "1.7501 - 2.0000": ["0", "<20", "<20"],
+                "2.0001 - 2.2500": ["<18", "<19", "0"],
+                ">=2.2501": ["<15", "0", "0"]
+                }).set_index("Intervalo CV")
+        },
         "MEXICO - LIGA MX": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
