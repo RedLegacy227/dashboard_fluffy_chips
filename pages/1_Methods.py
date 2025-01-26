@@ -972,8 +972,8 @@ with tab9:
     if data is not None:
         # Aplicar os filtros
         lay_1x1_home_flt = data[
-            (data["FT_Odd_H"] < 1.80) &
-            (data["FT_Odd_Ov25"] < 1.70)
+            (data["FT_Odd_H"] < 1.75) &
+            (data["FT_Odd_Ov25"] < 1.65)
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
 
@@ -987,8 +987,8 @@ with tab9:
     if data is not None:
         # Aplicar os filtros
         lay_1x1_away_flt = data[
-            (data["FT_Odd_A"] < 1.80) &
-            (data["FT_Odd_Ov25"] < 1.70)
+            (data["FT_Odd_A"] < 1.75) &
+            (data["FT_Odd_Ov25"] < 1.65)
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
 
