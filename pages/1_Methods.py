@@ -43,7 +43,7 @@ except Exception as e:
     data = None
 
 # Criação das abas
-tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home'])
+tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8,tab9 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1'])
 
 # Exibir dados para cada liga
 with tab1:
@@ -962,6 +962,39 @@ with tab8:
         # Exibir os dados filtrados
         if not back_home_Port_01_03_ft_flt.empty:
             st.dataframe(back_home_Port_01_03_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
+with tab9:
+    st.subheader('Todays Games for Lay 1x1 Based on Home Team')
+    st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
+    if data is not None:
+        # Aplicar os filtros
+        lay_1x1_home_flt = data[
+            (data["FT_Odd_H"] < 1.80) &
+            (data["FT_Odd_Ov25"] < 1.70)
+        ]
+        lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_1x1_home_flt.empty:
+            st.dataframe(lay_1x1_home_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    st.subheader('Todays Games for Lay 1x1 Based on Away Team')
+    st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
+    if data is not None:
+        # Aplicar os filtros
+        lay_1x1_away_flt = data[
+            (data["FT_Odd_A"] < 1.80) &
+            (data["FT_Odd_Ov25"] < 1.70)
+        ]
+        lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not lay_1x1_away_flt.empty:
+            st.dataframe(lay_1x1_away_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
