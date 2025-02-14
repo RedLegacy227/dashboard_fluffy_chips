@@ -966,6 +966,25 @@ with tab8:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+    st.markdown('England - Premier League - Method 1')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_eng_01_01_ft_flt = data[
+            (data["League"] == 'ENGLAND - PREMIER LEAGUE') &
+            (data["Media_CG_02_Marcados_Home"] > 0.1910) &
+            (data["Media_CG_02_Marcados_Home"] < 0.5580) &
+            (data["Media_Golos_Sofridos_Away"] > 0.1980) &
+            (data["Media_Golos_Sofridos_Away"] < 1.6000)
+        ]
+        back_home_eng_01_01_ft_flt = back_home_eng_01_01_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Exibir os dados filtrados
+        if not back_home_eng_01_01_ft_flt.empty:
+            st.dataframe(back_home_eng_01_01_ft_flt)
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    else:
+        st.info("Dados indisponíveis para a data selecionada.")
 with tab9:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
