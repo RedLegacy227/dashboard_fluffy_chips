@@ -737,8 +737,8 @@ with tab_views[2]:
         
         # Apply filtering conditions
         flt = (
-            (data["FT_Odd_H"] >= 1.60) & 
-            (data["FT_Odd_Ov25"] >= 1.60) &
+            (data["FT_Odd_H"] >= 1.50) & 
+            (data["FT_Odd_Ov25"] >= 1.50) &
             (data["FT_Odd_BTTS_Y"] <= 2.50) 
         )
         df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtered matches
