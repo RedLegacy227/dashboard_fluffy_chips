@@ -727,7 +727,7 @@ with tab_views[1]:
     
 
 with tab_views[2]:
-    st.subheader('Todays Games for Lay Goleada Casa')
+    st.subheader('Todays Games for Lay Any Other Home Win')
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
 
     # Ensure 'data' is available and contains required columns
@@ -736,9 +736,9 @@ with tab_views[2]:
         
         # Apply filtering conditions
         flt = (
-            (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 2.20) &
-            (data["FT_Odd_Ov25"] >= 1.50) & (data["FT_Odd_Ov25"] <= 2.20) &
-            (data["FT_Odd_BTTS_Y"] >= 1.50) & (data["FT_Odd_BTTS_Y"] <= 2.20)
+            (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 2.50) &
+            (data["FT_Odd_Ov25"] >= 1.60) & (data["FT_Odd_Ov25"] <= 2.50) &
+            (data["FT_Odd_BTTS_Y"] >= 1.50) & (data["FT_Odd_BTTS_Y"] <= 2.50)
         )
         df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtered matches
 
