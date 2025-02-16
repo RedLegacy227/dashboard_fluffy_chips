@@ -818,8 +818,6 @@ with tab_views[2]:
     else:
         st.warning("Data is missing or does not contain required columns.")
 
-
-
 with tab_views[3]:
     st.subheader('Todays Games for Over 1,5 FT')
     st.markdown('If the Odd is less than 1.42, you must wait for it to reach minimum 1.42')
@@ -846,9 +844,6 @@ with tab_views[3]:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-        
-# URL dos dados de Elo e Tilt
-elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/main/df_elo_tilt.csv"
 
 with tab_views[4]:
     st.subheader("Todays Games for Lay Home")
@@ -861,7 +856,7 @@ with tab_views[4]:
         try:
             # Carregar os dados de Elo e Tilt apenas uma vez
             if 'Elo_Home' not in lay_home.columns or 'Elo_Away' not in lay_home.columns:
-                df_elo_tilt = pd.read_csv(elo_tilt_url)
+                df_elo_tilt = elo_tilt_data
                 
                 # Merge para adicionar dados de Elo e Tilt
                 lay_home = lay_home.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left')
@@ -904,7 +899,7 @@ with tab_views[5]:
         try:
             # Carregar os dados de Elo e Tilt apenas uma vez
             if 'Elo_Home' not in lay_away.columns or 'Elo_Away' not in lay_away.columns:
-                df_elo_tilt = pd.read_csv(elo_tilt_url)
+                df_elo_tilt = elo_tilt_data
                 
                 # Merge para adicionar dados de Elo e Tilt
                 lay_away = lay_away.merge(df_elo_tilt[['Team', 'Elo', 'Tilt']], left_on='Home', right_on='Team', how='left')
