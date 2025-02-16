@@ -739,7 +739,7 @@ with tab_views[2]:
             (data["FT_Odd_Ov25"] >= 1.50) & (data["FT_Odd_Ov25"] <= 2.20) &
             (data["FT_Odd_BTTS_Y"] >= 1.50) & (data["FT_Odd_BTTS_Y"] <= 2.20)
         )
-        df_LGP = data[flt].dropna().reset_index(drop=True)
+        df_LGP = data[flt]
 
         def LayGoleada(df_LGP, historical_data):
             results = []  # Store results
