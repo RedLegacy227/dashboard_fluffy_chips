@@ -744,76 +744,85 @@ with tab_views[2]:
         df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtered matches
 
         def LayGoleada(df_LGP, historical_data):
+            """ 
+            Filtra jogos onde as equipes têm alto potencial de gols marcados e sofridos.
+            """
+        
             required_cols = ["League", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]
             
             if historical_data is None or not all(col in historical_data.columns for col in required_cols):
                 st.warning("Os dados históricos estão incompletos ou ausentes.")
                 return
+        
+            results = []  # Lista para armazenar os resultados
+        
+            try:
+                for league in df_LGP["League"].unique():
+                    df_league_hist = historical_data[historical_data["League"] == league]
+        
+                    if df_league_hist.empty:
+                        continue  # Pula ligas sem histórico suficiente
+        
+                    # Contar quantas equipes temos na liga
+                    unique_teams = set(df_league_hist["Home"]).union(set(df_league_hist["Away"]))
+                    num_teams = len(unique_teams)
+        
+                    if num_teams < 6:
+                        continue  # Pula ligas muito pequenas
+        
+                    # Criar um único DataFrame agrupado para otimizar cálculos
+                    goals_data = df_league_hist.groupby(["Home", "Away"]).agg(
+                        FT_Goals_H=("FT_Goals_H", "sum"),
+                        FT_Goals_A=("FT_Goals_A", "sum"),
+                    ).reset_index()
+        
+                    # Calcular gols marcados e sofridos por equipe
+                    team_goals = (
+                        goals_data.groupby("Home")["FT_Goals_H"].sum()
+                        .add(goals_data.groupby("Away")["FT_Goals_A"].sum(), fill_value=0)
+                        .sort_values(ascending=False)
+                    )
+        
+                    team_conceded = (
+                        goals_data.groupby("Home")["FT_Goals_A"].sum()
+                        .add(goals_data.groupby("Away")["FT_Goals_H"].sum(), fill_value=0)
+                        .sort_values(ascending=True)
+                    )
+        
+                    # Definir limites dinâmicos para selecionar os times
+                    top_limit = min(max(6, num_teams // 2), num_teams)  # Pelo menos 6 times ou 50% dos melhores
+                    weak_limit = min(max(5, num_teams // 2), num_teams)  # Pelo menos 5 times ou 50% dos piores
+        
+                    if num_teams > 10:
+                        top_scoring_teams = set(team_goals.iloc[5:top_limit].index)
+                        weak_defense_teams = set(team_conceded.iloc[:weak_limit].index)
+                    else:
+                        top_scoring_teams = set(team_goals.index)
+                        weak_defense_teams = set(team_conceded.index)
+        
+                    # Filtrar partidas que atendem aos critérios
+                    df_matches_league = df_LGP[df_LGP["League"] == league]
+        
+                    for _, row in df_matches_league.iterrows():
+                        home, away, match_time = row["Home"], row["Away"], row["Time"]
+        
+                        if home in top_scoring_teams and away in top_scoring_teams and \
+                            home in weak_defense_teams and away in weak_defense_teams:
+                            results.append([league, home, away, match_time])
+        
+                # Converter resultados em DataFrame e exibir
+                if results:
+                    df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
+                    df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M").dt.time
+                    df_results = df_results.sort_values(by="Time").reset_index(drop=True)
+        
+                    st.dataframe(df_results, use_container_width=True)
+                else:
+                    st.warning("Nenhum jogo atende aos critérios.")
 
-    results = []  # Lista para armazenar os resultados
+            except KeyError as e:
+                st.error(f"Coluna ausente nos dados históricos: {e}")
 
-    try:
-        for league in df_LGP["League"].unique():
-            df_league_hist = historical_data[historical_data["League"] == league]
-
-            if df_league_hist.empty:
-                continue  # Pula ligas sem histórico suficiente
-
-            # Contar quantas equipes temos na liga
-            unique_teams = set(df_league_hist["Home"]).union(set(df_league_hist["Away"]))
-            num_teams = len(unique_teams)
-
-            if num_teams < 6:
-                continue  # Pula ligas muito pequenas
-
-            # Criar um único DataFrame agrupado para otimizar cálculos
-            goals_data = df_league_hist.groupby(["Home", "Away"]).agg(
-                FT_Goals_H=("FT_Goals_H", "sum"),
-                FT_Goals_A=("FT_Goals_A", "sum"),
-            ).reset_index()
-
-            # Calcular gols marcados e sofridos por equipe
-            team_goals = (
-                goals_data.groupby("Home")["FT_Goals_H"].sum()
-                .add(goals_data.groupby("Away")["FT_Goals_A"].sum(), fill_value=0)
-                .sort_values(ascending=False)
-            )
-
-            team_conceded = (
-                goals_data.groupby("Home")["FT_Goals_A"].sum()
-                .add(goals_data.groupby("Away")["FT_Goals_H"].sum(), fill_value=0)
-                .sort_values(ascending=True)
-            )
-
-            # Definir limites dinâmicos para selecionar os times
-            top_limit = min(max(6, num_teams // 2), num_teams)  # Pelo menos 6 times ou 50% dos melhores
-            weak_limit = min(max(5, num_teams // 2), num_teams)  # Pelo menos 5 times ou 50% dos piores
-
-            top_scoring_teams = set(team_goals.iloc[5:top_limit].index if num_teams > 10 else team_goals.index)
-            weak_defense_teams = set(team_conceded.iloc[:weak_limit].index if num_teams > 10 else team_conceded.index)
-
-            # Filtrar partidas que atendem aos critérios
-            df_matches_league = df_LGP[df_LGP["League"] == league]
-
-            for _, row in df_matches_league.iterrows():
-                home, away, match_time = row["Home"], row["Away"], row["Time"]
-
-                if home in top_scoring_teams and away in top_scoring_teams and \
-                    home in weak_defense_teams and away in weak_defense_teams:
-                    results.append([league, home, away, match_time])
-
-        # Converter resultados em DataFrame e exibir
-        if results:
-            df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
-            df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M").dt.time
-            df_results = df_results.sort_values(by="Time").reset_index(drop=True)
-
-            st.dataframe(df_results, use_container_width=True)
-        else:
-            st.warning("Nenhum jogo atende aos critérios.")
-
-    except KeyError as e:
-        st.error(f"Coluna ausente nos dados históricos: {e}")
 
 
 with tab_views[3]:
