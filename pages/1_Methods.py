@@ -1,52 +1,77 @@
 import pandas as pd
-import numpy as np
 import streamlit as st
 from PIL import Image
 import os
 import base64
+import requests
 from datetime import datetime
 
-# Configuração inicial
+# Streamlit App Title and Headers
 st.title('_Fluffy Chips Web Analyzer_')
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.subheader('_Methods for Today_')
+
+# Display Image
 image_path = os.path.join(os.getcwd(), 'static', 'analises001.png')
-# HTML e CSS para centralizar
-st.markdown(
-    f"""
-    <div style="text-align: center;">
-        <img src="data:image/png;base64,{base64.b64encode(open(image_path, "rb").read()).decode()}" alt="Analysis" width="100%">
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+if os.path.exists(image_path):
+    st.image(image_path, use_column_width=True)
+else:
+    st.warning("Image not found. Please check the file path.")
+
 st.divider()
 
-# URL base do GitHub para os arquivos CSV
+# URLs for CSV Files
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
+historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/main/df_base_original.csv"
+leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/main/df_ligas.csv"
+elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/main/df_elo_tilt.csv"
 
-# Escolher uma data
+# Select Date
 selected_date = st.date_input("Select a date:", value=datetime.today())
 formatted_date = selected_date.strftime("%Y-%m-%d")
 
-# Construir a URL do arquivo baseado na data
+# Construct the CSV File URL
 csv_file_name = f'df_jogos_do_dia_{formatted_date}.csv'
 csv_file_url = github_base_url + csv_file_name
 
-# Tentar carregar o CSV
-try:
-    data = pd.read_csv(csv_file_url)
-    st.success("Dados carregados com sucesso!")
-except Exception as e:
-    st.error(f"Erro ao carregar os dados: {e}")
-    data = None
+# Function to Load Data with Caching
+@st.cache_data
+def load_data(url):
+    try:
+        response = requests.get(url)
+        if response.status_code == 200:
+            return pd.read_csv(url)
+        else:
+            st.error(f"File not found: {url}")
+            return None
+    except Exception as e:
+        st.error(f"Error loading data: {e}")
+        return None
 
-# Criação das abas
-tab1, tab2, tab3, tab4, tab5, tab6, tab7,tab8,tab9 = st.tabs(['Lay 0 x 1', 'Lay 1 x 0', 'Over 0,5 HT', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1'])
+# Load Data
+with st.spinner("Fetching data..."):
+    data = load_data(csv_file_url)
+    historical_data = load_data(historical_data_url)
+    leagues_data = load_data(leagues_url)
+    elo_tilt_data = load_data(elo_tilt_url)
+
+# Display Success Messages
+if data is not None:
+    st.success("Jogos do Dia loaded successfully!")
+if historical_data is not None:
+    st.success("Historical Data loaded successfully!")
+if leagues_data is not None:
+    st.success("Leagues Data loaded successfully!")
+if elo_tilt_data is not None:
+    st.success("Elo & Tilt Data loaded successfully!")
+
+# Create Tabs
+tabs = ['Lay 0 x 1', 'Lay 1 x 0', 'Lay Goleada Casa', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
+tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
-with tab1:
+with tab_views[0]:
     def parse_interval(interval):
         """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um par de valores numéricos."""
         interval = interval.strip().replace(" ", "")  # Remover espaços extras
@@ -596,7 +621,7 @@ with tab1:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-with tab2:
+with tab_views[1]:
     def parse_interval(interval):
         """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um par de valores numéricos."""
         interval = interval.strip().replace(" ", "")  # Remover espaços extras
@@ -700,7 +725,7 @@ with tab2:
         st.info("Dados indisponíveis para a data selecionada.")
     
 
-with tab3:
+with tab_views[2]:
     st.subheader('Todays Games for Over 0,5 HT')
     st.markdown('If the Odd is less than 1.54, you must wait for it to reach minimum 1.54')
     if data is not None:
@@ -721,7 +746,7 @@ with tab3:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-with tab4:
+with tab_views[3]:
     st.subheader('Todays Games for Over 1,5 FT')
     st.markdown('If the Odd is less than 1.42, you must wait for it to reach minimum 1.42')
     if data is not None:
@@ -751,7 +776,7 @@ with tab4:
 # URL dos dados de Elo e Tilt
 elo_tilt_url = "https://raw.githubusercontent.com/RedLegacy227/elo_tilt/main/df_elo_tilt.csv"
 
-with tab5:
+with tab_views[4]:
     st.subheader("Todays Games for Lay Home")
     lay_home = data.copy()
     lay_home['VAR1'] = np.sqrt((lay_home['FT_Odd_H'] - lay_home['FT_Odd_A'])**2)
@@ -794,7 +819,7 @@ with tab5:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-with tab6:
+with tab_views[5]:
     st.subheader("Todays Games for Lay Away")
     lay_away = data.copy()
     lay_away['VAR1'] = np.sqrt((lay_away['FT_Odd_H'] - lay_away['FT_Odd_A'])**2)
@@ -837,7 +862,7 @@ with tab6:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
         
-with tab7:
+with tab_views[6]:
     st.subheader('Todays Games for Under 1,5 FT')
     st.markdown('Croatia Method 1')
     if data is not None:
@@ -903,7 +928,7 @@ with tab7:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
         
-with tab8:
+with tab_views[7]:
     st.subheader('Todays Games for Back_Home')
     st.markdown('Portugal - Liga Portugal 1 - Method 1')
     if data is not None:
@@ -985,7 +1010,7 @@ with tab8:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-with tab9:
+with tab_views[8]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     if data is not None:
