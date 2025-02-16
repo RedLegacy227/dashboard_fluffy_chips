@@ -728,24 +728,66 @@ with tab_views[1]:
 
 with tab_views[2]:
     st.subheader('Todays Games for Over 0,5 HT')
-    st.markdown('If the Odd is less than 1.54, you must wait for it to reach minimum 1.54')
-    if data is not None:
-        over_05_ht_flt = data[
-            (data["Perc_Over_05_HT_Home"] >= 70) & 
-            (data["Perc_Over_05_HT_Away"] >= 70) &
-            (data["Media_CG_02_Marcados_Home"] >= 1) &
-            (data["Media_CG_02_Marcados_Away"] >= 1) &
-            (data["CV_Media_CG_02_Marcados_Home"] <= 0.5)
-        ]
-        over_05_ht_flt = over_05_ht_flt.sort_values(by='Time', ascending=True)
+    st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
 
-        # Exibir os dados filtrados
-        if not over_05_ht_flt.empty:
-            st.dataframe(over_05_ht_flt)
-        else:
-            st.info("Nenhum jogo encontrado com os critérios especificados.")
+    # Ensure 'data' is available and contains required columns
+    if data is not None and all(col in data.columns for col in ["FT_Odd_H", "FT_Odd_Ov25", "FT_Odd_BTTS_Y"]):
+        
+        # Filter the dataset
+        flt = (
+            (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 2.20) &
+            (data["FT_Odd_Ov25"] >= 1.50) & (data["FT_Odd_Ov25"] <= 2.20) &
+            (data["FT_Odd_BTTS_Y"] >= 1.50) & (data["FT_Odd_BTTS_Y"] <= 2.20)
+        )
+        df_LGP = data[flt].dropna().reset_index(drop=True)
+
+        def LayGoleada(df_LGP, historical_data):
+            results = []  # Store results
+
+            # Ensure historical_data is available and contains required columns
+            if historical_data is not None and all(col in historical_data.columns for col in ["League", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]):
+
+                try:
+                    # Compute goals scored and conceded once (optimization)
+                    Gols_Marcados_Home = historical_data.groupby("Home")["FT_Goals_H"].sum()
+                    Gols_Marcados_Away = historical_data.groupby("Away")["FT_Goals_A"].sum()
+                    Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
+                    Gols_Marcados["Gols_Marcados"] = Gols_Marcados.sum(axis=1)
+                    Gols_Marcados = Gols_Marcados[["Gols_Marcados"]].sort_values("Gols_Marcados", ascending=False)
+
+                    Gols_Sofridos_Home = historical_data.groupby("Home")["FT_Goals_A"].sum()
+                    Gols_Sofridos_Away = historical_data.groupby("Away")["FT_Goals_H"].sum()
+                    Gols_Sofridos = pd.concat([Gols_Sofridos_Home, Gols_Sofridos_Away], axis=1).fillna(0)
+                    Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
+                    Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
+
+                    # Get teams ranked 6-15 in goals scored & teams ranked 1-15 in goals conceded
+                    top_scoring_teams = set(Gols_Marcados.iloc[5:15].index)
+                    weak_defense_teams = set(Gols_Sofridos.iloc[:15].index)
+
+                    # Iterate over today's games
+                    for _, row in df_LGP.iterrows():
+                        liga, hora, mandante, visitante = row["League"], row["Time"], row["Home"], row["Away"]
+
+                        if mandante in top_scoring_teams and visitante in top_scoring_teams and \
+                           mandante in weak_defense_teams and visitante in weak_defense_teams:
+                            results.append([liga, mandante, visitante, hora])
+
+                    # Display results
+                    if results:
+                        df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
+                        st.dataframe(df_results, use_container_width=True)
+                    else:
+                        st.warning("No matches meet the criteria.")
+
+                except KeyError as e:
+                    st.error(f"Missing expected column in historical data: {e}")
+
+        # Run the function
+        LayGoleada(df_LGP, historical_data)
+
     else:
-        st.info("Dados indisponíveis para a data selecionada.")
+        st.warning("Data is missing or does not contain required columns.")
 
 with tab_views[3]:
     st.subheader('Todays Games for Over 1,5 FT')
