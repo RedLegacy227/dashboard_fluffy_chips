@@ -797,13 +797,13 @@ with tab_views[2]:
                     if results:
                         df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
 
-                        # Convert 'Time' to datetime format for proper sorting
-                        df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M", errors="coerce")
+                        # ✅ Convert 'Time' to proper time format **without adding a date**
+                        df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M").dt.time
 
-                        # Sort by Time in ascending order
+                        # ✅ Sort by Time in ascending order
                         df_results = df_results.sort_values(by="Time").reset_index(drop=True)
 
-                        # Display sorted results
+                        # ✅ Display sorted results
                         st.dataframe(df_results, use_container_width=True)
 
                     else:
@@ -817,6 +817,7 @@ with tab_views[2]:
 
     else:
         st.warning("Data is missing or does not contain required columns.")
+
 
 
 with tab_views[3]:
