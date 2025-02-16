@@ -770,38 +770,38 @@ with tab_views[2]:
                     if num_teams < 6:
                         continue  # Pula ligas muito pequenas
 
-                    # Calcular gols marcados e sofridos
-                    team_goals = (
-                        df_league_hist.groupby("Home")["FT_Goals_H"].sum()
-                        .add(df_league_hist.groupby("Away")["FT_Goals_A"].sum(), fill_value=0)
-                        .sort_values(ascending=False)
-                    )
+                    # 🔹 Voltar ao método original de cálculo de gols
+                    Gols_Marcados_Home = df_league_hist.groupby("Home")["FT_Goals_H"].sum()
+                    Gols_Marcados_Away = df_league_hist.groupby("Away")["FT_Goals_A"].sum()
+                    Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
+                    Gols_Marcados["Gols_Marcados"] = Gols_Marcados.sum(axis=1)
+                    Gols_Marcados = Gols_Marcados[["Gols_Marcados"]].sort_values("Gols_Marcados", ascending=False)
 
-                    team_conceded = (
-                        df_league_hist.groupby("Home")["FT_Goals_A"].sum()
-                        .add(df_league_hist.groupby("Away")["FT_Goals_H"].sum(), fill_value=0)
-                        .sort_values(ascending=True)
-                    )
+                    Gols_Sofridos_Home = df_league_hist.groupby("Home")["FT_Goals_A"].sum()
+                    Gols_Sofridos_Away = df_league_hist.groupby("Away")["FT_Goals_H"].sum()
+                    Gols_Sofridos = pd.concat([Gols_Sofridos_Home, Gols_Sofridos_Away], axis=1).fillna(0)
+                    Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
+                    Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
 
-                    # Ajustar limites dinamicamente
-                    top_limit = min(max(6, num_teams // 2), num_teams)  
-                    weak_limit = min(max(5, num_teams // 2), num_teams)  
+                    # 🔹 Ajuste nos limites para evitar exclusões desnecessárias
+                    top_scoring_limit = min(15, len(Gols_Marcados))
+                    weak_defense_limit = min(15, len(Gols_Sofridos))
 
-                    if num_teams > 10:
-                        top_scoring_teams = set(team_goals.iloc[5:top_limit].index)
-                        weak_defense_teams = set(team_conceded.iloc[:weak_limit].index)
-                    else:
-                        top_scoring_teams = set(team_goals.index)
-                        weak_defense_teams = set(team_conceded.index)
+                    if top_scoring_limit < 6 or weak_defense_limit < 15:
+                        continue  # Pula ligas com poucos times relevantes
 
-                    # Filtrar jogos da liga
+                    # 🔹 Restaurar o critério original de times ofensivos e fracos defensivamente
+                    top_scoring_teams = set(Gols_Marcados.iloc[5:top_scoring_limit].index)
+                    weak_defense_teams = set(Gols_Sofridos.iloc[:weak_defense_limit].index)
+
+                    # 🔹 Filtrar jogos da liga que atendem aos critérios
                     df_matches_league = df_LGP[df_LGP["League"] == league]
 
                     for _, row in df_matches_league.iterrows():
                         home, away, match_time = row["Home"], row["Away"], row["Time"]
 
                         if home in top_scoring_teams and away in top_scoring_teams and \
-                           home in weak_defense_teams and away in weak_defense_teams:
+                            home in weak_defense_teams and away in weak_defense_teams:
                             results.append([league, home, away, match_time])
 
                 # Verificar se há resultados antes de exibir
@@ -827,6 +827,7 @@ with tab_views[2]:
 
     else:
         st.warning("Os dados principais estão ausentes ou incompletos.")
+
 
 
 
