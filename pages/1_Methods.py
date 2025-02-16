@@ -732,12 +732,13 @@ with tab_views[2]:
 
     # Ensure 'data' is available and contains required columns
     required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Ov25", "FT_Odd_BTTS_Y"]
+    
     if data is not None and all(col in data.columns for col in required_columns):
         
         # Apply filtering conditions
         flt = (
             (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 2.50) &
-            (data["FT_Odd_Ov25"] >= 1.60) & (data["FT_Odd_Ov25"] <= 2.50) &
+            (data["FT_Odd_Ov25"] >= 1.50) & (data["FT_Odd_Ov25"] <= 2.50) &
             (data["FT_Odd_BTTS_Y"] >= 1.50) & (data["FT_Odd_BTTS_Y"] <= 2.50)
         )
         df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtered matches
@@ -754,6 +755,9 @@ with tab_views[2]:
                     for league in df_LGP["League"].unique():
                         df_league_hist = historical_data[historical_data["League"] == league]
 
+                        if df_league_hist.empty:
+                            continue  # Skip leagues with no historical data
+
                         # Compute goals scored and conceded **ONLY within this league**
                         Gols_Marcados_Home = df_league_hist.groupby("Home")["FT_Goals_H"].sum()
                         Gols_Marcados_Away = df_league_hist.groupby("Away")["FT_Goals_A"].sum()
@@ -767,9 +771,16 @@ with tab_views[2]:
                         Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
                         Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
 
+                        # Ensure we select only available indices to avoid errors
+                        top_scoring_limit = min(15, len(Gols_Marcados))
+                        weak_defense_limit = min(15, len(Gols_Sofridos))
+
+                        if top_scoring_limit < 6 or weak_defense_limit < 15:
+                            continue  # Skip leagues with insufficient teams
+
                         # Get teams ranked 6-15 in goals scored & teams ranked 1-15 in goals conceded **within the same league**
-                        top_scoring_teams = set(Gols_Marcados.iloc[5:15].index) if len(Gols_Marcados) > 15 else set()
-                        weak_defense_teams = set(Gols_Sofridos.iloc[:15].index) if len(Gols_Sofridos) > 15 else set()
+                        top_scoring_teams = set(Gols_Marcados.iloc[5:top_scoring_limit].index)
+                        weak_defense_teams = set(Gols_Sofridos.iloc[:weak_defense_limit].index)
 
                         # Iterate over matches in the same league
                         df_matches_league = df_LGP[df_LGP["League"] == league]
@@ -782,10 +793,19 @@ with tab_views[2]:
                             ):
                                 results.append([liga, mandante, visitante, hora])
 
-                    # Display results
+                    # Convert results to DataFrame
                     if results:
                         df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
+
+                        # Convert 'Time' to datetime format for proper sorting
+                        df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M", errors="coerce")
+
+                        # Sort by Time in ascending order
+                        df_results = df_results.sort_values(by="Time").reset_index(drop=True)
+
+                        # Display sorted results
                         st.dataframe(df_results, use_container_width=True)
+
                     else:
                         st.warning("No matches meet the criteria.")
 
@@ -797,6 +817,7 @@ with tab_views[2]:
 
     else:
         st.warning("Data is missing or does not contain required columns.")
+
 
 with tab_views[3]:
     st.subheader('Todays Games for Over 1,5 FT')
