@@ -15,7 +15,7 @@ st.subheader('_Methods for Today_')
 # Display Image
 image_path = os.path.join(os.getcwd(), 'static', 'analises001.png')
 if os.path.exists(image_path):
-    st.image(image_path, use_column_width=True)
+    st.image(image_path, use_container_width=True)
 else:
     st.warning("Image not found. Please check the file path.")
 
