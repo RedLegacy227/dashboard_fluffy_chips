@@ -727,51 +727,60 @@ with tab_views[1]:
     
 
 with tab_views[2]:
-    st.subheader('Todays Games for Over 0,5 HT')
+    st.subheader('Todays Games for Lay Goleada Casa')
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
 
     # Ensure 'data' is available and contains required columns
-    if data is not None and all(col in data.columns for col in ['League', 'Date', 'Time', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'HT_Odd_Ov05', 'HT_Odd_Un05', 'FT_Odd_Ov15', 'FT_Odd_Un15', 'FT_Odd_Ov25', 'FT_Odd_Un25', 'FT_Odd_BTTS_Y', 'FT_Odd_BTTS_N', 'Prob_H', 'Prob_D', 'Prob_A', 'Prob_Ov05_HT', 'Prob_Un05_HT', 'Prob_Ov15_FT', 'Prob_Un15_FT', 'Prob_Ov25_FT', 'Prob_Un25_FT', 'Prob_BTTS_Y_FT', 'Prob_BTTS_N_FT', 'H_D', 'H_A', 'D_H', 'D_A', 'A_H', 'A_D', 'Dif_Abs_HomeAway', 'Dif_Abs_HomeDraw', 'Dif_Abs_DrawAway', 'Angle_HomeAway', 'Angle_HomeDraw', 'Angle_DrawAway', 'Dif_Perc_HomeAway', 'Dif_Perc_HomeDraw', 'Dif_Perc_DrawAway', 'CV_Match_Odds', 'CV_Match_Type', 'Media_Ptos_Home', 'CV_Media_Ptos_Home', 'Media_Ptos_Away', 'CV_Media_Ptos_Away', 'Media_Saldo_Golos_Home_HT', 'Media_Saldo_Golos_Away_HT', 'Media_Golos_Marcados_Home_HT', 'CV_Media_Golos_Marcados_Home_HT', 'Media_Golos_Marcados_Away_HT', 'CV_Media_Golos_Marcados_Away_HT', 'Media_Golos_Sofridos_Home_HT', 'CV_Media_Golos_Sofridos_Home_HT', 'Media_Golos_Sofridos_Away_HT', 'CV_Media_Golos_Sofridos_Away_HT', 'Media_Saldo_Golos_Home', 'Media_Saldo_Golos_Away', 'Media_Golos_Marcados_Home', 'CV_Media_Golos_Marcados_Home', 'Media_Golos_Marcados_Away', 'CV_Media_Golos_Marcados_Away', 'Media_Golos_Sofridos_Home', 'CV_Media_Golos_Sofridos_Home', 'Media_Golos_Sofridos_Away', 'CV_Media_Golos_Sofridos_Away', 'Media_CG_01_Marcados_Home', 'CV_Media_CG_01_Marcados_Home', 'Media_CG_01_Marcados_Away', 'CV_Media_CG_01_Marcados_Away', 'Media_CG_01_Sofridos_Home', 'CV_Media_CG_01_Sofridos_Home', 'Media_CG_01_Sofridos_Away', 'CV_Media_CG_01_Sofridos_Away', 'Media_CG_02_Marcados_Home', 'CV_Media_CG_02_Marcados_Home', 'Media_CG_02_Marcados_Away', 'CV_Media_CG_02_Marcados_Away', 'Media_CG_02_Sofridos_Home', 'CV_Media_CG_02_Sofridos_Home', 'Media_CG_02_Sofridos_Away', 'CV_Media_CG_02_Sofridos_Away', 'Media_Shots_Home', 'CV_Media_Shots_Home', 'Media_Shots_Away', 'CV_Media_Shots_Away', 'Media_Shots_Against_Home', 'CV_Media_Shots_Against_Home', 'Media_Shots_Against_Away', 'CV_Media_Shots_Against_Away', 'Media_Shots_per_Goal_Home', 'CV_Media_Shots_per_Goal_Home', 'Media_Shots_per_Goal_Away', 'CV_Media_Shots_per_Goal_Away', 'Media_Shots_per_Goal_Against_Home', 'CV_Media_Shots_per_Goal_Against_Home', 'Media_Shots_per_Goal_Against_Away', 'CV_Media_Shots_per_Goal_Against_Away', 'Media_Shots_On_Target_Home', 'CV_Media_Shots_On_Target_Home', 'Media_Shots_On_Target_Away', 'CV_Media_Shots_On_Target_Away', 'Media_Shots_On_Target_Against_Home', 'CV_Media_Shots_On_Target_Against_Home', 'Media_Shots_On_Target_Against_Away', 'CV_Media_Shots_On_Target_Against_Away', 'Media_Shots_On_Target_per_Goal_Home', 'CV_Media_Shots_On_Target_per_Goal_Home', 'Media_Shots_On_Target_per_Goal_Away', 'CV_Media_Shots_On_Target_per_Goal_Away', 'Media_Shots_On_Target_per_Goal_Against_Home', 'CV_Media_Shots_On_Target_per_Goal_Against_Home', 'Media_Shots_On_Target_per_Goal_Against_Away', 'CV_Media_Shots_On_Target_per_Goal_Against_Away', 'Media_Goal_Attempts_Home', 'CV_Media_Goal_Attempts_Home', 'Media_Goal_Attempts_Away', 'CV_Media_Goal_Attempts_Away', 'Media_Goal_Attempts_Against_Home', 'CV_Media_Goal_Attempts_Against_Home', 'Media_Goal_Attempts_Against_Away', 'CV_Media_Goal_Attempts_Against_Away', 'Media_Goal_Attempts_per_Goal_Home', 'CV_Media_Goal_Attempts_per_Goal_Home', 'Media_Goal_Attempts_per_Goal_Away', 'CV_Media_Goal_Attempts_per_Goal_Away', 'Media_Goal_Attempts_per_Goal_Against_Home', 'CV_Media_Goal_Attempts_per_Goal_Against_Home', 'Media_Goal_Attempts_per_Goal_Against_Away', 'CV_Media_Goal_Attempts_per_Goal_Against_Away', 'Media_Corners_Home', 'CV_Media_Corners_Home', 'Media_Corners_Away', 'CV_Media_Corners_Away', 'Media_Corners_Against_Home', 'CV_Media_Corners_Against_Home', 'Media_Corners_Against_Away', 'CV_Media_Corners_Against_Away', 'Media_Ball_Possession_Home', 'CV_Media_Ball_Possession_Home', 'Media_Ball_Possession_Away', 'CV_Media_Ball_Possession_Away', 'Media_Ball_Possession_Against_Home', 'CV_Media_Ball_Possession_Against_Home', 'Media_Ball_Possession_Against_Away', 'CV_Media_Ball_Possession_Against_Away', 'Media_RPS_MO_Home', 'CV_Media_RPS_MO_Home', 'Media_RPS_MO_Away', 'CV_Media_RPS_MO_Away', 'Media_RPS_OvUn_Home', 'CV_Media_RPS_OvUn_Home', 'Media_RPS_OvUn_Away', 'CV_Media_RPS_OvUn_Away', 'Media_RPS_BTTS_Home', 'CV_Media_RPS_BTTS_Home', 'Media_RPS_BTTS_Away', 'CV_Media_RPS_BTTS_Away', 'Media_Prob_Home', 'CV_Media_Prob_Home', 'Media_Prob_Away', 'CV_Media_Prob_Away', 'Poisson_0_GM_Home', 'Poisson_1_GM_Home', 'Poisson_2_GM_Home', 'Poisson_3_GM_Home', 'Poisson_4_GM_Home', 'Poisson_0_GM_Away', 'Poisson_1_GM_Away', 'Poisson_2_GM_Away', 'Poisson_3_GM_Away', 'Poisson_4_GM_Away', 'Poisson_0_GS_Home', 'Poisson_1_GS_Home', 'Poisson_2_GS_Home', 'Poisson_3_GS_Home', 'Poisson_4_GS_Home', 'Poisson_0_GS_Away', 'Poisson_1_GS_Away', 'Poisson_2_GS_Away', 'Poisson_3_GS_Away', 'Poisson_4_GS_Away', 'Probabilidade_Goals_Scored_Home', 'Probabilidade_Goals_Scored_Away', 'Probabilidade_Goals_Taken_Home', 'Probabilidade_Goals_Taken_Away', 'Media_Power_Ranking_Home', 'CV_Media_Power_Ranking_Home', 'Media_Power_Ranking_Away', 'CV_Media_Power_Ranking_Away', 'Media_First_Goal_Home', 'Media_First_Goal_Away', 'Media_First_Goal_Taken_Home', 'Media_First_Goal_Taken_Away', 'Perc_Scored_1_Goal_1st_Half_Home', 'Perc_Scored_1_Goal_1st_Half_Away', 'Perc_Took_1_Goal_1st_Half_Home', 'Perc_Took_1_Goal_1st_Half_Away', 'Perc_Scored_1_Goal_FT_Home', 'Perc_Scored_1_Goal_FT_Away', 'Perc_Took_1_Goal_FT_Home', 'Perc_Took_1_Goal_FT_Away', 'Perc_Scored_at_least_1_Goal_Home', 'Perc_Scored_at_least_1_Goal_Away', 'Perc_Took_at_least_1_Goal_Home', 'Perc_Took_at_least_1_Goal_Away', 'Perc_of_Games_BTTS_Yes_Home', 'Perc_of_Games_BTTS_Yes_Away', 'Perc_Over_05_HT_Home', 'Perc_Over_05_HT_Away', 'Perc_Under_05_HT_Home', 'Perc_Under_05_HT_Away', 'Perc_Over_15_HT_Home', 'Perc_Over_15_HT_Away', 'Perc_Under_15_HT_Home', 'Perc_Under_15_HT_Away', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away', 'Perc_Under_15_FT_Home', 'Perc_Under_15_FT_Away', 'Perc_Over_25_FT_Home', 'Perc_Over_25_FT_Away', 'Perc_Under_25_FT_Home', 'Perc_Under_25_FT_Away', 'Perc_Wins_HT_Home', 'Perc_Wins_HT_Away', 'Perc_Wins_FT_Home', 'Perc_Wins_FT_Away', 'Favorite', 'Probability_Home', 'Probability_Away', 'Balance', 'Over_Under', 'BTTS_Yes_No', 'Points', 'Goal_Difference', 'Scored_Goals', 'Conceded_Goals', 'Home_Score_Take', 'Away_Score_Take', 'RPS_MO', 'RPS_OVUnd', 'RPS_BTTS']):
+    required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Ov25", "FT_Odd_BTTS_Y"]
+    if data is not None and all(col in data.columns for col in required_columns):
         
-        # Filter the dataset
+        # Apply filtering conditions
         flt = (
             (data["FT_Odd_H"] >= 1.50) & (data["FT_Odd_H"] <= 2.20) &
             (data["FT_Odd_Ov25"] >= 1.50) & (data["FT_Odd_Ov25"] <= 2.20) &
             (data["FT_Odd_BTTS_Y"] >= 1.50) & (data["FT_Odd_BTTS_Y"] <= 2.20)
         )
-        df_LGP = data[flt]
+        df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtered matches
 
         def LayGoleada(df_LGP, historical_data):
             results = []  # Store results
 
-            # Ensure historical_data is available and contains required columns
-            if historical_data is not None and all(col in historical_data.columns for col in ["League", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]):
+            # Ensure historical_data contains the required columns
+            historical_required_columns = ["League", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]
+            if historical_data is not None and all(col in historical_data.columns for col in historical_required_columns):
 
                 try:
-                    # Compute goals scored and conceded once (optimization)
-                    Gols_Marcados_Home = historical_data.groupby("Home")["FT_Goals_H"].sum()
-                    Gols_Marcados_Away = historical_data.groupby("Away")["FT_Goals_A"].sum()
-                    Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
-                    Gols_Marcados["Gols_Marcados"] = Gols_Marcados.sum(axis=1)
-                    Gols_Marcados = Gols_Marcados[["Gols_Marcados"]].sort_values("Gols_Marcados", ascending=False)
+                    # Process each league separately
+                    for league in df_LGP["League"].unique():
+                        df_league_hist = historical_data[historical_data["League"] == league]
 
-                    Gols_Sofridos_Home = historical_data.groupby("Home")["FT_Goals_A"].sum()
-                    Gols_Sofridos_Away = historical_data.groupby("Away")["FT_Goals_H"].sum()
-                    Gols_Sofridos = pd.concat([Gols_Sofridos_Home, Gols_Sofridos_Away], axis=1).fillna(0)
-                    Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
-                    Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
+                        # Compute goals scored and conceded **ONLY within this league**
+                        Gols_Marcados_Home = df_league_hist.groupby("Home")["FT_Goals_H"].sum()
+                        Gols_Marcados_Away = df_league_hist.groupby("Away")["FT_Goals_A"].sum()
+                        Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
+                        Gols_Marcados["Gols_Marcados"] = Gols_Marcados.sum(axis=1)
+                        Gols_Marcados = Gols_Marcados[["Gols_Marcados"]].sort_values("Gols_Marcados", ascending=False)
 
-                    # Get teams ranked 6-15 in goals scored & teams ranked 1-15 in goals conceded
-                    top_scoring_teams = set(Gols_Marcados.iloc[5:15].index)
-                    weak_defense_teams = set(Gols_Sofridos.iloc[:15].index)
+                        Gols_Sofridos_Home = df_league_hist.groupby("Home")["FT_Goals_A"].sum()
+                        Gols_Sofridos_Away = df_league_hist.groupby("Away")["FT_Goals_H"].sum()
+                        Gols_Sofridos = pd.concat([Gols_Sofridos_Home, Gols_Sofridos_Away], axis=1).fillna(0)
+                        Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
+                        Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
 
-                    # Iterate over today's games
-                    for _, row in df_LGP.iterrows():
-                        liga, hora, mandante, visitante = row["League"], row["Time"], row["Home"], row["Away"]
+                        # Get teams ranked 6-15 in goals scored & teams ranked 1-15 in goals conceded **within the same league**
+                        top_scoring_teams = set(Gols_Marcados.iloc[5:15].index) if len(Gols_Marcados) > 15 else set()
+                        weak_defense_teams = set(Gols_Sofridos.iloc[:15].index) if len(Gols_Sofridos) > 15 else set()
 
-                        if mandante in top_scoring_teams and visitante in top_scoring_teams and \
-                           mandante in weak_defense_teams and visitante in weak_defense_teams:
-                            results.append([liga, mandante, visitante, hora])
+                        # Iterate over matches in the same league
+                        df_matches_league = df_LGP[df_LGP["League"] == league]
+                        for _, row in df_matches_league.iterrows():
+                            liga, hora, mandante, visitante = row["League"], row["Time"], row["Home"], row["Away"]
+
+                            if (
+                                mandante in top_scoring_teams and visitante in top_scoring_teams and 
+                                mandante in weak_defense_teams and visitante in weak_defense_teams
+                            ):
+                                results.append([liga, mandante, visitante, hora])
 
                     # Display results
                     if results:
@@ -783,7 +792,7 @@ with tab_views[2]:
                 except KeyError as e:
                     st.error(f"Missing expected column in historical data: {e}")
 
-        # Run the function
+        # Run function
         LayGoleada(df_LGP, historical_data)
 
     else:
