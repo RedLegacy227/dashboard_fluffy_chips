@@ -68,7 +68,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Lay 1 x 0', 'Lay Goleada Casa', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
+tabs = ['Lay 0 x 1', 'Lay Any Other Away Win', 'Lay Any Other Home Win', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -120,9 +120,7 @@ with tab_views[0]:
         except Exception as e:
             st.error(f"Erro ao obter referência: {e}")
             return None
-    
-    
-    
+
     # Configurações de ligas e seus filtros
     leagues_config = {
         "EUROPE - CHAMPIONS LEAGUE": {
