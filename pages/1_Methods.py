@@ -783,16 +783,15 @@ with tab_views[2]:
                     Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
                     Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
 
-                    # 🔹 Ajuste nos limites para evitar exclusões desnecessárias
-                    top_scoring_limit = min(15, len(Gols_Marcados))
-                    weak_defense_limit = min(15, len(Gols_Sofridos))
-
-                    if top_scoring_limit < 6 or weak_defense_limit < 15:
-                        continue  # Pula ligas com poucos times relevantes
-
-                    # 🔹 Restaurar o critério original de times ofensivos e fracos defensivamente
-                    top_scoring_teams = set(Gols_Marcados.iloc[5:top_scoring_limit].index)
-                    weak_defense_teams = set(Gols_Sofridos.iloc[:weak_defense_limit].index)
+                    # 🔹 Ajuste nos limites para ligas pequenas e grandes
+                    if num_teams > 10:
+                        # Critério original para ligas grandes
+                        top_scoring_teams = set(Gols_Marcados.iloc[5:min(15, num_teams)].index)
+                        weak_defense_teams = set(Gols_Sofridos.iloc[:min(15, num_teams)].index)
+                    else:
+                        # Critério adaptado para ligas pequenas (top/bottom 50%)
+                        top_scoring_teams = set(Gols_Marcados.iloc[:max(1, num_teams // 2)].index)
+                        weak_defense_teams = set(Gols_Sofridos.iloc[:max(1, num_teams // 2)].index)
 
                     # 🔹 Filtrar jogos da liga que atendem aos critérios
                     df_matches_league = df_LGP[df_LGP["League"] == league]
@@ -827,6 +826,7 @@ with tab_views[2]:
 
     else:
         st.warning("Os dados principais estão ausentes ou incompletos.")
+
 
 
 
