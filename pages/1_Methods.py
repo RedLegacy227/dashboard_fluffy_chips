@@ -68,7 +68,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Away', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -621,107 +621,6 @@ with tab_views[0]:
         st.info("Dados indisponíveis para a data selecionada.")
 
 with tab_views[1]:
-    st.subheader('Todays Games for Lay Any Other Away Win')
-    st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
-
-    # Verificar se 'data' está disponível e contém as colunas necessárias
-    required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Ov25", "FT_Odd_BTTS_Y"]
-
-    if data is not None and all(col in data.columns for col in required_columns):
-        
-        # Aplicar filtros
-        flt = (
-            (data["FT_Odd_A"] >= 1.50) & 
-            (data["FT_Odd_Ov25"] >= 1.50) & 
-            (data["FT_Odd_BTTS_Y"] <= 2.50) 
-        )
-        df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtrar e resetar índice
-
-        def LayGoleada(df_LGP, historical_data):
-            """ 
-            Filtra jogos onde as equipes têm alto potencial de gols marcados e sofridos.
-            """
-
-            required_cols = ["League", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]
-            
-            if historical_data is None or not all(col in historical_data.columns for col in required_cols):
-                st.warning("Os dados históricos estão incompletos ou ausentes.")
-                return
-
-            results = []  # Lista para armazenar os resultados
-
-            try:
-                for league in df_LGP["League"].unique():
-                    df_league_hist = historical_data[historical_data["League"] == league]
-
-                    if df_league_hist.empty:
-                        continue  # Pula ligas sem histórico suficiente
-
-                    # Contar quantas equipes existem na liga
-                    unique_teams = set(df_league_hist["Home"]).union(set(df_league_hist["Away"]))
-                    num_teams = len(unique_teams)
-
-                    if num_teams < 6:
-                        continue  # Pula ligas muito pequenas
-
-                    # 🔹 Voltar ao método original de cálculo de gols
-                    Gols_Marcados_Home = df_league_hist.groupby("Home")["FT_Goals_H"].sum()
-                    Gols_Marcados_Away = df_league_hist.groupby("Away")["FT_Goals_A"].sum()
-                    Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
-                    Gols_Marcados["Gols_Marcados"] = Gols_Marcados.sum(axis=1)
-                    Gols_Marcados = Gols_Marcados[["Gols_Marcados"]].sort_values("Gols_Marcados", ascending=False)
-
-                    Gols_Sofridos_Home = df_league_hist.groupby("Home")["FT_Goals_A"].sum()
-                    Gols_Sofridos_Away = df_league_hist.groupby("Away")["FT_Goals_H"].sum()
-                    Gols_Sofridos = pd.concat([Gols_Sofridos_Home, Gols_Sofridos_Away], axis=1).fillna(0)
-                    Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
-                    Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
-
-                    # 🔹 Ajuste nos limites para ligas pequenas e grandes
-                    if num_teams > 10:
-                        # Critério original para ligas grandes
-                        top_scoring_teams = set(Gols_Marcados.iloc[5:min(15, num_teams)].index)
-                        weak_defense_teams = set(Gols_Sofridos.iloc[:min(15, num_teams)].index)
-                    else:
-                        # Critério adaptado para ligas pequenas (top/bottom 50%)
-                        top_scoring_teams = set(Gols_Marcados.iloc[:max(1, num_teams // 2)].index)
-                        weak_defense_teams = set(Gols_Sofridos.iloc[:max(1, num_teams // 2)].index)
-
-                    # 🔹 Filtrar jogos da liga que atendem aos critérios
-                    df_matches_league = df_LGP[df_LGP["League"] == league]
-
-                    for _, row in df_matches_league.iterrows():
-                        home, away, match_time = row["Home"], row["Away"], row["Time"]
-
-                        if home in top_scoring_teams and away in top_scoring_teams and \
-                            home in weak_defense_teams and away in weak_defense_teams:
-                            results.append([league, home, away, match_time])
-
-                # Verificar se há resultados antes de exibir
-                if results:
-                    df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
-
-                    # Verificar formato da coluna 'Time' antes de converter
-                    try:
-                        df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M").dt.time
-                    except Exception:
-                        st.error("Erro ao converter a coluna 'Time'. Verifique o formato dos dados.")
-
-                    df_results = df_results.sort_values(by="Time").reset_index(drop=True)
-                    st.dataframe(df_results, use_container_width=True)
-                else:
-                    st.warning("Nenhum jogo atende aos critérios.")
-
-            except KeyError as e:
-                st.error(f"Coluna ausente nos dados históricos: {e}")
-
-        # Chamar a função
-        LayGoleada(df_LGP, historical_data)
-
-    else:
-        st.warning("Os dados principais estão ausentes ou incompletos.")
-
-with tab_views[2]:
     st.subheader('Todays Games for Lay Any Other Home Win')
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
 
@@ -822,7 +721,7 @@ with tab_views[2]:
     else:
         st.warning("Os dados principais estão ausentes ou incompletos.")
 
-with tab_views[3]:
+with tab_views[2]:
     st.subheader('Todays Games for Over 1,5 FT')
     st.markdown('If the Odd is less than 1.42, you must wait for it to reach minimum 1.42')
     if data is not None:
@@ -849,7 +748,7 @@ with tab_views[3]:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-with tab_views[4]:
+with tab_views[3]:
     st.subheader("Todays Games for Lay Home")
     lay_home = data.copy()
     lay_home['VAR1'] = np.sqrt((lay_home['FT_Odd_H'] - lay_home['FT_Odd_A'])**2)
@@ -892,7 +791,7 @@ with tab_views[4]:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
-with tab_views[5]:
+with tab_views[4]:
     st.subheader("Todays Games for Lay Away")
     lay_away = data.copy()
     lay_away['VAR1'] = np.sqrt((lay_away['FT_Odd_H'] - lay_away['FT_Odd_A'])**2)
@@ -935,7 +834,7 @@ with tab_views[5]:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
         
-with tab_views[6]:
+with tab_views[5]:
     st.subheader('Todays Games for Under 1,5 FT')
     st.markdown('Croatia Method 1')
     if data is not None:
@@ -1001,7 +900,7 @@ with tab_views[6]:
     else:
         st.info("Dados indisponíveis para a data selecionada.")
         
-with tab_views[7]:
+with tab_views[6]:
     st.subheader('Todays Games for Back_Home')
     st.markdown('Portugal - Liga Portugal 1 - Method 1')
     if data is not None:
@@ -1083,7 +982,7 @@ with tab_views[7]:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-with tab_views[8]:
+with tab_views[7]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     if data is not None:
