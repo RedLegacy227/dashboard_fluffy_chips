@@ -67,6 +67,16 @@ if leagues_data is not None:
 if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
+# Criar input da banca APENAS UMA VEZ no sidebar
+banca = st.sidebar.number_input("Insert the amount of your working Bank:", min_value=50, value=200, step=10, key="banca_input")
+
+# Calcular stakes com base na banca inserida
+stake_5 = banca * 0.05
+stake_7 = banca * 0.07
+stake_10 = banca * 0.10
+stake_12 = banca * 0.12
+stake_15 = banca * 0.15
+
 # Create Tabs
 tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
 tab_views = st.tabs(tabs)
@@ -586,16 +596,6 @@ with tab_views[0]:
     }
     st.subheader("Today's Games for Lay 0X1 - Fluffy Method")
     
-    # Criar input para o usuário definir a banca (mínimo 50)
-    banca = st.number_input("Insert the amount of your working Bank:", min_value=50, value=200, step=10)
-    
-    # Calcular as stakes com base na banca inserida
-    stake_5 = banca * 0.05
-    stake_7 = banca * 0.07
-    stake_10 = banca * 0.10
-    stake_12 = banca * 0.12
-    stake_15 = banca * 0.15
-    
     # Exibir os valores calculados no Streamlit
     st.markdown(f"""
     ⚽ < 10  - 5% da banca --> **{stake_5:.2f}**\n
@@ -642,16 +642,6 @@ with tab_views[0]:
 with tab_views[1]:
     st.subheader('Todays Games for Lay Any Other Home Win')
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
-    
-    # Criar input para o usuário definir a banca (mínimo 50)
-    banca = st.number_input("Insert the amount of your working Bank:", min_value=50, value=200, step=10)
-    
-    # Calcular as stakes com base na banca inserida
-    stake_5 = banca * 0.05
-    stake_7 = banca * 0.07
-    stake_10 = banca * 0.10
-    stake_12 = banca * 0.12
-    stake_15 = banca * 0.15
     
     # Exibir os valores calculados no Streamlit
     st.markdown(f"""
@@ -1034,16 +1024,6 @@ with tab_views[6]:
 with tab_views[7]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
-    
-    # Criar input para o usuário definir a banca (mínimo 50)
-    banca = st.number_input("Insert the amount of your working Bank:", min_value=50, value=200, step=10)
-    
-    # Calcular as stakes com base na banca inserida
-    stake_5 = banca * 0.05
-    stake_7 = banca * 0.07
-    stake_10 = banca * 0.10
-    stake_12 = banca * 0.12
-    stake_15 = banca * 0.15
     
     # Exibir os valores calculados no Streamlit
     st.markdown(f"""
