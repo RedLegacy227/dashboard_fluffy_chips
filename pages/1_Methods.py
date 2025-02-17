@@ -67,9 +67,10 @@ if leagues_data is not None:
 if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
+# Adicionar um título no sidebar
+st.sidebar.header("💰 Working Bank Configuration")
 # Criar input da banca APENAS UMA VEZ no sidebar
 banca = st.sidebar.number_input("Insert the amount of your working Bank:", min_value=50, value=200, step=10, key="banca_input")
-
 # Calcular stakes com base na banca inserida
 stake_5 = banca * 0.05
 stake_7 = banca * 0.07
