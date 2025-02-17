@@ -639,10 +639,11 @@ with tab_views[1]:
 
         def LayGoleada(df_LGP, historical_data):
             """ 
-            Filtra jogos onde as equipes têm alto potencial de gols marcados e sofridos.
+            Filtra jogos onde as equipes têm alto potencial de gols marcados e sofridos,
+            considerando apenas os últimos 38 jogos dentro da liga.
             """
 
-            required_cols = ["League", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]
+            required_cols = ["League", "Date", "Home", "Away", "FT_Goals_H", "FT_Goals_A"]
             
             if historical_data is None or not all(col in historical_data.columns for col in required_cols):
                 st.warning("Os dados históricos estão incompletos ou ausentes.")
@@ -657,37 +658,43 @@ with tab_views[1]:
                     if df_league_hist.empty:
                         continue  # Pula ligas sem histórico suficiente
 
-                    # Contar quantas equipes existem na liga
-                    unique_teams = set(df_league_hist["Home"]).union(set(df_league_hist["Away"]))
-                    num_teams = len(unique_teams)
+                    # Ordenar jogos por data (assumindo formato AAAA-MM-DD)
+                    df_league_hist = df_league_hist.sort_values(by="Date", ascending=False)
 
-                    if num_teams < 6:
-                        continue  # Pula ligas muito pequenas
+                    # Filtrar apenas os últimos 34 jogos para cada time
+                    df_filtered = df_league_hist.groupby("Home").head(34)
+                    df_filtered = df_filtered.append(df_league_hist.groupby("Away").head(34)).drop_duplicates()
 
-                    # 🔹 Voltar ao método original de cálculo de gols
-                    Gols_Marcados_Home = df_league_hist.groupby("Home")["FT_Goals_H"].sum()
-                    Gols_Marcados_Away = df_league_hist.groupby("Away")["FT_Goals_A"].sum()
+                    # Contar quantos jogos cada equipe tem
+                    team_games_count = df_filtered["Home"].value_counts().add(df_filtered["Away"].value_counts(), fill_value=0)
+
+                    # Manter apenas times que tenham pelo menos 20 jogos
+                    valid_teams = team_games_count[team_games_count >= 20].index
+
+                    df_filtered = df_filtered[df_filtered["Home"].isin(valid_teams) & df_filtered["Away"].isin(valid_teams)]
+
+                    # Se não houver equipes suficientes, pula essa liga
+                    if df_filtered.empty:
+                        continue
+
+                    # Recalcular gols marcados e sofridos com base nesses últimos 34 jogos
+                    Gols_Marcados_Home = df_filtered.groupby("Home")["FT_Goals_H"].sum()
+                    Gols_Marcados_Away = df_filtered.groupby("Away")["FT_Goals_A"].sum()
                     Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
                     Gols_Marcados["Gols_Marcados"] = Gols_Marcados.sum(axis=1)
                     Gols_Marcados = Gols_Marcados[["Gols_Marcados"]].sort_values("Gols_Marcados", ascending=False)
 
-                    Gols_Sofridos_Home = df_league_hist.groupby("Home")["FT_Goals_A"].sum()
-                    Gols_Sofridos_Away = df_league_hist.groupby("Away")["FT_Goals_H"].sum()
+                    Gols_Sofridos_Home = df_filtered.groupby("Home")["FT_Goals_A"].sum()
+                    Gols_Sofridos_Away = df_filtered.groupby("Away")["FT_Goals_H"].sum()
                     Gols_Sofridos = pd.concat([Gols_Sofridos_Home, Gols_Sofridos_Away], axis=1).fillna(0)
                     Gols_Sofridos["Gols_Sofridos"] = Gols_Sofridos.sum(axis=1)
                     Gols_Sofridos = Gols_Sofridos[["Gols_Sofridos"]].sort_values("Gols_Sofridos", ascending=True)
 
-                    # 🔹 Ajuste nos limites para ligas pequenas e grandes
-                    if num_teams > 10:
-                        # Critério original para ligas grandes
-                        top_scoring_teams = set(Gols_Marcados.iloc[5:min(15, num_teams)].index)
-                        weak_defense_teams = set(Gols_Sofridos.iloc[:min(15, num_teams)].index)
-                    else:
-                        # Critério adaptado para ligas pequenas (top/bottom 50%)
-                        top_scoring_teams = set(Gols_Marcados.iloc[:max(1, num_teams // 2)].index)
-                        weak_defense_teams = set(Gols_Sofridos.iloc[:max(1, num_teams // 2)].index)
+                    # Ajustar seleção de times ofensivos e defensivos
+                    top_scoring_teams = set(Gols_Marcados.iloc[:max(1, len(valid_teams) // 2)].index)
+                    weak_defense_teams = set(Gols_Sofridos.iloc[:max(1, len(valid_teams) // 2)].index)
 
-                    # 🔹 Filtrar jogos da liga que atendem aos critérios
+                    # Filtrar jogos da liga que atendem aos critérios
                     df_matches_league = df_LGP[df_LGP["League"] == league]
 
                     for _, row in df_matches_league.iterrows():
@@ -720,6 +727,7 @@ with tab_views[1]:
 
     else:
         st.warning("Os dados principais estão ausentes ou incompletos.")
+
 
 with tab_views[2]:
     st.subheader('Todays Games for Over 1,5 FT')
