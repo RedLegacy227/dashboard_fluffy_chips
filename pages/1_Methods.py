@@ -662,14 +662,14 @@ with tab_views[1]:
                     df_league_hist = df_league_hist.sort_values(by="Date", ascending=False)
 
                     # Filtrar apenas os últimos 34 jogos para cada time
-                    df_filtered = df_league_hist.groupby("Home").head(34)
-                    df_filtered = df_filtered.append(df_league_hist.groupby("Away").head(34)).drop_duplicates()
+                    df_filtered = df_league_hist.groupby("Home").head(38)
+                    df_filtered = df_filtered.append(df_league_hist.groupby("Away").head(38)).drop_duplicates()
 
                     # Contar quantos jogos cada equipe tem
                     team_games_count = df_filtered["Home"].value_counts().add(df_filtered["Away"].value_counts(), fill_value=0)
 
                     # Manter apenas times que tenham pelo menos 20 jogos
-                    valid_teams = team_games_count[team_games_count >= 20].index
+                    valid_teams = team_games_count[team_games_count >= 38].index
 
                     df_filtered = df_filtered[df_filtered["Home"].isin(valid_teams) & df_filtered["Away"].isin(valid_teams)]
 
