@@ -586,11 +586,11 @@ with tab_views[0]:
     }
     st.subheader("Today's Games for Lay 0X1 - Fluffy Method")
     st.markdown("""
-                < 10  - 5% da banca
-                10-20 - 7% da banca
-                21-30 - 10% da banca
-                31-40 - 12% da banca
-                41-50 - 15% da banca")
+                ⚽ < 10  - 5% da banca \n
+                ⚽ 10-20 - 7% da banca \n
+                ⚽ 21-30 - 10% da banca \n
+                ⚽ 31-40 - 12% da banca \n
+                ⚽ 41-50 - 15% da banca
                 """)
     if data is not None:
         for league, config in leagues_config.items():
@@ -630,11 +630,11 @@ with tab_views[1]:
     st.subheader('Todays Games for Lay Any Other Home Win')
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
     st.markdown("""
-                < 10  - 5% da banca
-                10-20 - 7% da banca
-                21-30 - 10% da banca
-                31-40 - 12% da banca
-                41-50 - 15% da banca")
+                ⚽ < 10  - 5% da banca \n
+                ⚽ 10-20 - 7% da banca \n
+                ⚽ 21-30 - 10% da banca \n
+                ⚽ 31-40 - 12% da banca \n
+                ⚽ 41-50 - 15% da banca
                 """)
 
     # Verificar se 'data' está disponível e contém as colunas necessárias
@@ -1010,11 +1010,11 @@ with tab_views[7]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     st.markdown("""
-                < 10  - 5% da banca
-                10-20 - 7% da banca
-                21-30 - 10% da banca
-                31-40 - 12% da banca
-                41-50 - 15% da banca")
+                ⚽ < 10  - 5% da banca \n
+                ⚽ 10-20 - 7% da banca \n
+                ⚽ 21-30 - 10% da banca \n
+                ⚽ 31-40 - 12% da banca \n
+                ⚽ 41-50 - 15% da banca
                 """)
     if data is not None:
         # Aplicar os filtros
