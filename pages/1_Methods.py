@@ -661,9 +661,9 @@ with tab_views[1]:
                     # Ordenar jogos por data (assumindo formato AAAA-MM-DD)
                     df_league_hist = df_league_hist.sort_values(by="Date", ascending=False)
 
-                    # Filtrar apenas os últimos 34 jogos para cada time
-                    df_home = df_league_hist.groupby("Home").head(25)
-                    df_away = df_league_hist.groupby("Away").head(25)
+                    # Filtrar apenas os últimos 21 jogos para cada time
+                    df_home = df_league_hist.groupby("Home").head(21)
+                    df_away = df_league_hist.groupby("Away").head(21)
 
                     # ✅ Substituindo .append() por pd.concat()
                     df_filtered = pd.concat([df_home, df_away]).drop_duplicates()
@@ -671,8 +671,8 @@ with tab_views[1]:
                     # Contar quantos jogos cada equipe tem
                     team_games_count = df_filtered["Home"].value_counts().add(df_filtered["Away"].value_counts(), fill_value=0)
 
-                    # Manter apenas times que tenham pelo menos 25 jogos
-                    valid_teams = team_games_count[team_games_count >= 25].index
+                    # Manter apenas times que tenham pelo menos 21 jogos
+                    valid_teams = team_games_count[team_games_count >= 21].index
 
                     df_filtered = df_filtered[df_filtered["Home"].isin(valid_teams) & df_filtered["Away"].isin(valid_teams)]
 
@@ -680,7 +680,7 @@ with tab_views[1]:
                     if df_filtered.empty:
                         continue
 
-                    # Recalcular gols marcados e sofridos com base nesses últimos 25 jogos
+                    # Recalcular gols marcados e sofridos com base nesses últimos 21 jogos
                     Gols_Marcados_Home = df_filtered.groupby("Home")["FT_Goals_H"].sum()
                     Gols_Marcados_Away = df_filtered.groupby("Away")["FT_Goals_A"].sum()
                     Gols_Marcados = pd.concat([Gols_Marcados_Home, Gols_Marcados_Away], axis=1).fillna(0)
