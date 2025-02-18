@@ -337,3 +337,54 @@ try:
                 ax7.set_title("Goals Scored - Away Games", fontsize=20)
                 ax7.legend(fontsize=20)
                 st.pyplot(fig7)
+        
+            st.divider()
+            # Adicionar cálculo de poder de ataque e defesa
+            leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/refs/heads/main/df_ligas.csv"
+            try:
+                leagues_data = pd.read_csv(leagues_url)
+                
+                if "League" in filtered_data.columns:
+                    selected_league = filtered_data["League"].iloc[0]
+                    league_stats = leagues_data[leagues_data["League"] == selected_league]
+                    
+                if not league_stats.empty:
+                    # Média de gols da liga correspondente
+                    league_avg_gm_home = league_stats["Media_GM_Home_Teams"].iloc[0]
+                    league_avg_gs_away = league_stats["Media_GS_Away_Teams"].iloc[0]
+                    league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
+                    league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
+                    
+                    # Filtrar jogos do Home apenas em casa
+                    home_filtered_data = filtered_data[filtered_data["Home"] == selected_home]
+                    home_goals_scored = home_filtered_data["FT_Goals_H"].mean()  # Média de gols marcados pelo Home em casa
+                    home_goals_conceded = home_filtered_data["FT_Goals_A"].mean()  # Média de gols sofridos pelo Home em casa
+                    
+                    # Filtrar jogos do Away apenas fora
+                    away_filtered_data = filtered_data[filtered_data["Away"] == selected_away]
+                    away_goals_scored = away_filtered_data["FT_Goals_A"].mean()  # Média de gols marcados pelo Away fora
+                    away_goals_conceded = away_filtered_data["FT_Goals_H"].mean()  # Média de gols sofridos pelo Away fora
+                    
+                    # Calcular poderes de ataque e defesa
+                    attack_power_home = home_goals_scored / league_avg_gm_home
+                    defense_power_home = home_goals_conceded / league_avg_gs_home
+                    
+                    attack_power_away = away_goals_scored / league_avg_gm_away
+                    defense_power_away = away_goals_conceded / league_avg_gs_away
+                    
+                    
+                    # Exibir os resultados no Streamlit
+                    st.subheader("**Power Strength Analysis**")
+                    st.markdown('**Power of Attack > 1**: The Team has a Superior Attack than the League Average (Strong Attack)')
+                    st.markdown('**Power of Attack < 1**: The Team has an Inferior Attack than the League Average (Weak Attack)')
+                    st.markdown('**Power of Defense > 1**: The Team has a Inferior Defense than the League Average (Weak Defense)')
+                    st.markdown('**Power of Defense < 1**: The Team has an Superior Defense than the League Average (Strong Defense)')
+                    st.markdown(f"- **Power of Attack for {selected_home}:** {attack_power_home:.2f}")
+                    st.markdown(f"- **Power of Attack for {selected_away}:** {attack_power_away:.2f}")
+                    st.markdown(f"- **Power of Defense for {selected_home}:** {defense_power_home:.2f}")
+                    st.markdown(f"- **Power of Defense for {selected_away}:** {defense_power_away:.2f}")
+                else:
+                    st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
+            except Exception as e:
+                st.error(f"Erro ao carregar os dados de ligas: {e}")
+                st.divider()                    
