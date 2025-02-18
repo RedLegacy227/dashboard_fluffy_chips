@@ -389,4 +389,6 @@ try:
                 st.error(f"Erro ao carregar os dados de ligas: {e}")
         except:
             st.error(f"Erro Geral: {e}")
-        st.divider()                    
+except:
+            st.error(f"Erro Geral: {e}")
+st.divider()                    
