@@ -383,6 +383,15 @@ try:
                     st.markdown(f"- **Power of Attack for {selected_away}:** {attack_power_away:.2f}")
                     st.markdown(f"- **Power of Defense for {selected_home}:** {defense_power_home:.2f}")
                     st.markdown(f"- **Power of Defense for {selected_away}:** {defense_power_away:.2f}")
+                    
+                    # Cálculos de Expected Goals
+                    xg_home = league_avg_gm_home * attack_power_home / defense_power_away
+                    xg_away = league_avg_gm_away * attack_power_away / defense_power_home
+                    
+                    # Exibindo os Expected Goals
+                    st.subheader("**Expected Goals (xG) Analysis**")
+                    st.markdown(f"- **Expected Goals for {selected_home}:** {xg_home:.2f}")
+                    st.markdown(f"- **Expected Goals for {selected_away}:** {xg_away:.2f}")
                 else:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
