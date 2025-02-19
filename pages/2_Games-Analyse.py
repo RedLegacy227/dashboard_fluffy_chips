@@ -384,12 +384,17 @@ try:
                     st.markdown(f"- **Power of Defense for {selected_home}:** {defense_power_home:.2f}")
                     st.markdown(f"- **Power of Defense for {selected_away}:** {defense_power_away:.2f}")
                     
-                    # Cálculos de Expected Goals (xG) e Expected Goals Against (xGA)
-                    xg_home = league_avg_gm_home * attack_power_home / defense_power_away
-                    xg_away = league_avg_gm_away * attack_power_away / defense_power_home
+                    # Expected Goals (xG) para o time da casa
+                    xg_home = home_goals_scored * attack_power_home / defense_power_away
                     
-                    xga_home = league_avg_gs_home * defense_power_home / attack_power_away
-                    xga_away = league_avg_gs_away * defense_power_away / attack_power_home
+                    # Expected Goals (xG) para o time visitante
+                    xg_away = away_goals_scored * attack_power_away / defense_power_home
+                    
+                    # Expected Goals Against (xGA) para o time da casa
+                    xga_home = home_goals_conceded * defense_power_home / attack_power_away
+                    
+                    # Expected Goals Against (xGA) para o time visitante
+                    xga_away = away_goals_conceded * defense_power_away / attack_power_home
                     
                     # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
                     st.subheader("**Expected Goals (xG) and Expected Goals Against (xGA) Analysis**")
