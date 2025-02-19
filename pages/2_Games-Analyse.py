@@ -73,7 +73,7 @@ try:
 
             if all(col in filtered_data.columns for col in required_columns):
                 filtered_data = filtered_data[
-                    (filtered_data["Home"] == selected_home) & (filtered_data["Away"] == selected_away)
+                    (filtered_data["Home"] == selected_home) & (filtered_data["Away"] == selected_away) & (filtered_data['League'] == selected_league)
                     ][required_columns]
                 
                 if not filtered_data.empty:
@@ -184,7 +184,7 @@ try:
             
         # Carregar dados do CSV e preparar análises
         try:
-            data_7 = pd.read_csv(historical_data_url)
+            data_7 = filtered_data
             # Converter a coluna "Date" para datetime
             data_7["Date"] = pd.to_datetime(data_7["Date"])
             # Filtrar os últimos 7 jogos da equipe da casa (jogando em casa) até a data selecionada
