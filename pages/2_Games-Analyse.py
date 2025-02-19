@@ -184,7 +184,7 @@ try:
             
         # Carregar dados do CSV e preparar análises
         try:
-            data_7 = filtered_data
+            data_7 = historical_data
             # Converter a coluna "Date" para datetime
             data_7["Date"] = pd.to_datetime(data_7["Date"])
             # Filtrar os últimos 7 jogos da equipe da casa (jogando em casa) até a data selecionada
