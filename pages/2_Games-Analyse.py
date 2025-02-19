@@ -389,22 +389,13 @@ try:
                     
                     # Expected Goals (xG) para o time da casa
                     xg_home = home_goals_scored * attack_power_home / defense_power_away
-                    
                     # Expected Goals (xG) para o time visitante
                     xg_away = away_goals_scored * attack_power_away / defense_power_home
-                    
-                    # Expected Goals Against (xGA) para o time da casa
-                    xga_home = home_goals_conceded * defense_power_home / attack_power_away
-                    
-                    # Expected Goals Against (xGA) para o time visitante
-                    xga_away = away_goals_conceded * defense_power_away / attack_power_home
                     
                     # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
                     st.subheader("**Expected Goals (xG) and Expected Goals Against (xGA) Analysis**")
                     st.markdown(f"- **Expected Goals for {selected_home}:** {xg_home:.2f}")
                     st.markdown(f"- **Expected Goals for {selected_away}:** {xg_away:.2f}")
-                    st.markdown(f"- **Expected Goals Against for {selected_home}:** {xga_home:.2f}")
-                    st.markdown(f"- **Expected Goals Against for {selected_away}:** {xga_away:.2f}")
                 else:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
