@@ -188,10 +188,10 @@ try:
             # Converter a coluna "Date" para datetime
             data_7["Date"] = pd.to_datetime(data_7["Date"])
             # Filtrar os últimos 7 jogos da equipe da casa (jogando em casa) até a data selecionada
-            home_last_7 = data_7[(data_7["Home"] == selected_home) & (data_7["Date"] <= pd.to_datetime(selected_date))
+            home_last_7 = data_7[(data_7["Home"] == selected_home) & (data_7['League'] == selected_league) & (data_7["Date"] <= pd.to_datetime(selected_date))
                             ].sort_values(by="Date", ascending=False).head(7)
             # Filtrar os últimos 7 jogos da equipe visitante (jogando fora) até a data selecionada
-            away_last_7 = data_7[(data_7["Away"] == selected_away) & (data_7["Date"] <= pd.to_datetime(selected_date))
+            away_last_7 = data_7[(data_7["Away"] == selected_away) & (data_7['League'] == selected_league) & (data_7["Date"] <= pd.to_datetime(selected_date))
                             ].sort_values(by="Date", ascending=False).head(7)
             st.divider()
             # **Análises para a equipe da casa**
