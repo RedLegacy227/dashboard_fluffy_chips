@@ -355,15 +355,15 @@ try:
                     league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
                     league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
                     
-                    # Filtrar jogos do Home apenas em casa
-                    home_filtered_data = filtered_data[filtered_data["Home"] == selected_home]
-                    home_goals_scored = home_filtered_data["FT_Goals_H"].mean()  # Média de gols marcados pelo Home em casa
-                    home_goals_conceded = home_filtered_data["FT_Goals_A"].mean()  # Média de gols sofridos pelo Home em casa
-                    
-                    # Filtrar jogos do Away apenas fora
-                    away_filtered_data = filtered_data[filtered_data["Away"] == selected_away]
-                    away_goals_scored = away_filtered_data["FT_Goals_A"].mean()  # Média de gols marcados pelo Away fora
-                    away_goals_conceded = away_filtered_data["FT_Goals_H"].mean()  # Média de gols sofridos pelo Away fora
+                    # Filtrar dados históricos apenas da liga e do time da casa
+                    home_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Home"] == selected_home)]
+                    home_goals_scored = home_league_data["FT_Goals_H"].mean()
+                    home_goals_conceded = home_league_data["FT_Goals_A"].mean()
+            
+                    # Filtrar dados históricos apenas da liga e do time visitante
+                    away_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Away"] == selected_away)]
+                    away_goals_scored = away_league_data["FT_Goals_A"].mean()
+                    away_goals_conceded = away_league_data["FT_Goals_H"].mean()
                     
                     # Calcular poderes de ataque e defesa
                     attack_power_home = home_goals_scored / league_avg_gm_home
@@ -371,7 +371,6 @@ try:
                     
                     attack_power_away = away_goals_scored / league_avg_gm_away
                     defense_power_away = away_goals_conceded / league_avg_gs_away
-                    
                     
                     # Exibir os resultados no Streamlit
                     st.subheader("**Power Strength Analysis**")
