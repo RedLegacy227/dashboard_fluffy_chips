@@ -55,13 +55,17 @@ try:
 
         # Dividir o jogo em Home e Away
         selected_home, selected_away = selected_game.split(" x ")
+        
+        # Escolher a liga baseada na seleção do jogo
+        selected_league = data[data['Home'] == selected_home].iloc[0]['League']
 
         # Carregar dados históricos
         historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/refs/heads/main/df_base_original.csv"
         
         historical_data = pd.read_csv(historical_data_url)
         historical_data['Date'] = pd.to_datetime(historical_data["Date"])
-        filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date))]
+        # Filtrar dados históricos por data e liga
+        filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
         try:
             required_columns = [
                 'Date', 'League', 'Season', 'Home', 'Away', 'HT_Goals_H', 'HT_Goals_A', 'FT_Goals_H', 'FT_Goals_A', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A','FT_Odd_Over25', 'Odd_BTTS_Yes'
