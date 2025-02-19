@@ -37,7 +37,7 @@ csv_file_name = f'df_jogos_do_dia_{formatted_date}.csv'
 csv_file_url = github_base_url + csv_file_name
 
 # Function to Load Data with Caching
-@st.cache_data
+@st.cache_data(ttl=0)
 def load_data(url):
     try:
         response = requests.get(url)
