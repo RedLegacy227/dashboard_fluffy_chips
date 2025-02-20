@@ -10,6 +10,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 from auth import logout
+from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
 st.title("👩🏽‍💻 Games Analyser - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
@@ -31,8 +32,8 @@ st.divider()
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.session_state["redirect"] = "Login"  # Define a página para onde o usuário deve ir
     st.rerun()  # Recarrega a aplicação
-# Logout button
-st.sidebar.button("🚪 Logout", on_click=logout)
+# Adiciona o botão de logout apenas uma vez
+add_logout_button()
 # Features based on roles
 if st.session_state["role"] == "Admin":
     st.subheader("🔧 Admin Features")
