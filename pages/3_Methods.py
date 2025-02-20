@@ -9,7 +9,7 @@ from datetime import datetime
 from auth import logout
 
 # Streamlit App Title and Headers
-st.set_page_config(page_title="Methods - Fluffy Chips", page_icon="🔋")
+
 st.title("🔋 Methods - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
