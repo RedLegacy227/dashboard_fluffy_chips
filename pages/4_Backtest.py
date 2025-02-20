@@ -7,6 +7,7 @@ import base64
 import requests
 from datetime import datetime
 from auth import logout
+from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
 # Streamlit App Title and Headers
 
@@ -43,5 +44,5 @@ elif st.session_state["role"] == "Viewer":
     st.subheader("👀 Viewer Features")
     st.write("- View analytics and reports")
 
-# Logout button
-st.sidebar.button("🚪 Logout", on_click=logout)
+# Adiciona o botão de logout apenas uma vez
+add_logout_button()
