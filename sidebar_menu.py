@@ -1,24 +1,20 @@
 import streamlit as st
 
 def show_sidebar():
-    """Exibe dinamicamente o menu lateral baseado no status de login."""
+    """Dynamically displays the sidebar menu based on login status."""
     
-    # Certificar que o estado de sessão está inicializado
+    # Ensure session state is initialized
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
 
-    # ✅ Capturar parâmetro da URL (se existir)
-    query_params = st.experimental_get_query_params()
-    if "page" in query_params:
-        selected_page = query_params["page"][0]  # Pegamos o primeiro valor da lista
-    else:
-        selected_page = "Login"  # Default para Login
+    # ✅ Get the query parameter (if any)
+    selected_page = st.query_params.get("page", ["Login"])[0]
 
-    # Se o usuário não estiver logado, exibe apenas "Login"
+    # Show only "Login" if the user is not logged in
     if not st.session_state["logged_in"]:
         menu_items = {"Login": "Login"}
     else:
-        # Usuário logado vê apenas estas páginas
+        # Show these pages only after login
         menu_items = {
             "Home": "1_Home",
             "Games Analyse": "2_Games-Analyse",
@@ -26,11 +22,11 @@ def show_sidebar():
             "Backtest": "4_Backtest"
         }
 
-    # Criar o menu lateral
+    # Create sidebar menu
     st.sidebar.title("📂 Navigation")
     page = st.sidebar.radio("Select a Page:", list(menu_items.keys()), index=list(menu_items.values()).index(selected_page))
 
-    # Redirecionar para a página escolhida
-    st.experimental_set_query_params(page=menu_items[page])
+    # ✅ Update the query parameter to track selected page
+    st.query_params.update({"page": menu_items[page]})
     st.rerun()
 
