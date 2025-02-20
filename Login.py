@@ -1,33 +1,38 @@
 import streamlit as st
+from auth import verify_login
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
 
-# Simulated authentication
+# Inicializar estado de sessão para login
 if "logged_in" not in st.session_state:
-    st.session_state["logged_in"] = False  # Ensure default state
+    st.session_state["logged_in"] = False
 
-# Mock login form (Replace with actual authentication)
 st.title("🔐 Login - Fluffy Chips Web Analyzer")
-username = st.text_input("Username", key="username_input")
-password = st.text_input("Password", type="password", key="password_input")
+
+username = st.text_input("Username")
+password = st.text_input("Password", type="password")
 login_button = st.button("Login")
 
-# Simulated authentication logic
+# Processamento de login
 if login_button:
-    if username == "admin" and password == "password":  # Replace with real auth
+    user = verify_login(username, password)
+    if user:
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
-        st.session_state["role"] = "admin"
+        st.session_state["role"] = user.get("role", "viewer")
 
-        # Redirect if a previous page was set
+        st.success(f"✅ Bem-vindo, {username} ({st.session_state['role']})!")
+
+        # Redirecionamento seguro
         if "redirect" in st.session_state:
             target_page = st.session_state.pop("redirect")
-            st.success(f"✅ Redirecting to {target_page}...")
-            st.experimental_rerun()  # Safe to rerun after session change
+            st.experimental_rerun()
+        else:
+            st.experimental_rerun()
     else:
-        st.error("❌ Invalid username or password.")
+        st.error("❌ Usuário ou senha incorretos.")
 
-# Prevent non-logged-in users from accessing this page
+# Impedir acesso não autorizado
 if not st.session_state["logged_in"]:
-    st.warning("🚫 Access denied. Please log in first.")
+    st.warning("🚫 Acesso negado. Faça login primeiro.")
     st.stop()
