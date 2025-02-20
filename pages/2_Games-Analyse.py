@@ -414,7 +414,7 @@ try:
             past_games = filtered_data[(filtered_data['Home'] == selected_home) | (filtered_data['Away'] == selected_away)].tail(21)
             
             # Function to count goals per time segment
-            def count_goals(goals_list, home_team):
+            def count_goals(goals_list):
                 time_segments = {"0-15": 0, "15-30": 0, "30-45": 0, "45-60": 0, "60-75": 0, "75-90": 0}
                 for goals in goals_list:
                     if isinstance(goals, str):
@@ -435,29 +435,63 @@ try:
                 return time_segments
     
             # Get goal statistics
-            home_goals = count_goals(past_games['Goals_Minutes_Home'], selected_home)
-            away_goals = count_goals(past_games['Goals_Minutes_Away'], selected_away)
+            home_goals = count_goals(past_games['Goals_Minutes_Home'])
+            away_goals = count_goals(past_games['Goals_Minutes_Away'])
     
             st.subheader(f"Time of Goals of {selected_home}")
             for segment, count in home_goals.items():
                 st.write(f"{segment} - {count} scored and {away_goals[segment]} conceded")
     
+            st.subheader(f"Time of Goals of {selected_away}")
+            for segment, count in away_goals.items():
+                st.write(f"{segment} - {count} scored and {home_goals[segment]} conceded")
+    
+            def summarize_half_goals(goals, half_segments):
+                return sum([goals[segment] for segment in half_segments])
+    
             st.subheader(f"First Half Goals of {selected_home}")
-            first_half_scored = sum([home_goals[segment] for segment in ["0-15", "15-30", "30-45"]])
-            first_half_conceded = sum([away_goals[segment] for segment in ["0-15", "15-30", "30-45"]])
-            st.write(f"In the last 21 games, {selected_home} scored {first_half_scored} goals in the first half and conceded {first_half_conceded} goals.")
+            st.write(f"In the last 21 games, {selected_home} scored {summarize_half_goals(home_goals, ['0-15', '15-30', '30-45'])} goals and conceded {summarize_half_goals(away_goals, ['0-15', '15-30', '30-45'])} goals.")
     
             st.subheader(f"Second Half Goals of {selected_home}")
-            second_half_scored = sum([home_goals[segment] for segment in ["45-60", "60-75", "75-90"]])
-            second_half_conceded = sum([away_goals[segment] for segment in ["45-60", "60-75", "75-90"]])
-            st.write(f"In the last 21 games, {selected_home} scored {second_half_scored} goals in the second half and conceded {second_half_conceded} goals.")
+            st.write(f"In the last 21 games, {selected_home} scored {summarize_half_goals(home_goals, ['45-60', '60-75', '75-90'])} goals and conceded {summarize_half_goals(away_goals, ['45-60', '60-75', '75-90'])} goals.")
     
-            # Count first goal occurrences
-            home_first_goal = sum(past_games['Goals_Minutes_Home'].apply(lambda x: isinstance(x, str) and ast.literal_eval(x) and min(ast.literal_eval(x)) < min(ast.literal_eval(past_games['Goals_Minutes_Away'][i])) if isinstance(past_games['Goals_Minutes_Away'][i], str) and ast.literal_eval(past_games['Goals_Minutes_Away'][i]) else True for i in range(len(past_games))))
-            away_first_goal = 21 - home_first_goal
+            st.subheader(f"First Half Goals of {selected_away}")
+            st.write(f"In the last 21 games, {selected_away} scored {summarize_half_goals(away_goals, ['0-15', '15-30', '30-45'])} goals and conceded {summarize_half_goals(home_goals, ['0-15', '15-30', '30-45'])} goals.")
     
-            st.write(f"{selected_home} marcou primeiro {home_first_goal} vezes nos últimos 21 jogos")
-            st.write(f"{selected_away} marcou primeiro {away_first_goal} vezes nos últimos 21 jogos")
+            st.subheader(f"Second Half Goals of {selected_away}")
+            st.write(f"In the last 21 games, {selected_away} scored {summarize_half_goals(away_goals, ['45-60', '60-75', '75-90'])} goals and conceded {summarize_half_goals(home_goals, ['45-60', '60-75', '75-90'])} goals.")
+    
+            # Function to determine first goal occurrences
+            def count_first_goal(home_goals_list, away_goals_list):
+                count_home_first = 0
+                count_away_first = 0
+                
+                for home_goals, away_goals in zip(home_goals_list, away_goals_list):
+                    if isinstance(home_goals, str) and isinstance(away_goals, str):
+                        home_times = ast.literal_eval(home_goals)
+                        away_times = ast.literal_eval(away_goals)
+                        
+                        if home_times and away_times:  # Both teams scored
+                            if min(home_times) < min(away_times):
+                                count_home_first += 1
+                            else:
+                                count_away_first += 1
+                        elif home_times:  # Only home team scored
+                            count_home_first += 1
+                        elif away_times:  # Only away team scored
+                            count_away_first += 1
+            
+                return count_home_first, count_away_first
+            
+            # Apply function to past 21 games
+            home_first_goal, away_first_goal = count_first_goal(
+                past_games['Goals_Minutes_Home'], past_games['Goals_Minutes_Away']
+            )
+            
+            # Display results
+            st.write(f"{selected_home} Scored First {home_first_goal} times in the last 21 games")
+            st.write(f"{selected_away} Scored First {away_first_goal} times in the last 21 games")
+
 
         except Exception as e:
             st.error(f"Erro Geral: {e}")
