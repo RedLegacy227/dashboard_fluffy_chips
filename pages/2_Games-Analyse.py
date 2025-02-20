@@ -486,7 +486,7 @@ try:
             ax.set_title("First & Second Half Goals")
             ax.legend()
             st.pyplot(fig22)
-    
+            
             def count_first_goal(home_goals_list, away_goals_list):
                 count_home_first = 0
                 count_away_first = 0
@@ -494,23 +494,25 @@ try:
                 count_away_conceded = 0
                 
                 for home_goals_scored, away_goals_scored in zip(home_goals_list, away_goals_list):
-                    if isinstance(home_goals_scored, str) and isinstance(away_goals_scored, str):
-                        home_times = ast.literal_eval(home_goals_scored)
-                        away_times = ast.literal_eval(away_goals_scored)
-                        
-                        if home_times and away_times:  # Ambos marcaram
-                            if min(home_times) < min(away_times):
-                                count_home_first += 1
-                                count_away_conceded += 1  # Away sofreu primeiro
-                            else:
-                                count_away_first += 1
-                                count_home_conceded += 1  # Home sofreu primeiro
-                        elif home_times:  # Só o time da casa marcou
+                    try:
+                        home_times = ast.literal_eval(home_goals_scored) if isinstance(home_goals_scored, str) else []
+                        away_times = ast.literal_eval(away_goals_scored) if isinstance(away_goals_scored, str) else []
+                    except (SyntaxError, ValueError):
+                        continue  # Ignorar entradas inválidas
+            
+                    if home_times and away_times:  # Ambos marcaram
+                        if min(home_times) < min(away_times):
                             count_home_first += 1
-                            count_away_conceded += 1
-                        elif away_times:  # Só o time visitante marcou
+                            count_away_conceded += 1  # Away sofreu primeiro
+                        else:
                             count_away_first += 1
-                            count_home_conceded += 1
+                            count_home_conceded += 1  # Home sofreu primeiro
+                    elif home_times:  # Só o time da casa marcou
+                        count_home_first += 1
+                        count_away_conceded += 1
+                    elif away_times:  # Só o time visitante marcou
+                        count_away_first += 1
+                        count_home_conceded += 1
             
                 return count_home_first, count_away_first, count_home_conceded, count_away_conceded
             
@@ -525,8 +527,6 @@ try:
             st.write(f"{selected_away} Scored First {away_first_goal} times in the last 21 games")
             st.write(f"{selected_home} Conceded First {home_conceded_first} times in the last 21 games")
             st.write(f"{selected_away} Conceded First {away_conceded_first} times in the last 21 games")
-
-
 
         except Exception as e:
             st.error(f"Erro Geral: {e}")
