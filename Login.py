@@ -1,12 +1,12 @@
+from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 import streamlit as st
 from auth import verify_login
-from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
 # Exibir a barra lateral com páginas dinâmicas
 show_sidebar()
 
-# Inicializar estado de sessão para login
+# Initialize session state
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 
@@ -23,15 +23,15 @@ if login_button:
         st.session_state["username"] = username
         st.session_state["role"] = user.get("role", "viewer")
 
-        st.success(f"✅ Bem-vindo, {username}!")
+        st.success(f"✅ Welcome, {username}!")
 
-        # ✅ Definir redirecionamento para a página Home (1_Home.py)
-        st.experimental_set_query_params(page="1_Home")
+        # ✅ Set query parameter to redirect to Home
+        st.query_params["page"] = "1_Home"
         st.rerun()
     else:
-        st.error("❌ Usuário ou senha incorretos.")
+        st.error("❌ Incorrect username or password.")
 
-# Impedir acesso não autorizado
+# Prevent unauthorized access
 if not st.session_state["logged_in"]:
-    st.warning("🚫 Acesso negado. Faça login primeiro.")
+    st.warning("🚫 Access denied. Please log in first.")
     st.stop()
