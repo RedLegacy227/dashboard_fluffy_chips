@@ -15,6 +15,8 @@ st.set_page_config(page_title="Methods - Fluffy Chips Web Analyser", page_icon="
 show_role_features()
 st.title("🔋 Methods - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
+st.write(f"Welcome, **{st.session_state['username']}**!")
+st.write(f"Your role: **{st.session_state['role']}**")
 st.divider()
 st.subheader('_Methods for Today_')
 
