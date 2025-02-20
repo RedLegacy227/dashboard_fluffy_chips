@@ -52,7 +52,7 @@ def logout():
     for key in list(st.session_state.keys()):
         del st.session_state[key]  # Clear session state
     
-    st.switch_page("Login")  # ✅ Redirect to login after logout
+    st.switch_page("Login.py")  # ✅ Redirect to login after logout
 
 # Admin-only function to add users with specific roles
 def add_user(username, password, role="viewer"):
