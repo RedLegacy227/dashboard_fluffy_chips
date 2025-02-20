@@ -10,6 +10,7 @@ if st.session_state.get("role") != "Admin":
     st.error("❌ Access Denied: You are not an Admin.")
     st.stop()
 
+st.set_page_config(page_title="Admin Panel - Fluffy Chips", page_icon="🤺")
 # Admin Page UI
 st.title("🔑 Admin Panel - Manage Users")
 st.write("Only authorized admin users can access this page.")
