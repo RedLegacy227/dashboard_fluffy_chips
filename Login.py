@@ -1,10 +1,7 @@
-
 import streamlit as st
 from auth import verify_login
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
-
-
 # Initialize session state
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
