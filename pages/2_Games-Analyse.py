@@ -534,8 +534,8 @@ try:
                 st.write(f"{selected_away} Conceded First {away_conceded_first} times in the last 21 games")
             
         
-        except Exception as e:
-            st.error(f"Erro Geral: {e}")
+        except Exception:
+            st.error(f"Not enough Data Available")
 except Exception as e:
     st.error(f"Erro Geral: {e}")
 st.divider()                    
