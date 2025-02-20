@@ -4,7 +4,7 @@ from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
 # Exibir a barra lateral com páginas dinâmicas
-#show_sidebar()
+show_sidebar()
 # Inicializar estado de sessão para login
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
