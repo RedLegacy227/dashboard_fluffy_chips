@@ -57,7 +57,7 @@ try:
         # Menu dropdown para selecionar um jogo
         selected_game = st.selectbox("Select a game:", games_list)
 
-        st.markdown(f"Selected Game ➡️ ***{selected_game}***")
+        st.markdown(f"#### Selected Game ➡️ ***{selected_game}*** ####")
         st.divider()
 
         # Dividir o jogo em Home e Away
