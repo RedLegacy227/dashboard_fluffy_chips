@@ -15,16 +15,15 @@ login_button = st.button("Login")
 
 if login_button:
     user = verify_login(username, password)
-    if user:  # ✅ Now correctly verifies bcrypt passwords
+    if user:
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
         st.session_state["role"] = user.get("role", "viewer")
 
         st.success(f"✅ Welcome, {username}!")
 
-        # ✅ Redirect to Home (1_Home.py)
-        st.query_params.from_dict({"page": "1_Home"})
-        st.rerun()
+        # ✅ Use st.switch_page() to navigate to Home
+        st.switch_page("pages/1_Home.py")  # Ensure path matches your pages folder
     else:
         st.error("❌ Incorrect username or password.")
 
