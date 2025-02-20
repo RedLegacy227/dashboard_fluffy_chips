@@ -25,11 +25,6 @@ st.divider()
 # Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.switch_page("Home.py")  # Redirect to login page
-
-st.title("📊 Protected Page")
-st.write(f"Welcome, **{st.session_state['username']}**!")
-st.write("This is a protected page. Only authenticated users can access it.")
-
 # Logout button
 st.sidebar.button("🚪 Logout", on_click=logout)
 
