@@ -33,10 +33,22 @@ st.divider()
 # Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.switch_page("Home.py")  # Redirect to login page
+# Logout button
+st.sidebar.button("🚪 Logout", on_click=logout)
+# Features based on roles
+if st.session_state["role"] == "admin":
+    st.subheader("🔧 Admin Features")
+    st.write("- Manage users")
+    if st.button("Go to Admin Panel"):
+        st.switch_page("admin.py")
 
-st.title("📊 Protected Page")
-st.write(f"Welcome, **{st.session_state['username']}**!")
-st.write("This is a protected page. Only authenticated users can access it.")
+elif st.session_state["role"] == "editor":
+    st.subheader("📝 Editor Features")
+    st.write("- Edit and manage content")
+
+elif st.session_state["role"] == "viewer":
+    st.subheader("👀 Viewer Features")
+    st.write("- View analytics and reports")
 
 # Logout button
 st.sidebar.button("🚪 Logout", on_click=logout)
