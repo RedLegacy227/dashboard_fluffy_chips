@@ -8,9 +8,12 @@ import requests
 from datetime import datetime
 from auth import logout
 from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
+from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 
 # Streamlit App Title and Headers
 st.set_page_config(page_title="BackTest - Fluffy Chips", page_icon="📈")
+# Exibir a barra lateral com páginas dinâmicas
+show_sidebar()
 st.title("📈 BackTest - Fluffy Chips")
 st.subheader('The place where you can do Backtest of your Strategies!!!')
 st.divider()
