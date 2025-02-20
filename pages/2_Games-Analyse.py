@@ -457,16 +457,16 @@ try:
                 ax.legend()
                 st.pyplot(fig21)
     
-            st.subheader(f"Time of Goals of {selected_home}")
+            st.subheader(f"Time of Goals of {selected_home} on the last 21 Games")
             plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
     
-            st.subheader(f"Time of Goals of {selected_away}")
+            st.subheader(f"Time of Goals of {selected_away} on the last 21 Games")
             plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
     
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
     
-            st.subheader(f"First Half & Second Half Goals Distribution")
+            st.subheader(f"First Half & Second Half Goals Distribution on the last 21 Games")
             half_labels = ["First Half", "Second Half"]
             home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
             home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
@@ -487,36 +487,45 @@ try:
             ax.legend()
             st.pyplot(fig22)
     
-            # Function to determine first goal occurrences
             def count_first_goal(home_goals_list, away_goals_list):
                 count_home_first = 0
                 count_away_first = 0
+                count_home_conceded = 0
+                count_away_conceded = 0
                 
                 for home_goals, away_goals in zip(home_goals_list, away_goals_list):
                     if isinstance(home_goals, str) and isinstance(away_goals, str):
                         home_times = ast.literal_eval(home_goals)
                         away_times = ast.literal_eval(away_goals)
                         
-                        if home_times and away_times:  # Both teams scored
+                        if home_times and away_times:  # Ambos marcaram
                             if min(home_times) < min(away_times):
                                 count_home_first += 1
+                                count_away_conceded += 1  # Away sofreu primeiro
                             else:
                                 count_away_first += 1
-                        elif home_times:  # Only home team scored
+                                count_home_conceded += 1  # Home sofreu primeiro
+                        elif home_times:  # Só o time da casa marcou
                             count_home_first += 1
-                        elif away_times:  # Only away team scored
+                            count_away_conceded += 1
+                        elif away_times:  # Só o time visitante marcou
                             count_away_first += 1
+                            count_home_conceded += 1
             
-                return count_home_first, count_away_first
+                return count_home_first, count_away_first, count_home_conceded, count_away_conceded
             
-            # Apply function to past 21 games
-            home_first_goal, away_first_goal = count_first_goal(
+            # Aplicar a função aos últimos 21 jogos
+            home_first_goal, away_first_goal, home_conceded_first, away_conceded_first = count_first_goal(
                 past_games_home['Goals_Minutes_Home'], past_games_away['Goals_Minutes_Away']
             )
             
-            # Display results
+            # Exibir resultados
+            st.subheader(f"Who Scored and Conceded First in the Last 21 Games")
             st.write(f"{selected_home} Scored First {home_first_goal} times in the last 21 games")
             st.write(f"{selected_away} Scored First {away_first_goal} times in the last 21 games")
+            st.write(f"{selected_home} Conceded First {home_conceded_first} times in the last 21 games")
+            st.write(f"{selected_away} Conceded First {away_conceded_first} times in the last 21 games")
+
 
 
         except Exception as e:
