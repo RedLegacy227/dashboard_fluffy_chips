@@ -30,7 +30,8 @@ st.markdown(
 st.divider()
 # Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.switch_page("1_Home.py")  # Redirect to login page
+    st.session_state["redirect"] = "Login"  # Define a página para onde o usuário deve ir
+    st.rerun()  # Recarrega a aplicação
 # Logout button
 st.sidebar.button("🚪 Logout", on_click=logout)
 # Features based on roles
