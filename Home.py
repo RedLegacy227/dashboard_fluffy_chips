@@ -5,21 +5,20 @@ from auth import login, logout
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
 
-# If the user successfully logs in, set the redirection flag
-if "redirect_to_Home_1" not in st.session_state:
-    st.session_state["redirect_to_Home_1"] = False
+# If logged in and redirect flag is set, go to Home_1.py
+if st.session_state.get("redirect_to_Home_1", False):
+    st.session_state["redirect_to_Home_1"] = False  # Reset flag
+    st.switch_page("Home_1.py")
 
-# Redirect to Home_1.py if the user is logged in
-if st.session_state["logged_in"] and st.session_state["redirect_to_Home_1"]:
-    st.session_state["redirect_to_Home_1"] = False  # Reset redirection flag
-    st.switch_page("Home_1.py")  # Redirect to Home_1.py
-
-# If the user is not logged in, show the login page
+# If not logged in, show login page
 if not st.session_state["logged_in"]:
     login()
 else:
-    st.sidebar.button("🚪 Logout", on_click=logout)
+    st.sidebar.title("📍 Navigation")
 
-    st.title("🏠 Home - Fluffy Chips Web Analyzer")
-    st.write(f"Welcome, **{st.session_state['username']}**!")
-    st.write("Here is the Web Analyzer.")
+    # Show "Admin Panel" only for admin users
+    if st.session_state["username"] in ["admin", "superuser"]:
+        if st.sidebar.button("🔑 Admin Panel"):
+            st.switch_page("admin.py")
+
+    st.sidebar.button("🚪 Logout", on_click=logout)
