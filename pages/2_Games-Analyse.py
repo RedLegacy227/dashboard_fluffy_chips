@@ -488,6 +488,8 @@ try:
             st.pyplot(fig22)
             
             def count_first_goal(goals_scored_list, goals_conceded_list):
+                if len(goals_scored_list) == 0 or len(goals_conceded_list) == 0:
+                    return "No Data Available", "No Data Available"
                 count_scored_first = 0
                 count_conceded_first = 0
                 
