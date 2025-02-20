@@ -1,5 +1,6 @@
 import streamlit as st
 from auth import logout, add_user
+from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
 # Redirect to login page if not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
@@ -10,7 +11,7 @@ if st.session_state.get("role") != "Admin":
     st.error("❌ Access Denied: You are not an Admin.")
     st.stop()
 
-st.set_page_config(page_title="Admin Panel - Fluffy Chips", page_icon="🤺")
+
 # Admin Page UI
 st.title("🔑 Admin Panel - Manage Users")
 st.write("Only authorized admin users can access this page.")
@@ -26,5 +27,5 @@ if st.button("Create User"):
     else:
         st.warning("Please enter both a username and a password.")
 
-# Logout button
-st.sidebar.button("🚪 Logout", on_click=logout)
+# Adiciona o botão de logout apenas uma vez
+add_logout_button()
