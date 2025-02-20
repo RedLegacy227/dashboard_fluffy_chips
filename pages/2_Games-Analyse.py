@@ -426,5 +426,5 @@ try:
         except:
             st.error(f"Erro Geral: {e}")
 except:
-            st.error(f"Erro Geral: {e}")
+    st.error(f"Erro Geral: {e}")
 st.divider()                    
