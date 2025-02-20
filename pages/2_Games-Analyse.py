@@ -320,7 +320,7 @@ try:
                 
                 away_last_7["Score"] = away_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + away_last_7["FT_Goals_A"].astype(int).astype(str)
                 top_scores_away = away_last_7["Score"].value_counts().head(7)
-                st.subheader("**Tendency of Last 7 Games**")
+                st.subheader("Tendency of Last 7 Games")
                 st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_away:.2f}%**")
                 st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_away:.2f}%**")
                 st.markdown(f"Tendency BTTS: **{tendency_btts_away:.2f}%**")
@@ -456,20 +456,20 @@ try:
                 ax.set_xticks(x)
                 ax.set_xticklabels(x_labels, rotation=45)
                 ax.set_ylabel("Goals")
-                ax.set_title(f"Goal Distribution - ***{team_name}***")
+                ax.set_title(f"Goal Distribution - {team_name}")
                 ax.legend()
                 st.pyplot(fig21)
     
-            st.subheader(f"Time of Goals of {selected_home} on the last 21 Games")
+            st.markdown(f"**Time of Goals of ***{selected_home}*** on the last 21 Games**")
             plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
     
-            st.subheader(f"Time of Goals of {selected_away} on the last 21 Games")
+            st.markdown(f"**Time of Goals of ***{selected_away}*** on the last 21 Games**")
             plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
     
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
     
-            st.subheader(f"First Half & Second Half Goals Distribution on the last 21 Games")
+            st.markdown(f"**First Half & Second Half Goals Distribution on the last 21 Games**")
             half_labels = ["First Half", "Second Half"]
             home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
             home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
