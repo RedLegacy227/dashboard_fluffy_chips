@@ -20,8 +20,8 @@ st.title("🔑 Admin Panel - Manage Users")
 st.write("Only authorized admin users can access this page.")
 
 # Formulário para criação de usuário
-new_username = st.text_input("New Username")
-new_password = st.text_input("New Password", type="password")
+new_username = st.text_input("Username")
+new_password = st.text_input("Password", type="password")
 new_role = st.selectbox("Role", ["Viewer", "Editor", "Admin"])  # Opções de função
 
 if st.button("Create User"):
