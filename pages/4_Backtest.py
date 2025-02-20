@@ -15,6 +15,8 @@ st.set_page_config(page_title="BackTest - Fluffy Chips Web Analyser", page_icon=
 show_role_features()
 st.title("📈 BackTest - Fluffy Chips")
 st.subheader('The place where you can do Backtest of your Strategies!!!')
+st.write(f"Welcome, **{st.session_state['username']}**!")
+st.write(f"Your role: **{st.session_state['role']}**")
 st.divider()
 st.subheader('_Sector Under Contrution_')
 
