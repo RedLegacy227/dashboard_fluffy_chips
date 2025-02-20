@@ -11,8 +11,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 from auth import logout
 from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
+from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 
 st.set_page_config(page_title="Games Analyser - Fluffy Chips", page_icon="📽️")
+# Exibir a barra lateral com páginas dinâmicas
+show_sidebar()
 st.title("📽️ Games Analyser - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
