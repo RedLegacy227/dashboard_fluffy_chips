@@ -423,8 +423,8 @@ try:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
                 st.error(f"Erro ao carregar os dados de ligas: {e}")
-        except:
+        except Exception as e:
             st.error(f"Erro Geral: {e}")
-except:
+except Exception as e:
     st.error(f"Erro Geral: {e}")
 st.divider()                    
