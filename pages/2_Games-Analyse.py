@@ -29,10 +29,8 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.divider()
-# Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.session_state["redirect"] = "Login"  # Define a página para onde o usuário deve ir
-    st.rerun()  # Recarrega a aplicação
+    st.switch_page("Login.py")  # Redirect to login page
 # Adiciona o botão de logout apenas uma vez
 add_logout_button()
 # Features based on roles
