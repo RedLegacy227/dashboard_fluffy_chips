@@ -8,12 +8,18 @@ import numpy as np
 import os
 from datetime import datetime
 import requests
+from auth import logout
 
 st.title('_Fluffy Chips Web Analyzer_')
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.image(os.path.join(os.getcwd(), 'static', 'tatics.jpg'))
 st.divider()
+# Redirect to login page if the user is not logged in
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.switch_page("Home.py")  # Redirect to login page
+# Logout button
+st.sidebar.button("🚪 Logout", on_click=logout)
 st.subheader('_Games Of The Day_')
 # URL base do GitHub para os arquivos CSV
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_sem_variaveis/main/"
