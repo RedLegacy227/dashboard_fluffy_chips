@@ -7,8 +7,8 @@ def show_sidebar():
     if "logged_in" not in st.session_state:
         st.session_state["logged_in"] = False
 
-    # ✅ Get the query parameter (if any)
-    selected_page = st.query_params.get("page", ["Login"])[0]
+    # ✅ Get the current page from the query params
+    selected_page = st.query_params.get("page", "Login")
 
     # Show only "Login" if the user is not logged in
     if not st.session_state["logged_in"]:
@@ -27,6 +27,6 @@ def show_sidebar():
     page = st.sidebar.radio("Select a Page:", list(menu_items.keys()), index=list(menu_items.values()).index(selected_page))
 
     # ✅ Update the query parameter to track selected page
-    st.query_params.update({"page": menu_items[page]})
+    st.query_params.from_dict({"page": menu_items[page]})
     st.rerun()
 
