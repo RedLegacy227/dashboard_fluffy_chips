@@ -9,7 +9,8 @@ from sidebar_menu import show_role_features
 
 
 st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
-
+# ✅ Show role-based features in the sidebar
+show_role_features()
 st.title("🏠 Home - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
@@ -26,8 +27,7 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
 st.subheader('_Games Of The Day_')
 st.write(f"Welcome, **{st.session_state['username']}**!")
 st.write(f"Your role: **{st.session_state['role']}**")
-# ✅ Show role-based features in the sidebar
-show_role_features()
+
 
 # URL base for GitHub CSV files
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_sem_variaveis/main/"
