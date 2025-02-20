@@ -26,7 +26,7 @@ if login_button:
         st.success(f"✅ Welcome, {username}!")
 
         # ✅ Set query parameter to redirect to Home
-        st.query_params["page"] = "1_Home"
+        st.query_params.update({"page": "1_Home"})
         st.rerun()
     else:
         st.error("❌ Incorrect username or password.")
