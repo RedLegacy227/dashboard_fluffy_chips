@@ -491,8 +491,6 @@ try:
             st.pyplot(fig22)
             
             def count_first_goal(goals_scored_list, goals_conceded_list):
-                if len(goals_scored_list) == 0 or len(goals_conceded_list) == 0:
-                    return "No Data Available", "No Data Available"
                 count_scored_first = 0
                 count_conceded_first = 0
                 
@@ -517,7 +515,6 @@ try:
             
             # Verificar se os dados têm o tamanho esperado
             if len(past_games_home) < 5 or len(past_games_away) < 5:
-                st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
                 st.write("No Sufficient Data Available")
             else:
                 # Contar gols para cada time separadamente
@@ -530,6 +527,7 @@ try:
                 )
             
                 # Exibir resultados com negrito e itálico
+                st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
                 st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
                 st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
                 st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
