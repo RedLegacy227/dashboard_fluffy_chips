@@ -5,17 +5,21 @@ from database import get_users_collection
 # Function to hash passwords securely using bcrypt
 def hash_password(password):
     salt = bcrypt.gensalt()
-    return bcrypt.hashpw(password.encode(), salt)
+    return bcrypt.hashpw(password.encode(), salt)  # Returns bytes
 
 # Function to verify password using bcrypt
 def verify_password(stored_password, entered_password):
+    """Ensure stored password is bytes before checking"""
+    if isinstance(stored_password, str):
+        stored_password = stored_password.encode()  # Convert stored hash to bytes
+    
     return bcrypt.checkpw(entered_password.encode(), stored_password)
 
 # Function to verify login and fetch user role
 def verify_login(username, password):
     users_collection = get_users_collection()
     
-    # Find user in MongoDB collection (username is not hashed)
+    # Find user in MongoDB collection
     user = users_collection.find_one({"username": username})
     
     if user and verify_password(user["password"], password):  # Compare password securely
@@ -64,9 +68,7 @@ def add_user(username, password, role="viewer"):
     else:
         users_collection.insert_one({
             "username": username, 
-            "password": hashed_password,  # Store bcrypt-hashed password
+            "password": hashed_password.decode(),  # Store bcrypt-hashed password as string
             "role": role
         })
         st.success(f"✅ User '{username}' added successfully with role '{role}'.")
-
-
