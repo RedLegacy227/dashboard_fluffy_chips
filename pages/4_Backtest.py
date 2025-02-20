@@ -26,9 +26,7 @@ else:
 st.divider()
 # Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.switch_page("Login")  # Redirect to login page
-# Logout button
-st.sidebar.button("🚪 Logout", on_click=logout)
+    st.switch_page("Login.py")  # Redirect to login page
 # Features based on roles
 if st.session_state["role"] == "Admin":
     st.subheader("🔧 Admin Features")
