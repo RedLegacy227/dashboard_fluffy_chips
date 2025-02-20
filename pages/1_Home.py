@@ -7,7 +7,9 @@ from datetime import datetime
 from auth import logout
 from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
+
 st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
+
 st.title("🏠 Home - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
