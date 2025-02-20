@@ -1,11 +1,8 @@
 import streamlit as st
 from auth import logout, add_user
 from ui_helpers import add_logout_button
-from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 
 st.set_page_config(page_title="Admin Panel - Fluffy Chips", page_icon="🔑")
-# Exibir a barra lateral com páginas dinâmicas
-show_sidebar()
 
 # Redireciona para login se não estiver autenticado
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
