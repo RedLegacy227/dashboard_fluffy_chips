@@ -10,8 +10,8 @@ from auth import logout
 from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
 # Streamlit App Title and Headers
-
-st.title("🔋 Methods - Fluffy Chips Web Analyzer")
+st.set_page_config(page_title="Methods - Fluffy Chips", page_icon="🔋")
+st.title("🔋 Methods - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.subheader('_Methods for Today_')
