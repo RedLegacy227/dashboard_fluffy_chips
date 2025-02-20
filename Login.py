@@ -2,6 +2,7 @@ import streamlit as st
 from auth import verify_login
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
+
 # Initialize session state
 if "logged_in" not in st.session_state:
     st.session_state["logged_in"] = False
@@ -14,14 +15,14 @@ login_button = st.button("Login")
 
 if login_button:
     user = verify_login(username, password)
-    if user:
+    if user:  # ✅ Now correctly verifies bcrypt passwords
         st.session_state["logged_in"] = True
         st.session_state["username"] = username
         st.session_state["role"] = user.get("role", "viewer")
 
         st.success(f"✅ Welcome, {username}!")
 
-        # ✅ Redirect to Home (1_Home.py) using st.query_params
+        # ✅ Redirect to Home (1_Home.py)
         st.query_params.from_dict({"page": "1_Home"})
         st.rerun()
     else:
