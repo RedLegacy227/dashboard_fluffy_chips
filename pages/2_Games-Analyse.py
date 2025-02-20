@@ -512,21 +512,27 @@ try:
             
                 return count_scored_first, count_conceded_first
             
-            # Contar gols para cada time separadamente
-            home_first_goal, home_conceded_first = count_first_goal(
-                past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
-            )
+            # Verificar se os dados têm o tamanho esperado
+            if len(past_games_home) < 5 or len(past_games_away) < 5:
+                st.subheader("Who Scored and Conceded First in the Last 21 Games")
+                st.write("No Sufficient Data Available")
+            else:
+                # Contar gols para cada time separadamente
+                home_first_goal, home_conceded_first = count_first_goal(
+                    past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
+                )
             
-            away_first_goal, away_conceded_first = count_first_goal(
-                past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
-            )
+                away_first_goal, away_conceded_first = count_first_goal(
+                    past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
+                )
             
-            # Exibir resultados
-            st.subheader(f"Who Scored and Conceded First in the Last 21 Games")
-            st.write(f"{selected_home} Scored First {home_first_goal} times in the last 21 games")
-            st.write(f"{selected_home} Conceded First {home_conceded_first} times in the last 21 games")
-            st.write(f"{selected_away} Scored First {away_first_goal} times in the last 21 games")
-            st.write(f"{selected_away} Conceded First {away_conceded_first} times in the last 21 games")
+                # Exibir resultados
+                st.subheader(f"Who Scored and Conceded First in the Last 21 Games")
+                st.write(f"{selected_home} Scored First {home_first_goal} times in the last 21 games")
+                st.write(f"{selected_home} Conceded First {home_conceded_first} times in the last 21 games")
+                st.write(f"{selected_away} Scored First {away_first_goal} times in the last 21 games")
+                st.write(f"{selected_away} Conceded First {away_conceded_first} times in the last 21 games")
+            
         
         except Exception as e:
             st.error(f"Erro Geral: {e}")
