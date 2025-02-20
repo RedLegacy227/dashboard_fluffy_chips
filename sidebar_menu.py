@@ -3,9 +3,6 @@ from auth import logout  # Ensure you have a logout function in auth.py
 
 def show_role_features():
     """Displays role-based features in the sidebar."""
-    
-
-
     # ✅ Add role-based features inside the sidebar
     if "role" in st.session_state:
         st.sidebar.subheader("👤 User Features")
