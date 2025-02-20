@@ -43,7 +43,7 @@ def login():
 
             # Redirect to Home_1.py
             st.session_state["redirect_to_Home_1"] = True
-            st.experimental_rerun()
+            st.rerun()  # ✅ FIX: Use `st.rerun()` instead of `st.experimental_rerun()`
         else:
             st.error("Incorrect username or password.")
 
@@ -53,7 +53,7 @@ def logout():
     st.session_state["username"] = None
     st.session_state["role"] = None
     st.session_state["redirect_to_Home_1"] = False
-    st.experimental_rerun()
+    st.rerun()  # ✅ FIX: Use `st.rerun()` instead of `st.experimental_rerun()`
 
 # Admin-only function to add users with specific roles
 def add_user(username, password, role="viewer"):
