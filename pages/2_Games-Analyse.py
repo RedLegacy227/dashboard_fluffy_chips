@@ -511,7 +511,7 @@ try:
             
             # Apply function to past 21 games
             home_first_goal, away_first_goal = count_first_goal(
-                past_games['Goals_Minutes_Home'], past_games['Goals_Minutes_Away']
+                past_games_home['Goals_Minutes_Home'], past_games_away['Goals_Minutes_Away']
             )
             
             # Display results
