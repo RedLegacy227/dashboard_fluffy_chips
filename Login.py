@@ -1,28 +1,33 @@
 import streamlit as st
-from auth import logout  # Ensure this function clears session state
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
 
-# Redirect to login if not logged in
-if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.warning("🚫 Access denied. Please log in first.")
-    st.session_state["redirect"] = "1_Home"
-    st.stop()  # Stop further execution instead of rerun
+# Simulated authentication
+if "logged_in" not in st.session_state:
+    st.session_state["logged_in"] = False  # Ensure default state
 
-# Sidebar Navigation
-st.sidebar.title("📍 Navigation")
-
-# Show "Admin Panel" only for admin users
-if st.session_state.get("role") == "Admin":
-    if st.sidebar.button("🔑 Admin Panel"):
-        st.session_state["pages"] = "admin"
-
-# Logout button
-if st.sidebar.button("🚪 Logout"):
-    logout()  # Ensure it resets session
-    st.session_state.clear()
-    st.experimental_rerun()  # Safe to call after state change
-
-# Main Content
+# Mock login form (Replace with actual authentication)
 st.title("🔐 Login - Fluffy Chips Web Analyzer")
-st.write(f"Welcome, **{st.session_state.get('username', 'Guest')}**!")
+username = st.text_input("Username", key="username_input")
+password = st.text_input("Password", type="password", key="password_input")
+login_button = st.button("Login")
+
+# Simulated authentication logic
+if login_button:
+    if username == "admin" and password == "password":  # Replace with real auth
+        st.session_state["logged_in"] = True
+        st.session_state["username"] = username
+        st.session_state["role"] = "admin"
+
+        # Redirect if a previous page was set
+        if "redirect" in st.session_state:
+            target_page = st.session_state.pop("redirect")
+            st.success(f"✅ Redirecting to {target_page}...")
+            st.experimental_rerun()  # Safe to rerun after session change
+    else:
+        st.error("❌ Invalid username or password.")
+
+# Prevent non-logged-in users from accessing this page
+if not st.session_state["logged_in"]:
+    st.warning("🚫 Access denied. Please log in first.")
+    st.stop()
