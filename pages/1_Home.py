@@ -10,7 +10,8 @@ from datetime import datetime
 import requests
 from auth import logout
 
-st.title('_Fluffy Chips Web Analyzer_')
+st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
+st.title("🏠 Home - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.image(os.path.join(os.getcwd(), 'static', 'tatics.jpg'))
