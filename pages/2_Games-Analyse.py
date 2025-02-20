@@ -348,195 +348,194 @@ try:
                 ax7.set_title("Goals Scored - Away Games", fontsize=20)
                 ax7.legend(fontsize=20)
                 st.pyplot(fig7)
-        
-            st.divider()
-            # Adicionar cálculo de poder de ataque e defesa
-            leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/refs/heads/main/df_ligas.csv"
-            try:
-                leagues_data = pd.read_csv(leagues_url)
                 
-                if "League" in filtered_data.columns:
-                    selected_league = filtered_data["League"].iloc[0]
-                    league_stats = leagues_data[leagues_data["League"] == selected_league]
-                    
-                if not league_stats.empty:
-                    # Média de gols da liga correspondente
-                    league_avg_gm_home = league_stats["Media_GM_Home_Teams"].iloc[0]
-                    league_avg_gs_away = league_stats["Media_GS_Away_Teams"].iloc[0]
-                    league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
-                    league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
-                    
-                    # Filtrar dados históricos apenas da liga e do time da casa
-                    home_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Home"] == selected_home)]
-                    home_goals_scored = home_league_data["FT_Goals_H"].mean()
-                    home_goals_conceded = home_league_data["FT_Goals_A"].mean()
-            
-                    # Filtrar dados históricos apenas da liga e do time visitante
-                    away_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Away"] == selected_away)]
-                    away_goals_scored = away_league_data["FT_Goals_A"].mean()
-                    away_goals_conceded = away_league_data["FT_Goals_H"].mean()
-                    
-                    # Calcular poderes de ataque e defesa
-                    attack_power_home = home_goals_scored / league_avg_gm_home
-                    defense_power_home = home_goals_conceded / league_avg_gs_home
-                    
-                    attack_power_away = away_goals_scored / league_avg_gm_away
-                    defense_power_away = away_goals_conceded / league_avg_gs_away
-                    
-                    # Exibir os resultados no Streamlit
-                    st.markdown(f"#### Power Strength Analysis ####")
-                    st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
-                    st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
-                    st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
-                    st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
-                    st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ **{attack_power_home:.2f}**")
-                    st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ **{attack_power_away:.2f}**")
-                    st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ **{defense_power_home:.2f}**")
-                    st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ **{defense_power_away:.2f}**")
-                    
-                    st.divider()
-                    if defense_power_away == 0 or defense_power_home == 0:
-                        st.error("Division by zero detected in xG calculation.")
-                    else:
-                        # Expected Goals (xG) para o time da casa
-                        xg_home = home_goals_scored * attack_power_home / defense_power_away
-                        # Expected Goals (xG) para o time visitante
-                        xg_away = away_goals_scored * attack_power_away / defense_power_home
-                    
-                    # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
-                    st.markdown(f"#### Expected Goals (xG) and Expected Goals Against (xGA) Analysis ####")
-                    st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
-                    st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
-                else:
-                    st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
-            except Exception as e:
-                st.error(f"Erro ao carregar os dados de ligas: {e}")
-                
-            st.divider()
-            filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
-            past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
-            past_games_away = filtered_data[(filtered_data['Away'] == selected_away)].tail(21)
-            
-            # Function to count goals per time segment
-            def count_goals(goals_list):
-                time_segments = {"0-15": 0, "15-30": 0, "30-45": 0, "45-60": 0, "60-75": 0, "75-90": 0}
-                for goals in goals_list:
-                    if isinstance(goals, str):
-                        goal_times = ast.literal_eval(goals)
-                        for minute in goal_times:
-                            if 0 <= minute < 15:
-                                time_segments["0-15"] += 1
-                            elif 15 <= minute < 30:
-                                time_segments["15-30"] += 1
-                            elif 30 <= minute < 45:
-                                time_segments["30-45"] += 1
-                            elif 45 <= minute < 60:
-                                time_segments["45-60"] += 1
-                            elif 60 <= minute < 75:
-                                time_segments["60-75"] += 1
-                            elif 75 <= minute < 90:
-                                time_segments["75-90"] += 1
-                return time_segments
-    
-            # Get goal statistics
-            home_goals_scored = count_goals(past_games_home['Goals_Minutes_Home'])
-            home_goals_conceded = count_goals(past_games_home['Goals_Minutes_Away'])
-            away_goals_scored = count_goals(past_games_away['Goals_Minutes_Away'])
-            away_goals_conceded = count_goals(past_games_away['Goals_Minutes_Home'])
-    
-            # Function to plot goal distribution
-            def plot_goal_distribution(team_name, goals, conceded):
-                fig21, ax = plt.subplots(figsize=(8, 5))
-                x_labels = list(goals.keys())
-                x = np.arange(len(x_labels))
-                width = 0.35
-    
-                ax.bar(x - width/2, goals.values(), width, label='Scored', color='green')
-                ax.bar(x + width/2, conceded.values(), width, label='Conceded', color='red')
-                ax.set_xticks(x)
-                ax.set_xticklabels(x_labels, rotation=45)
-                ax.set_ylabel("Goals")
-                ax.set_title(f"Goal Distribution - {team_name}")
-                ax.legend()
-                st.pyplot(fig21)
-    
-            st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
-            plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
-    
-            st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
-            plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
-    
-            def summarize_half_goals(goals, half_segments):
-                return sum([goals[segment] for segment in half_segments])
-    
-            st.markdown(f"#### First Half & Second Half Goals Distribution on the last 21 Games ####")
-            half_labels = ["First Half", "Second Half"]
-            home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
-            home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
-            away_half_data_scored = [summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90'])]
-            away_half_data_conceded = [summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])]
-    
-            fig22, ax = plt.subplots(figsize=(8, 5))
-            x = np.arange(len(half_labels))
-            width = 0.35
-            ax.bar(x - width/2, home_half_data_scored.values(), width, label=f'{selected_home} Scored', color='green')
-            ax.bar(x + width/2, home_half_data_conceded.values(), width, label=f'{selected_home} Conceded', color='darkgreen')
-            ax.bar(x - width/2, away_half_data_scored.values(), width, label=f'{selected_away} Scored', color='red')
-            ax.bar(x + width/2, away_half_data_conceded.values(), width, label=f'{selected_away} Conceded', color='darkred')
-            ax.set_xticks(x)
-            ax.set_xticklabels(half_labels)
-            ax.set_ylabel("Goals")
-            ax.set_title("First & Second Half Goals")
-            ax.legend()
-            st.pyplot(fig22)
-            
-            def count_first_goal(goals_scored_list, goals_conceded_list):
-                count_scored_first = 0
-                count_conceded_first = 0
-                
-                for goals_scored, goals_conceded in zip(goals_scored_list, goals_conceded_list):
-                    try:
-                        scored_times = ast.literal_eval(goals_scored) if isinstance(goals_scored, str) else []
-                        conceded_times = ast.literal_eval(goals_conceded) if isinstance(goals_conceded, str) else []
-                    except (SyntaxError, ValueError):
-                        continue  # Ignorar entradas inválidas
-                    
-                    if scored_times and conceded_times:  # Ambos marcaram
-                        if min(scored_times) < min(conceded_times):
-                            count_scored_first += 1  # Time marcou primeiro
-                        else:
-                            count_conceded_first += 1  # Time sofreu primeiro
-                    elif scored_times:  # Só esse time marcou
-                        count_scored_first += 1
-                    elif conceded_times:  # Só o adversário marcou
-                        count_conceded_first += 1
-            
-                return count_scored_first, count_conceded_first
-            
-            # Verificar se os dados têm o tamanho esperado
-            if len(past_games_home) < 5 or len(past_games_away) < 5:
-                st.write("No Sufficient Data Available")
-            else:
-                # Contar gols para cada time separadamente
-                home_first_goal, home_conceded_first = count_first_goal(
-                    past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
-                )
-            
-                away_first_goal, away_conceded_first = count_first_goal(
-                    past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
-                )
-            
-                # Exibir resultados com negrito e itálico
-                st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
-                st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
-                st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
-                st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
-                st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
-
-            
-        
         except Exception:
             st.error(f"Not enough Data Available")
+            
+        st.divider()
+        # Adicionar cálculo de poder de ataque e defesa
+        leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/refs/heads/main/df_ligas.csv"
+        try:
+            leagues_data = pd.read_csv(leagues_url)
+            
+            if "League" in filtered_data.columns:
+                selected_league = filtered_data["League"].iloc[0]
+                league_stats = leagues_data[leagues_data["League"] == selected_league]
+                
+            if not league_stats.empty:
+                # Média de gols da liga correspondente
+                league_avg_gm_home = league_stats["Media_GM_Home_Teams"].iloc[0]
+                league_avg_gs_away = league_stats["Media_GS_Away_Teams"].iloc[0]
+                league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
+                league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
+                
+                # Filtrar dados históricos apenas da liga e do time da casa
+                home_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Home"] == selected_home)]
+                home_goals_scored = home_league_data["FT_Goals_H"].mean()
+                home_goals_conceded = home_league_data["FT_Goals_A"].mean()
+        
+                # Filtrar dados históricos apenas da liga e do time visitante
+                away_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Away"] == selected_away)]
+                away_goals_scored = away_league_data["FT_Goals_A"].mean()
+                away_goals_conceded = away_league_data["FT_Goals_H"].mean()
+                
+                # Calcular poderes de ataque e defesa
+                attack_power_home = home_goals_scored / league_avg_gm_home
+                defense_power_home = home_goals_conceded / league_avg_gs_home
+                
+                attack_power_away = away_goals_scored / league_avg_gm_away
+                defense_power_away = away_goals_conceded / league_avg_gs_away
+                
+                # Exibir os resultados no Streamlit
+                st.markdown(f"#### Power Strength Analysis ####")
+                st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
+                st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
+                st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
+                st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
+                st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ **{attack_power_home:.2f}**")
+                st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ **{attack_power_away:.2f}**")
+                st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ **{defense_power_home:.2f}**")
+                st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ **{defense_power_away:.2f}**")
+                
+                st.divider()
+                if defense_power_away == 0 or defense_power_home == 0:
+                    st.error("Division by zero detected in xG calculation.")
+                else:
+                    # Expected Goals (xG) para o time da casa
+                    xg_home = home_goals_scored * attack_power_home / defense_power_away
+                    # Expected Goals (xG) para o time visitante
+                    xg_away = away_goals_scored * attack_power_away / defense_power_home
+                
+                # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
+                st.markdown(f"#### Expected Goals (xG) and Expected Goals Against (xGA) Analysis ####")
+                st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
+                st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
+            else:
+                st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
+        except Exception as e:
+            st.error(f"Erro ao carregar os dados de ligas: {e}")
+            
+        st.divider()
+        filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
+        past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
+        past_games_away = filtered_data[(filtered_data['Away'] == selected_away)].tail(21)
+        
+        # Function to count goals per time segment
+        def count_goals(goals_list):
+            time_segments = {"0-15": 0, "15-30": 0, "30-45": 0, "45-60": 0, "60-75": 0, "75-90": 0}
+            for goals in goals_list:
+                if isinstance(goals, str):
+                    goal_times = ast.literal_eval(goals)
+                    for minute in goal_times:
+                        if 0 <= minute < 15:
+                            time_segments["0-15"] += 1
+                        elif 15 <= minute < 30:
+                            time_segments["15-30"] += 1
+                        elif 30 <= minute < 45:
+                            time_segments["30-45"] += 1
+                        elif 45 <= minute < 60:
+                            time_segments["45-60"] += 1
+                        elif 60 <= minute < 75:
+                            time_segments["60-75"] += 1
+                        elif 75 <= minute < 90:
+                            time_segments["75-90"] += 1
+            return time_segments
+
+        # Get goal statistics
+        home_goals_scored = count_goals(past_games_home['Goals_Minutes_Home'])
+        home_goals_conceded = count_goals(past_games_home['Goals_Minutes_Away'])
+        away_goals_scored = count_goals(past_games_away['Goals_Minutes_Away'])
+        away_goals_conceded = count_goals(past_games_away['Goals_Minutes_Home'])
+
+        # Function to plot goal distribution
+        def plot_goal_distribution(team_name, goals, conceded):
+            fig21, ax = plt.subplots(figsize=(8, 5))
+            x_labels = list(goals.keys())
+            x = np.arange(len(x_labels))
+            width = 0.35
+
+            ax.bar(x - width/2, goals.values(), width, label='Scored', color='green')
+            ax.bar(x + width/2, conceded.values(), width, label='Conceded', color='red')
+            ax.set_xticks(x)
+            ax.set_xticklabels(x_labels, rotation=45)
+            ax.set_ylabel("Goals")
+            ax.set_title(f"Goal Distribution - {team_name}")
+            ax.legend()
+            st.pyplot(fig21)
+
+        st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
+        plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
+
+        st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
+        plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
+
+        def summarize_half_goals(goals, half_segments):
+            return sum([goals[segment] for segment in half_segments])
+
+        st.markdown(f"#### First Half & Second Half Goals Distribution on the last 21 Games ####")
+        half_labels = ["First Half", "Second Half"]
+        home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
+        home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
+        away_half_data_scored = [summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90'])]
+        away_half_data_conceded = [summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])]
+
+        fig22, ax = plt.subplots(figsize=(8, 5))
+        x = np.arange(len(half_labels))
+        width = 0.35
+        ax.bar(x - width/2, home_half_data_scored.values(), width, label=f'{selected_home} Scored', color='green')
+        ax.bar(x + width/2, home_half_data_conceded.values(), width, label=f'{selected_home} Conceded', color='darkgreen')
+        ax.bar(x - width/2, away_half_data_scored.values(), width, label=f'{selected_away} Scored', color='red')
+        ax.bar(x + width/2, away_half_data_conceded.values(), width, label=f'{selected_away} Conceded', color='darkred')
+        ax.set_xticks(x)
+        ax.set_xticklabels(half_labels)
+        ax.set_ylabel("Goals")
+        ax.set_title("First & Second Half Goals")
+        ax.legend()
+        st.pyplot(fig22)
+        
+        def count_first_goal(goals_scored_list, goals_conceded_list):
+            count_scored_first = 0
+            count_conceded_first = 0
+            
+            for goals_scored, goals_conceded in zip(goals_scored_list, goals_conceded_list):
+                try:
+                    scored_times = ast.literal_eval(goals_scored) if isinstance(goals_scored, str) else []
+                    conceded_times = ast.literal_eval(goals_conceded) if isinstance(goals_conceded, str) else []
+                except (SyntaxError, ValueError):
+                    continue  # Ignorar entradas inválidas
+                
+                if scored_times and conceded_times:  # Ambos marcaram
+                    if min(scored_times) < min(conceded_times):
+                        count_scored_first += 1  # Time marcou primeiro
+                    else:
+                        count_conceded_first += 1  # Time sofreu primeiro
+                elif scored_times:  # Só esse time marcou
+                    count_scored_first += 1
+                elif conceded_times:  # Só o adversário marcou
+                    count_conceded_first += 1
+        
+            return count_scored_first, count_conceded_first
+        
+        # Verificar se os dados têm o tamanho esperado
+        if len(past_games_home) < 5 or len(past_games_away) < 5:
+            st.write("No Sufficient Data Available")
+        else:
+            # Contar gols para cada time separadamente
+            home_first_goal, home_conceded_first = count_first_goal(
+                past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
+            )
+        
+            away_first_goal, away_conceded_first = count_first_goal(
+                past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
+            )
+        
+            # Exibir resultados com negrito e itálico
+            st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
+            st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
+            st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
+            st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
+            st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
+            
 except Exception as e:
     st.error(f"Erro Geral: {e}")
 st.divider()                    
