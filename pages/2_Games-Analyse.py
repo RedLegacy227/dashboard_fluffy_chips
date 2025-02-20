@@ -438,28 +438,47 @@ try:
             home_goals = count_goals(past_games['Goals_Minutes_Home'])
             away_goals = count_goals(past_games['Goals_Minutes_Away'])
     
+            # Function to plot goal distribution
+            def plot_goal_distribution(team_name, goals, conceded):
+                fig21, ax = plt.subplots(figsize=(8, 5))
+                x_labels = list(goals.keys())
+                x = np.arange(len(x_labels))
+                width = 0.35
+    
+                ax.bar(x - width/2, goals.values(), width, label='Scored', color='green')
+                ax.bar(x + width/2, conceded.values(), width, label='Conceded', color='red')
+                ax.set_xticks(x)
+                ax.set_xticklabels(x_labels, rotation=45)
+                ax.set_ylabel("Goals")
+                ax.set_title(f"Goal Distribution - {team_name}")
+                ax.legend()
+                st.pyplot(fig21)
+    
             st.subheader(f"Time of Goals of {selected_home}")
-            for segment, count in home_goals.items():
-                st.write(f"{segment} - {count} scored and {away_goals[segment]} conceded")
+            plot_goal_distribution(selected_home, home_goals, away_goals)
     
             st.subheader(f"Time of Goals of {selected_away}")
-            for segment, count in away_goals.items():
-                st.write(f"{segment} - {count} scored and {home_goals[segment]} conceded")
+            plot_goal_distribution(selected_away, away_goals, home_goals)
     
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
     
-            st.subheader(f"First Half Goals of {selected_home}")
-            st.write(f"In the last 21 games, {selected_home} scored {summarize_half_goals(home_goals, ['0-15', '15-30', '30-45'])} goals and conceded {summarize_half_goals(away_goals, ['0-15', '15-30', '30-45'])} goals.")
+            st.subheader(f"First Half & Second Half Goals Distribution")
+            half_labels = ["First Half", "Second Half"]
+            home_half_data = [summarize_half_goals(home_goals, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals, ['45-60', '60-75', '75-90'])]
+            away_half_data = [summarize_half_goals(away_goals, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals, ['45-60', '60-75', '75-90'])]
     
-            st.subheader(f"Second Half Goals of {selected_home}")
-            st.write(f"In the last 21 games, {selected_home} scored {summarize_half_goals(home_goals, ['45-60', '60-75', '75-90'])} goals and conceded {summarize_half_goals(away_goals, ['45-60', '60-75', '75-90'])} goals.")
-    
-            st.subheader(f"First Half Goals of {selected_away}")
-            st.write(f"In the last 21 games, {selected_away} scored {summarize_half_goals(away_goals, ['0-15', '15-30', '30-45'])} goals and conceded {summarize_half_goals(home_goals, ['0-15', '15-30', '30-45'])} goals.")
-    
-            st.subheader(f"Second Half Goals of {selected_away}")
-            st.write(f"In the last 21 games, {selected_away} scored {summarize_half_goals(away_goals, ['45-60', '60-75', '75-90'])} goals and conceded {summarize_half_goals(home_goals, ['45-60', '60-75', '75-90'])} goals.")
+            fig22, ax = plt.subplots(figsize=(8, 5))
+            x = np.arange(len(half_labels))
+            width = 0.35
+            ax.bar(x - width/2, home_half_data, width, label=f'{selected_home}', color='blue')
+            ax.bar(x + width/2, away_half_data, width, label=f'{selected_away}', color='orange')
+            ax.set_xticks(x)
+            ax.set_xticklabels(half_labels)
+            ax.set_ylabel("Goals")
+            ax.set_title("First & Second Half Goals")
+            ax.legend()
+            st.pyplot(fig22)
     
             # Function to determine first goal occurrences
             def count_first_goal(home_goals_list, away_goals_list):
