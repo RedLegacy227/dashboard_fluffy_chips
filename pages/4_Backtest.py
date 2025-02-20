@@ -10,7 +10,7 @@ from auth import logout
 from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
 # Streamlit App Title and Headers
-st.set_page_config(page_title="BackTest - Fluffy Chips", page_icon="🏠")
+st.set_page_config(page_title="BackTest - Fluffy Chips", page_icon="📈")
 st.title("📈 BackTest - Fluffy Chips")
 st.subheader('The place where you can do Backtest of your Strategies!!!')
 st.divider()
