@@ -78,6 +78,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Adicionar um título no sidebar
+st.sidebar.divider()
 st.sidebar.header("💰 Working Bank Configuration")
 # Criar input da banca APENAS UMA VEZ no sidebar
 banca = st.sidebar.number_input("Insert the amount of your working Bank:", min_value=50, value=200, step=10, key="banca_input")
@@ -87,6 +88,7 @@ stake_7 = banca * 0.07
 stake_10 = banca * 0.10
 stake_12 = banca * 0.12
 stake_15 = banca * 0.15
+st.sidebar.divider()
 
 # Create Tabs
 tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
