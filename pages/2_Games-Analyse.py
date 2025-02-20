@@ -18,8 +18,8 @@ st.set_page_config(page_title="Games Analyser - Fluffy Chips Web Analyser", page
 show_role_features()
 st.title("📽️ Games Analyser - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
-st.write(f"Welcome, **{st.session_state['username']}**!")
-st.write(f"Your role: **{st.session_state['role']}**")
+st.markdown(f"Welcome, **{st.session_state['username']}**!")
+st.markdown(f"Your role: **{st.session_state['role']}**")
 st.divider()
 st.subheader('_Games of the Day_')
 # Caminho para a imagem
@@ -57,7 +57,7 @@ try:
         # Menu dropdown para selecionar um jogo
         selected_game = st.selectbox("Select a game:", games_list)
 
-        st.write(f"**Selected Game:** {selected_game}")
+        st.markdown(f"Selected Game ➡️ ***{selected_game}***")
         st.divider()
 
         # Dividir o jogo em Home e Away
@@ -84,7 +84,7 @@ try:
                     ][required_columns]
                 
                 if not filtered_data.empty:
-                    st.write(f"**Past Games Between {selected_home} and {selected_away}:**")
+                    st.markdown(f"Past Games Between ***{selected_home}*** and ***{selected_away}***")
                     st.dataframe(filtered_data)
 
                     # **Gráfico de Pizza e Barras lado a lado**
@@ -174,7 +174,7 @@ try:
                         top_scores = filtered_data["Score"].value_counts().head(3)
                         
                         # Exibir informações adicionais
-                        st.subheader("**Tendency of the H2H**")
+                        st.subheader("Tendency of the H2H")
                         st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht:.2f}%**")
                         st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over:.2f}%**")
                         st.markdown(f"Tendency BTTS (Both Teams to Score): **{tendency_btts:.2f}%**")
@@ -384,15 +384,17 @@ try:
                     defense_power_away = away_goals_conceded / league_avg_gs_away
                     
                     # Exibir os resultados no Streamlit
-                    st.subheader("**Power Strength Analysis**")
-                    st.markdown('**Power of Attack > 1**: The Team has a Superior Attack than the League Average (Strong Attack)')
-                    st.markdown('**Power of Attack < 1**: The Team has an Inferior Attack than the League Average (Weak Attack)')
-                    st.markdown('**Power of Defense > 1**: The Team has a Inferior Defense than the League Average (Weak Defense)')
-                    st.markdown('**Power of Defense < 1**: The Team has an Superior Defense than the League Average (Strong Defense)')
-                    st.markdown(f"- **Power of Attack for {selected_home}:** {attack_power_home:.2f}")
-                    st.markdown(f"- **Power of Attack for {selected_away}:** {attack_power_away:.2f}")
-                    st.markdown(f"- **Power of Defense for {selected_home}:** {defense_power_home:.2f}")
-                    st.markdown(f"- **Power of Defense for {selected_away}:** {defense_power_away:.2f}")
+                    st.subheader("Power Strength Analysis")
+                    st.markdown('Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
+                    st.markdown('Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
+                    st.markdown('Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
+                    st.markdown('Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
+                    st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ **{attack_power_home:.2f}**")
+                    st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ **{attack_power_away:.2f}**")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ **{defense_power_home:.2f}**")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ **{defense_power_away:.2f}**")
+                    
+                    st.divider()
                     if defense_power_away == 0 or defense_power_home == 0:
                         st.error("Division by zero detected in xG calculation.")
                     else:
@@ -402,14 +404,15 @@ try:
                         xg_away = away_goals_scored * attack_power_away / defense_power_home
                     
                     # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
-                    st.subheader("**Expected Goals (xG) and Expected Goals Against (xGA) Analysis**")
-                    st.markdown(f"- **Expected Goals for {selected_home}:** {xg_home:.2f}")
-                    st.markdown(f"- **Expected Goals for {selected_away}:** {xg_away:.2f}")
+                    st.subheader("Expected Goals (xG) and Expected Goals Against (xGA) Analysis")
+                    st.markdown(f"- Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
+                    st.markdown(f"- Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
                 else:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
                 st.error(f"Erro ao carregar os dados de ligas: {e}")
-            
+                
+            st.divider()
             filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
             past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
             past_games_away = filtered_data[(filtered_data['Away'] == selected_away)].tail(21)
@@ -453,7 +456,7 @@ try:
                 ax.set_xticks(x)
                 ax.set_xticklabels(x_labels, rotation=45)
                 ax.set_ylabel("Goals")
-                ax.set_title(f"Goal Distribution - {team_name}")
+                ax.set_title(f"Goal Distribution - ***{team_name}***")
                 ax.legend()
                 st.pyplot(fig21)
     
@@ -476,10 +479,10 @@ try:
             fig22, ax = plt.subplots(figsize=(8, 5))
             x = np.arange(len(half_labels))
             width = 0.35
-            ax.bar(x - width/2, home_half_data_scored, width, label=f'{selected_home} Scored', color='blue')
-            ax.bar(x - width/2, home_half_data_conceded, width, label=f'{selected_home} Conceded', color='darkblue')
-            ax.bar(x + width/2, away_half_data_scored, width, label=f'{selected_away} Scored', color='red')
-            ax.bar(x + width/2, away_half_data_conceded, width, label=f'{selected_away} Conceded', color='darkred')
+            ax.bar(x - width/2, home_half_data_scored.values(), width, label=f'{selected_home} Scored', color='green')
+            ax.bar(x + width/2, home_half_data_conceded.values(), width, label=f'{selected_home} Conceded', color='darkgreen')
+            ax.bar(x - width/2, away_half_data_scored.values(), width, label=f'{selected_away} Scored', color='red')
+            ax.bar(x + width/2, away_half_data_conceded.values(), width, label=f'{selected_away} Conceded', color='darkred')
             ax.set_xticks(x)
             ax.set_xticklabels(half_labels)
             ax.set_ylabel("Goals")
@@ -514,7 +517,7 @@ try:
             
             # Verificar se os dados têm o tamanho esperado
             if len(past_games_home) < 5 or len(past_games_away) < 5:
-                st.subheader("Who Scored and Conceded First in the Last 21 Games")
+                st.subheader("Who Scored and Conceded First in the Last 21 Games?")
                 st.write("No Sufficient Data Available")
             else:
                 # Contar gols para cada time separadamente
@@ -526,12 +529,13 @@ try:
                     past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
                 )
             
-                # Exibir resultados
-                st.subheader(f"Who Scored and Conceded First in the Last 21 Games")
-                st.write(f"{selected_home} Scored First {home_first_goal} times in the last 21 games")
-                st.write(f"{selected_home} Conceded First {home_conceded_first} times in the last 21 games")
-                st.write(f"{selected_away} Scored First {away_first_goal} times in the last 21 games")
-                st.write(f"{selected_away} Conceded First {away_conceded_first} times in the last 21 games")
+                # Exibir resultados com negrito e itálico
+                st.subheader("Who Scored and Conceded First in the Last 21 Games")
+                st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
+                st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
+                st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
+                st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
+
             
         
         except Exception:
