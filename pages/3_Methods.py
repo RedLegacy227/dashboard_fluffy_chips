@@ -7,11 +7,12 @@ import base64
 import requests
 from datetime import datetime
 from auth import logout
-from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
+from sidebar_menu import show_role_features
 
 # Streamlit App Title and Headers
-st.set_page_config(page_title="Methods - Fluffy Chips", page_icon="🔋")
-
+st.set_page_config(page_title="Methods - Fluffy Chips Web Analyser", page_icon="🔋")
+# ✅ Show role-based features in the sidebar
+show_role_features()
 st.title("🔋 Methods - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
@@ -28,23 +29,6 @@ st.divider()
 # Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.switch_page("Login.py")  # Redirect to login page
-# Features based on roles
-if st.session_state["role"] == "Admin":
-    st.subheader("🔧 Admin Features")
-    st.write("- Manage users")
-    if st.button("Go to Admin Panel"):
-        st.switch_page("admin.py")
-
-elif st.session_state["role"] == "Editor":
-    st.subheader("📝 Editor Features")
-    st.write("- Edit and manage content")
-
-elif st.session_state["role"] == "Viewer":
-    st.subheader("👀 Viewer Features")
-    st.write("- View analytics and reports")
-
-# Adiciona o botão de logout apenas uma vez
-add_logout_button()
 
 # URLs for CSV Files
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
