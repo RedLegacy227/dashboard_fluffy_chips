@@ -8,7 +8,7 @@ if "logged_in" not in st.session_state:
 # If logged in and redirect flag is set, go to Home_1.py
 if st.session_state.get("redirect_to_1_Home", False):
     st.session_state["redirect_to_1_Home"] = False  # Reset flag
-    st.switch_page("1_Home.py")
+    st.switch_page("/pages/1_Home.py")
 
 # If not logged in, show login page
 if not st.session_state["logged_in"]:
