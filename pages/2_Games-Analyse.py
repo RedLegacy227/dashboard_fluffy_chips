@@ -493,10 +493,10 @@ try:
                 count_home_conceded = 0
                 count_away_conceded = 0
                 
-                for home_goals, away_goals in zip(home_goals_list, away_goals_list):
-                    if isinstance(home_goals, str) and isinstance(away_goals, str):
-                        home_times = ast.literal_eval(home_goals)
-                        away_times = ast.literal_eval(away_goals)
+                for home_goals_scored, away_goals_scored in zip(home_goals_list, away_goals_list):
+                    if isinstance(home_goals_scored, str) and isinstance(away_goals_scored, str):
+                        home_times = ast.literal_eval(home_goals_scored)
+                        away_times = ast.literal_eval(away_goals_scored)
                         
                         if home_times and away_times:  # Ambos marcaram
                             if min(home_times) < min(away_times):
