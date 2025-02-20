@@ -5,6 +5,7 @@ import requests
 import os
 from datetime import datetime
 from auth import logout
+from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
 
 st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
 st.title("🏠 Home - Fluffy Chips Web Analyzer")
@@ -41,8 +42,8 @@ elif role == "viewer":
     st.subheader("👀 Viewer Features")
     st.write("- View analytics and reports")
 
-# Logout button
-st.sidebar.button("🚪 Logout", on_click=logout)
+# Adiciona o botão de logout apenas uma vez
+add_logout_button()
 
 # URL base for GitHub CSV files
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_sem_variaveis/main/"
