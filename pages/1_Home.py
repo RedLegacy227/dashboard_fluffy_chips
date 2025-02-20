@@ -22,7 +22,7 @@ st.image("static/tatics.jpg")  # ✅ Fixed image path
 st.divider()
 
 # Welcome message
-st.subheader('_Games Of The Day_')
+st.markdown(f'#### 📆Games Of The Day📆 ####')
 st.write(f"Welcome, **{st.session_state['username']}**!")
 st.write(f"Your role: **{st.session_state['role']}**")
 
