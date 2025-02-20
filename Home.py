@@ -17,7 +17,7 @@ else:
     st.sidebar.title("📍 Navigation")
 
     # Show "Admin Panel" only for admin users
-    if st.session_state["username"] in ["admin", "superuser"]:
+    if st.session_state.get("role") == "admin":
         if st.sidebar.button("🔑 Admin Panel"):
             st.switch_page("admin.py")
 
