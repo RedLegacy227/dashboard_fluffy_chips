@@ -14,7 +14,8 @@ from auth import logout
 # Configuração inicial
 # Configurar a página para largura total
 st.set_page_config(layout="wide")
-st.title('_Fluffy Chips Web Analyzer_')
+st.set_page_config(page_title="Games Analyser - Fluffy Chips", page_icon="👩🏽‍💻")
+st.title("👩🏽‍💻 Games Analyser - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 st.subheader('_Games of the Day_')
