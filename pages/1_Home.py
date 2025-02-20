@@ -8,10 +8,10 @@ from auth import logout
 from sidebar_menu import show_role_features
 
 
-st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
+st.set_page_config(page_title="Home - Fluffy Chips Web Analyser", page_icon="🏠")
 # ✅ Show role-based features in the sidebar
 show_role_features()
-st.title("🏠 Home - Fluffy Chips Web Analyzer")
+st.title("🏠 Home - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
 
