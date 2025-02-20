@@ -471,27 +471,47 @@ try:
 
         def summarize_half_goals(goals, half_segments):
             return sum([goals[segment] for segment in half_segments])
-
-        st.markdown(f"#### First Half & Second Half Goals Distribution on the last 21 Games ####")
-        half_labels = ["First Half", "Second Half"]
-        home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
-        home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
-        away_half_data_scored = [summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90'])]
-        away_half_data_conceded = [summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])]
-
-        fig22, ax = plt.subplots(figsize=(8, 5))
+        
+        st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 21 Games ####")
+        
+        # Criar rótulos para 4 colunas no First Half e 4 colunas no Second Half
+        half_labels = [
+            f"{selected_home} Scored (1H)", f"{selected_home} Conceded (1H)", 
+            f"{selected_away} Scored (1H)", f"{selected_away} Conceded (1H)",
+            f"{selected_home} Scored (2H)", f"{selected_home} Conceded (2H)", 
+            f"{selected_away} Scored (2H)", f"{selected_away} Conceded (2H)"
+        ]
+        
+        # Criar listas de gols com 4 colunas para cada tempo
+        goal_data = [
+            summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']),  # Home Scored 1H
+            summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']),  # Home Conceded 1H
+            summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']),  # Away Scored 1H
+            summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']),  # Away Conceded 1H
+            summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90']),  # Home Scored 2H
+            summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90']),  # Home Conceded 2H
+            summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90']),  # Away Scored 2H
+            summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])  # Away Conceded 2H
+        ]
+        
+        # Criar o gráfico com 8 colunas
+        fig22, ax = plt.subplots(figsize=(10, 6))
         x = np.arange(len(half_labels))
-        width = 0.35
-        ax.bar(x - width/2, home_half_data_scored, width, label=f'{selected_home} Scored', color='green')
-        ax.bar(x + width/2, home_half_data_conceded, width, label=f'{selected_home} Conceded', color='darkgreen')
-        ax.bar(x - width/2, away_half_data_scored, width, label=f'{selected_away} Scored', color='red')
-        ax.bar(x + width/2, away_half_data_conceded, width, label=f'{selected_away} Conceded', color='darkred')
+        width = 0.5  # Largura das barras
+        
+        # Criar o gráfico de barras com todas as categorias
+        ax.bar(x, goal_data, width, color=['green', 'darkgreen', 'red', 'darkred', 'blue', 'darkblue', 'orange', 'brown'])
+        
+        # Configurar o gráfico
         ax.set_xticks(x)
-        ax.set_xticklabels(half_labels)
+        ax.set_xticklabels(half_labels, rotation=45, ha="right")
         ax.set_ylabel("Goals")
         ax.set_title("First & Second Half Goals")
-        ax.legend()
+        ax.grid(axis="y", linestyle="--", alpha=0.7)
+        
+        # Exibir gráfico no Streamlit
         st.pyplot(fig22)
+
         
         def count_first_goal(goals_scored_list, goals_conceded_list):
             count_scored_first = 0
