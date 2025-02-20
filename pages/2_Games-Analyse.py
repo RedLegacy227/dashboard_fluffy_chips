@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from auth import logout
 from sidebar_menu import show_role_features
+import ast
 
 st.set_page_config(page_title="Games Analyser - Fluffy Chips Web Analyser", page_icon="📽️")
 # ✅ Show role-based features in the sidebar
@@ -392,11 +393,13 @@ try:
                     st.markdown(f"- **Power of Attack for {selected_away}:** {attack_power_away:.2f}")
                     st.markdown(f"- **Power of Defense for {selected_home}:** {defense_power_home:.2f}")
                     st.markdown(f"- **Power of Defense for {selected_away}:** {defense_power_away:.2f}")
-                    
-                    # Expected Goals (xG) para o time da casa
-                    xg_home = home_goals_scored * attack_power_home / defense_power_away
-                    # Expected Goals (xG) para o time visitante
-                    xg_away = away_goals_scored * attack_power_away / defense_power_home
+                    if defense_power_away == 0 or defense_power_home == 0:
+                        st.error("Division by zero detected in xG calculation.")
+                    else:
+                        # Expected Goals (xG) para o time da casa
+                        xg_home = home_goals_scored * attack_power_home / defense_power_away
+                        # Expected Goals (xG) para o time visitante
+                        xg_away = away_goals_scored * attack_power_away / defense_power_home
                     
                     # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
                     st.subheader("**Expected Goals (xG) and Expected Goals Against (xGA) Analysis**")
@@ -406,6 +409,56 @@ try:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
                 st.error(f"Erro ao carregar os dados de ligas: {e}")
+            
+            filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
+            past_games = filtered_data[(filtered_data['Home'] == selected_home) | (filtered_data['Away'] == selected_away)].tail(21)
+            
+            # Function to count goals per time segment
+            def count_goals(goals_list, home_team):
+                time_segments = {"0-15": 0, "15-30": 0, "30-45": 0, "45-60": 0, "60-75": 0, "75-90": 0}
+                for goals in goals_list:
+                    if isinstance(goals, str):
+                        goal_times = ast.literal_eval(goals)
+                        for minute in goal_times:
+                            if 0 <= minute < 15:
+                                time_segments["0-15"] += 1
+                            elif 15 <= minute < 30:
+                                time_segments["15-30"] += 1
+                            elif 30 <= minute < 45:
+                                time_segments["30-45"] += 1
+                            elif 45 <= minute < 60:
+                                time_segments["45-60"] += 1
+                            elif 60 <= minute < 75:
+                                time_segments["60-75"] += 1
+                            elif 75 <= minute < 90:
+                                time_segments["75-90"] += 1
+                return time_segments
+    
+            # Get goal statistics
+            home_goals = count_goals(past_games['Goals_Minutes_Home'], selected_home)
+            away_goals = count_goals(past_games['Goals_Minutes_Away'], selected_away)
+    
+            st.subheader(f"Time of Goals of {selected_home}")
+            for segment, count in home_goals.items():
+                st.write(f"{segment} - {count} scored and {away_goals[segment]} conceded")
+    
+            st.subheader(f"First Half Goals of {selected_home}")
+            first_half_scored = sum([home_goals[segment] for segment in ["0-15", "15-30", "30-45"]])
+            first_half_conceded = sum([away_goals[segment] for segment in ["0-15", "15-30", "30-45"]])
+            st.write(f"In the last 21 games, {selected_home} scored {first_half_scored} goals in the first half and conceded {first_half_conceded} goals.")
+    
+            st.subheader(f"Second Half Goals of {selected_home}")
+            second_half_scored = sum([home_goals[segment] for segment in ["45-60", "60-75", "75-90"]])
+            second_half_conceded = sum([away_goals[segment] for segment in ["45-60", "60-75", "75-90"]])
+            st.write(f"In the last 21 games, {selected_home} scored {second_half_scored} goals in the second half and conceded {second_half_conceded} goals.")
+    
+            # Count first goal occurrences
+            home_first_goal = sum(past_games['Goals_Minutes_Home'].apply(lambda x: isinstance(x, str) and ast.literal_eval(x) and min(ast.literal_eval(x)) < min(ast.literal_eval(past_games['Goals_Minutes_Away'][i])) if isinstance(past_games['Goals_Minutes_Away'][i], str) and ast.literal_eval(past_games['Goals_Minutes_Away'][i]) else True for i in range(len(past_games))))
+            away_first_goal = 21 - home_first_goal
+    
+            st.write(f"{selected_home} marcou primeiro {home_first_goal} vezes nos últimos 21 jogos")
+            st.write(f"{selected_away} marcou primeiro {away_first_goal} vezes nos últimos 21 jogos")
+
         except Exception as e:
             st.error(f"Erro Geral: {e}")
 except Exception as e:
