@@ -11,7 +11,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 from auth import logout
 
-st.set_page_config(page_title="Games Analyser - Fluffy Chips", page_icon="👩🏽‍💻")
 st.title("👩🏽‍💻 Games Analyser - Fluffy Chips Web Analyzer")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.divider()
