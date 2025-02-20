@@ -9,6 +9,7 @@ import base64
 from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
+from auth import logout
 
 # Configuração inicial
 # Configurar a página para largura total
@@ -29,6 +30,16 @@ st.markdown(
     unsafe_allow_html=True
 )
 st.divider()
+# Redirect to login page if the user is not logged in
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.switch_page("Home.py")  # Redirect to login page
+
+st.title("📊 Protected Page")
+st.write(f"Welcome, **{st.session_state['username']}**!")
+st.write("This is a protected page. Only authenticated users can access it.")
+
+# Logout button
+st.sidebar.button("🚪 Logout", on_click=logout)
 
 # URL base do GitHub para os arquivos CSV
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
