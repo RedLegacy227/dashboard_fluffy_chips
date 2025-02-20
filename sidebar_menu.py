@@ -50,8 +50,8 @@ def show_role_features():
     st.sidebar.write(f"💸 10% - Stake ➡️ **{stake_10:.2f}** - Odds 20<>30")
     st.sidebar.write(f"💸 12% - Stake ➡️ **{stake_12:.2f}** - Odds 30<>40")
     st.sidebar.write(f"💸 15% - Stake ➡️ **{stake_15:.2f}** - Odds 40<>50")
-    st.sidebar.write(f"💸 20% - Stake ➡️ **{stake_15:.2f}** - Odds 50<>80")
-    st.sidebar.write(f"💸 30% - Stake ➡️ **{stake_15:.2f}** - Odds >80")
+    st.sidebar.write(f"💸 20% - Stake ➡️ **{stake_20:.2f}** - Odds 50<>80")
+    st.sidebar.write(f"💸 30% - Stake ➡️ **{stake_30:.2f}** - Odds >80")
 
     st.sidebar.divider()
 
