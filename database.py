@@ -6,7 +6,7 @@ import os
 load_dotenv()
 
 # Get MongoDB URI from environment variables
-MONGO_URI = os.getenv("mongo.env")
+MONGO_URI = os.getenv("MONGO_URI")
 
 # Connect to MongoDB Atlas
 def get_database():
