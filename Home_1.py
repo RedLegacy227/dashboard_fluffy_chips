@@ -18,9 +18,26 @@ st.divider()
 # Redirect to login page if the user is not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.switch_page("Home.py")  # Redirect to login page
+st.subheader('_Games Of The Day_')
+st.write(f"Welcome, **{st.session_state['username']}**!")
+st.write(f"Your role: **{st.session_state['role']}**")
+# Features based on roles
+if st.session_state["role"] == "admin":
+    st.subheader("🔧 Admin Features")
+    st.write("- Manage users")
+    if st.button("Go to Admin Panel"):
+        st.switch_page("admin.py")
+
+elif st.session_state["role"] == "editor":
+    st.subheader("📝 Editor Features")
+    st.write("- Edit and manage content")
+
+elif st.session_state["role"] == "viewer":
+    st.subheader("👀 Viewer Features")
+    st.write("- View analytics and reports")
+
 # Logout button
 st.sidebar.button("🚪 Logout", on_click=logout)
-st.subheader('_Games Of The Day_')
 # URL base do GitHub para os arquivos CSV
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_sem_variaveis/main/"
 # Escolher uma data
