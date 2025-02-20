@@ -14,6 +14,8 @@ from sidebar_menu import show_role_features
 import ast
 
 st.set_page_config(page_title="Games Analyser - Fluffy Chips Web Analyser", page_icon="📽️")
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.switch_page("Login.py")  # Redireciona para a página de login
 # ✅ Show role-based features in the sidebar
 show_role_features()
 st.title("📽️ Games Analyser - Fluffy Chips")
