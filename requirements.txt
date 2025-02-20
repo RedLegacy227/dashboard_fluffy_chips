@@ -7,3 +7,4 @@ scipy
 pymongo
 bcrypt
 pymongo[srv]
+python-dotenv
