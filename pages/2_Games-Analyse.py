@@ -465,10 +465,10 @@ try:
 
         st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
         plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
-
+        st.divider() 
         st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
         plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
-
+        st.divider() 
         def summarize_half_goals(goals, half_segments):
             return sum([goals[segment] for segment in half_segments])
         
@@ -516,8 +516,7 @@ try:
         
         # Exibir gráfico no Streamlit
         st.pyplot(fig22)
-
-
+        st.divider() 
         
         def count_first_goal(goals_scored_list, goals_conceded_list):
             count_scored_first = 0
@@ -561,7 +560,7 @@ try:
             st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
             st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
             st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
-            
+        st.divider()             
 except Exception as e:
     st.error(f"Erro Geral: {e}")
 st.divider()                    
