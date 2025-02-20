@@ -562,5 +562,4 @@ try:
             st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
         st.divider()             
 except Exception as e:
-    st.error(f"Erro Geral: {e}")
-st.divider()                    
+    st.error(f"Erro Geral: {e}")                   
