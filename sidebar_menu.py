@@ -12,7 +12,7 @@ def show_sidebar():
 
     # Define available pages
     if not st.session_state["logged_in"]:
-        menu_items = {"Login": "Login"}
+        menu_items = {"Login": "Login.py"}
     else:
         menu_items = {
             "Home": "1_Home",
@@ -23,7 +23,7 @@ def show_sidebar():
 
     # ✅ Ensure selected_page exists in menu_items.values()
     if selected_page not in menu_items.values():
-        selected_page = "Login"  # Default back to "Login" if invalid
+        selected_page = "Login.py"  # Default back to "Login" if invalid
 
     # Create sidebar menu
     st.sidebar.title("📂 Navigation")
