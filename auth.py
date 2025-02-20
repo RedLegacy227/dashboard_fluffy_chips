@@ -1,23 +1,24 @@
 import streamlit as st
-import hashlib
+import bcrypt
 from database import get_users_collection
 
-# Function to hash values securely
-def hash_value(value):
-    return hashlib.sha256(value.encode()).hexdigest()
+# Function to hash passwords securely using bcrypt
+def hash_password(password):
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode(), salt)
+
+# Function to verify password using bcrypt
+def verify_password(stored_password, entered_password):
+    return bcrypt.checkpw(entered_password.encode(), stored_password)
 
 # Function to verify login and fetch user role
 def verify_login(username, password):
     users_collection = get_users_collection()
     
-    # Generate hashed values
-    hashed_username = hash_value(username)
-    hashed_password = hash_value(password)
+    # Find user in MongoDB collection (username is not hashed)
+    user = users_collection.find_one({"username": username})
     
-    # Find user in MongoDB collection
-    user = users_collection.find_one({"username": hashed_username, "password": hashed_password})
-    
-    if user:
+    if user and verify_password(user["password"], password):  # Compare password securely
         return user  # Return full user document
     return None  # Return None if no user found
 
@@ -54,14 +55,18 @@ def logout():
 def add_user(username, password, role="viewer"):
     users_collection = get_users_collection()
     
-    # Hash username and password
-    hashed_username = hash_value(username)
-    hashed_password = hash_value(password)
-    
-    # Check if user already exists (by hashed username)
-    if users_collection.find_one({"username": hashed_username}):
-        st.warning(f"User '{username}' already exists.")
+    # Hash the password with bcrypt
+    hashed_password = hash_password(password)
+
+    # Check if user already exists
+    if users_collection.find_one({"username": username}):
+        st.warning(f"⚠️ User '{username}' already exists.")
     else:
-        users_collection.insert_one({"username": hashed_username, "password": hashed_password, "role": role})
-        st.success(f"User '{username}' added successfully with role '{role}'.")
+        users_collection.insert_one({
+            "username": username, 
+            "password": hashed_password,  # Store bcrypt-hashed password
+            "role": role
+        })
+        st.success(f"✅ User '{username}' added successfully with role '{role}'.")
+
 
