@@ -469,7 +469,7 @@ try:
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
     
-            st.markdown(f"##First Half & Second Half Goals Distribution on the last 21 Games##")
+            st.markdown(f"### First Half & Second Half Goals Distribution on the last 21 Games ###")
             half_labels = ["First Half", "Second Half"]
             home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
             home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
