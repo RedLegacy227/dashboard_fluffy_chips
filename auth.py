@@ -41,19 +41,18 @@ def login():
             st.session_state["role"] = user.get("role", "viewer")  # Default role is "viewer"
             st.success(f"Welcome, {username}! Role: {st.session_state['role']}")
 
-            # Redirect to Home_1.py
+            # ✅ Set redirect flag before switching page
             st.session_state["redirect_to_Home_1"] = True
-            st.rerun()  # ✅ FIX: Use `st.rerun()` instead of `st.experimental_rerun()`
+            st.switch_page("1_Home")  # ✅ Corrected navigation
         else:
             st.error("Incorrect username or password.")
 
 # Logout function
 def logout():
-    st.session_state["logged_in"] = False
-    st.session_state["username"] = None
-    st.session_state["role"] = None
-    st.session_state["redirect_to_Home_1"] = False
-    st.rerun()  # ✅ FIX: Use `st.rerun()` instead of `st.experimental_rerun()`
+    for key in list(st.session_state.keys()):
+        del st.session_state[key]  # Clear session state
+    
+    st.switch_page("Login")  # ✅ Redirect to login after logout
 
 # Admin-only function to add users with specific roles
 def add_user(username, password, role="viewer"):
