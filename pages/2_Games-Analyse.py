@@ -17,6 +17,8 @@ st.set_page_config(page_title="Games Analyser - Fluffy Chips Web Analyser", page
 show_role_features()
 st.title("📽️ Games Analyser - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
+st.write(f"Welcome, **{st.session_state['username']}**!")
+st.write(f"Your role: **{st.session_state['role']}**")
 st.divider()
 st.subheader('_Games of the Day_')
 # Caminho para a imagem
