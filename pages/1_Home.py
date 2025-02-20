@@ -26,7 +26,7 @@ if st.session_state["role"] == "admin":
     st.subheader("🔧 Admin Features")
     st.write("- Manage users")
     if st.button("Go to Admin Panel"):
-        st.switch_page("admin.py")
+        st.switch_page("pages/admin.py")
 
 elif st.session_state["role"] == "editor":
     st.subheader("📝 Editor Features")
