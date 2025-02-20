@@ -6,7 +6,7 @@ st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
 # Redirect to login if not logged in
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.warning("🚫 Access denied. Please log in first.")
-    st.switch_page("Login")  # ✅ Redirect to login page
+    st.switch_page("Login.py")  # ✅ Redirect to login page
 
 # Navigation
 st.sidebar.title("📍 Navigation")
