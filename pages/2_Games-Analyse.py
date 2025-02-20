@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 from auth import logout
 from ui_helpers import add_logout_button  # ✅ Importa a função para evitar duplicação
+
 st.set_page_config(page_title="Games Analyser - Fluffy Chips", page_icon="👩🏽‍💻")
 st.title("👩🏽‍💻 Games Analyser - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
@@ -49,8 +50,8 @@ elif st.session_state["role"] == "Viewer":
     st.subheader("👀 Viewer Features")
     st.write("- View analytics and reports")
 
-# Logout button
-st.sidebar.button("🚪 Logout", on_click=logout)
+# Adiciona o botão de logout apenas uma vez
+add_logout_button()
 
 # URL base do GitHub para os arquivos CSV
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
