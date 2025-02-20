@@ -1,24 +1,24 @@
 import streamlit as st
-from auth import login, logout
+from auth import logout
 
-# Initialize session state for login
-if "logged_in" not in st.session_state:
-    st.session_state["logged_in"] = False
+st.set_page_config(page_title="Home - Fluffy Chips", page_icon="🏠")
 
-# If logged in and redirect flag is set, go to Home_1.py
-if st.session_state.get("redirect_to_1_Home", False):
-    st.session_state["redirect_to_1_Home"] = False  # Reset flag
-    st.switch_page("pages/1_Home.py")
+# Redirect to login if not logged in
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.warning("🚫 Access denied. Please log in first.")
+    st.switch_page("Login")  # ✅ Redirect to login page
 
-# If not logged in, show login page
-if not st.session_state["logged_in"]:
-    login()
-else:
-    st.sidebar.title("📍 Navigation")
+# Navigation
+st.sidebar.title("📍 Navigation")
 
-    # Show "Admin Panel" only for admin users
-    if st.session_state.get("role") == "admin":
-        if st.sidebar.button("🔑 Admin Panel"):
-            st.switch_page("pages/admin.py")
+# Show "Admin Panel" only for admin users
+if st.session_state.get("role") == "admin":
+    if st.sidebar.button("🔑 Admin Panel"):
+        st.switch_page("admin")  # ✅ Corrected path
 
-    st.sidebar.button("🚪 Logout", on_click=logout)
+# Logout button
+st.sidebar.button("🚪 Logout", on_click=logout)
+
+# Main content
+st.title("🏠 Home - Fluffy Chips Web Analyzer")
+st.write(f"Welcome, **{st.session_state['username']}**!")
