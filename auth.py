@@ -5,15 +5,12 @@ from database import get_users_collection
 # Function to hash passwords securely using bcrypt
 def hash_password(password):
     salt = bcrypt.gensalt()
-    return bcrypt.hashpw(password.encode(), salt)  # Returns bytes
+    return bcrypt.hashpw(password.encode(), salt).decode()  # ✅ Store as string
 
 # Function to verify password using bcrypt
 def verify_password(stored_password, entered_password):
     """Ensure stored password is bytes before checking"""
-    if isinstance(stored_password, str):
-        stored_password = stored_password.encode()  # Convert stored hash to bytes
-    
-    return bcrypt.checkpw(entered_password.encode(), stored_password)
+    return bcrypt.checkpw(entered_password.encode(), stored_password.encode())
 
 # Function to verify login and fetch user role
 def verify_login(username, password):
@@ -41,9 +38,8 @@ def login():
             st.session_state["role"] = user.get("role", "viewer")  # Default role is "viewer"
             st.success(f"Welcome, {username}! Role: {st.session_state['role']}")
 
-            # ✅ Set redirect flag before switching page
-            st.session_state["redirect_to_Home_1"] = True
-            st.switch_page("1_Home")  # ✅ Corrected navigation
+            # ✅ Redirect to Home page after login
+            st.switch_page("1_Home")
         else:
             st.error("Incorrect username or password.")
 
@@ -52,7 +48,7 @@ def logout():
     for key in list(st.session_state.keys()):
         del st.session_state[key]  # Clear session state
     
-    st.switch_page("Login.py")  # ✅ Redirect to login after logout
+    st.switch_page("Login")  # ✅ Redirect to login after logout
 
 # Admin-only function to add users with specific roles
 def add_user(username, password, role="viewer"):
@@ -67,7 +63,7 @@ def add_user(username, password, role="viewer"):
     else:
         users_collection.insert_one({
             "username": username, 
-            "password": hashed_password.decode(),  # Store bcrypt-hashed password as string
+            "password": hashed_password,  # ✅ Store bcrypt-hashed password as string
             "role": role
         })
         st.success(f"✅ User '{username}' added successfully with role '{role}'.")
