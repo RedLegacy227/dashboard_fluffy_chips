@@ -411,7 +411,8 @@ try:
                 st.error(f"Erro ao carregar os dados de ligas: {e}")
             
             filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
-            past_games = filtered_data[(filtered_data['Home'] == selected_home) | (filtered_data['Away'] == selected_away)].tail(21)
+            past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
+            past_games_away = filtered_data[(filtered_data['Away'] == selected_away)].tail(21)
             
             # Function to count goals per time segment
             def count_goals(goals_list):
@@ -435,8 +436,10 @@ try:
                 return time_segments
     
             # Get goal statistics
-            home_goals = count_goals(past_games['Goals_Minutes_Home'])
-            away_goals = count_goals(past_games['Goals_Minutes_Away'])
+            home_goals_scored = count_goals(past_games_home['Goals_Minutes_Home'])
+            home_goals_conceded = count_goals(past_games_home['Goals_Minutes_Away'])
+            away_goals_scored = count_goals(past_games_away['Goals_Minutes_Away'])
+            away_goals_conceded = count_goals(past_games_away['Goals_Minutes_Home'])
     
             # Function to plot goal distribution
             def plot_goal_distribution(team_name, goals, conceded):
@@ -455,24 +458,28 @@ try:
                 st.pyplot(fig21)
     
             st.subheader(f"Time of Goals of {selected_home}")
-            plot_goal_distribution(selected_home, home_goals, away_goals)
+            plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
     
             st.subheader(f"Time of Goals of {selected_away}")
-            plot_goal_distribution(selected_away, away_goals, home_goals)
+            plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
     
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
     
             st.subheader(f"First Half & Second Half Goals Distribution")
             half_labels = ["First Half", "Second Half"]
-            home_half_data = [summarize_half_goals(home_goals, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals, ['45-60', '60-75', '75-90'])]
-            away_half_data = [summarize_half_goals(away_goals, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals, ['45-60', '60-75', '75-90'])]
+            home_half_data_scored = [summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])]
+            home_half_data_conceded = [summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])]
+            away_half_data_scored = [summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90'])]
+            away_half_data_conceded = [summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']), summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])]
     
             fig22, ax = plt.subplots(figsize=(8, 5))
             x = np.arange(len(half_labels))
             width = 0.35
-            ax.bar(x - width/2, home_half_data, width, label=f'{selected_home}', color='blue')
-            ax.bar(x + width/2, away_half_data, width, label=f'{selected_away}', color='orange')
+            ax.bar(x - width/2, home_half_data_scored, width, label=f'{selected_home}', color='blue')
+            ax.bar(x - width/2, home_half_data_conceded, width, label=f'{selected_home}', color='darkblue')
+            ax.bar(x + width/2, away_half_data_scored, width, label=f'{selected_away}', color='red')
+            ax.bar(x + width/2, away_half_data_conceded, width, label=f'{selected_away}', color='darkred')
             ax.set_xticks(x)
             ax.set_xticklabels(half_labels)
             ax.set_ylabel("Goals")
