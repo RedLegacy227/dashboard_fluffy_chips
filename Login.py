@@ -1,5 +1,6 @@
 import streamlit as st
 from auth import verify_login
+from sidebar_menu import show_sidebar  # ✅ Importa o menu lateral dinâmico
 
 st.set_page_config(page_title="Login - Fluffy Chips", page_icon="🔐")
 
@@ -20,16 +21,15 @@ if login_button:
         st.session_state["username"] = username
         st.session_state["role"] = user.get("role", "viewer")
 
-        st.success(f"✅ Bem-vindo, {username} ({st.session_state['role']})!")
+        st.success(f"✅ Bem-vindo, {username}!")
 
-        # Método atualizado para redirecionamento seguro
+        # Redirecionar para "Home" após login
         st.session_state["redirect"] = "1_Home"
-        st.stop()  # Evita que o código continue executando
-        
+        st.rerun()
     else:
         st.error("❌ Usuário ou senha incorretos.")
 
+# Impedir acesso não autorizado
 if not st.session_state["logged_in"]:
     st.warning("🚫 Acesso negado. Faça login primeiro.")
     st.stop()
-
