@@ -1,13 +1,12 @@
 import streamlit as st
 from auth import logout, add_user
-from ui_helpers import add_logout_button
+from sidebar_menu import show_role_features
 
 st.set_page_config(page_title="Admin Panel - Fluffy Chips", page_icon="🔑")
-
-# Redireciona para login se não estiver autenticado
 if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.session_state["redirect"] = "1_Home"
-    st.rerun()
+    st.switch_page("Login.py")  # Redireciona para a página de login
+# ✅ Show role-based features in the sidebar
+show_role_features()
 
 # Bloqueia acesso para não-admins
 if st.session_state.get("role") != "Admin":
@@ -29,6 +28,3 @@ if st.button("Create User"):
         st.success(f"✅ User '{new_username}' created successfully!")
     else:
         st.warning("⚠️ Please enter both a username and a password.")
-
-# Adiciona botão de logout na barra lateral
-add_logout_button()
