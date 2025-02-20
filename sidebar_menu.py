@@ -41,13 +41,17 @@ def show_role_features():
     stake_10 = banca * 0.10
     stake_12 = banca * 0.12
     stake_15 = banca * 0.15
+    stake_20 = banca * 0.20
+    stake_30 = banca * 0.30
 
     # Display calculated stakes
-    st.sidebar.write(f"5% Stake: **{stake_5:.2f}**")
-    st.sidebar.write(f"7% Stake: **{stake_7:.2f}**")
-    st.sidebar.write(f"10% Stake: **{stake_10:.2f}**")
-    st.sidebar.write(f"12% Stake: **{stake_12:.2f}**")
-    st.sidebar.write(f"15% Stake: **{stake_15:.2f}**")
+    st.sidebar.write(f"💸 5% - Stake ➡️ **{stake_5:.2f}** - Odds <10")
+    st.sidebar.write(f"💸 7% - Stake ➡️ **{stake_7:.2f}** - Odds 10<>20")
+    st.sidebar.write(f"💸 10% - Stake ➡️ **{stake_10:.2f}** - Odds 20<>30")
+    st.sidebar.write(f"💸 12% - Stake ➡️ **{stake_12:.2f}** - Odds 30<>40")
+    st.sidebar.write(f"💸 15% - Stake ➡️ **{stake_15:.2f}** - Odds 40<>50")
+    st.sidebar.write(f"💸 20% - Stake ➡️ **{stake_15:.2f}** - Odds 50<>80")
+    st.sidebar.write(f"💸 30% - Stake ➡️ **{stake_15:.2f}** - Odds >80")
 
     st.sidebar.divider()
 
