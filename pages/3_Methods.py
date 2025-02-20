@@ -11,6 +11,8 @@ from sidebar_menu import show_role_features
 
 # Streamlit App Title and Headers
 st.set_page_config(page_title="Methods - Fluffy Chips Web Analyser", page_icon="🔋")
+if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
+    st.switch_page("Login.py")  # Redireciona para a página de login
 # ✅ Show role-based features in the sidebar
 show_role_features()
 st.title("🔋 Methods - Fluffy Chips")
@@ -28,10 +30,6 @@ else:
     st.warning("Image not found. Please check the file path.")
 
 st.divider()
-# Redirect to login page if the user is not logged in
-if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
-    st.switch_page("Login.py")  # Redirect to login page
-
 # URLs for CSV Files
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
 historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/main/df_base_original.csv"
