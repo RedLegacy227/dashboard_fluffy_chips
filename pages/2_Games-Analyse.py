@@ -246,7 +246,7 @@ try:
                 
                 home_last_7["Score"] = home_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + home_last_7["FT_Goals_A"].astype(int).astype(str)
                 top_scores_home = home_last_7["Score"].value_counts().head(7)
-                st.subheader("**Tendency of Last 7 Games**")
+                st.subheader("Tendency of Last 7 Games")
                 st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_home:.2f}%**")
                 st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_home:.2f}%**")
                 st.markdown(f"Tendency BTTS: **{tendency_btts_home:.2f}%**")
@@ -405,8 +405,8 @@ try:
                     
                     # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
                     st.subheader("Expected Goals (xG) and Expected Goals Against (xGA) Analysis")
-                    st.markdown(f"- Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
-                    st.markdown(f"- Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
                 else:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
@@ -460,10 +460,10 @@ try:
                 ax.legend()
                 st.pyplot(fig21)
     
-            st.markdown(f"**Time of Goals of ***{selected_home}*** on the last 21 Games**")
+            st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
             plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
     
-            st.markdown(f"**Time of Goals of ***{selected_away}*** on the last 21 Games**")
+            st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
             plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
     
             def summarize_half_goals(goals, half_segments):
