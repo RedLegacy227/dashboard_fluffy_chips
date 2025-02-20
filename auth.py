@@ -39,3 +39,15 @@ def logout():
     st.session_state["username"] = None
     st.session_state["redirect_to_Home_1"] = False
     st.experimental_rerun()
+
+# Admin-only function to add users
+def add_user(username, password):
+    users_collection = get_users_collection()
+    hashed_password = hashlib.sha256(password.encode()).hexdigest()
+    
+    # Check if user already exists
+    if users_collection.find_one({"username": username}):
+        st.warning(f"User '{username}' already exists.")
+    else:
+        users_collection.insert_one({"username": username, "password": hashed_password, "role": "user"})
+        st.success(f"User '{username}' added successfully.")
