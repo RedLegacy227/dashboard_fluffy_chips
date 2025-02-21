@@ -420,6 +420,7 @@ try:
                 st.error(f"Erro ao carregar os dados de ligas: {e}")
             
         with col1:
+            st.divider() 
             filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
             past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
             past_games_away = filtered_data[(filtered_data['Away'] == selected_away)].tail(21)
@@ -469,11 +470,10 @@ try:
                 
             st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
             plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
-            
+            st.divider()             
             st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
             plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
-            
-        with col1:
+            st.divider() 
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
         
@@ -523,7 +523,6 @@ try:
             st.pyplot(fig22)
         
         with col2:
-            
             def count_first_goal(goals_scored_list, goals_conceded_list):
                 count_scored_first = 0
                 count_conceded_first = 0
