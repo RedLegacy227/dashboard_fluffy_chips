@@ -736,11 +736,20 @@ with tab_views[1]:
 
                         if home in top_scoring_teams and away in top_scoring_teams and \
                             home in weak_defense_teams and away in weak_defense_teams:
-                            results.append([league, home, away, match_time])
+                            # Adicionar todos os dados necessários à lista de resultados
+                            results.append([
+                                league, match_time, home, away,
+                                row.get("FT_Odd_H", None),  # Usar .get() para evitar erros se a coluna não existir
+                                row.get("FT_Odd_D", None),
+                                row.get("FT_Odd_A", None),
+                                row.get("Balance", None),
+                                row.get("Perc_Over_25_FT_Home", None),
+                                row.get("Perc_Over_25_FT_Away", None)
+                            ])
 
                 # Verificar se há resultados antes de exibir
                 if results:
-                    df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"])
+                    df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True)
                 else:
@@ -1023,7 +1032,7 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
         available_columns = [col for col in required_columns if col in data.columns]
 
         # Aplicar os filtros
