@@ -102,7 +102,7 @@ try:
                         sizes = [home_wins, draws, away_wins]
                         colors = ['darkgreen', 'cyan', 'orange']
 
-                        fig1, ax1 = plt.subplots(figsize=(10, 13))
+                        fig1, ax1 = plt.subplots(figsize=(10, 10))
                         wedges, texts, autotexts = ax1.pie(
                             sizes,
                             autopct='%1.1f%%',
@@ -118,7 +118,7 @@ try:
                         st.pyplot(fig1)
                         
                         # Gráfico de Linhas (Odds)
-                        fig3, ax3 = plt.subplots(figsize=(10, 9))
+                        fig3, ax3 = plt.subplots(figsize=(10, 10))
                         ax3.plot(filtered_data["Date"], filtered_data["FT_Odd_H"], color='darkgreen', label='FT_Odd_H')
                         ax3.plot(filtered_data["Date"], filtered_data["FT_Odd_D"], color='cyan', label='FT_Odd_D')
                         ax3.plot(filtered_data["Date"], filtered_data["FT_Odd_A"], color='orange', label='FT_Odd_A')
@@ -135,7 +135,7 @@ try:
                         home_goals = filtered_data["FT_Goals_H"]
                         away_goals = filtered_data["FT_Goals_A"]
 
-                        fig2, ax2 = plt.subplots(figsize=(10, 8))
+                        fig2, ax2 = plt.subplots(figsize=(10, 6))
                         bar_width = 0.35
                         x = np.arange(len(games))
 
