@@ -135,7 +135,7 @@ try:
                         home_goals = filtered_data["FT_Goals_H"]
                         away_goals = filtered_data["FT_Goals_A"]
 
-                        fig2, ax2 = plt.subplots(figsize=(10, 6.5))
+                        fig2, ax2 = plt.subplots(figsize=(10, 6.2))
                         bar_width = 0.35
                         x = np.arange(len(games))
 
