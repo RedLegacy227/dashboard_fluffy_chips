@@ -118,7 +118,7 @@ try:
                         st.pyplot(fig1)
                         
                         # Gráfico de Linhas (Odds)
-                        fig3, ax3 = plt.subplots(figsize=(10, 10))
+                        fig3, ax3 = plt.subplots(figsize=(10, 6))
                         ax3.plot(filtered_data["Date"], filtered_data["FT_Odd_H"], color='darkgreen', label='FT_Odd_H')
                         ax3.plot(filtered_data["Date"], filtered_data["FT_Odd_D"], color='cyan', label='FT_Odd_D')
                         ax3.plot(filtered_data["Date"], filtered_data["FT_Odd_A"], color='orange', label='FT_Odd_A')
