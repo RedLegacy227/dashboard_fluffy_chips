@@ -222,7 +222,7 @@ try:
                 sizes = [home_wins, draws, away_wins]
                 colors = ['darkgreen', 'cyan', 'orange']
                 
-                fig4, ax4 = plt.subplots(figsize=(10, 13))
+                fig4, ax4 = plt.subplots(figsize=(10, 10))
                 wedges, texts, autotexts = ax4.pie(
                             sizes,
                             autopct='%1.1f%%',
@@ -263,7 +263,7 @@ try:
                 home_goals = home_last_7["FT_Goals_H"]
                 away_goals = home_last_7["FT_Goals_A"]
                 
-                fig5, ax5 = plt.subplots(figsize=(10, 8))
+                fig5, ax5 = plt.subplots(figsize=(10, 6))
                 bar_width = 0.35
                 x = np.arange(len(home_last_7))
                 
@@ -297,7 +297,7 @@ try:
                 sizes = [home_wins, draws, away_wins]
                 colors = ['darkgreen', 'cyan', 'orange']
                 
-                fig6, ax6 = plt.subplots(figsize=(10, 13))
+                fig6, ax6 = plt.subplots(figsize=(10, 10))
                 wedges, texts, autotexts = ax6.pie(
                             sizes,
                             autopct='%1.1f%%',
@@ -339,7 +339,7 @@ try:
                 home_goals = away_last_7["FT_Goals_H"]
                 away_goals = away_last_7["FT_Goals_A"]
                 
-                fig7, ax7 = plt.subplots(figsize=(10, 8))
+                fig7, ax7 = plt.subplots(figsize=(10, 6))
                 bar_width = 0.35
                 x = np.arange(len(home_last_7))
                 
@@ -458,7 +458,7 @@ try:
     
             # Function to plot goal distribution
             def plot_goal_distribution(team_name, goals, conceded):
-                fig21, ax = plt.subplots(figsize=(10, 6))
+                fig21, ax = plt.subplots(figsize=(10, 10))
                 x_labels = list(goals.keys())
                 x = np.arange(len(x_labels))
                 width = 0.35
@@ -505,7 +505,7 @@ try:
             ]
             
             # Criar o gráfico com 2 grupos ("First Half" e "Second Half"), mas 4 colunas dentro de cada um
-            fig22, ax = plt.subplots(figsize=(10, 6))
+            fig22, ax = plt.subplots(figsize=(10, 10))
             x = np.arange(len(half_labels))  # Posições para "First Half" e "Second Half"
             width = 0.2  # Largura das barras
             
