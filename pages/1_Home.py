@@ -52,7 +52,7 @@ try:
         
         # Display DataFrame
         if not filtered_data.empty:
-            st.write(f"### Matches Available for **{formatted_date}**: ####")
+            st.markdown(f"### Matches Available for **{formatted_date}**: ####")
             st.dataframe(filtered_data)
         else:
             st.warning("No data available after filtering.")
