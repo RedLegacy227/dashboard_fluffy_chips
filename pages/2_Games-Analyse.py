@@ -521,50 +521,51 @@ try:
             
             # Exibir gráfico no Streamlit
             st.pyplot(fig22)
-        st.divider() 
         
-        def count_first_goal(goals_scored_list, goals_conceded_list):
-            count_scored_first = 0
-            count_conceded_first = 0
+        with col2:
             
-            for goals_scored, goals_conceded in zip(goals_scored_list, goals_conceded_list):
-                try:
-                    scored_times = ast.literal_eval(goals_scored) if isinstance(goals_scored, str) else []
-                    conceded_times = ast.literal_eval(goals_conceded) if isinstance(goals_conceded, str) else []
-                except (SyntaxError, ValueError):
-                    continue  # Ignorar entradas inválidas
+            def count_first_goal(goals_scored_list, goals_conceded_list):
+                count_scored_first = 0
+                count_conceded_first = 0
                 
-                if scored_times and conceded_times:  # Ambos marcaram
-                    if min(scored_times) < min(conceded_times):
-                        count_scored_first += 1  # Time marcou primeiro
-                    else:
-                        count_conceded_first += 1  # Time sofreu primeiro
-                elif scored_times:  # Só esse time marcou
-                    count_scored_first += 1
-                elif conceded_times:  # Só o adversário marcou
-                    count_conceded_first += 1
-        
-            return count_scored_first, count_conceded_first
-        
-        # Verificar se os dados têm o tamanho esperado
-        if len(past_games_home) < 5 or len(past_games_away) < 5:
-            st.write("No Sufficient Data Available")
-        else:
-            # Contar gols para cada time separadamente
-            home_first_goal, home_conceded_first = count_first_goal(
-                past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
-            )
-        
-            away_first_goal, away_conceded_first = count_first_goal(
-                past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
-            )
-        
-            # Exibir resultados com negrito e itálico
-            st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
-            st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
-            st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
-            st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
-            st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
+                for goals_scored, goals_conceded in zip(goals_scored_list, goals_conceded_list):
+                    try:
+                        scored_times = ast.literal_eval(goals_scored) if isinstance(goals_scored, str) else []
+                        conceded_times = ast.literal_eval(goals_conceded) if isinstance(goals_conceded, str) else []
+                    except (SyntaxError, ValueError):
+                        continue  # Ignorar entradas inválidas
+                    
+                    if scored_times and conceded_times:  # Ambos marcaram
+                        if min(scored_times) < min(conceded_times):
+                            count_scored_first += 1  # Time marcou primeiro
+                        else:
+                            count_conceded_first += 1  # Time sofreu primeiro
+                    elif scored_times:  # Só esse time marcou
+                        count_scored_first += 1
+                    elif conceded_times:  # Só o adversário marcou
+                        count_conceded_first += 1
+            
+                return count_scored_first, count_conceded_first
+            
+            # Verificar se os dados têm o tamanho esperado
+            if len(past_games_home) < 5 or len(past_games_away) < 5:
+                st.write("No Sufficient Data Available")
+            else:
+                # Contar gols para cada time separadamente
+                home_first_goal, home_conceded_first = count_first_goal(
+                    past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
+                )
+            
+                away_first_goal, away_conceded_first = count_first_goal(
+                    past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
+                )
+            
+                # Exibir resultados com negrito e itálico
+                st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
+                st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
+                st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
+                st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
+                st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
         st.divider()             
 except Exception as e:
     st.error(f"Erro Geral: {e}")                   
