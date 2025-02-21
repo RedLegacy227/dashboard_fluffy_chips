@@ -956,7 +956,7 @@ with tab_views[6]:
             (data["Media_Saldo_Golos_Away"] < 0.0250)
         ]
         back_home_Port_01_01_ft_flt = back_home_Port_01_01_ft_flt.sort_values(by='Time', ascending=True)
-
+        
         # Exibir os dados filtrados
         if not back_home_Port_01_01_ft_flt.empty:
             st.dataframe(back_home_Port_01_01_ft_flt)
@@ -977,7 +977,7 @@ with tab_views[6]:
             (data["Media_Ptos_Away"] < 1.6950)
         ]
         back_home_Port_01_02_ft_flt = back_home_Port_01_02_ft_flt.sort_values(by='Time', ascending=True)
-
+        
         # Exibir os dados filtrados
         if not back_home_Port_01_02_ft_flt.empty:
             st.dataframe(back_home_Port_01_02_ft_flt)
@@ -998,7 +998,7 @@ with tab_views[6]:
             (data["Media_Golos_Sofridos_Away"] < 4.0670)
         ]
         back_home_Port_01_03_ft_flt = back_home_Port_01_03_ft_flt.sort_values(by='Time', ascending=True)
-
+        
         # Exibir os dados filtrados
         if not back_home_Port_01_03_ft_flt.empty:
             st.dataframe(back_home_Port_01_03_ft_flt)
@@ -1017,7 +1017,7 @@ with tab_views[6]:
             (data["Media_Golos_Sofridos_Away"] < 1.6000)
         ]
         back_home_eng_01_01_ft_flt = back_home_eng_01_01_ft_flt.sort_values(by='Time', ascending=True)
-
+        
         # Exibir os dados filtrados
         if not back_home_eng_01_01_ft_flt.empty:
             st.dataframe(back_home_eng_01_01_ft_flt)
@@ -1033,42 +1033,33 @@ with tab_views[7]:
     if data is not None:
         # Verificar se as colunas existem no DataFrame
         required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
-        available_columns = [col for col in required_columns if col in data.columns]
-
+        
         # Aplicar os filtros
         lay_1x1_home_flt = data[
             (data["FT_Odd_H"] < 1.75) &
             (data["FT_Odd_Ov25"] < 1.65)
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
-
-        # Selecionar apenas as colunas disponíveis
-        lay_1x1_home_flt = lay_1x1_home_flt[available_columns]
-
+        
         # Exibir os dados filtrados
         if not lay_1x1_home_flt.empty:
             st.dataframe(lay_1x1_home_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
-    
+            
     st.subheader('Todays Games for Lay 1x1 Based on Away Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
         required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
-        available_columns = [col for col in required_columns if col in data.columns]
-
+        
         # Aplicar os filtros
         lay_1x1_away_flt = data[
             (data["FT_Odd_A"] < 1.75) &
             (data["FT_Odd_Ov25"] < 1.65)
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
-
-        # Selecionar apenas as colunas disponíveis
-        lay_1x1_away_flt = lay_1x1_away_flt[available_columns]
-
         # Exibir os dados filtrados
         if not lay_1x1_away_flt.empty:
             st.dataframe(lay_1x1_away_flt)
