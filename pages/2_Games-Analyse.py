@@ -566,6 +566,7 @@ try:
                 st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
                 st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
                 st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
-        st.divider()             
+                st.divider() 
+        
 except Exception as e:
     st.error(f"Erro Geral: {e}")                   
