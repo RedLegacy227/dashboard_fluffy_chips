@@ -1022,6 +1022,10 @@ with tab_views[7]:
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     
     if data is not None:
+        # Verificar se as colunas existem no DataFrame
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
+        available_columns = [col for col in required_columns if col in data.columns]
+
         # Aplicar os filtros
         lay_1x1_home_flt = data[
             (data["FT_Odd_H"] < 1.75) &
@@ -1029,8 +1033,8 @@ with tab_views[7]:
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
 
-        # Selecionar as colunas desejadas
-        lay_1x1_home_flt = lay_1x1_home_flt[["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]]
+        # Selecionar apenas as colunas disponíveis
+        lay_1x1_home_flt = lay_1x1_home_flt[available_columns]
 
         # Exibir os dados filtrados
         if not lay_1x1_home_flt.empty:
@@ -1042,6 +1046,10 @@ with tab_views[7]:
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     
     if data is not None:
+        # Verificar se as colunas existem no DataFrame
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
+        available_columns = [col for col in required_columns if col in data.columns]
+
         # Aplicar os filtros
         lay_1x1_away_flt = data[
             (data["FT_Odd_A"] < 1.75) &
@@ -1049,8 +1057,8 @@ with tab_views[7]:
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
 
-        # Selecionar as colunas desejadas
-        lay_1x1_away_flt = lay_1x1_away_flt[["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]]
+        # Selecionar apenas as colunas disponíveis
+        lay_1x1_away_flt = lay_1x1_away_flt[available_columns]
 
         # Exibir os dados filtrados
         if not lay_1x1_away_flt.empty:
