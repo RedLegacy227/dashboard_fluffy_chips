@@ -176,6 +176,7 @@ try:
                         top_scores = filtered_data["Score"].value_counts().head(3)
                         
                         # Exibir informações adicionais
+                        st.divider() 
                         st.markdown(f"#### Tendency of the H2H ####")
                         st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht:.2f}%**")
                         st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over:.2f}%**")
@@ -248,6 +249,7 @@ try:
                 
                 home_last_7["Score"] = home_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + home_last_7["FT_Goals_A"].astype(int).astype(str)
                 top_scores_home = home_last_7["Score"].value_counts().head(7)
+                st.divider() 
                 st.markdown(f"#### Tendency of Last 7 Games ####")
                 st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_home:.2f}%**")
                 st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_home:.2f}%**")
@@ -322,6 +324,7 @@ try:
                 
                 away_last_7["Score"] = away_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + away_last_7["FT_Goals_A"].astype(int).astype(str)
                 top_scores_away = away_last_7["Score"].value_counts().head(7)
+                st.divider() 
                 st.markdown(f"#### Tendency of Last 7 Games ####")
                 st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_away:.2f}%**")
                 st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_away:.2f}%**")
@@ -391,6 +394,7 @@ try:
                     defense_power_away = away_goals_conceded / league_avg_gs_away
                     
                     # Exibir os resultados no Streamlit
+                    st.divider() 
                     st.markdown(f"#### Power Strength Analysis ####")
                     st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
                     st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
