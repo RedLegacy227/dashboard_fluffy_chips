@@ -1041,9 +1041,12 @@ with tab_views[7]:
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
         
-        # Exibir os dados filtrados
+        # Selecionar apenas as colunas desejadas
+        lay_1x1_home_flt = lay_1x1_home_flt[required_columns]
+        
+        # Exibir os dados filtrados sem o índice
         if not lay_1x1_home_flt.empty:
-            st.dataframe(lay_1x1_home_flt)
+            st.dataframe(lay_1x1_home_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
             
@@ -1052,7 +1055,7 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
         
         # Aplicar os filtros
         lay_1x1_away_flt = data[
@@ -1060,9 +1063,13 @@ with tab_views[7]:
             (data["FT_Odd_Ov25"] < 1.65)
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
-        # Exibir os dados filtrados
+        
+        # Selecionar apenas as colunas desejadas
+        lay_1x1_away_flt = lay_1x1_away_flt[required_columns]
+        
+        # Exibir os dados filtrados sem o índice
         if not lay_1x1_away_flt.empty:
-            st.dataframe(lay_1x1_away_flt)
+            st.dataframe(lay_1x1_away_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
