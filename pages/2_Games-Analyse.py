@@ -222,7 +222,7 @@ try:
                 sizes = [home_wins, draws, away_wins]
                 colors = ['darkgreen', 'cyan', 'orange']
                 
-                fig4, ax4 = plt.subplots(figsize=(10, 10))
+                fig4, ax4 = plt.subplots(figsize=(10, 9.5))
                 wedges, texts, autotexts = ax4.pie(
                             sizes,
                             autopct='%1.1f%%',
