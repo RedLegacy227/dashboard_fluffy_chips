@@ -1023,7 +1023,7 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
         available_columns = [col for col in required_columns if col in data.columns]
 
         # Aplicar os filtros
@@ -1047,7 +1047,7 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]
         available_columns = [col for col in required_columns if col in data.columns]
 
         # Aplicar os filtros
