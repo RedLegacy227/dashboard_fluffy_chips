@@ -417,7 +417,6 @@ try:
         except Exception as e:
             st.error(f"Erro ao carregar os dados de ligas: {e}")
             
-        st.divider()
         with col1:
             filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
             past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
@@ -472,7 +471,6 @@ try:
             st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
             plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
             
-        st.divider() 
         with col1:
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
