@@ -401,6 +401,21 @@ with tab_views[0]:
                 ">=2.2501": ["<15", "0", "0"]
                 }).set_index("Intervalo CV")
         },
+        "JAPAN - J1 LEAGUE": {
+            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "additional_filters": [
+                ("Poisson_0_GM_Home", "<=", 0.3000),
+                ("Prob_D", ">=", 0.1501),
+                ("Prob_D", "<=", 0.3000)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.3000", "0.3001 - 0.5000", ">=0.5001"],
+                "<=1.5500": ["0", "0", "<25"],
+                "1.5501 - 1.7500": ["0", "<40", "<13"],
+                "1.7501 - 2.0500": ["<9", "<12", "0"],
+                ">=2.0501": ["<16", "<18", "<19"]
+                }).set_index("Intervalo CV")
+        },
         "MEXICO - LIGA MX": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
