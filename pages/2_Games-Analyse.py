@@ -468,11 +468,12 @@ try:
                 
             st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
             plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
-            st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
-            plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
+            with col2:
+                st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
+                plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
             
         st.divider() 
-        with col2:
+        with col1:
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
         
