@@ -355,67 +355,69 @@ try:
             st.error(f"Not enough Data Available")
             
         st.divider()
-        # Adicionar cálculo de poder de ataque e defesa
-        leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/refs/heads/main/df_ligas.csv"
-        try:
-            leagues_data = pd.read_csv(leagues_url)
+        with col2:
             
-            if "League" in filtered_data.columns:
-                selected_league = filtered_data["League"].iloc[0]
-                league_stats = leagues_data[leagues_data["League"] == selected_league]
+            # Adicionar cálculo de poder de ataque e defesa
+            leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/refs/heads/main/df_ligas.csv"
+            try:
+                leagues_data = pd.read_csv(leagues_url)
                 
-            if not league_stats.empty:
-                # Média de gols da liga correspondente
-                league_avg_gm_home = league_stats["Media_GM_Home_Teams"].iloc[0]
-                league_avg_gs_away = league_stats["Media_GS_Away_Teams"].iloc[0]
-                league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
-                league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
-                
-                # Filtrar dados históricos apenas da liga e do time da casa
-                home_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Home"] == selected_home)]
-                home_goals_scored = home_league_data["FT_Goals_H"].mean()
-                home_goals_conceded = home_league_data["FT_Goals_A"].mean()
-        
-                # Filtrar dados históricos apenas da liga e do time visitante
-                away_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Away"] == selected_away)]
-                away_goals_scored = away_league_data["FT_Goals_A"].mean()
-                away_goals_conceded = away_league_data["FT_Goals_H"].mean()
-                
-                # Calcular poderes de ataque e defesa
-                attack_power_home = home_goals_scored / league_avg_gm_home
-                defense_power_home = home_goals_conceded / league_avg_gs_home
-                
-                attack_power_away = away_goals_scored / league_avg_gm_away
-                defense_power_away = away_goals_conceded / league_avg_gs_away
-                
-                # Exibir os resultados no Streamlit
-                st.markdown(f"#### Power Strength Analysis ####")
-                st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
-                st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
-                st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
-                st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
-                st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ **{attack_power_home:.2f}**")
-                st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ **{attack_power_away:.2f}**")
-                st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ **{defense_power_home:.2f}**")
-                st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ **{defense_power_away:.2f}**")
-                
-                st.divider()
-                if defense_power_away == 0 or defense_power_home == 0:
-                    st.error("Division by zero detected in xG calculation.")
+                if "League" in filtered_data.columns:
+                    selected_league = filtered_data["League"].iloc[0]
+                    league_stats = leagues_data[leagues_data["League"] == selected_league]
+                    
+                if not league_stats.empty:
+                    # Média de gols da liga correspondente
+                    league_avg_gm_home = league_stats["Media_GM_Home_Teams"].iloc[0]
+                    league_avg_gs_away = league_stats["Media_GS_Away_Teams"].iloc[0]
+                    league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
+                    league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
+                    
+                    # Filtrar dados históricos apenas da liga e do time da casa
+                    home_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Home"] == selected_home)]
+                    home_goals_scored = home_league_data["FT_Goals_H"].mean()
+                    home_goals_conceded = home_league_data["FT_Goals_A"].mean()
+            
+                    # Filtrar dados históricos apenas da liga e do time visitante
+                    away_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Away"] == selected_away)]
+                    away_goals_scored = away_league_data["FT_Goals_A"].mean()
+                    away_goals_conceded = away_league_data["FT_Goals_H"].mean()
+                    
+                    # Calcular poderes de ataque e defesa
+                    attack_power_home = home_goals_scored / league_avg_gm_home
+                    defense_power_home = home_goals_conceded / league_avg_gs_home
+                    
+                    attack_power_away = away_goals_scored / league_avg_gm_away
+                    defense_power_away = away_goals_conceded / league_avg_gs_away
+                    
+                    # Exibir os resultados no Streamlit
+                    st.markdown(f"#### Power Strength Analysis ####")
+                    st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
+                    st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
+                    st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
+                    st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
+                    st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ **{attack_power_home:.2f}**")
+                    st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ **{attack_power_away:.2f}**")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ **{defense_power_home:.2f}**")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ **{defense_power_away:.2f}**")
+                    
+                    st.divider()
+                    if defense_power_away == 0 or defense_power_home == 0:
+                        st.error("Division by zero detected in xG calculation.")
+                    else:
+                        # Expected Goals (xG) para o time da casa
+                        xg_home = home_goals_scored * attack_power_home / defense_power_away
+                        # Expected Goals (xG) para o time visitante
+                        xg_away = away_goals_scored * attack_power_away / defense_power_home
+                    
+                    # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
+                    st.markdown(f"#### Expected Goals (xG) ####")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
                 else:
-                    # Expected Goals (xG) para o time da casa
-                    xg_home = home_goals_scored * attack_power_home / defense_power_away
-                    # Expected Goals (xG) para o time visitante
-                    xg_away = away_goals_scored * attack_power_away / defense_power_home
-                
-                # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
-                st.markdown(f"#### Expected Goals (xG) ####")
-                st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
-                st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
-            else:
-                st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
-        except Exception as e:
-            st.error(f"Erro ao carregar os dados de ligas: {e}")
+                    st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
+            except Exception as e:
+                st.error(f"Erro ao carregar os dados de ligas: {e}")
             
         with col1:
             filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
