@@ -740,14 +740,7 @@ with tab_views[1]:
 
                 # Verificar se há resultados antes de exibir
                 if results:
-                    df_results = pd.DataFrame(results, columns=["League", "Home", "Away", "Time"])
-
-                    # Verificar formato da coluna 'Time' antes de converter
-                    try:
-                        df_results["Time"] = pd.to_datetime(df_results["Time"], format="%H:%M").dt.time
-                    except Exception:
-                        st.error("Erro ao converter a coluna 'Time'. Verifique o formato dos dados.")
-
+                    df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True)
                 else:
@@ -1036,13 +1029,18 @@ with tab_views[7]:
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
 
+        # Selecionar as colunas desejadas
+        lay_1x1_home_flt = lay_1x1_home_flt[["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]]
+
         # Exibir os dados filtrados
         if not lay_1x1_home_flt.empty:
             st.dataframe(lay_1x1_home_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
+    
     st.subheader('Todays Games for Lay 1x1 Based on Away Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
+    
     if data is not None:
         # Aplicar os filtros
         lay_1x1_away_flt = data[
@@ -1051,6 +1049,9 @@ with tab_views[7]:
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
 
+        # Selecionar as colunas desejadas
+        lay_1x1_away_flt = lay_1x1_away_flt[["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"]]
+
         # Exibir os dados filtrados
         if not lay_1x1_away_flt.empty:
             st.dataframe(lay_1x1_away_flt)
@@ -1058,4 +1059,3 @@ with tab_views[7]:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
-        
