@@ -409,7 +409,7 @@ try:
                     xg_away = away_goals_scored * attack_power_away / defense_power_home
                 
                 # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
-                st.markdown(f"#### Expected Goals (xG) and Expected Goals Against (xGA) Analysis ####")
+                st.markdown(f"#### Expected Goals (xG) ####")
                 st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
                 st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
             else:
@@ -418,6 +418,7 @@ try:
             st.error(f"Erro ao carregar os dados de ligas: {e}")
             
         st.divider()
+        
         filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
         past_games_home = filtered_data[(filtered_data['Home'] == selected_home)].tail(21)
         past_games_away = filtered_data[(filtered_data['Away'] == selected_away)].tail(21)
