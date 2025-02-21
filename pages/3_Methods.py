@@ -81,6 +81,7 @@ tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
 with tab_views[0]:
+    # Função para parsear intervalos
     def parse_interval(interval):
         """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um par de valores numéricos."""
         interval = interval.strip().replace(" ", "")  # Remover espaços extras
@@ -95,6 +96,7 @@ with tab_views[0]:
         else:
             raise ValueError(f"Formato de intervalo desconhecido: {interval}")
     
+    # Função para obter referência
     def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
         """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
         try:
@@ -608,38 +610,44 @@ with tab_views[0]:
         }
     }
     st.subheader("Today's Games for Lay 0X1 - Fluffy Method")
-    
+
     if data is not None:
+        all_games = []  # Lista para armazenar todos os jogos filtrados
+    
         for league, config in leagues_config.items():
-            st.markdown(f"### {league}")
             prob_filter_col, prob_filter_val = config["prob_filter"]
             df_referencias = config["df_referencias"]
-            
+    
             # Aplicar filtros
             filtered_data = data[data["League"] == league]
             filtered_data = filtered_data[filtered_data[prob_filter_col] == prob_filter_val]
-            
+    
             for col, op, val in config["additional_filters"]:
                 if op == ">=":
                     filtered_data = filtered_data[filtered_data[col] >= val]
                 elif op == "<=":
                     filtered_data = filtered_data[filtered_data[col] <= val]
-            
-            filtered_data = filtered_data.sort_values(by='Time', ascending=True)
-            
+    
             # Aplicar a função para calcular 'Odd_Justa_Lay_0x1'
             filtered_data["Odd_Justa_Lay_0x1"] = filtered_data.apply(
                 lambda row: obter_referencia(row["CV_Match_Odds"], row["FT_Odd_H"], df_referencias),
                 axis=1
             )
-            
-            # Exibir os dados filtrados
-            if not filtered_data.empty:
-                st.dataframe(filtered_data[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
-                                        'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
-                                        'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
-            else:
-                st.info("Nenhum jogo encontrado com os critérios especificados.")
+    
+            # Adicionar os jogos filtrados à lista
+            all_games.append(filtered_data)
+    
+        # Concatenar todos os DataFrames da lista em um único DataFrame
+        if all_games:
+            final_df = pd.concat(all_games, ignore_index=True)
+            final_df = final_df.sort_values(by='Time', ascending=True)  # Ordenar por 'Time'
+    
+            # Exibir o DataFrame final
+            st.dataframe(final_df[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
+                                  'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
+                                  'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
+        else:
+            st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
 
