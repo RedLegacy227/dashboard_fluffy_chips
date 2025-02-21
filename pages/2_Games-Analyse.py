@@ -173,7 +173,7 @@ try:
                         
                         # Contar os resultados mais frequentes
                         filtered_data["Score"] = filtered_data["FT_Goals_H"].astype(int).astype(str) + "x" + filtered_data["FT_Goals_A"].astype(int).astype(str)
-                        top_scores = filtered_data["Score"].value_counts().head(3)
+                        top_scores = filtered_data["Score"].value_counts().head(7)
                         
                         # Exibir informações adicionais
                         st.divider() 
