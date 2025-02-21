@@ -458,7 +458,7 @@ try:
     
             # Function to plot goal distribution
             def plot_goal_distribution(team_name, goals, conceded):
-                fig21, ax = plt.subplots(figsize=(10, 10))
+                fig21, ax = plt.subplots(figsize=(10, 6))
                 x_labels = list(goals.keys())
                 x = np.arange(len(x_labels))
                 width = 0.35
@@ -505,7 +505,7 @@ try:
             ]
             
             # Criar o gráfico com 2 grupos ("First Half" e "Second Half"), mas 4 colunas dentro de cada um
-            fig22, ax = plt.subplots(figsize=(10, 10))
+            fig22, ax = plt.subplots(figsize=(10, 6))
             x = np.arange(len(half_labels))  # Posições para "First Half" e "Second Half"
             width = 0.2  # Largura das barras
             
