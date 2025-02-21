@@ -339,7 +339,7 @@ try:
                 home_goals = away_last_7["FT_Goals_H"]
                 away_goals = away_last_7["FT_Goals_A"]
                 
-                fig7, ax7 = plt.subplots(figsize=(10, 8))
+                fig7, ax7 = plt.subplots(figsize=(10, 9))
                 bar_width = 0.35
                 x = np.arange(len(home_last_7))
                 
