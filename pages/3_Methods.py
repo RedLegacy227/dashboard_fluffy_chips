@@ -740,7 +740,7 @@ with tab_views[1]:
 
                 # Verificar se há resultados antes de exibir
                 if results:
-                    df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"])
+                    df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "Balance", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True)
                 else:
