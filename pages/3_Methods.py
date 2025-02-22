@@ -15,6 +15,11 @@ if "logged_in" not in st.session_state or not st.session_state["logged_in"]:
     st.switch_page("Login.py")  # Redireciona para a página de login
 # ✅ Show role-based features in the sidebar
 show_role_features()
+def drop_reset_index(df):
+    df = df.dropna()
+    df = df.reset_index(drop=True)
+    df.index += 1
+    return df
 st.title("🔋 Methods - Fluffy Chips")
 st.subheader('The place where you can Analyse Football Matches!!!')
 st.write(f"Welcome, **{st.session_state['username']}**!")
@@ -655,6 +660,7 @@ with tab_views[0]:
         if all_games:
             final_df = pd.concat(all_games, ignore_index=True)
             final_df = final_df.sort_values(by='Time', ascending=True)  # Ordenar por 'Time'
+            final_df = drop_reset_index(final_df)
     
             # Exibir o DataFrame final
             st.dataframe(final_df[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
