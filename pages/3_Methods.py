@@ -607,6 +607,20 @@ with tab_views[0]:
                 "1.6501 - 1.9000": ["<21", "<11", "0"],
                 ">=1.9001": ["<12", "0", "0"]
                 }).set_index("Intervalo CV")
+        },
+        "USA - MLS": {
+            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "additional_filters": [
+                ("Prob_H", ">=", 0.5001),
+                ("Prob_Ov25_FT", ">=", 0.5501)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.4500", "0.4501 - 0.6000", ">=0.6001"],
+                "<=1.4500": ["0", "0", "<60"],
+                "1.4501 - 1.6000": ["0", "<19", "<40"],
+                "1.6001 - 1.7500": ["<29", "<17", "0"],
+                ">=1.7501": ["<34", "0", "0"]
+                }).set_index("Intervalo CV")
         }
     }
     st.subheader("Today's Games for Lay 0X1 - Fluffy Method")
