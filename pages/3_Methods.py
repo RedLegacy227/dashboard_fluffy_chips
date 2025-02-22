@@ -663,9 +663,10 @@ with tab_views[0]:
             final_df = drop_reset_index(final_df)
     
             # Exibir o DataFrame final
-            st.dataframe(final_df[['Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1',
-                                  'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Odds',
-                                  'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away']])
+            st.dataframe(final_df[[
+                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
+                'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away', 'Perc_Over_25_FT_Home', 'Perc_Over_25_FT_Away'
+                ]])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
