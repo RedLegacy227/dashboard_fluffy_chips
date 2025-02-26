@@ -418,8 +418,10 @@ try:
                     st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
                     
                     st.divider()
-                    stats_corners_home = data['Avg_Corners_InFavor_H']
-                    stats_corners_away = data['Avg_Corners_InFavor_A']
+                    team_data = data[data['Home'] == selected_home]
+                    team_data = data[data['Away'] == selected_away]
+                    stats_corners_home = team_data['Avg_Corners_InFavor_H'].values[0]
+                    stats_corners_away = team_data['Avg_Corners_InFavor_A'].values[0]
                     st.markdown(f'#### Statistics ###')
                     st.markdown(f'''
                                 Average Stats on the last 21 Games:  
