@@ -155,7 +155,7 @@ with tab_views[0]:
         "ARGENTINA - TORNEO BETANO": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("prob_Under25_FT", "<=", 0.75),
+                ("prob_Under_25_FT", "<=", 0.75),
                 ("Poisson_GM_H_2", ">=", 0.1501)
             ],
             "df_referencias": pd.DataFrame({
@@ -197,7 +197,7 @@ with tab_views[0]:
         "COSTA RICA - PRIMERA DIVISION": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
-                ("prob_Under25_FT", ">=", 0.5001),
+                ("prob_Under_25_FT", ">=", 0.5001),
                 ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
@@ -211,7 +211,7 @@ with tab_views[0]:
         "EGYPT - PREMIER LEAGUE": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
-                ("prob_Over25_FT", ">=", 0.4001),
+                ("prob_Over_25_FT", ">=", 0.4001),
                 ("prob_BTTS_No_FT", ">=", 0.5001)
                 ],
             "df_referencias": pd.DataFrame({
@@ -267,7 +267,7 @@ with tab_views[0]:
         "FRANCE - LIGUE 1": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
-                ("prob_Over25_FT", ">=", 0.4501),
+                ("prob_Over_25_FT", ">=", 0.4501),
                 ("prob_H", ">=", 0.3501)
                 ],
             "df_referencias": pd.DataFrame({
@@ -368,8 +368,8 @@ with tab_views[0]:
         "ISRAEL - LIGAT HA'AL": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
-                ("prob_Under25_FT", "<=", 0.6000),
-                ("prob_Over25_FT", ">=", 0.4501)
+                ("prob_Under_25_FT", "<=", 0.6000),
+                ("prob_Over_25_FT", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.7000", ">=0.7001"],
@@ -440,7 +440,7 @@ with tab_views[0]:
         "NETHERLANDS - EREDIVISIE": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
-                ("prob_Under25_FT", "<=", 0.5000),
+                ("prob_Under_25_FT", "<=", 0.5000),
                 ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
@@ -512,7 +512,7 @@ with tab_views[0]:
         "ROMANIA - SUPERLIGA": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("prob_Over25_FT", ">=", 0.4001),
+                ("prob_Over_25_FT", ">=", 0.4001),
                 ("prob_H", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
@@ -618,7 +618,7 @@ with tab_views[0]:
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_H", ">=", 0.5001),
-                ("prob_Over25_FT", ">=", 0.5501)
+                ("prob_Over_25_FT", ">=", 0.5501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4500", "0.4501 - 0.6000", ">=0.6001"],
