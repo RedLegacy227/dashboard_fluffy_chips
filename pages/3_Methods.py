@@ -678,7 +678,7 @@ with tab_views[1]:
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
     
     # Verificar se 'data' está disponível e contém as colunas necessárias
-    required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Over25", "FT_Odd_BTTS_Yes"]
+    required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Over25", "Odd_BTTS_Yes"]
 
     if data is not None and all(col in data.columns for col in required_columns):
         
