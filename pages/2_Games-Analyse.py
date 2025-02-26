@@ -77,7 +77,7 @@ try:
         filtered_data = historical_data[(historical_data['Date'] < pd.to_datetime(selected_date)) & (historical_data['League'] == selected_league)]
         try:
             required_columns = [
-                'Date', 'League', 'Season', 'Home', 'Away', 'HT_Goals_H', 'HT_Goals_A', 'FT_Goals_H', 'FT_Goals_A', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A','FT_Odd_Over25', 'Odd_BTTS_Yes'
+                'Date', 'League', 'Season', 'Home', 'Away', 'HT_Goals_H', 'HT_Goals_A', 'FT_Goals_H', 'FT_Goals_A', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A','FT_Odd_Over25', 'Odd_BTTS_Yes', 'CV_MO_FT', 'CV_OvUn_FT', 'CV_BTTS_FT'
             ]
 
             if all(col in filtered_data.columns for col in required_columns):
@@ -371,10 +371,10 @@ try:
                     
                 if not league_stats.empty:
                     # Média de gols da liga correspondente
-                    league_avg_gm_home = league_stats["Media_GM_Home_Teams"].iloc[0]
-                    league_avg_gs_away = league_stats["Media_GS_Away_Teams"].iloc[0]
-                    league_avg_gm_away = league_stats["Media_GM_Away_Teams"].iloc[0]
-                    league_avg_gs_home = league_stats["Media_GS_Home_Teams"].iloc[0]
+                    league_avg_gm_home = league_stats["Avg_G_Scored_Home_Teams"].iloc[0]
+                    league_avg_gs_away = league_stats["Avg_G_Conceded_Home_Teams"].iloc[0]
+                    league_avg_gm_away = league_stats["Avg_G_Scored_Away_Teams"].iloc[0]
+                    league_avg_gs_home = league_stats["Avg_G_Conceded_Away_Teams"].iloc[0]
                     
                     # Filtrar dados históricos apenas da liga e do time da casa
                     home_league_data = historical_data[(historical_data["League"] == selected_league) & (historical_data["Home"] == selected_home)]
