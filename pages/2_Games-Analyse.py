@@ -412,10 +412,21 @@ try:
                     st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
                     st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
                     st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
-                    st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ **{attack_power_home:.2f}**")
-                    st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ **{attack_power_away:.2f}**")
-                    st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ **{defense_power_home:.2f}**")
-                    st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ **{defense_power_away:.2f}**")
+                    st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ ***{attack_power_home:.2f}***")
+                    st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
+                    
+                    st.divider()
+                    stats_corners_home = data['Avg_Corners_InFavor_H']
+                    stats_corners_away = data['Avg_Corners_InFavor_A']
+                    st.markdown(f'#### Statistics ###')
+                    st.markdown(f'''
+                                Average Stats on the last 21 Games:  
+                                🚩 Corners Average for ***{selected_home}*** ➡️ ***{stats_corners_home}***  
+                                🚩 Corners Average for ***{selected_away}*** ➡️ ***{stats_corners_away}***  
+                                
+                                ''')
                     
                     st.divider()
                     if defense_power_away == 0 or defense_power_home == 0:
