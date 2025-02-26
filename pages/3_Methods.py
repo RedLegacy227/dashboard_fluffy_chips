@@ -1065,7 +1065,7 @@ with tab_views[7]:
         # Aplicar os filtros
         lay_1x1_away_flt = data[
             (data["FT_Odd_A"] < 1.75) &
-            (data["FT_Odd_Ov25"] < 1.65)
+            (data["FT_Odd_Over25"] < 1.65)
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
         
