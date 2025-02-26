@@ -765,8 +765,6 @@ with tab_views[1]:
                                 row.get("FT_Odd_D", None),
                                 row.get("FT_Odd_A", None),
                                 row.get("CV_Match_Type", None),
-                                row.get("CV_OvUn_Type", None),
-                                row.get("CV_BTTS_Type", None),
                                 row.get("Perc_Over25FT_Home", None),
                                 row.get("Perc_Over25FT_Away", None)
                             ])
