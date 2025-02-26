@@ -102,14 +102,14 @@ with tab_views[0]:
             raise ValueError(f"Formato de intervalo desconhecido: {interval}")
     
     # Função para obter referência
-    def obter_referencia(cv_match_odds, ft_odd_h, df_referencias):
+    def obter_referencia(cv_mo_ft, ft_odd_h, df_referencias):
         """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
         try:
             # Garantir que os valores sejam numéricos
-            cv_match_odds = float(cv_match_odds) if not pd.isna(cv_match_odds) else None
+            cv_mo_ft = float(cv_mo_ft) if not pd.isna(cv_mo_ft) else None
             ft_odd_h = float(ft_odd_h) if not pd.isna(ft_odd_h) else None
     
-            if cv_match_odds is None or ft_odd_h is None:
+            if cv_mo_ft is None or ft_odd_h is None:
                 return None  # Se os valores estiverem ausentes, retorna None
     
             # Determinar a linha correta baseada no intervalo de CV_Match_Odds
@@ -117,7 +117,7 @@ with tab_views[0]:
             for i, intervalo in enumerate(df_referencias.index):
                 min_val, max_val = parse_interval(intervalo)
     
-                if min_val <= cv_match_odds <= max_val:
+                if min_val <= cv_mo_ft <= max_val:
                     linha = i
                     break
     
@@ -139,7 +139,7 @@ with tab_views[0]:
     # Configurações de ligas e seus filtros
     leagues_config = {
         "EUROPE - CHAMPIONS LEAGUE": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_H", ">=", 0.4001),
                 ("prob_D", "<=", 0.30)
@@ -182,7 +182,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "CROATIA - HNL": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_BTTS_No_FT", ">=", 0.5001),
                 ("Poisson_GM_H_0", "<=", 0.30),
@@ -209,7 +209,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "EGYPT - PREMIER LEAGUE": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_Over25_FT", ">=", 0.4001),
                 ("prob_BTTS_No_FT", ">=", 0.5001)
@@ -251,7 +251,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "ENGLAND - LEAGUE ONE": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_A", "<=", 0.30),
                 ("prob_D", "<=", 0.30)
@@ -265,7 +265,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "FRANCE - LIGUE 1": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_Over25_FT", ">=", 0.4501),
                 ("prob_H", ">=", 0.3501)
@@ -293,7 +293,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "GERMANY - BUNDESLIGA": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("Poisson_GS_A_2", ">=", 0.1501),
                 ("prob_H", ">=", 0.5501),
@@ -308,7 +308,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "GERMANY - 2. BUNDESLIGA": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_D", "<=", 0.3000),
                 ("Avg_CG_Conceded_H_02", ">=", 0.2001),
@@ -350,7 +350,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "INDONESIA - LIGA 1": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_BTTS_Yes_FT", ">=", 0.5001),
                 ("prob_BTTS_Yes_FT", "<=", 0.6500),
@@ -366,7 +366,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "ISRAEL - LIGAT HA'AL": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_Under25_FT", "<=", 0.6000),
                 ("prob_Over25_FT", ">=", 0.4501)
@@ -380,7 +380,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "ITALY - SERIE A": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("Poisson_GS_A_3", ">=", 0.1001),
                 ("prob_H", ">=", 0.3501)
@@ -409,7 +409,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "JAPAN - J1 LEAGUE": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("Poisson_GM_H_0", "<=", 0.3000),
                 ("prob_D", ">=", 0.1501),
@@ -438,7 +438,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "NETHERLANDS - EREDIVISIE": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_Under25_FT", "<=", 0.5000),
                 ("prob_H", ">=", 0.4001)
@@ -466,7 +466,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "PORTUGAL - LIGA PORTUGAL": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("Poisson_GM_A_3", "<=", 0.1000),
                 ("prob_H", ">=", 0.4501)
@@ -496,7 +496,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "QATAR - QSL": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("Poisson_GM_H_1", ">=", 0.1001),
                 ("prob_D", "<=", 0.3000)
@@ -615,7 +615,7 @@ with tab_views[0]:
                 }).set_index("Intervalo CV")
         },
         "USA - MLS": {
-            "prob_filter": ("Probability_Away", "Media_Bigger"),
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_H", ">=", 0.5001),
                 ("rob_Over25_FT", ">=", 0.5501)
