@@ -207,7 +207,13 @@ try:
             # **Análises para a equipe da casa**
             if not home_last_7.empty:
                 st.markdown(f"#### Last 7 Games of ***{selected_home}*** - Playing @Home ####")
-                st.dataframe(home_last_7)
+                # Select only the specified columns
+                columns_to_show = [
+                    'Date','League','Season','Home','Away','HT_Goals_H','HT_Goals_A','FT_Goals_H','FT_Goals_A',
+                    'FT_Odd_H','FT_Odd_D','FT_Odd_A','FT_Odd_Over25','Odd_BTTS_Yes','Goals_Minutes_Home','Goals_Minutes_Away'
+                    ]
+                home_last_7_filt = home_last_7[columns_to_show]
+                st.dataframe(home_last_7_filt)
             
             # Estatísticas e gráficos
             col1, col2 = st.columns(2)
