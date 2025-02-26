@@ -618,7 +618,7 @@ with tab_views[0]:
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_H", ">=", 0.5001),
-                ("rob_Over25_FT", ">=", 0.5501)
+                ("prob_Over25_FT", ">=", 0.5501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4500", "0.4501 - 0.6000", ">=0.6001"],
