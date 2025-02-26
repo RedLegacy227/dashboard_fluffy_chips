@@ -995,8 +995,8 @@ with tab_views[6]:
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Home_Score_Take"] == 'No') &
             (data["Away_Score_Take"] == 'Yes') &
-            (data["Poisson_2_GS_Away"] > 0.2520) &
-            (data["Poisson_2_GS_Away"] < 0.2710) &
+            (data["Poisson_GS_A_2"] > 0.2520) &
+            (data["Poisson_GS_A_2"] < 0.2710) &
             (data["Avg_Points_Away_FT"] > 0.9780) &
             (data["Avg_Points_Away_FT"] < 1.6950)
         ]
