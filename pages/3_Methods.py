@@ -650,7 +650,7 @@ with tab_views[0]:
     
             # Aplicar a função para calcular 'Odd_Justa_Lay_0x1'
             filtered_data["Odd_Justa_Lay_0x1"] = filtered_data.apply(
-                lambda row: obter_referencia(row["CV_Match_Odds"], row["FT_Odd_H"], df_referencias),
+                lambda row: obter_referencia(row["CV_MO_FT"], row["FT_Odd_H"], df_referencias),
                 axis=1
             )
     
