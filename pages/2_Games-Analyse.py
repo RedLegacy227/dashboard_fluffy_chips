@@ -420,13 +420,17 @@ try:
                     st.divider()
                     team_data = data[data['Home'] == selected_home]
                     team_data = data[data['Away'] == selected_away]
-                    stats_corners_home = team_data['Avg_Corners_InFavor_H'].values[0]
-                    stats_corners_away = team_data['Avg_Corners_InFavor_A'].values[0]
+                    stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].values[0]
+                    stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].values[0]
+                    stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].values[0]
+                    stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].values[0]
                     st.markdown(f'#### Statistics ###')
                     st.markdown(f'''
                                 Average Stats on the last 21 Games:  
-                                🚩 Corners Average for ***{selected_home}*** ➡️ ***{stats_corners_home}***  
-                                🚩 Corners Average for ***{selected_away}*** ➡️ ***{stats_corners_away}***  
+                                🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
+                                🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
+                                🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
                                 
                                 ''')
                     
