@@ -790,7 +790,7 @@ with tab_views[1]:
 
 with tab_views[2]:
     st.subheader('Todays Games for Over 1,5 FT')
-    st.markdown('If the Odd is less than 1.42, you must wait for it to reach minimum 1.42')
+    st.markdown('If the Odd is less than 1.45, you must wait for it to reach minimum 1.45')
     if data is not None:
         # Aplicar os filtros
         over_15_ft_flt = data[
