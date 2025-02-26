@@ -141,8 +141,8 @@ with tab_views[0]:
         "EUROPE - CHAMPIONS LEAGUE": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_H", ">=", 0.4001),
-                ("Prob_D", "<=", 0.30)
+                ("prob_H", ">=", 0.4001),
+                ("prob_D", "<=", 0.30)
             ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.5000", "0.5001 - 0.8000", ">=0.8001"],
@@ -155,8 +155,8 @@ with tab_views[0]:
         "ARGENTINA - TORNEO BETANO": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Prob_Un25_FT", "<=", 0.75),
-                ("Poisson_2_GM_Home", ">=", 0.1501)
+                ("prob_Under25_FT", "<=", 0.75),
+                ("Poisson_GM_H_2", ">=", 0.1501)
             ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.5000", ">=0.5001"],
@@ -169,9 +169,9 @@ with tab_views[0]:
         "AUSTRALIA - A-LEAGUE": {
             "prob_filter": ("Goal_Difference", "Bigger_Home"),
             "additional_filters": [
-                ("Poisson_1_GS_Away", ">=", 0.1501),
-                ("Poisson_1_GM_Home", ">=", 0.2001),
-                ("Prob_A", "<=", 0.45)
+                ("Poisson_GS_A_1", ">=", 0.1501),
+                ("Poisson_GM_H_1", ">=", 0.2001),
+                ("prob_A", "<=", 0.45)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2000", "0.2001 - 0.4000", ">=0.4001"],
@@ -184,8 +184,8 @@ with tab_views[0]:
         "CROATIA - HNL": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_BTTS_N_FT", ">=", 0.5001),
-                ("Poisson_0_GM_Home", "<=", 0.30),
+                ("prob_BTTS_No_FT", ">=", 0.5001),
+                ("Poisson_GM_H_0", "<=", 0.30),
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.5000", "0.5001 - 0.8000", ">=0.8001"],
@@ -197,8 +197,8 @@ with tab_views[0]:
         "COSTA RICA - PRIMERA DIVISION": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
-                ("Prob_Un25_FT", ">=", 0.5001),
-                ("Prob_H", ">=", 0.4001)
+                ("prob_Under25_FT", ">=", 0.5001),
+                ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.5500", ">=0.5501"],
@@ -211,8 +211,8 @@ with tab_views[0]:
         "EGYPT - PREMIER LEAGUE": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_Ov25_FT", ">=", 0.4001),
-                ("Prob_BTTS_N_FT", ">=", 0.5001)
+                ("prob_Over25_FT", ">=", 0.4001),
+                ("prob_BTTS_No_FT", ">=", 0.5001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.6000", ">=0.6001"],
@@ -225,8 +225,8 @@ with tab_views[0]:
         "ENGLAND - PREMIER LEAGUE": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_1_GM_Home", "<=", 0.40),
-                ("Prob_D", "<=", 0.40)
+                ("Poisson_GM_H_1", "<=", 0.40),
+                ("prob_D", "<=", 0.40)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4500", "0.4501 - 0.6500", ">=0.6501"],
@@ -239,8 +239,8 @@ with tab_views[0]:
         "ENGLAND - CHAMPIONSHIP": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_1_GM_Home", "<=", 0.40),
-                ("Prob_D", "<=", 0.30)
+                ("Poisson_GM_H_1", "<=", 0.40),
+                ("prob_D", "<=", 0.30)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3500", "0.3501 - 0.5500", ">=0.5501"],
@@ -253,8 +253,8 @@ with tab_views[0]:
         "ENGLAND - LEAGUE ONE": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_A", "<=", 0.30),
-                ("Prob_D", "<=", 0.30)
+                ("prob_A", "<=", 0.30),
+                ("prob_D", "<=", 0.30)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.5500", ">=0.5501"],
@@ -267,8 +267,8 @@ with tab_views[0]:
         "FRANCE - LIGUE 1": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_Ov25_FT", ">=", 0.4501),
-                ("Prob_H", ">=", 0.3501)
+                ("prob_Over25_FT", ">=", 0.4501),
+                ("prob_H", ">=", 0.3501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.6500", ">=0.6501"],
@@ -281,8 +281,8 @@ with tab_views[0]:
         "FRANCE - LIGUE 2": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_1_GS_Away", ">=", 0.3001),
-                ("Prob_H", ">=", 0.4001)
+                ("Poisson_GS_A_1", ">=", 0.3001),
+                ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2500", "0.2501 - 0.4500", ">=0.4501"],
@@ -295,9 +295,9 @@ with tab_views[0]:
         "GERMANY - BUNDESLIGA": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Poisson_2_GS_Away", ">=", 0.1501),
-                ("Prob_H", ">=", 0.5501),
-                ("Prob_H", "<=", 0.95)
+                ("Poisson_GS_A_2", ">=", 0.1501),
+                ("prob_H", ">=", 0.5501),
+                ("prob_H", "<=", 0.95)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.5000", "0.5001 - 0.7500", ">=0.7501"],
@@ -310,9 +310,9 @@ with tab_views[0]:
         "GERMANY - 2. BUNDESLIGA": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_D", "<=", 0.3000),
-                ("Media_CG_02_Sofridos_Home", ">=", 0.2001),
-                ("Media_CG_02_Sofridos_Home", "<=", 1.0000)
+                ("prob_D", "<=", 0.3000),
+                ("Avg_CG_Conceded_H_02", ">=", 0.2001),
+                ("Avg_CG_Conceded_H_02", "<=", 1.0000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2500", "0.2501 - 0.4500", ">=0.4501"],
@@ -325,8 +325,8 @@ with tab_views[0]:
         "GREECE - SUPER LEAGUE": {
             "prob_filter": ("Goal_Difference", "Bigger_Home"),
             "additional_filters": [
-                ("Media_CG_02_Sofridos_Away", ">=", 0.6001),
-                ("Prob_H", ">=", 0.4001)
+                ("Avg_CG_Conceded_A_02", ">=", 0.6001),
+                ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.8000", ">=0.8001"],
@@ -339,7 +339,7 @@ with tab_views[0]:
         "INDIA - ISL": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_2_GS_Away", ">=", 0.2501)
+                ("Poisson_GS_A_2", ">=", 0.2501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.5000", ">=0.5001"],
@@ -352,10 +352,10 @@ with tab_views[0]:
         "INDONESIA - LIGA 1": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_BTTS_Y_FT", ">=", 0.5001),
-                ("Prob_BTTS_Y_FT", "<=", 0.6500),
-                ("Prob_H", ">=", 0.4001),
-                ("Prob_H", "<=", 0.8000)
+                ("prob_BTTS_Yes_FT", ">=", 0.5001),
+                ("prob_BTTS_Yes_FT", "<=", 0.6500),
+                ("prob_H", ">=", 0.4001),
+                ("prob_H", "<=", 0.8000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.5500", ">=0.5501"],
@@ -368,8 +368,8 @@ with tab_views[0]:
         "ISRAEL - LIGAT HA'AL": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_Un25_FT", "<=", 0.6000),
-                ("Prob_Ov25_FT", ">=", 0.4501)
+                ("prob_Under25_FT", "<=", 0.6000),
+                ("prob_Over25_FT", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.7000", ">=0.7001"],
@@ -382,8 +382,8 @@ with tab_views[0]:
         "ITALY - SERIE A": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Poisson_3_GS_Away", ">=", 0.1001),
-                ("Prob_H", ">=", 0.3501)
+                ("Poisson_GS_A_3", ">=", 0.1001),
+                ("prob_H", ">=", 0.3501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.5000", "0.5001 - 0.7500", ">=0.7501"],
@@ -396,9 +396,9 @@ with tab_views[0]:
         "ITALY - SERIE B": {
             "prob_filter": ("Goal_Difference", "Bigger_Home"),
             "additional_filters": [
-                ("Poisson_2_GM_Home", ">=", 0.1501),
-                ("Prob_A", ">=", 0.1001),
-                ("Prob_A", "<=", 0.3500)
+                ("Poisson_GM_H_3", ">=", 0.1501),
+                ("prob_A", ">=", 0.1001),
+                ("prob_A", "<=", 0.3500)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2000", "0.2001 - 0.4000", ">=0.4001"],
@@ -411,9 +411,9 @@ with tab_views[0]:
         "JAPAN - J1 LEAGUE": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Poisson_0_GM_Home", "<=", 0.3000),
-                ("Prob_D", ">=", 0.1501),
-                ("Prob_D", "<=", 0.3000)
+                ("Poisson_GM_H_0", "<=", 0.3000),
+                ("prob_D", ">=", 0.1501),
+                ("prob_D", "<=", 0.3000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.5000", ">=0.5001"],
@@ -426,8 +426,8 @@ with tab_views[0]:
         "MEXICO - LIGA MX": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
-                ("Poisson_0_GM_Home", "<=", 0.3500),
-                ("Prob_H", ">=", 0.4501)
+                ("Poisson_GM_H_0", "<=", 0.3500),
+                ("prob_H", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3500", "0.3501 - 0.5500", ">=0.5501"],
@@ -440,8 +440,8 @@ with tab_views[0]:
         "NETHERLANDS - EREDIVISIE": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_Un25_FT", "<=", 0.5000),
-                ("Prob_H", ">=", 0.4001)
+                ("prob_Under25_FT", "<=", 0.5000),
+                ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.5500", "0.5501 - 0.8500", ">=0.8501"],
@@ -454,8 +454,8 @@ with tab_views[0]:
         "NETHERLANDS - EERSTE DIVISIE": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
-                ("Poisson_2_GS_Away", ">=", 0.2001),
-                ("Prob_H", ">=", 0.4501)
+                ("Poisson_GS_A_2", ">=", 0.2001),
+                ("prob_H", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3500", "0.3501 - 0.6000", ">=0.6001"],
@@ -468,8 +468,8 @@ with tab_views[0]:
         "PORTUGAL - LIGA PORTUGAL": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Poisson_3_GM_Away", "<=", 0.1000),
-                ("Prob_H", ">=", 0.4501)
+                ("Poisson_GM_A_3", "<=", 0.1000),
+                ("prob_H", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.5500", "0.5501 - 0.9000", ">=0.9001"],
@@ -482,10 +482,10 @@ with tab_views[0]:
         "PORTUGAL - LIGA PORTUGAL 2": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
-                ("Poisson_2_GM_Away", ">=", 0.0501),
-                ("Poisson_2_GM_Away", "<=", 0.2500),
-                ("Poisson_2_GS_Away", ">=", 0.2001),
-                ("Prob_H", ">=", 0.3501)
+                ("Poisson_GM_A_2", ">=", 0.0501),
+                ("Poisson_GM_A_2", "<=", 0.2500),
+                ("Poisson_GS_A_2", ">=", 0.2001),
+                ("prob_H", ">=", 0.3501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2000", "0.2001 - 0.4000", ">=0.4001"],
@@ -498,8 +498,8 @@ with tab_views[0]:
         "QATAR - QSL": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Poisson_1_GM_Home", ">=", 0.1001),
-                ("Prob_D", "<=", 0.3000)
+                ("Poisson_GM_H_1", ">=", 0.1001),
+                ("prob_D", "<=", 0.3000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.6000", ">=0.6001"],
@@ -512,8 +512,8 @@ with tab_views[0]:
         "ROMANIA - SUPERLIGA": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Prob_Ov25_FT", ">=", 0.4001),
-                ("Prob_H", ">=", 0.4501)
+                ("prob_Over25_FT", ">=", 0.4001),
+                ("prob_H", ">=", 0.4501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4000", "0.4001 - 0.6000", ">=0.6001"],
@@ -526,9 +526,9 @@ with tab_views[0]:
         "SAUDI ARABIA - SAUDI PROFESSIONAL LEAGUE": {
             "prob_filter": ("Scored_Goals", "Bigger_Home"),
             "additional_filters": [
-                ("Poisson_2_GS_Away", ">=", 0.1501),
-                ("Poisson_2_GS_Away", "<=", 0.3000),
-                ("Prob_H", ">=", 0.3001)
+                ("Poisson_GS_A_2", ">=", 0.1501),
+                ("Poisson_GS_A_2", "<=", 0.3000),
+                ("prob_H", ">=", 0.3001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2000", "0.2001 - 0.5000", ">=0.5001"],
@@ -541,9 +541,9 @@ with tab_views[0]:
         "SPAIN - LALIGA": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_2_GM_Away", "<=", 0.2500),
-                ("Poisson_0_GS_Away", "<=", 0.3500),
-                ("Prob_H", ">=", 0.4001)
+                ("Poisson_GM_A_2", "<=", 0.2500),
+                ("Poisson_GS_A_0", "<=", 0.3500),
+                ("prob_H", ">=", 0.4001)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3500", "0.3501 - 0.6000", ">=0.6001"],
@@ -556,8 +556,8 @@ with tab_views[0]:
         "SPAIN - LALIGA2": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Media_CG_02_Marcados_Home", ">=", 0.7501),
-                ("Media_CG_02_Marcados_Home", "<=", 1.2000)
+                ("Avg_CG_Scored_H_02", ">=", 0.7501),
+                ("Avg_CG_Scored_H_02", "<=", 1.2000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3000", "0.3001 - 0.4500", ">=0.4501"],
@@ -570,10 +570,10 @@ with tab_views[0]:
         "THAILAND - THAI LEAGUE 1": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Media_CG_02_Marcados_Away", ">=", 0.3001),
-                ("Media_CG_02_Marcados_Away", "<=", 0.9500),
-                ("Media_CG_02_Sofridos_Away", ">=", 0.5001),
-                ("Media_CG_02_Sofridos_Away", "<=", 1.6000)
+                ("Avg_CG_Scored_A_02", ">=", 0.3001),
+                ("Avg_CG_Scored_A_02", "<=", 0.9500),
+                ("Avg_CG_Conceded_A_02", ">=", 0.5001),
+                ("Avg_CG_Conceded_A_02", "<=", 1.6000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2500", "0.2501 - 0.5000", ">=0.5001"],
@@ -586,11 +586,11 @@ with tab_views[0]:
         "TURKEY - SUPER LIG": {
             "prob_filter": ("Goal_Difference", "Bigger_Home"),
             "additional_filters": [
-                ("Poisson_2_GM_Away", ">=", 0.1001),
-                ("Poisson_2_GM_Away", "<=", 0.2500),
-                ("Media_CG_02_Marcados_Home", ">=", 0.4501),
-                ("Media_CG_02_Marcados_Home", "<=", 1.0500),
-                ("Prob_BTTS_N_FT", "<=", 0.6000)
+                ("Poisson_GM_A_2", ">=", 0.1001),
+                ("Poisson_GM_A_2", "<=", 0.2500),
+                ("Avg_CG_Scored_H_02", ">=", 0.4501),
+                ("Avg_CG_Scored_H_02", "<=", 1.0500),
+                ("prob_BTTS_No_FT", "<=", 0.6000)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.2500", "0.2501 - 0.5500", ">=0.5501"],
@@ -603,7 +603,8 @@ with tab_views[0]:
         "TURKEY - 1. LIG": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_2_GM_Home", ">=", 0.1501),
+                ("Poisson_GM_H_2", ">=", 0.1501),
+                ("FT_Odd_A", ">=", 2.20)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.3500", "0.3501 - 0.6000", ">=0.6001"],
@@ -616,8 +617,8 @@ with tab_views[0]:
         "USA - MLS": {
             "prob_filter": ("Probability_Away", "Media_Bigger"),
             "additional_filters": [
-                ("Prob_H", ">=", 0.5001),
-                ("Prob_Ov25_FT", ">=", 0.5501)
+                ("prob_H", ">=", 0.5001),
+                ("rob_Over25_FT", ">=", 0.5501)
                 ],
             "df_referencias": pd.DataFrame({
                 "Intervalo CV": ["<=0.4500", "0.4501 - 0.6000", ">=0.6001"],
@@ -665,7 +666,7 @@ with tab_views[0]:
             # Exibir o DataFrame final
             st.dataframe(final_df[[
                 'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
-                'CV_Match_Type', 'Perc_Over_15_FT_Home', 'Perc_Over_15_FT_Away', 'Perc_Over_25_FT_Home', 'Perc_Over_25_FT_Away'
+                'CV_Match_Type', 'CV_OvUn_Type', 'CV_BTTS_Type', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away'
                 ]])
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
@@ -677,15 +678,15 @@ with tab_views[1]:
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
     
     # Verificar se 'data' está disponível e contém as colunas necessárias
-    required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Ov25", "FT_Odd_BTTS_Y"]
+    required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_Over25", "FT_Odd_BTTS_Yes"]
 
     if data is not None and all(col in data.columns for col in required_columns):
         
         # Aplicar filtros
         flt = (
             (data["FT_Odd_H"] >= 1.50) & 
-            (data["FT_Odd_Ov25"] >= 1.50) & 
-            (data["FT_Odd_BTTS_Y"] <= 2.50) 
+            (data["FT_Odd_Over25"] >= 1.50) & 
+            (data["FT_Odd_BTTS_Yes"] <= 2.50) 
         )
         df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtrar e resetar índice
 
@@ -763,9 +764,11 @@ with tab_views[1]:
                                 row.get("FT_Odd_H", None),  # Usar .get() para evitar erros se a coluna não existir
                                 row.get("FT_Odd_D", None),
                                 row.get("FT_Odd_A", None),
-                                row.get("Balance", None),
-                                row.get("Perc_Over_25_FT_Home", None),
-                                row.get("Perc_Over_25_FT_Away", None)
+                                row.get("CV_Match_Type", None),
+                                row.get("CV_OvUn_Type", None),
+                                row.get("CV_BTTS_Type", None),
+                                row.get("Perc_Over25FT_Home", None),
+                                row.get("Perc_Over25FT_Away", None)
                             ])
 
                 # Verificar se há resultados antes de exibir
@@ -791,16 +794,16 @@ with tab_views[2]:
     if data is not None:
         # Aplicar os filtros
         over_15_ft_flt = data[
-            ((data["Perc_Over_15_FT_Home"] + data["Perc_Over_15_FT_Away"]) / 2 > 65) &
-            ((data["Perc_of_Games_BTTS_Yes_Home"] + data["Perc_of_Games_BTTS_Yes_Away"]) / 2 > 65) &
-            (data["Media_Golos_Marcados_Home"] > 1) &
-            (data["CV_Media_Golos_Marcados_Home"] < 1) &
-            (data["Media_Golos_Marcados_Away"] > 1) &
-            (data["CV_Media_Golos_Marcados_Away"] < 1) &
-            (data["Media_Golos_Sofridos_Home"] > 1) &
-            (data["CV_Media_Golos_Sofridos_Home"] < 1) &
-            (data["Media_Golos_Sofridos_Away"] > 1) &
-            (data["CV_Media_Golos_Sofridos_Away"] < 1)
+            ((data["Perc_Over15FT_Home"] + data["Perc_Over15FT_Away"]) / 2 > 65) &
+            ((data["Perc_BTTS_Yes_FT_Home"] + data["Perc_BTTS_Yes_FT_Away"]) / 2 > 65) &
+            (data["Avg_G_Scored_H_FT"] > 1) &
+            (data["CV_Avg_G_Scored_H_FT"] < 1) &
+            (data["Avg_G_Scored_A_FT"] > 1) &
+            (data["CV_Avg_G_Scored_A_FT"] < 1) &
+            (data["Avg_G_Conceded_H_FT"] > 1) &
+            (data["CV_Avg_G_Conceded_H_FT"] < 1) &
+            (data["Avg_G_Conceded_A_FT"] > 1) &
+            (data["CV_Avg_G_Conceded_A_FT"] < 1)
         ]
         over_15_ft_flt = over_15_ft_flt.sort_values(by='Time', ascending=True)
 
@@ -847,7 +850,7 @@ with tab_views[3]:
             
             # Exibir dados filtrados
             if not lay_home_flt.empty:
-                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Media_Power_Ranking_Home', 'CV_Media_Power_Ranking_Home', 'Media_Power_Ranking_Away', 'CV_Media_Power_Ranking_Away']])
+                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type' 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']])
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -890,7 +893,7 @@ with tab_views[4]:
             
             # Exibir dados filtrados
             if not lay_away_flt.empty:
-                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Media_Power_Ranking_Home', 'CV_Media_Power_Ranking_Home', 'Media_Power_Ranking_Away', 'CV_Media_Power_Ranking_Away']])
+                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type' 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']])
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -907,10 +910,10 @@ with tab_views[5]:
             (data["League"] == 'CROATIA - HNL') &
             (data["Points"] == 'Points_Home') &
             (data["RPS_OVUnd"] == 'Bigger_Away') &
-            (data["Poisson_2_GS_Home"] > 0.1660) &
-            (data["Poisson_2_GS_Home"] < 0.2610) &
-            (data["Media_CG_02_Marcados_Away"] > 0.5550) &
-            (data["Media_CG_02_Marcados_Away"] < 0.8390)
+            (data["Poisson_GS_H_2"] > 0.1660) &
+            (data["Poisson_GS_H_2"] < 0.2610) &
+            (data["Avg_CG_Scored_A_02"] > 0.5550) &
+            (data["Avg_CG_Scored_A_02"] < 0.8390)
         ]
         under_15_croatia_01_ft_flt = under_15_croatia_01_ft_flt.sort_values(by='Time', ascending=True)
 
@@ -928,10 +931,10 @@ with tab_views[5]:
             (data["League"] == 'CROATIA - HNL') &
             (data["Points"] == 'Points_Home') &
             (data["RPS_OVUnd"] == 'Bigger_Away') &
-            (data["Poisson_2_GS_Home"] > 0.1660) &
-            (data["Poisson_2_GS_Home"] < 0.2610) &
-            (data["Media_CG_02_Sofridos_Home"] > 0.7080) &
-            (data["Media_CG_02_Sofridos_Home"] < 0.9270)
+            (data["Poisson_GS_H_2"] > 0.1660) &
+            (data["Poisson_GS_H_2"] < 0.2610) &
+            (data["Avg_CG_Conceded_H_02"] > 0.7080) &
+            (data["Avg_CG_Conceded_H_02"] < 0.9270)
         ]
         under_15_croatia_02_ft_flt = under_15_croatia_02_ft_flt.sort_values(by='Time', ascending=True)
 
@@ -949,10 +952,10 @@ with tab_views[5]:
             (data["League"] == 'CROATIA - HNL') &
             (data["Points"] == 'Points_Home') &
             (data["RPS_OVUnd"] == 'Bigger_Away') &
-            (data["Probabilidade_Goals_Scored_Home"] > 0.9020) &
-            (data["Probabilidade_Goals_Scored_Home"] < 1.5720) &
-            (data["Probabilidade_Goals_Taken_Home"] > 0.9370) &
-            (data["Probabilidade_Goals_Taken_Home"] < 1.3880)
+            (data["prob_G_Scored_H"] > 0.9020) &
+            (data["prob_G_Scored_H"] < 1.5720) &
+            (data["prob_G_Conceded_H"] > 0.9370) &
+            (data["prob_G_Conceded_H"] < 1.3880)
         ]
         under_15_croatia_03_ft_flt = under_15_croatia_03_ft_flt.sort_values(by='Time', ascending=True)
 
@@ -973,8 +976,8 @@ with tab_views[6]:
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Home_Score_Take"] == 'No') &
             (data["Away_Score_Take"] == 'Yes') &
-            (data["Media_Saldo_Golos_Away"] > -0.0900) &
-            (data["Media_Saldo_Golos_Away"] < 0.0250)
+            (data["Avg_G_Diff_A_FT_Value"] > -0.0900) &
+            (data["Avg_G_Diff_A_FT_Value"] < 0.0250)
         ]
         back_home_Port_01_01_ft_flt = back_home_Port_01_01_ft_flt.sort_values(by='Time', ascending=True)
         
@@ -994,8 +997,8 @@ with tab_views[6]:
             (data["Away_Score_Take"] == 'Yes') &
             (data["Poisson_2_GS_Away"] > 0.2520) &
             (data["Poisson_2_GS_Away"] < 0.2710) &
-            (data["Media_Ptos_Away"] > 0.9780) &
-            (data["Media_Ptos_Away"] < 1.6950)
+            (data["Avg_Points_Away_FT"] > 0.9780) &
+            (data["Avg_Points_Away_FT"] < 1.6950)
         ]
         back_home_Port_01_02_ft_flt = back_home_Port_01_02_ft_flt.sort_values(by='Time', ascending=True)
         
@@ -1013,35 +1016,16 @@ with tab_views[6]:
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Home_Score_Take"] == 'No') &
             (data["Away_Score_Take"] == 'Yes') &
-            (data["Media_Ptos_Away"] > 0.9780) &
-            (data["Media_Ptos_Away"] < 1.6950) &
-            (data["Media_Golos_Sofridos_Away"] > 1.5120) &
-            (data["Media_Golos_Sofridos_Away"] < 4.0670)
+            (data["Avg_Points_Away_FT"] > 0.9780) &
+            (data["Avg_Points_Away_FT"] < 1.6950) &
+            (data["Avg_G_Conceded_A_FT_Value"] > 1.5120) &
+            (data["Avg_G_Conceded_A_FT_Value"] < 4.0670)
         ]
         back_home_Port_01_03_ft_flt = back_home_Port_01_03_ft_flt.sort_values(by='Time', ascending=True)
         
         # Exibir os dados filtrados
         if not back_home_Port_01_03_ft_flt.empty:
             st.dataframe(back_home_Port_01_03_ft_flt)
-        else:
-            st.info("Nenhum jogo encontrado com os critérios especificados.")
-    else:
-        st.info("Dados indisponíveis para a data selecionada.")
-    st.markdown('England - Premier League - Method 1')
-    if data is not None:
-        # Aplicar os filtros
-        back_home_eng_01_01_ft_flt = data[
-            (data["League"] == 'ENGLAND - PREMIER LEAGUE') &
-            (data["Media_CG_02_Marcados_Home"] > 0.1910) &
-            (data["Media_CG_02_Marcados_Home"] < 0.5580) &
-            (data["Media_Golos_Sofridos_Away"] > 0.1980) &
-            (data["Media_Golos_Sofridos_Away"] < 1.6000)
-        ]
-        back_home_eng_01_01_ft_flt = back_home_eng_01_01_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_home_eng_01_01_ft_flt.empty:
-            st.dataframe(back_home_eng_01_01_ft_flt)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1053,12 +1037,12 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away", "Goal_Difference", "Scored_Goals", "Conceded_Goals"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "CV_OvUn_Type", "CV_BTTS_Type","Perc_Over25FT_Home", "Perc_Over25FT_Away"]
         
         # Aplicar os filtros
         lay_1x1_home_flt = data[
             (data["FT_Odd_H"] < 1.75) &
-            (data["FT_Odd_Ov25"] < 1.65)
+            (data["FT_Odd_Over25"] < 1.65)
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
         
@@ -1076,7 +1060,7 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over_25_FT_Home", "Perc_Over_25_FT_Away", "Goal_Difference", "Scored_Goals", "Conceded_Goals"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "CV_OvUn_Type", "CV_BTTS_Type","Perc_Over25FT_Home", "Perc_Over25FT_Away"]
         
         # Aplicar os filtros
         lay_1x1_away_flt = data[
