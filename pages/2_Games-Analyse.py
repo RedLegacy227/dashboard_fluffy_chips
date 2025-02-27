@@ -434,7 +434,7 @@ try:
                                 🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
                                 🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
                                 🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
-                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}*** 
+                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
                                 🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  
                                 🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  
                                 🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}***  
