@@ -435,7 +435,7 @@ try:
                     st.markdown(f'#### Statistics ###')
                     st.markdown(f'''
                                 #### Average Stats on the last 7 Games ####  
-                                🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  🥅 Goal Attempt In Favor ***{stats_shots_G_Attempts_IF_home}*** ➡️ ***{stats_shots_G_Attempts_IF_home}***  
+                                🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  🥅 Goal Attempt In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_IF_home}***  
                                 🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  
                                 🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}***  
                                 🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away}***  
