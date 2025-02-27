@@ -430,7 +430,7 @@ try:
                     stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].values[0]
                     st.markdown(f'#### Statistics ###')
                     st.markdown(f'''
-                                Average Stats on the last 21 Games:  
+                                #### Average Stats on the last 7 Games ####  
                                 🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
                                 🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
                                 🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
@@ -453,8 +453,8 @@ try:
                     
                     # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
                     st.markdown(f"#### Expected Goals (xG) ####")
-                    st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ **{xg_home:.2f}**")
-                    st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ **{xg_away:.2f}**")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
                 else:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
