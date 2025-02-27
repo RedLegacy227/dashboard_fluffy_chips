@@ -1098,7 +1098,7 @@ with tab_views[8]:
             never_won_by_4_or_more = not any(
                 (games['Home'] == team) & (games['FT_Goals_H'] >= 4) & (games['FT_Goals_H'] > games['FT_Goals_A']))
             # Verificar se mais de 80% dos jogos foram Under 3
-            under_3_percentage_team = (games['FT_Goals_H'] <= 3).mean() >= 0.85
+            under_3_percentage_team = (games['FT_Goals_H'] < 3).mean() >= 0.85
             under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
             
             
@@ -1119,7 +1119,7 @@ with tab_views[8]:
             never_won_by_4_or_more = not any(
                 (games['Away'] == team) & (games['FT_Goals_A'] >= 4) & (games['FT_Goals_A'] > games['FT_Goals_H']))
             # Verificar se mais de 80% dos jogos foram Under 3
-            under_3_percentage_team = (games['FT_Goals_A'] <= 3).mean() >= 0.85
+            under_3_percentage_team = (games['FT_Goals_A'] < 3).mean() >= 0.85
             under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
             
             # Verificar se o time visitante não venceu por 4 ou mais gols contra o time da casa em confrontos anteriores
