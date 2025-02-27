@@ -81,7 +81,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Test 1']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -1077,3 +1077,66 @@ with tab_views[7]:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
         st.info("Dados indisponíveis para a data selecionada.")
+        
+with tab_views[8]:
+    st.markdown(f'#### Teste of Lay Any Other Win Score ####')
+
+    if data is not None and historical_data is not None:
+        # Filtrar os times da data selecionada
+        home_teams = data['Home'].unique()
+        away_teams = data['Away'].unique()
+
+        # Função para buscar os últimos 21 jogos de um time
+        def get_last_21_games(team, historical_data):
+            team_games = historical_data[(historical_data['Home'] == team) | (historical_data['Away'] == team)]
+            team_games = team_games.sort_values(by='Date', ascending=False).head(21)
+            return team_games
+
+        # Função para verificar as condições de "Lay any Other Home Win"
+        def check_home_win_conditions(games, team):
+            # Verificar se o time nunca ganhou marcando 4 ou mais golos
+            never_won_by_4_or_more = not any(
+                (games['Home'] == team) & (games['FT_Goals_H'] >= 4) & (games['FT_Goals_H'] > games['FT_Goals_A']))
+            # Verificar se mais de 80% dos jogos foram Under 3
+            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) < 3).mean() > 0.8
+            return never_won_by_4_or_more and under_3_percentage
+
+        # Função para verificar as condições de "Lay any Other Away Win"
+        def check_away_win_conditions(games, team):
+            # Verificar se o time nunca ganhou marcando 4 ou mais golos
+            never_won_by_4_or_more = not any(
+                (games['Away'] == team) & (games['FT_Goals_A'] >= 4) & (games['FT_Goals_A'] > games['FT_Goals_H']))
+            # Verificar se mais de 80% dos jogos foram Under 3
+            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) < 3).mean() > 0.8
+            return never_won_by_4_or_more and under_3_percentage
+
+        # Lista para armazenar os jogos que atendem às condições
+        home_win_games = []
+        away_win_games = []
+
+        # Verificar as condições para cada time em casa
+        for team in home_teams:
+            last_21_games = get_last_21_games(team, historical_data)
+            if check_home_win_conditions(last_21_games, team):
+                home_win_games.extend(data[data['Home'] == team].to_dict('records'))
+
+        # Verificar as condições para cada time fora
+        for team in away_teams:
+            last_21_games = get_last_21_games(team, historical_data)
+            if check_away_win_conditions(last_21_games, team):
+                away_win_games.extend(data[data['Away'] == team].to_dict('records'))
+
+        # Exibir os resultados
+        st.subheader('Lay any Other Home Win')
+        if home_win_games:
+            st.write(pd.DataFrame(home_win_games))
+        else:
+            st.write("No games meet the criteria for Lay any Other Home Win.")
+
+        st.subheader('Lay any Other Away Win')
+        if away_win_games:
+            st.write(pd.DataFrame(away_win_games))
+        else:
+            st.write("No games meet the criteria for Lay any Other Away Win.")
+    else:
+        st.error("Data not loaded properly. Please check the data sources.")
