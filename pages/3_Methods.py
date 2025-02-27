@@ -848,7 +848,7 @@ with tab_views[3]:
             
             # Exibir dados filtrados
             if not lay_home_flt.empty:
-                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'CV_Avg_Points_Home_FT', 'PPJ_Home', 'Avg_Points_Away_FT', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
+                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -891,7 +891,7 @@ with tab_views[4]:
             
             # Exibir dados filtrados
             if not lay_away_flt.empty:
-                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'CV_Avg_Points_Home_FT', 'PPJ_Home', 'Avg_Points_Away_FT', 'CV_Avg_Points_Away_FT', 'PPJ_Away', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
+                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
