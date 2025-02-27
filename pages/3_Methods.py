@@ -1080,18 +1080,18 @@ with tab_views[7]:
         
 with tab_views[8]:
     st.markdown(f'#### Teste of Lay Any Other Win Score ####')
-
+    
     if data is not None and historical_data is not None:
         # Filtrar os times da data selecionada
         home_teams = data['Home'].unique()
         away_teams = data['Away'].unique()
-
+        
         # Função para buscar os últimos 21 jogos de um time
         def get_last_21_games(team, historical_data):
             team_games = historical_data[(historical_data['Home'] == team) | (historical_data['Away'] == team)]
             team_games = team_games.sort_values(by='Date', ascending=False).head(21)
             return team_games
-
+        
         # Função para verificar as condições de "Lay any Other Home Win"
         def check_home_win_conditions(games, team, historical_data):
             # Verificar se o time nunca ganhou marcando 4 ou mais golos
@@ -1099,7 +1099,8 @@ with tab_views[8]:
                 (games['Home'] == team) & (games['FT_Goals_H'] >= 4) & (games['FT_Goals_H'] > games['FT_Goals_A']))
             # Verificar se mais de 80% dos jogos foram Under 3
             under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
-
+            lower_perc_Ov25 = (games['Home'] == team) & (games['FT_Goals_H'] < 3).mean() >=0.85
+            
             # Verificar se o time da casa não venceu por 4 ou mais gols contra o time visitante em confrontos anteriores
             home_vs_away_games = historical_data[
                 ((historical_data['Home'] == team) & (historical_data['Away'].isin(away_teams))) |
@@ -1108,9 +1109,9 @@ with tab_views[8]:
             never_won_by_4_or_more_vs_opponent = not any(
                 (home_vs_away_games['Home'] == team) & (home_vs_away_games['FT_Goals_H'] >= 4) & (home_vs_away_games['FT_Goals_H'] > home_vs_away_games['FT_Goals_A'])
             )
-
-            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent
-
+            
+            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent and lower_perc_Ov25
+        
         # Função para verificar as condições de "Lay any Other Away Win"
         def check_away_win_conditions(games, team, historical_data):
             # Verificar se o time nunca ganhou marcando 4 ou mais golos
@@ -1118,7 +1119,8 @@ with tab_views[8]:
                 (games['Away'] == team) & (games['FT_Goals_A'] >= 4) & (games['FT_Goals_A'] > games['FT_Goals_H']))
             # Verificar se mais de 80% dos jogos foram Under 3
             under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
-
+            lower_perc_Ov25 = (games['Away'] == team) & (games['FT_Goals_A'] < 3).mean() >=0.85
+            
             # Verificar se o time visitante não venceu por 4 ou mais gols contra o time da casa em confrontos anteriores
             away_vs_home_games = historical_data[
                 ((historical_data['Away'] == team) & (historical_data['Home'].isin(home_teams))) |
@@ -1127,25 +1129,25 @@ with tab_views[8]:
             never_won_by_4_or_more_vs_opponent = not any(
                 (away_vs_home_games['Away'] == team) & (away_vs_home_games['FT_Goals_A'] >= 4) & (away_vs_home_games['FT_Goals_A'] > away_vs_home_games['FT_Goals_H'])
             )
-
-            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent
-
+            
+            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent and lower_perc_Ov25
+        
         # Lista para armazenar os jogos que atendem às condições
         home_win_games = []
         away_win_games = []
-
+        
         # Verificar as condições para cada time em casa
         for team in home_teams:
             last_21_games = get_last_21_games(team, historical_data)
             if check_home_win_conditions(last_21_games, team, historical_data):
                 home_win_games.extend(data[data['Home'] == team].to_dict('records'))
-
+        
         # Verificar as condições para cada time fora
         for team in away_teams:
             last_21_games = get_last_21_games(team, historical_data)
             if check_away_win_conditions(last_21_games, team, historical_data):
                 away_win_games.extend(data[data['Away'] == team].to_dict('records'))
-
+        
         # Exibir os resultados
         st.subheader('Lay any Other Home Win')
         if home_win_games:
