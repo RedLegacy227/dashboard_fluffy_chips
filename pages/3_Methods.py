@@ -1098,7 +1098,8 @@ with tab_views[8]:
             never_won_by_4_or_more = not any(
                 (games['Home'] == team) & (games['FT_Goals_H'] >= 4) & (games['FT_Goals_H'] > games['FT_Goals_A']))
             # Verificar se mais de 80% dos jogos foram Under 3
-            under_3_percentage = (games['FT_Goals_H'] <= 3).mean() >= 0.85
+            under_3_percentage_team = (games['FT_Goals_H'] <= 3).mean() >= 0.85
+            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
             
             
             # Verificar se o time da casa não venceu por 4 ou mais gols contra o time visitante em confrontos anteriores
@@ -1110,7 +1111,7 @@ with tab_views[8]:
                 (home_vs_away_games['Home'] == team) & (home_vs_away_games['FT_Goals_H'] >= 4) & (home_vs_away_games['FT_Goals_H'] > home_vs_away_games['FT_Goals_A'])
             )
             
-            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent
+            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent and under_3_percentage_team
         
         # Função para verificar as condições de "Lay any Other Away Win"
         def check_away_win_conditions(games, team, historical_data):
@@ -1118,8 +1119,8 @@ with tab_views[8]:
             never_won_by_4_or_more = not any(
                 (games['Away'] == team) & (games['FT_Goals_A'] >= 4) & (games['FT_Goals_A'] > games['FT_Goals_H']))
             # Verificar se mais de 80% dos jogos foram Under 3
-            under_3_percentage = (games['FT_Goals_A'] <= 3).mean() >= 0.85
-            
+            under_3_percentage_team = (games['FT_Goals_A'] <= 3).mean() >= 0.85
+            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
             
             # Verificar se o time visitante não venceu por 4 ou mais gols contra o time da casa em confrontos anteriores
             away_vs_home_games = historical_data[
@@ -1130,7 +1131,7 @@ with tab_views[8]:
                 (away_vs_home_games['Away'] == team) & (away_vs_home_games['FT_Goals_A'] >= 4) & (away_vs_home_games['FT_Goals_A'] > away_vs_home_games['FT_Goals_H'])
             )
             
-            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent
+            return never_won_by_4_or_more and under_3_percentage and never_won_by_4_or_more_vs_opponent and under_3_percentage_team
         
         # Lista para armazenar os jogos que atendem às condições
         home_win_games = []
