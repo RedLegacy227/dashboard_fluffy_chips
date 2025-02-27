@@ -436,7 +436,7 @@ try:
                     stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_G_Attempt_Against_H'].values[0]
                     stats_shots_G_Attempts_pG_IF_away = team_data['Avg_G_Attempt_InFavor_A'].values[0]
                     stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_G_Attempt_Against_A'].values[0]
-                    st.markdown(f'#### Statistics ###')
+                    
                     st.markdown(f'''
                                 #### Average Stats on the last 7 Games ####  
                                 🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}*** | ⚽ Shots On Target per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_IF_home}***  
