@@ -1149,21 +1149,23 @@ with tab_views[8]:
         # Exibir os resultados
         st.subheader('Lay any Other Home Win')
         if home_win_games:
-            # Filtrar as colunas desejadas e remover o índice
+            # Filtrar as colunas desejadas
             home_win_df = pd.DataFrame(home_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
-            st.write(home_win_df.to_string(index=False))  # Exibir sem índice
+            # Exibir o DataFrame sem o índice
+            st.dataframe(home_win_df, hide_index=True)  # Use hide_index para remover o índice
         else:
             st.write("No games meet the criteria for Lay any Other Home Win.")
-
+        
         st.subheader('Lay any Other Away Win')
         if away_win_games:
-            # Filtrar as colunas desejadas e remover o índice
+            # Filtrar as colunas desejadas
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
-            st.write(away_win_df.to_string(index=False))  # Exibir sem índice
+            # Exibir o DataFrame sem o índice
+            st.dataframe(away_win_df, hide_index=True)  # Use hide_index para remover o índice
         else:
             st.write("No games meet the criteria for Lay any Other Away Win.")
     else:
