@@ -81,7 +81,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Test 1']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -1165,7 +1165,7 @@ with tab_views[8]:
         if away_win_games:
             # Filtrar as colunas desejadas
             away_win_df = pd.DataFrame(away_win_games)[
-                ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+                ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home"]
             ]
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
