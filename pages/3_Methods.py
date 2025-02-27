@@ -773,7 +773,7 @@ with tab_views[1]:
                 if results:
                     df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
-                    st.dataframe(df_results, use_container_width=True, hide_index=True )
+                    st.dataframe(df_results, use_container_width=True, hide_index=True)
                 else:
                     st.warning("Nenhum jogo atende aos critérios.")
 
@@ -807,7 +807,7 @@ with tab_views[2]:
 
         # Exibir os dados filtrados
         if not over_15_ft_flt.empty:
-            st.dataframe(over_15_ft_flt)
+            st.dataframe(over_15_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -848,7 +848,7 @@ with tab_views[3]:
             
             # Exibir dados filtrados
             if not lay_home_flt.empty:
-                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], hide_index=True)
+                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_H', 'CV_Avg_Points_H', 'PPJ_Home', 'Avg_Points_A', 'CV_Avg_Points_A', 'PPJ_Away', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -891,7 +891,7 @@ with tab_views[4]:
             
             # Exibir dados filtrados
             if not lay_away_flt.empty:
-                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], hide_index=True)
+                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_H', 'CV_Avg_Points_H', 'PPJ_Home', 'Avg_Points_A', 'CV_Avg_Points_A', 'PPJ_Away', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -917,7 +917,7 @@ with tab_views[5]:
 
         # Exibir os dados filtrados
         if not under_15_croatia_01_ft_flt.empty:
-            st.dataframe(under_15_croatia_01_ft_flt, hide_index=True)
+            st.dataframe(under_15_croatia_01_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -938,7 +938,7 @@ with tab_views[5]:
 
         # Exibir os dados filtrados
         if not under_15_croatia_02_ft_flt.empty:
-            st.dataframe(under_15_croatia_02_ft_flt, hide_index=True)
+            st.dataframe(under_15_croatia_02_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -959,7 +959,7 @@ with tab_views[5]:
 
         # Exibir os dados filtrados
         if not under_15_croatia_03_ft_flt.empty:
-            st.dataframe(under_15_croatia_03_ft_flt, hide_index=True)
+            st.dataframe(under_15_croatia_03_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -981,7 +981,7 @@ with tab_views[6]:
         
         # Exibir os dados filtrados
         if not back_home_Port_01_01_ft_flt.empty:
-            st.dataframe(back_home_Port_01_01_ft_flt, hide_index=True)
+            st.dataframe(back_home_Port_01_01_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1002,7 +1002,7 @@ with tab_views[6]:
         
         # Exibir os dados filtrados
         if not back_home_Port_01_02_ft_flt.empty:
-            st.dataframe(back_home_Port_01_02_ft_flt, hide_index=True)
+            st.dataframe(back_home_Port_01_02_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1023,7 +1023,7 @@ with tab_views[6]:
         
         # Exibir os dados filtrados
         if not back_home_Port_01_03_ft_flt.empty:
-            st.dataframe(back_home_Port_01_03_ft_flt, hide_index=True)
+            st.dataframe(back_home_Port_01_03_ft_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1072,7 +1072,7 @@ with tab_views[7]:
         
         # Exibir os dados filtrados sem o índice
         if not lay_1x1_away_flt.empty:
-            st.dataframe(lay_1x1_away_flt, hide_index=True)
+            st.dataframe(lay_1x1_away_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1154,7 +1154,7 @@ with tab_views[8]:
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
             # Exibir o DataFrame sem o índice
-            st.dataframe(home_win_df, hide_index=True)  # Use hide_index para remover o índice
+            st.dataframe(home_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
             st.write("No games meet the criteria for Lay any Other Home Win.")
         
@@ -1165,7 +1165,7 @@ with tab_views[8]:
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
             # Exibir o DataFrame sem o índice
-            st.dataframe(away_win_df, hide_index=True)  # Use hide_index para remover o índice
+            st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
             st.write("No games meet the criteria for Lay any Other Away Win.")
     else:
