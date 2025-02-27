@@ -1167,6 +1167,17 @@ with tab_views[8]:
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home"]
             ]
+            # Inject custom CSS to center align text in the dataframe
+            st.markdown(
+                """
+                <style>
+                .stDataFrame td {
+                    text-align: center;
+                }
+                </style>
+                """,
+                unsafe_allow_html=True
+            )
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
