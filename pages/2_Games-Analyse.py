@@ -424,13 +424,21 @@ try:
                     stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].values[0]
                     stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].values[0]
                     stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].values[0]
+                    stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].values[0]
+                    stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].values[0]
+                    stats_shots_ot_IF_away = team_data['Avg_Shots_OnTarget_InFavor_A'].values[0]
+                    stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].values[0]
                     st.markdown(f'#### Statistics ###')
                     st.markdown(f'''
                                 Average Stats on the last 21 Games:  
                                 🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
                                 🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
                                 🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
-                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}*** 
+                                🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  
+                                🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  
+                                🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}***  
+                                🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away}***  
                                 
                                 ''')
                     
