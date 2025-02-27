@@ -448,8 +448,6 @@ try:
                                 🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}*** | 🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
                                 🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}*** | 🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
                                 🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}*** | 🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
-                                
-                                
                                 ''')
                     
                     st.divider()
@@ -612,10 +610,10 @@ try:
             
                 # Exibir resultados com negrito e itálico
                 st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
-                st.markdown(f"***{selected_home}*** Scored First **{home_first_goal}** times")
-                st.markdown(f"***{selected_home}*** Conceded First **{home_conceded_first}** times")
-                st.markdown(f"***{selected_away}*** Scored First **{away_first_goal}** times")
-                st.markdown(f"***{selected_away}*** Conceded First **{away_conceded_first}**")
+                st.markdown(f"***{selected_home}*** Scored First ***{home_first_goal}*** times")
+                st.markdown(f"***{selected_home}*** Conceded First ***{home_conceded_first}*** times")
+                st.markdown(f"***{selected_away}*** Scored First ***{away_first_goal}*** times")
+                st.markdown(f"***{selected_away}*** Conceded First ***{away_conceded_first}*** times")
                 st.divider() 
         
 except Exception as e:
