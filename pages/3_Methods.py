@@ -667,7 +667,7 @@ with tab_views[0]:
             st.dataframe(final_df[[
                 'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
                 'CV_Match_Type', 'CV_OvUn_Type', 'CV_BTTS_Type', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away'
-                ]])
+                ]], hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -773,7 +773,7 @@ with tab_views[1]:
                 if results:
                     df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
-                    st.dataframe(df_results, use_container_width=True)
+                    st.dataframe(df_results, use_container_width=True, hide_index=True )
                 else:
                     st.warning("Nenhum jogo atende aos critérios.")
 
@@ -848,7 +848,7 @@ with tab_views[3]:
             
             # Exibir dados filtrados
             if not lay_home_flt.empty:
-                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']])
+                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -891,7 +891,7 @@ with tab_views[4]:
             
             # Exibir dados filtrados
             if not lay_away_flt.empty:
-                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']])
+                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -917,7 +917,7 @@ with tab_views[5]:
 
         # Exibir os dados filtrados
         if not under_15_croatia_01_ft_flt.empty:
-            st.dataframe(under_15_croatia_01_ft_flt)
+            st.dataframe(under_15_croatia_01_ft_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -938,7 +938,7 @@ with tab_views[5]:
 
         # Exibir os dados filtrados
         if not under_15_croatia_02_ft_flt.empty:
-            st.dataframe(under_15_croatia_02_ft_flt)
+            st.dataframe(under_15_croatia_02_ft_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -959,7 +959,7 @@ with tab_views[5]:
 
         # Exibir os dados filtrados
         if not under_15_croatia_03_ft_flt.empty:
-            st.dataframe(under_15_croatia_03_ft_flt)
+            st.dataframe(under_15_croatia_03_ft_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -981,7 +981,7 @@ with tab_views[6]:
         
         # Exibir os dados filtrados
         if not back_home_Port_01_01_ft_flt.empty:
-            st.dataframe(back_home_Port_01_01_ft_flt)
+            st.dataframe(back_home_Port_01_01_ft_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1002,7 +1002,7 @@ with tab_views[6]:
         
         # Exibir os dados filtrados
         if not back_home_Port_01_02_ft_flt.empty:
-            st.dataframe(back_home_Port_01_02_ft_flt)
+            st.dataframe(back_home_Port_01_02_ft_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1023,7 +1023,7 @@ with tab_views[6]:
         
         # Exibir os dados filtrados
         if not back_home_Port_01_03_ft_flt.empty:
-            st.dataframe(back_home_Port_01_03_ft_flt)
+            st.dataframe(back_home_Port_01_03_ft_flt, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1098,7 +1098,7 @@ with tab_views[8]:
             never_won_by_4_or_more = not any(
                 (games['Home'] == team) & (games['FT_Goals_H'] >= 4) & (games['FT_Goals_H'] > games['FT_Goals_A']))
             # Verificar se mais de 80% dos jogos foram Under 3
-            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <= 3).mean() > 0.8
+            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) < 3).mean() > 0.8
 
             # Verificar se o time da casa não venceu por 4 ou mais gols contra o time visitante em confrontos anteriores
             home_vs_away_games = historical_data[
@@ -1117,7 +1117,7 @@ with tab_views[8]:
             never_won_by_4_or_more = not any(
                 (games['Away'] == team) & (games['FT_Goals_A'] >= 4) & (games['FT_Goals_A'] > games['FT_Goals_H']))
             # Verificar se mais de 80% dos jogos foram Under 3
-            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <= 3).mean() > 0.8
+            under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) < 3).mean() > 0.8
 
             # Verificar se o time visitante não venceu por 4 ou mais gols contra o time da casa em confrontos anteriores
             away_vs_home_games = historical_data[
@@ -1149,13 +1149,21 @@ with tab_views[8]:
         # Exibir os resultados
         st.subheader('Lay any Other Home Win')
         if home_win_games:
-            st.write(pd.DataFrame(home_win_games))
+            # Filtrar as colunas desejadas e remover o índice
+            home_win_df = pd.DataFrame(home_win_games)[
+                ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+            ]
+            st.write(home_win_df.to_string(index=False))  # Exibir sem índice
         else:
             st.write("No games meet the criteria for Lay any Other Home Win.")
 
         st.subheader('Lay any Other Away Win')
         if away_win_games:
-            st.write(pd.DataFrame(away_win_games))
+            # Filtrar as colunas desejadas e remover o índice
+            away_win_df = pd.DataFrame(away_win_games)[
+                ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+            ]
+            st.write(away_win_df.to_string(index=False))  # Exibir sem índice
         else:
             st.write("No games meet the criteria for Lay any Other Away Win.")
     else:
