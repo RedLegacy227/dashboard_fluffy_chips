@@ -439,15 +439,26 @@ try:
                     
                     st.markdown(f'''
                                 #### Average Stats on the last 7 Games ####  
-                                🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}*** | ⚽ Shots On Target per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_IF_home}***  
-                                🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  | ⚽ Shots On Target per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_Ag_home}***  
-                                🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}*** | ⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away}***  
-                                🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away}***  | ⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away}***  
-                                    
-                                🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}*** | 🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
-                                🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}*** | 🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
-                                🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}*** | 🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
-                                🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}*** | 🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  
+                                🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  
+                                🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}***  
+                                🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away}***  
+                                
+                                ⚽ Shots On Target per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_IF_home}***  
+                                ⚽ Shots On Target per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_Ag_home}***  
+                                ⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away}***  
+                                ⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away}***  
+
+                                🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}***  
+                                🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}***  
+                                🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}***  
+                                🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}***  
+                                
+                                🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
+                                🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
+                                🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                
                                 ''')
                     
                     st.divider()
