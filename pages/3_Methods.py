@@ -1052,7 +1052,7 @@ with tab_views[7]:
         
         # Exibir os dados filtrados sem o índice
         if not lay_1x1_home_flt.empty:
-            st.dataframe(lay_1x1_home_flt, hide_index=True)
+            st.dataframe(lay_1x1_home_flt, use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
             
