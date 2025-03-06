@@ -668,7 +668,7 @@ with tab_views[0]:
     
             # Exibir o DataFrame final
             st.dataframe(final_df[[
-                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away']], hide_index=True)
+                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away']], use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -1215,6 +1215,6 @@ with tab_views[9]:
         columns_to_display = [col for col in columns_to_display if col in df_louro_jose.columns]
         
         # Display the final DataFrame
-        st.dataframe(df_louro_jose[columns_to_display], hide_index=True)
+        st.dataframe(df_louro_jose[columns_to_display], use_container_width=True, hide_index=True)
     else:
         st.info("Nenhum jogo encontrado com os critérios especificados.")
