@@ -773,8 +773,6 @@ with tab_views[1]:
                 # Verificar se há resultados antes de exibir
                 if results:
                     df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"])
-                    # Aplicar filtro adicional para '0x1_H' e '0x1_A'
-                    df_results = df_results[(df_results['Perc_goleada_casa_H'] < 10) & (df_results['Perc_goleada_casa_A'] < 10)]
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True, hide_index=True)
                 else:
