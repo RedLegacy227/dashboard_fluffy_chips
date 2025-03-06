@@ -642,6 +642,9 @@ with tab_views[0]:
             filtered_data = data[data["League"] == league]
             filtered_data = filtered_data[filtered_data[prob_filter_col] == prob_filter_val]
     
+            # Aplicar filtro adicional para '0x1_H' e '0x1_A'
+            filtered_data = filtered_data[(filtered_data['Perc_0x1_H'] < 10) & (filtered_data['Perc_0x1_A'] < 10)]
+    
             for col, op, val in config["additional_filters"]:
                 if op == ">=":
                     filtered_data = filtered_data[filtered_data[col] >= val]
@@ -665,9 +668,7 @@ with tab_views[0]:
     
             # Exibir o DataFrame final
             st.dataframe(final_df[[
-                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A',
-                'CV_Match_Type', 'CV_OvUn_Type', 'CV_BTTS_Type', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away'
-                ]], hide_index=True)
+                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away']], hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
@@ -772,6 +773,8 @@ with tab_views[1]:
                 # Verificar se há resultados antes de exibir
                 if results:
                     df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"])
+                    # Aplicar filtro adicional para '0x1_H' e '0x1_A'
+                    df_results = df_results[(df_results['Perc_goleada_casa_H'] < 10) & (df_results['Perc_goleada_casa_A'] < 10)]
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True, hide_index=True)
                 else:
@@ -1156,6 +1159,7 @@ with tab_views[8]:
             home_win_df = pd.DataFrame(home_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
+            home_win_df = home_win_df[(home_win_df['Perc_goleada_casa_H'] < 10) & (home_win_df['Perc_goleada_casa_A'] < 10)]
             # Exibir o DataFrame sem o índice
             st.dataframe(home_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
@@ -1167,6 +1171,7 @@ with tab_views[8]:
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home"]
             ]
+            away_win_df = away_win_df[(away_win_df['Perc_goleada_away_H'] < 10) & (away_win_df['Perc_goleada_away_A'] < 10)]
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
