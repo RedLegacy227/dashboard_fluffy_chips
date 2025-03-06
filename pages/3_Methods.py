@@ -1086,7 +1086,7 @@ with tab_views[8]:
     
     if data is not None and historical_data is not None:
         # Apply the extra filter condition
-        data = data[(data['0x1_H'] < 10) & (data['0x1_A'] < 10)]
+        data = data[(data['Perc_0x1_H'] < 10) & (data['Perc_0x1_A'] < 10)]
         
         # Filtrar os times da data selecionada
         home_teams = data['Home'].unique()
