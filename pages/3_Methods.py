@@ -81,7 +81,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -1180,3 +1180,42 @@ with tab_views[8]:
             st.write("No games meet the criteria for Lay any Other Away Win.")
     else:
         st.error("Data not loaded properly. Please check the data sources.")
+        
+with tab_views[9]:
+    st.markdown('#### Best Teams for Louro José ####')
+    
+    if data is not None:
+        # Apply the extra filter conditions
+        conditions = [
+            (data['Avg_G_Scored_H_ST'] > 0.9) & (data['Avg_G_Conceded_A_ST'] > 0.9),
+            (data['Avg_G_Scored_A_ST'] > 0.9) & (data['Avg_G_Conceded_H_ST'] > 0.9),
+            (data['Avg_G_Scored_H_ST'] > 0.9) & (data['Avg_G_Scored_A_ST'] > 0.9),
+            (data['Avg_G_Conceded_H_ST'] > 0.9) & (data['Avg_G_Conceded_A_ST'] > 0.9)
+        ]
+        
+        # Combine conditions using logical OR
+        combined_condition = conditions[0]
+        for condition in conditions[1:]:
+            combined_condition |= condition
+        
+        # Filter data
+        df_louro_jose = data[combined_condition].drop_duplicates(subset=['Home'])
+        
+        # Sort by 'Time' (ensure 'Time' is in a sortable format)
+        df_louro_jose = df_louro_jose.sort_values(by='Time', ascending=True)
+        
+        # Define columns to display
+        columns_to_display = [
+            'Time', 'League', 'Home', 'Away', 'FT_Odd_Over25', 'FT_Odd_Under25', 
+            'FT_Odd_BTTS_Yes', 'FT_Odd_BTTS_No', 'CV_Match_Type', 'Perc_Over15ST_Home', 
+            'Perc_Over15ST_Away', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 
+            'Perc_Over25FT_Home', 'Perc_Over25FT_Away'
+        ]
+        
+        # Check if columns exist in the DataFrame
+        columns_to_display = [col for col in columns_to_display if col in df_louro_jose.columns]
+        
+        # Display the final DataFrame
+        st.dataframe(df_louro_jose[columns_to_display], hide_index=True)
+    else:
+        st.info("Nenhum jogo encontrado com os critérios especificados.")
