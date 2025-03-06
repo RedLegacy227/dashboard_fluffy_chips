@@ -687,7 +687,9 @@ with tab_views[1]:
         flt = (
             (data["FT_Odd_H"] >= 1.50) & 
             (data["FT_Odd_Over25"] >= 1.50) & 
-            (data["FT_Odd_BTTS_Yes"] <= 2.50) 
+            (data["FT_Odd_BTTS_Yes"] <= 2.50) &
+            (data["Perc_goleada_casa_H"] < 10) &
+            (data["Perc_goleada_casa_A"] < 10)
         )
         df_LGP = data[flt].dropna().reset_index(drop=True)  # Filtrar e resetar índice
 
