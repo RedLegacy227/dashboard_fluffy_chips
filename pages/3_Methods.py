@@ -1085,6 +1085,9 @@ with tab_views[8]:
     st.markdown(f'#### Teste of Lay Any Other Win Score ####')
     
     if data is not None and historical_data is not None:
+        # Apply the extra filter condition
+        data = data[(data['0x1_H'] < 10) & (data['0x1_A'] < 10)]
+        
         # Filtrar os times da data selecionada
         home_teams = data['Home'].unique()
         away_teams = data['Away'].unique()
@@ -1103,7 +1106,6 @@ with tab_views[8]:
             # Verificar se mais de 80% dos jogos foram Under 3
             under_3_percentage_team = (games['FT_Goals_H'] < 3).mean() >= 0.85
             under_3_percentage = ((games['FT_Goals_H'] + games['FT_Goals_A']) <=3).mean() >= 0.8
-            
             
             # Verificar se o time da casa não venceu por 4 ou mais gols contra o time visitante em confrontos anteriores
             home_vs_away_games = historical_data[
