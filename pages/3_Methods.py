@@ -1206,9 +1206,8 @@ with tab_views[9]:
         
         # Define columns to display
         columns_to_display = [
-            'Time', 'League', 'Home', 'Away', 'FT_Odd_Over25', 'FT_Odd_BTTS_Yes',
-            'CV_Match_Type', 'CV_Avg_G_Scored_H_ST', 'CV_Avg_G_Scored_A_ST', 'CV_Avg_G_Conceded_H_ST',
-            'CV_Avg_G_Conceded_A_ST', 'Perc_Over15ST_Home', 'Perc_Over15ST_Away', 
+            'Time', 'League', 'Home', 'Away', 'FT_Odd_Over25', 'FT_Odd_BTTS_Yes', 'CV_Match_Type',
+            'CV_Avg_G_Scored_H_ST', 'CV_Avg_G_Scored_A_ST', 'Perc_Over15ST_Home', 'Perc_Over15ST_Away', 
             'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away'
         ]
         
