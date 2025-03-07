@@ -1220,7 +1220,7 @@ with tab_views[9]:
         st.info("Nenhum jogo encontrado com os critérios especificados.")
 
 with tab_views[10]:
-    st.markdown('#### Best Teams > 70% Probability - Last 11 Games ####')
+    st.markdown(f'#### Best Teams > 70% Probability - Last 11 Games ####')
     if data is not None:
         # Apply the extra filter conditions
         flt_home_SFW = data[data['Perc_Scored_First_and_Won_H'] > 70]
