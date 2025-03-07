@@ -563,6 +563,9 @@ try:
             st.markdown(f"⚽ Shots On Target per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_Ag_home:.2f}***")
             st.markdown(f"⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away:.2f}***")
             st.markdown(f"⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away:.2f}***")
+            st.divider()
+            st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_home:.2f}***")
+            st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_away:.2f}***")
         with col2:
             st.divider()
             st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_G_Attempts_pG_IF_home:.2f}***")
@@ -575,8 +578,6 @@ try:
             st.markdown(f"🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away:.2f}***")
             st.markdown(f"🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_Ag_away:.2f}***")
             st.divider()   
-            st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_home:.2f}***")
-            st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_away:.2f}***")
             st.markdown(f"🟥 Red Cards Taken ***{selected_away}*** ➡️ ***{stats_red_cards_home:.2f}***")
             st.markdown(f"🟥 Red Cards Taken ***{selected_away}*** ➡️ ***{stats_red_cards_away:.2f}***")
 
