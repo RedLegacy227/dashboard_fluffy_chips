@@ -541,14 +541,14 @@ try:
         stats_shots_ot_pG_Ag_home = team_data['Avg_Shots_OnTarget_per_Goal_Against_H'].iloc[0]
         stats_shots_ot_pG_IF_away = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_A'].iloc[0]
         stats_shots_ot_pG_Ag_away = team_data['Avg_Shots_OnTarget_per_Goal_Against_A'].iloc[0]
-        stats_shots_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].iloc[0]
-        stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_Goal_Attempt_Against_H'].iloc[0]
-        stats_shots_G_Attempts_pG_IF_away = team_data['Avg_Goal_Attempt_InFavor_A'].iloc[0]
-        stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_Goal_Attempt_Against_A'].iloc[0]
+        stats_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].iloc[0]
+        stats_G_Attempts_pG_Ag_home = team_data['Avg_Goal_Attempts_per_Goal_Against_H'].iloc[0]
+        stats_G_Attempts_pG_IF_away = team_data['Avg_Goal_Attempt_per_Goal_InFavor_A'].iloc[0]
+        stats_G_Attempts_pG_Ag_away = team_data['Avg_Goal_Attempts_per_Goal_Against_A'].iloc[0]
         stats_yellow_cards_home = team_data['Avg_Yellow_Cards_H'].iloc[0]
         stats_yellow_cards_away = team_data['Avg_Yellow_Cards_A'].iloc[0]
         stats_red_cards_home = team_data['Avg_Red_Cards_H'].iloc[0]
-        stats_red_cards_home = team_data['Avg_Red_Cards_A'].iloc[0]
+        stats_red_cards_away = team_data['Avg_Red_Cards_A'].iloc[0]
 
         st.divider()
         st.markdown(f"#### Average Stats on the Last 7 Games ####")
@@ -562,15 +562,20 @@ try:
         st.markdown(f"⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away:.2f}***")
         st.markdown(f"⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away:.2f}***")
 
-        st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home:.2f}***")
-        st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_Ag_home:.2f}***")
-        st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away:.2f}***")
-        st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_Ag_away:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_G_Attempts_pG_IF_home:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_G_Attempts_pG_Ag_home:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_G_Attempts_pG_IF_away:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_G_Attempts_pG_Ag_away:.2f}***")
 
         st.markdown(f"🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home:.2f}***")
         st.markdown(f"🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home:.2f}***")
         st.markdown(f"🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away:.2f}***")
         st.markdown(f"🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_Ag_away:.2f}***")
+        
+        st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_home:.2f}***")
+        st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_away:.2f}***")
+        st.markdown(f"🟥 Red Cards Taken ***{selected_away}*** ➡️ ***{stats_red_cards_home:.2f}***")
+        st.markdown(f"🟥 Red Cards Taken ***{selected_away}*** ➡️ ***{stats_red_cards_away:.2f}***")
 
     else:
         st.error("Not enough data available for the selected teams.")
