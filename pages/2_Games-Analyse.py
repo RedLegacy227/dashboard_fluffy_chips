@@ -551,9 +551,10 @@ try:
         stats_red_cards_home = team_data['Avg_Red_Cards_H'].values[0]
         stats_red_cards_away = team_data['Avg_Red_Cards_A'].values[0]
         
+        st.divider()
+        st.markdown(f"#### Average Stats on the Last 7 Games ####")
+        
         with col1:
-            st.divider()
-            st.markdown(f"#### Average Stats on the Last 7 Games ####")
             st.markdown(f"🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home:.2f}***")
             st.markdown(f"🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home:.2f}***")
             st.markdown(f"🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away:.2f}***")
