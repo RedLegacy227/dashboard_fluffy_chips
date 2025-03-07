@@ -516,7 +516,6 @@ try:
         xg_away = away_goals_scored * attack_power_away / defense_power_home
         
         with col2:
-            st.divider()
             st.markdown(f"#### Expected Goals (xG) ####")
             st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
             st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
