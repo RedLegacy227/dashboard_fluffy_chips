@@ -651,8 +651,8 @@ try:
     # Plot the data side by side
     fig22, ax = plt.subplots(figsize=(10, 6))
     half_labels = ["First Half", "Second Half"]
-    home_goals = [home_first_half_goals, home_second_half_goals]
-    away_goals = [away_first_half_goals, away_second_half_goals]
+    home_goals = [home_first_half_goals, home_first_half_conceded, home_second_half_goals, home_second_half_conceded]
+    away_goals = [away_first_half_goals, away_first_half_conceded, away_second_half_goals, away_second_half_conceded]
     
     x = np.arange(len(half_labels))
     width = 0.35
