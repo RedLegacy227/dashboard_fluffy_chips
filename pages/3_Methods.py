@@ -1223,20 +1223,20 @@ with tab_views[10]:
     st.markdown(f'#### Best Teams with > 70% Probability - Last 11 Games ####')
     if data is not None:
         # Apply the extra filter conditions
-        flt_home_SFW = data[data['Perc_Scored_First_and_Won_H'] > 70]
-        flt_home_SFD = data[data['Perc_Scored_First_and_Draw_H'] > 70]
-        flt_home_SFL = data[data['Perc_Scored_First_and_Lost_H'] > 70]
-        flt_home_CFW = data[data['Perc_Conceded_First_and_Won_H'] > 70]
-        flt_home_CFD = data[data['Perc_Conceded_First_and_Draw_H'] > 70]
-        flt_home_CFL = data[data['Perc_Conceded_First_and_Lost_H'] > 70]
-        flt_home_DilV = data[data['Perc_Dilatou_Vantagem_1_Golo_H'] > 70]
-        flt_away_SFW = data[data['Perc_Scored_First_and_Won_A'] > 70]
-        flt_away_SFD = data[data['Perc_Scored_First_and_Draw_A'] > 70]
-        flt_away_SFL = data[data['Perc_Scored_First_and_Lost_A'] > 70]
-        flt_away_CFW = data[data['Perc_Conceded_First_and_Won_A'] > 70]
-        flt_away_CFD = data[data['Perc_Conceded_First_and_Draw_A'] > 70]
-        flt_away_CFL = data[data['Perc_Conceded_First_and_Lost_A'] > 70]
-        flt_away_DilV = data[data['Perc_Dilatou_Vantagem_1_Golo_A'] > 70]
+        flt_home_SFW = data[data['Perc_Scored_First_and_Won_H'] > 60]
+        flt_home_SFD = data[data['Perc_Scored_First_and_Draw_H'] > 60]
+        flt_home_SFL = data[data['Perc_Scored_First_and_Lost_H'] > 60]
+        flt_home_CFW = data[data['Perc_Conceded_First_and_Won_H'] > 60]
+        flt_home_CFD = data[data['Perc_Conceded_First_and_Draw_H'] > 60]
+        flt_home_CFL = data[data['Perc_Conceded_First_and_Lost_H'] > 60]
+        flt_home_DilV = data[data['Perc_Dilatou_Vantagem_1_Golo_H'] > 60]
+        flt_away_SFW = data[data['Perc_Scored_First_and_Won_A'] > 60]
+        flt_away_SFD = data[data['Perc_Scored_First_and_Draw_A'] > 60]
+        flt_away_SFL = data[data['Perc_Scored_First_and_Lost_A'] > 60]
+        flt_away_CFW = data[data['Perc_Conceded_First_and_Won_A'] > 60]
+        flt_away_CFD = data[data['Perc_Conceded_First_and_Draw_A'] > 60]
+        flt_away_CFL = data[data['Perc_Conceded_First_and_Lost_A'] > 60]
+        flt_away_DilV = data[data['Perc_Dilatou_Vantagem_1_Golo_A'] > 60]
         
         # Define columns to display
         columns_to_display = [
