@@ -631,11 +631,6 @@ try:
     with col2:
         st.pyplot(fig_away)
     
-    # Plot first half and second half goal distribution
-    st.divider()
-    st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 21 Games ####")
-    
-    
     # Calculate first half and second half goals for both teams
     home_first_half_goals = sum([home_goals_scored[segment] for segment in ['0-15', '15-30', '30-45']])
     home_second_half_goals = sum([home_goals_scored[segment] for segment in ['45-60', '60-75', '75-90']])
@@ -678,6 +673,7 @@ try:
     ax.grid(axis="y", linestyle="--", alpha=0.7)
     
     with col1:
+        st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 21 Games ####")
         # Display the plot
         st.pyplot(fig22)
     
