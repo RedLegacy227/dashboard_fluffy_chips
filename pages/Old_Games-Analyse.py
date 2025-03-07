@@ -528,50 +528,41 @@ try:
                 ax.legend()
                 st.pyplot(fig21)
                 
-            st.markdown(f"#### Time of Goals of ***{selected_home}*** on the last 21 Games ####")
+            st.markdown(f"#### Time of Goals of ***{selected_home}*** and ***{selected_away}*** on the last 21 Games ####")
             plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
-            st.divider()             
-            st.markdown(f"#### Time of Goals of ***{selected_away}*** on the last 21 Games ####")
             plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
             st.divider() 
             def summarize_half_goals(goals, half_segments):
                 return sum([goals[segment] for segment in half_segments])
-        
+        # Plot first half and second half goal distribution
+            st.divider()
             st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 21 Games ####")
             
-            # Definir rótulos apenas para os tempos de jogo
-            half_labels = ["First Half", "Second Half"]
+            # Calculate first half and second half goals for both teams
+            home_first_half_goals = sum([home_goals_scored[segment] for segment in ['0-15', '15-30', '30-45']])
+            home_second_half_goals = sum([home_goals_scored[segment] for segment in ['45-60', '60-75', '75-90']])
+            away_first_half_goals = sum([away_goals_scored[segment] for segment in ['0-15', '15-30', '30-45']])
+            away_second_half_goals = sum([away_goals_scored[segment] for segment in ['45-60', '60-75', '75-90']])
             
-            # Criar listas de gols com 4 categorias dentro de cada tempo
-            home_scored = [
-                summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']),
-                summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])
-            ]
-            home_conceded = [
-                summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']),
-                summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])
-            ]
-            away_scored = [
-                summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']),
-                summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90'])
-            ]
-            away_conceded = [
-                summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']),
-                summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])
-            ]
+            # Calculate first half and second half goals conceded for both teams
+            home_first_half_conceded = sum([home_goals_conceded[segment] for segment in ['0-15', '15-30', '30-45']])
+            home_second_half_conceded = sum([home_goals_conceded[segment] for segment in ['45-60', '60-75', '75-90']])
+            away_first_half_conceded = sum([away_goals_conceded[segment] for segment in ['0-15', '15-30', '30-45']])
+            away_second_half_conceded = sum([away_goals_conceded[segment] for segment in ['45-60', '60-75', '75-90']])
             
-            # Criar o gráfico com 2 grupos ("First Half" e "Second Half"), mas 4 colunas dentro de cada um
+            # Create the bar chart with 2 groups and 4 columns within each group
             fig22, ax = plt.subplots(figsize=(10, 6))
-            x = np.arange(len(half_labels))  # Posições para "First Half" e "Second Half"
-            width = 0.2  # Largura das barras
+            half_labels = ["First Half", "Second Half"]
+            x = np.arange(len(half_labels))  # Positions for "First Half" and "Second Half"
+            width = 0.2  # Width of the bars
             
-            # Adicionar as barras deslocadas dentro de cada tempo
-            ax.bar(x - 1.5 * width, home_scored, width, label=f'{selected_home} Scored', color='green')
-            ax.bar(x - 0.5 * width, home_conceded, width, label=f'{selected_home} Conceded', color='darkgreen')
-            ax.bar(x + 0.5 * width, away_scored, width, label=f'{selected_away} Scored', color='red')
-            ax.bar(x + 1.5 * width, away_conceded, width, label=f'{selected_away} Conceded', color='darkred')
+            # Add the bars with offsets within each half
+            ax.bar(x - 1.5 * width, [home_first_half_goals, home_second_half_goals], width, label=f'{selected_home} Scored', color='green')
+            ax.bar(x - 0.5 * width, [home_first_half_conceded, home_second_half_conceded], width, label=f'{selected_home} Conceded', color='darkgreen')
+            ax.bar(x + 0.5 * width, [away_first_half_goals, away_second_half_goals], width, label=f'{selected_away} Scored', color='red')
+            ax.bar(x + 1.5 * width, [away_first_half_conceded, away_second_half_conceded], width, label=f'{selected_away} Conceded', color='darkred')
             
-            # Configurar rótulos do gráfico
+            # Configure the labels of the chart
             ax.set_xticks(x)
             ax.set_xticklabels(half_labels)
             ax.set_ylabel("Goals")
@@ -579,7 +570,7 @@ try:
             ax.legend()
             ax.grid(axis="y", linestyle="--", alpha=0.7)
             
-            # Exibir gráfico no Streamlit
+            # Display the chart in Streamlit
             st.pyplot(fig22)
         
         with col2:
