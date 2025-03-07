@@ -689,9 +689,9 @@ try:
     fig27, ax = plt.subplots(figsize=(10, 6))
     
     # Labels and data for the bar chart
-    labels = [f'{selected_home} Scored First', f'{selected_home} Conceded First', f'{selected_away} Scored First', f'{selected_away} Conceded First']
+    labels = [f'{selected_home} Scored', f'{selected_home} Conceded', f'{selected_away} Scored', f'{selected_away} Conceded']
     values = [home_first_goal, home_conceded_first, away_first_goal, away_conceded_first]
-    colors = ['green', 'darkgreen', 'red', 'darkred']
+    colors = ['green', 'darkgreen', 'blue', 'darkblue']
     
     # Create the bar chart
     ax.bar(labels, values, color=colors)
