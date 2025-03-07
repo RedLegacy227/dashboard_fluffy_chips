@@ -677,8 +677,9 @@ try:
     ax.legend()
     ax.grid(axis="y", linestyle="--", alpha=0.7)
     
-    # Display the plot
-    st.pyplot(fig22)
+    with col1:
+        # Display the plot
+        st.pyplot(fig22)
     
     # Count first goal occurrences
     st.divider()
