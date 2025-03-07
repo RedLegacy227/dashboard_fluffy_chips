@@ -664,10 +664,10 @@ try:
     width = 0.2  # Width of the bars
     
     # Add the bars with offsets within each half
-    ax.bar(x - 1.5 * width, [home_first_half_goals, home_second_half_goals], width, label=f'{selected_home} Scored', color='green')
-    ax.bar(x - 0.5 * width, [home_first_half_conceded, home_second_half_conceded], width, label=f'{selected_home} Conceded', color='darkgreen')
-    ax.bar(x + 0.5 * width, [away_first_half_goals, away_second_half_goals], width, label=f'{selected_away} Scored', color='red')
-    ax.bar(x + 1.5 * width, [away_first_half_conceded, away_second_half_conceded], width, label=f'{selected_away} Conceded', color='darkred')
+    ax.bar(x - 1.5 * width, [home_first_half_goals, home_second_half_goals], width, label=f'{selected_home} Scored', color='grey')
+    ax.bar(x - 0.5 * width, [home_first_half_conceded, home_second_half_conceded], width, label=f'{selected_home} Conceded', color='darkgrey')
+    ax.bar(x + 0.5 * width, [away_first_half_goals, away_second_half_goals], width, label=f'{selected_away} Scored', color='blue')
+    ax.bar(x + 1.5 * width, [away_first_half_conceded, away_second_half_conceded], width, label=f'{selected_away} Conceded', color='darkblue')
     
     # Configure the labels of the chart
     ax.set_xticks(x)
