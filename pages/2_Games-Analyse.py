@@ -532,7 +532,7 @@ try:
     if not team_data.empty:
         stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].values[0]
         stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].values[0]
-        stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].ilvaluesoc[0]
+        stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].values[0]
         stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].values[0]
         stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].values[0]
         stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].values[0]
