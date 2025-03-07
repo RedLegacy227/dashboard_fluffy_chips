@@ -677,22 +677,34 @@ try:
         # Display the plot
         st.pyplot(fig22)
     
-    # Count first goal occurrences
-    st.divider()
-    st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
-    
     home_first_goal, home_conceded_first = count_first_goal(
-        past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
+    past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
     )
     
     away_first_goal, away_conceded_first = count_first_goal(
         past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
     )
     
-    st.markdown(f"***{selected_home}*** Scored First ***{home_first_goal}*** times")
-    st.markdown(f"***{selected_home}*** Conceded First ***{home_conceded_first}*** times")
-    st.markdown(f"***{selected_away}*** Scored First ***{away_first_goal}*** times")
-    st.markdown(f"***{selected_away}*** Conceded First ***{away_conceded_first}*** times")
+    # Create a bar chart to display the first goal occurrences
+    fig27, ax = plt.subplots(figsize=(10, 6))
+    
+    # Labels and data for the bar chart
+    labels = [f'{selected_home} Scored First', f'{selected_home} Conceded First', f'{selected_away} Scored First', f'{selected_away} Conceded First']
+    values = [home_first_goal, home_conceded_first, away_first_goal, away_conceded_first]
+    colors = ['green', 'darkgreen', 'red', 'darkred']
+    
+    # Create the bar chart
+    ax.bar(labels, values, color=colors)
+    
+    # Configure the labels of the chart
+    ax.set_ylabel("Number of Times")
+    ax.set_title("First Goal Occurrences in the Last 21 Games")
+    ax.grid(axis="y", linestyle="--", alpha=0.7)
+    
+    with col2:
+        st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
+        # Display the chart in Streamlit
+        st.pyplot(fig27)
 
 except Exception as e:
     st.error(f"General Error: {e}")
