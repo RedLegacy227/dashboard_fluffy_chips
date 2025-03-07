@@ -406,76 +406,74 @@ try:
                     defense_power_away = away_goals_conceded / league_avg_gs_away
                     
                     # Exibir os resultados no Streamlit
-                    with col1:
-                        
-                        st.markdown(f"#### Power Strength Analysis ####")
-                        st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
-                        st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
-                        st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
-                        st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
-                        st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ ***{attack_power_home:.2f}***")
-                        st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
-                        st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
-                        st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
+                    st.divider() 
+                    st.markdown(f"#### Power Strength Analysis ####")
+                    st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
+                    st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
+                    st.markdown(f'Power of Defense > 1: The Team has a Inferior Defense than the League Average (Weak Defense)')
+                    st.markdown(f'Power of Defense < 1: The Team has an Superior Defense than the League Average (Strong Defense)')
+                    st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ ***{attack_power_home:.2f}***")
+                    st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
+                    st.markdown(f"⚽ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
                     
-                        st.divider()
-                        team_data = data[data['Home'] == selected_home]
-                        team_data = data[data['Away'] == selected_away]
-                        stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].values[0]
-                        stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].values[0]
-                        stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].values[0]
-                        stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].values[0]
-                        stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].values[0]
-                        stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].values[0]
-                        stats_shots_ot_IF_away = team_data['Avg_Shots_OnTarget_InFavor_A'].values[0]
-                        stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].values[0]
-                        stats_shots_ot_pG_IF_home = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_H'].values[0]
-                        stats_shots_ot_pG_Ag_home = team_data['Avg_Shots_OnTarget_per_Goal_Against_H'].values[0]
-                        stats_shots_ot_pG_IF_away = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_A'].values[0]
-                        stats_shots_ot_pG_Ag_away = team_data['Avg_Shots_OnTarget_per_Goal_Against_A'].values[0]
-                        stats_shots_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].values[0]
-                        stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_G_Attempt_Against_H'].values[0]
-                        stats_shots_G_Attempts_pG_IF_away = team_data['Avg_G_Attempt_InFavor_A'].values[0]
-                        stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_G_Attempt_Against_A'].values[0]
-                        
-                        st.markdown(f'''
-                                    #### Average Stats on the last 7 Games ####  
-                                    🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  
-                                    🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  
-                                    🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}***  
-                                    🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away}***  
-                                    
-                                    ⚽ Shots On Target per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_IF_home}***  
-                                    ⚽ Shots On Target per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_Ag_home}***  
-                                    ⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away}***  
-                                    ⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away}***  
-    
-                                    🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}***  
-                                    🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}***  
-                                    🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}***  
-                                    🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}***  
-                                    
-                                    🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
-                                    🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
-                                    🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
-                                    🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
-                                    
-                                    ''')
+                    st.divider()
+                    team_data = data[data['Home'] == selected_home]
+                    team_data = data[data['Away'] == selected_away]
+                    stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].values[0]
+                    stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].values[0]
+                    stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].values[0]
+                    stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].values[0]
+                    stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].values[0]
+                    stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].values[0]
+                    stats_shots_ot_IF_away = team_data['Avg_Shots_OnTarget_InFavor_A'].values[0]
+                    stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].values[0]
+                    stats_shots_ot_pG_IF_home = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_H'].values[0]
+                    stats_shots_ot_pG_Ag_home = team_data['Avg_Shots_OnTarget_per_Goal_Against_H'].values[0]
+                    stats_shots_ot_pG_IF_away = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_A'].values[0]
+                    stats_shots_ot_pG_Ag_away = team_data['Avg_Shots_OnTarget_per_Goal_Against_A'].values[0]
+                    stats_shots_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].values[0]
+                    stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_G_Attempt_Against_H'].values[0]
+                    stats_shots_G_Attempts_pG_IF_away = team_data['Avg_G_Attempt_InFavor_A'].values[0]
+                    stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_G_Attempt_Against_A'].values[0]
                     
-                    with col2:
-                        
-                        if defense_power_away == 0 or defense_power_home == 0:
-                            st.error("Division by zero detected in xG calculation.")
-                        else:
-                            # Expected Goals (xG) para o time da casa
-                            xg_home = home_goals_scored * attack_power_home / defense_power_away
-                            # Expected Goals (xG) para o time visitante
-                            xg_away = away_goals_scored * attack_power_away / defense_power_home
-                        
-                        # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
-                        st.markdown(f"#### Expected Goals (xG) ####")
-                        st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
-                        st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
+                    st.markdown(f'''
+                                #### Average Stats on the last 7 Games ####  
+                                🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home}***  
+                                🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home}***  
+                                🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away}***  
+                                🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away}***  
+                                
+                                ⚽ Shots On Target per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_IF_home}***  
+                                ⚽ Shots On Target per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_Ag_home}***  
+                                ⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away}***  
+                                ⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away}***  
+
+                                🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}***  
+                                🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home}***  
+                                🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}***  
+                                🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away}***  
+                                
+                                🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home}***  
+                                🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home}***  
+                                🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_IF_away}***  
+                                
+                                ''')
+                    
+                    st.divider()
+                    if defense_power_away == 0 or defense_power_home == 0:
+                        st.error("Division by zero detected in xG calculation.")
+                    else:
+                        # Expected Goals (xG) para o time da casa
+                        xg_home = home_goals_scored * attack_power_home / defense_power_away
+                        # Expected Goals (xG) para o time visitante
+                        xg_away = away_goals_scored * attack_power_away / defense_power_home
+                    
+                    # Exibindo os Expected Goals (xG) e Expected Goals Against (xGA)
+                    st.markdown(f"#### Expected Goals (xG) ####")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
+                    st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
                 else:
                     st.error("Liga do jogo selecionado não encontrada nos dados de ligas.")
             except Exception as e:
