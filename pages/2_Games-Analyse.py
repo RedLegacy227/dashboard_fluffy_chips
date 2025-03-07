@@ -280,5 +280,399 @@ try:
     else:
         st.info(f"No past games found between {selected_home} and {selected_away} in the same home field.")
 
+    # Load data for the last 7 games of the home team
+    home_last_7 = historical_data[
+        (historical_data["Home"] == selected_home) &
+        (historical_data['League'] == selected_league) &
+        (historical_data["Date"] <= pd.to_datetime(selected_date))
+    ].sort_values(by="Date", ascending=False).head(7)
+
+    if not home_last_7.empty:
+        st.markdown(f"#### Last 7 Games of ***{selected_home}*** - Playing @Home ####")
+        columns_to_show = [
+            'Date', 'League', 'Season', 'Home', 'Away', 'HT_Goals_H', 'HT_Goals_A', 'FT_Goals_H', 'FT_Goals_A',
+            'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Goals_Minutes_Home', 'Goals_Minutes_Away'
+        ]
+        home_last_7_filt = home_last_7[columns_to_show]
+        st.dataframe(home_last_7_filt)
+
+        # Plot pie chart and bar chart side by side for home team
+        col1, col2 = st.columns(2)
+
+        with col1:
+            # Pie chart
+            home_wins = len(home_last_7[home_last_7["FT_Goals_H"] > home_last_7["FT_Goals_A"]])
+            away_wins = len(home_last_7[home_last_7["FT_Goals_A"] > home_last_7["FT_Goals_H"]])
+            draws = len(home_last_7[home_last_7["FT_Goals_H"] == home_last_7["FT_Goals_A"]])
+
+            labels = ['Home Wins', 'Draws', 'Away Wins']
+            sizes = [home_wins, draws, away_wins]
+            colors = ['darkgreen', 'cyan', 'orange']
+
+            fig4, ax4 = plt.subplots(figsize=(10, 9.1))
+            wedges, texts, autotexts = ax4.pie(
+                sizes,
+                autopct='%1.1f%%',
+                startangle=90,
+                colors=colors,
+                textprops=dict(color="white", weight="bold", fontsize=40)
+            )
+            ax4.axis('equal')
+            ax4.set_title(f"{selected_home} - Last 7 Games @Home", fontsize=20)
+            ax4.legend(
+                wedges, labels, title="Results", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=20
+            )
+            st.pyplot(fig4)
+
+            # Statistics for the last 7 home games
+            total_games_home = len(home_last_7)
+            tendency_over_ht_home = len(home_last_7[
+                (home_last_7["HT_Goals_H"] + home_last_7["HT_Goals_A"]) > 0
+            ]) / total_games_home * 100
+
+            tendency_over_home = len(home_last_7[
+                (home_last_7["FT_Goals_H"] + home_last_7["FT_Goals_A"]) > 2
+            ]) / total_games_home * 100
+
+            tendency_btts_home = len(home_last_7[
+                (home_last_7["FT_Goals_H"] > 0) & (home_last_7["FT_Goals_A"] > 0)
+            ]) / total_games_home * 100
+
+            home_last_7["Score"] = home_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + home_last_7["FT_Goals_A"].astype(int).astype(str)
+            top_scores_home = home_last_7["Score"].value_counts().head(7)
+
+            st.divider()
+            st.markdown(f"#### Tendency of Last 7 Games ####")
+            st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_home:.2f}%**")
+            st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_home:.2f}%**")
+            st.markdown(f"Tendency BTTS: **{tendency_btts_home:.2f}%**")
+            st.markdown("Most Frequent Scores:")
+            for score, count in top_scores_home.items():
+                st.markdown(f"- **{score}**: **{count}** times")
+
+        with col2:
+            # Bar chart
+            home_goals = home_last_7["FT_Goals_H"]
+            away_goals = home_last_7["FT_Goals_A"]
+
+            fig5, ax5 = plt.subplots(figsize=(10, 6))
+            bar_width = 0.35
+            x = np.arange(len(home_last_7))
+
+            ax5.bar(x - bar_width / 2, home_goals, bar_width, label="Home Goals", color='darkgreen', alpha=0.7)
+            ax5.bar(x + bar_width / 2, away_goals, bar_width, label="Away Goals", color='orange', alpha=0.7)
+            ax5.set_xticks(x)
+            ax5.set_xticklabels(home_last_7["Date"].dt.strftime('%Y-%m-%d'), rotation=45)
+            ax5.set_ylim(0, max(max(home_goals), max(away_goals)) + 1)
+            ax5.set_ylabel("Goals")
+            ax5.set_title("Goals Scored - Home Games", fontsize=20)
+            ax5.legend(fontsize=20)
+            st.pyplot(fig5)
+
+    # Load data for the last 7 games of the away team
+    away_last_7 = historical_data[
+        (historical_data["Away"] == selected_away) &
+        (historical_data['League'] == selected_league) &
+        (historical_data["Date"] <= pd.to_datetime(selected_date))
+    ].sort_values(by="Date", ascending=False).head(7)
+
+    if not away_last_7.empty:
+        st.markdown(f"#### Last 7 Games of ***{selected_away}*** - Playing @Away ####")
+        columns_to_show = [
+            'Date', 'League', 'Season', 'Home', 'Away', 'HT_Goals_H', 'HT_Goals_A', 'FT_Goals_H', 'FT_Goals_A',
+            'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Goals_Minutes_Home', 'Goals_Minutes_Away'
+        ]
+        away_last_7_filt = away_last_7[columns_to_show]
+        st.dataframe(away_last_7_filt)
+
+        # Plot pie chart and bar chart side by side for away team
+        col1, col2 = st.columns(2)
+
+        with col1:
+            # Pie chart
+            home_wins = len(away_last_7[away_last_7["FT_Goals_H"] > away_last_7["FT_Goals_A"]])
+            away_wins = len(away_last_7[away_last_7["FT_Goals_A"] > away_last_7["FT_Goals_H"]])
+            draws = len(away_last_7[away_last_7["FT_Goals_H"] == away_last_7["FT_Goals_A"]])
+
+            labels = ['Home Wins', 'Draws', 'Away Wins']
+            sizes = [home_wins, draws, away_wins]
+            colors = ['darkgreen', 'cyan', 'orange']
+
+            fig6, ax6 = plt.subplots(figsize=(10, 9.1))
+            wedges, texts, autotexts = ax6.pie(
+                sizes,
+                autopct='%1.1f%%',
+                startangle=90,
+                colors=colors,
+                textprops=dict(color="white", weight="bold", fontsize=40)
+            )
+            ax6.axis('equal')
+            ax6.set_title(f"{selected_away} - Last 7 Games @Away", fontsize=20)
+            ax6.legend(
+                wedges, labels, title="Results", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1), fontsize=20
+            )
+            st.pyplot(fig6)
+
+            # Statistics for the last 7 away games
+            total_games_away = len(away_last_7)
+            tendency_over_ht_away = len(away_last_7[
+                (away_last_7["HT_Goals_H"] + away_last_7["HT_Goals_A"]) > 0
+            ]) / total_games_away * 100
+
+            tendency_over_away = len(away_last_7[
+                (away_last_7["FT_Goals_H"] + away_last_7["FT_Goals_A"]) > 2
+            ]) / total_games_away * 100
+
+            tendency_btts_away = len(away_last_7[
+                (away_last_7["FT_Goals_H"] > 0) & (away_last_7["FT_Goals_A"] > 0)
+            ]) / total_games_away * 100
+
+            away_last_7["Score"] = away_last_7["FT_Goals_H"].astype(int).astype(str) + "x" + away_last_7["FT_Goals_A"].astype(int).astype(str)
+            top_scores_away = away_last_7["Score"].value_counts().head(7)
+
+            st.divider()
+            st.markdown(f"#### Tendency of Last 7 Games ####")
+            st.markdown(f"Tendency Over 0.5 HT: **{tendency_over_ht_away:.2f}%**")
+            st.markdown(f"Tendency Over 2.5 Goals: **{tendency_over_away:.2f}%**")
+            st.markdown(f"Tendency BTTS: **{tendency_btts_away:.2f}%**")
+            st.markdown("Most Frequent Scores:")
+            for score, count in top_scores_away.items():
+                st.markdown(f"- **{score}**: **{count}** times")
+
+        with col2:
+            # Bar chart
+            home_goals = away_last_7["FT_Goals_H"]
+            away_goals = away_last_7["FT_Goals_A"]
+
+            fig7, ax7 = plt.subplots(figsize=(10, 6))
+            bar_width = 0.35
+            x = np.arange(len(away_last_7))
+
+            ax7.bar(x - bar_width / 2, home_goals, bar_width, label="Home Goals", color='darkgreen', alpha=0.7)
+            ax7.bar(x + bar_width / 2, away_goals, bar_width, label="Away Goals", color='orange', alpha=0.7)
+            ax7.set_xticks(x)
+            ax7.set_xticklabels(away_last_7["Date"].dt.strftime('%Y-%m-%d'), rotation=45)
+            ax7.set_ylim(0, max(max(home_goals), max(away_goals)) + 1)
+            ax7.set_ylabel("Goals")
+            ax7.set_title("Goals Scored - Away Games", fontsize=20)
+            ax7.legend(fontsize=20)
+            st.pyplot(fig7)
+
+    # Load league statistics
+    leagues_url = "https://raw.githubusercontent.com/RedLegacy227/dados_ligas/refs/heads/main/df_ligas.csv"
+    leagues_data = load_data(leagues_url)
+    if leagues_data is None:
+        st.stop()  # Stop the app if league data loading fails
+
+    if "League" in filtered_data.columns:
+        selected_league = filtered_data["League"].iloc[0]
+        league_stats = leagues_data[leagues_data["League"] == selected_league]
+
+    if not league_stats.empty:
+        # Average goals scored and conceded for the league
+        league_avg_gm_home = league_stats["Avg_G_Scored_Home_Teams"].iloc[0]
+        league_avg_gs_away = league_stats["Avg_G_Conceded_Home_Teams"].iloc[0]
+        league_avg_gm_away = league_stats["Avg_G_Scored_Away_Teams"].iloc[0]
+        league_avg_gs_home = league_stats["Avg_G_Conceded_Away_Teams"].iloc[0]
+
+        # Filter historical data for the home team
+        home_league_data = historical_data[
+            (historical_data["League"] == selected_league) &
+            (historical_data["Home"] == selected_home)
+        ]
+        home_goals_scored = home_league_data["FT_Goals_H"].mean()
+        home_goals_conceded = home_league_data["FT_Goals_A"].mean()
+
+        # Filter historical data for the away team
+        away_league_data = historical_data[
+            (historical_data["League"] == selected_league) &
+            (historical_data["Away"] == selected_away)
+        ]
+        away_goals_scored = away_league_data["FT_Goals_A"].mean()
+        away_goals_conceded = away_league_data["FT_Goals_H"].mean()
+
+        # Calculate attack and defense powers
+        attack_power_home = home_goals_scored / league_avg_gm_home
+        defense_power_home = home_goals_conceded / league_avg_gs_home
+
+        attack_power_away = away_goals_scored / league_avg_gm_away
+        defense_power_away = away_goals_conceded / league_avg_gs_away
+
+        # Display the results
+        st.divider()
+        st.markdown(f"#### Power Strength Analysis ####")
+        st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
+        st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
+        st.markdown(f'Power of Defense > 1: The Team has an Inferior Defense than the League Average (Weak Defense)')
+        st.markdown(f'Power of Defense < 1: The Team has a Superior Defense than the League Average (Strong Defense)')
+        st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ ***{attack_power_home:.2f}***")
+        st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
+        st.markdown(f"🛡️ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
+        st.markdown(f"🛡️ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
+
+        # Expected Goals (xG) calculation
+        xg_home = home_goals_scored * attack_power_home / defense_power_away
+        xg_away = away_goals_scored * attack_power_away / defense_power_home
+
+        st.divider()
+        st.markdown(f"#### Expected Goals (xG) ####")
+        st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
+        st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
+
+    else:
+        st.error("League statistics not found for the selected league.")
+
+    # Load additional statistics for the teams
+    team_data = data[
+        (data['Home'] == selected_home) |
+        (data['Away'] == selected_away)
+    ]
+
+    if not team_data.empty:
+        stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].mean()
+        stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].mean()
+        stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].mean()
+        stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].mean()
+        stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].mean()
+        stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].mean()
+        stats_shots_ot_IF_away = team_data['Avg_Shots_OnTarget_InFavor_A'].mean()
+        stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].mean()
+        stats_shots_ot_pG_IF_home = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_H'].mean()
+        stats_shots_ot_pG_Ag_home = team_data['Avg_Shots_OnTarget_per_Goal_Against_H'].mean()
+        stats_shots_ot_pG_IF_away = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_A'].mean()
+        stats_shots_ot_pG_Ag_away = team_data['Avg_Shots_OnTarget_per_Goal_Against_A'].mean()
+        stats_shots_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].mean()
+        stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_G_Attempt_Against_H'].mean()
+        stats_shots_G_Attempts_pG_IF_away = team_data['Avg_Goal_Attempt_InFavor_A'].mean()
+        stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_Goal_Attempt_Against_A'].mean()
+
+        st.divider()
+        st.markdown(f"#### Average Stats on the Last 7 Games ####")
+        st.markdown(f"🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home:.2f}***")
+        st.markdown(f"🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home:.2f}***")
+        st.markdown(f"🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away:.2f}***")
+        st.markdown(f"🎯 Shots On Target Against ***{selected_away}*** ➡️ ***{stats_shots_ot_Ag_away:.2f}***")
+
+        st.markdown(f"⚽ Shots On Target per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_IF_home:.2f}***")
+        st.markdown(f"⚽ Shots On Target per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_ot_pG_Ag_home:.2f}***")
+        st.markdown(f"⚽ Shots On Target per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_IF_away:.2f}***")
+        st.markdown(f"⚽ Shots On Target per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_ot_pG_Ag_away:.2f}***")
+
+        st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_home:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_shots_G_Attempts_pG_Ag_home:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_IF_away:.2f}***")
+        st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_away}*** ➡️ ***{stats_shots_G_Attempts_pG_Ag_away:.2f}***")
+
+        st.markdown(f"🚩 Corners Average In Favor ***{selected_home}*** ➡️ ***{stats_crn_IF_home:.2f}***")
+        st.markdown(f"🚩 Corners Average Against ***{selected_home}*** ➡️ ***{stats_crn_Ag_home:.2f}***")
+        st.markdown(f"🚩 Corners Average In Favor ***{selected_away}*** ➡️ ***{stats_crn_IF_away:.2f}***")
+        st.markdown(f"🚩 Corners Average Against ***{selected_away}*** ➡️ ***{stats_crn_Ag_away:.2f}***")
+
+    else:
+        st.error("Not enough data available for the selected teams.")
+
+    # Load data for the last 21 games of the home team
+    past_games_home = historical_data[
+        (historical_data['Home'] == selected_home) &
+        (historical_data['Date'] < pd.to_datetime(selected_date))
+    ].tail(21)
+
+    # Load data for the last 21 games of the away team
+    past_games_away = historical_data[
+        (historical_data['Away'] == selected_away) &
+        (historical_data['Date'] < pd.to_datetime(selected_date))
+    ].tail(21)
+
+    # Function to summarize goals in time segments
+    def summarize_half_goals(goals, half_segments):
+        return sum([goals[segment] for segment in half_segments])
+
+    # Function to plot goal distribution
+    def plot_goal_distribution(team_name, goals, conceded):
+        fig21, ax = plt.subplots(figsize=(10, 6))
+        x_labels = list(goals.keys())
+        x = np.arange(len(x_labels))
+        width = 0.35
+
+        ax.bar(x - width/2, goals.values(), width, label='Scored', color='green')
+        ax.bar(x + width/2, conceded.values(), width, label='Conceded', color='red')
+        ax.set_xticks(x)
+        ax.set_xticklabels(x_labels, rotation=45)
+        ax.set_ylabel("Goals")
+        ax.set_title(f"Goal Distribution - {team_name}")
+        ax.legend()
+        st.pyplot(fig21)
+
+    # Plot goal distribution for the home team
+    st.divider()
+    st.markdown(f"#### Time of Goals of ***{selected_home}*** on the Last 21 Games ####")
+    home_goals_scored = count_goals(past_games_home['Goals_Minutes_Home'])
+    home_goals_conceded = count_goals(past_games_home['Goals_Minutes_Away'])
+    plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
+
+    # Plot goal distribution for the away team
+    st.divider()
+    st.markdown(f"#### Time of Goals of ***{selected_away}*** on the Last 21 Games ####")
+    away_goals_scored = count_goals(past_games_away['Goals_Minutes_Away'])
+    away_goals_conceded = count_goals(past_games_away['Goals_Minutes_Home'])
+    plot_goal_distribution(selected_away, away_goals_scored, away_goals_conceded)
+
+    # Plot first half and second half goal distribution
+    st.divider()
+    st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 21 Games ####")
+
+    half_labels = ["First Half", "Second Half"]
+    home_scored = [
+        summarize_half_goals(home_goals_scored, ['0-15', '15-30', '30-45']),
+        summarize_half_goals(home_goals_scored, ['45-60', '60-75', '75-90'])
+    ]
+    home_conceded = [
+        summarize_half_goals(home_goals_conceded, ['0-15', '15-30', '30-45']),
+        summarize_half_goals(home_goals_conceded, ['45-60', '60-75', '75-90'])
+    ]
+    away_scored = [
+        summarize_half_goals(away_goals_scored, ['0-15', '15-30', '30-45']),
+        summarize_half_goals(away_goals_scored, ['45-60', '60-75', '75-90'])
+    ]
+    away_conceded = [
+        summarize_half_goals(away_goals_conceded, ['0-15', '15-30', '30-45']),
+        summarize_half_goals(away_goals_conceded, ['45-60', '60-75', '75-90'])
+    ]
+
+    fig22, ax = plt.subplots(figsize=(10, 6))
+    x = np.arange(len(half_labels))
+    width = 0.2
+
+    ax.bar(x - 1.5 * width, home_scored, width, label=f'{selected_home} Scored', color='green')
+    ax.bar(x - 0.5 * width, home_conceded, width, label=f'{selected_home} Conceded', color='darkgreen')
+    ax.bar(x + 0.5 * width, away_scored, width, label=f'{selected_away} Scored', color='red')
+    ax.bar(x + 1.5 * width, away_conceded, width, label=f'{selected_away} Conceded', color='darkred')
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(half_labels)
+    ax.set_ylabel("Goals")
+    ax.set_title("First & Second Half Goals")
+    ax.legend()
+    ax.grid(axis="y", linestyle="--", alpha=0.7)
+
+    st.pyplot(fig22)
+
+    # Count first goal occurrences
+    st.divider()
+    st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
+
+    home_first_goal, home_conceded_first = count_first_goal(
+        past_games_home['Goals_Minutes_Home'], past_games_home['Goals_Minutes_Away']
+    )
+
+    away_first_goal, away_conceded_first = count_first_goal(
+        past_games_away['Goals_Minutes_Away'], past_games_away['Goals_Minutes_Home']
+    )
+
+    st.markdown(f"***{selected_home}*** Scored First ***{home_first_goal}*** times")
+    st.markdown(f"***{selected_home}*** Conceded First ***{home_conceded_first}*** times")
+    st.markdown(f"***{selected_away}*** Scored First ***{away_first_goal}*** times")
+    st.markdown(f"***{selected_away}*** Conceded First ***{away_conceded_first}*** times")
+
 except Exception as e:
     st.error(f"General Error: {e}")
