@@ -522,7 +522,8 @@ try:
 
     else:
         st.error("League statistics not found for the selected league.")
-
+    st.divider()
+    st.markdown(f"#### Average Stats on the Last 7 Games ####")
     # Load additional statistics for the teams
     team_data = data[
         (data['Home'] == selected_home) |
@@ -550,9 +551,6 @@ try:
         stats_yellow_cards_away = team_data['Avg_Yellow_Cards_A'].values[0]
         stats_red_cards_home = team_data['Avg_Red_Cards_H'].values[0]
         stats_red_cards_away = team_data['Avg_Red_Cards_A'].values[0]
-        
-        st.divider()
-        st.markdown(f"#### Average Stats on the Last 7 Games ####")
         
         with col1:
             st.markdown(f"🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home:.2f}***")
