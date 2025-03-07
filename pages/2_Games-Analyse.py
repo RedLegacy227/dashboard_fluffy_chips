@@ -529,22 +529,26 @@ try:
     ]
 
     if not team_data.empty:
-        stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].mean()
-        stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].mean()
-        stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].mean()
-        stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].mean()
-        stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].mean()
-        stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].mean()
-        stats_shots_ot_IF_away = team_data['Avg_Shots_OnTarget_InFavor_A'].mean()
-        stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].mean()
-        stats_shots_ot_pG_IF_home = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_H'].mean()
-        stats_shots_ot_pG_Ag_home = team_data['Avg_Shots_OnTarget_per_Goal_Against_H'].mean()
-        stats_shots_ot_pG_IF_away = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_A'].mean()
-        stats_shots_ot_pG_Ag_away = team_data['Avg_Shots_OnTarget_per_Goal_Against_A'].mean()
-        stats_shots_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].mean()
-        stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_G_Attempt_Against_H'].mean()
-        stats_shots_G_Attempts_pG_IF_away = team_data['Avg_Goal_Attempt_InFavor_A'].mean()
-        stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_Goal_Attempt_Against_A'].mean()
+        stats_crn_IF_home = team_data['Avg_Corners_InFavor_H'].iloc[0]
+        stats_crn_Ag_home = team_data['Avg_Corners_Against_H'].iloc[0]
+        stats_crn_IF_away = team_data['Avg_Corners_InFavor_A'].iloc[0]
+        stats_crn_Ag_away = team_data['Avg_Corners_Against_A'].iloc[0]
+        stats_shots_ot_IF_home = team_data['Avg_Shots_OnTarget_InFavor_H'].iloc[0]
+        stats_shots_ot_Ag_home = team_data['Avg_Shots_OnTarget_Against_H'].iloc[0]
+        stats_shots_ot_IF_away = team_data['Avg_Shots_OnTarget_InFavor_A'].iloc[0]
+        stats_shots_ot_Ag_away = team_data['Avg_Shots_OnTarget_Against_A'].iloc[0]
+        stats_shots_ot_pG_IF_home = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_H'].iloc[0]
+        stats_shots_ot_pG_Ag_home = team_data['Avg_Shots_OnTarget_per_Goal_Against_H'].iloc[0]
+        stats_shots_ot_pG_IF_away = team_data['Avg_Shots_OnTarget_per_Goal_InFavor_A'].iloc[0]
+        stats_shots_ot_pG_Ag_away = team_data['Avg_Shots_OnTarget_per_Goal_Against_A'].iloc[0]
+        stats_shots_G_Attempts_pG_IF_home = team_data['Avg_Goal_Attempt_per_Goal_InFavor_H'].iloc[0]
+        stats_shots_G_Attempts_pG_Ag_home = team_data['Avg_Goal_Attempt_Against_H'].iloc[0]
+        stats_shots_G_Attempts_pG_IF_away = team_data['Avg_Goal_Attempt_InFavor_A'].iloc[0]
+        stats_shots_G_Attempts_pG_Ag_away = team_data['Avg_Goal_Attempt_Against_A'].iloc[0]
+        stats_yellow_cards_home = team_data['Avg_Yellow_Cards_H'].iloc[0]
+        stats_yellow_cards_away = team_data['Avg_Yellow_Cards_A'].iloc[0]
+        stats_red_cards_home = team_data['Avg_Red_Cards_H'].iloc[0]
+        stats_red_cards_home = team_data['Avg_Red_Cards_A'].iloc[0]
 
         st.divider()
         st.markdown(f"#### Average Stats on the Last 7 Games ####")
