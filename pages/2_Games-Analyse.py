@@ -682,6 +682,94 @@ try:
     st.markdown(f"***{selected_home}*** Conceded First ***{home_conceded_first}*** times")
     st.markdown(f"***{selected_away}*** Scored First ***{away_first_goal}*** times")
     st.markdown(f"***{selected_away}*** Conceded First ***{away_conceded_first}*** times")
+    
+        # Plot goals scored per minute and first half vs. second half goals side by side
+    st.divider()
+    st.markdown(f"#### Goals Scored per Minute and First Half vs. Second Half Goals ####")
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        # Plot goals scored per minute for the home team
+        st.markdown(f"##### Goals Scored per Minute for ***{selected_home}*** #####")
+        fig23, ax = plt.subplots(figsize=(10, 6))
+        goals_per_minute_home = count_goals(past_games_home['Goals_Minutes_Home'])
+        minutes = list(goals_per_minute_home.keys())
+        goals = list(goals_per_minute_home.values())
+
+        ax.bar(minutes, goals, color='darkgreen')
+        ax.set_xlabel("Time Segment (minutes)")
+        ax.set_ylabel("Number of Goals")
+        ax.set_title(f"Goals Scored per Minute - {selected_home}")
+        ax.set_xticklabels(minutes, rotation=45)
+        st.pyplot(fig23)
+
+        # Plot first half vs. second half goals for the home team
+        st.markdown(f"##### First Half vs. Second Half Goals for ***{selected_home}*** #####")
+        fig25, ax = plt.subplots(figsize=(10, 6))
+
+        # Calculate first half and second half goals for the home team
+        home_first_half_goals = sum([goals_per_minute_home[segment] for segment in ['0-15', '15-30', '30-45']])
+        home_second_half_goals = sum([goals_per_minute_home[segment] for segment in ['45-60', '60-75', '75-90']])
+
+        # Plot the data
+        labels = ['First Half', 'Second Half']
+        home_goals = [home_first_half_goals, home_second_half_goals]
+
+        x = np.arange(len(labels))
+        width = 0.35
+
+        ax.bar(x, home_goals, width, label=selected_home, color='darkgreen')
+
+        ax.set_xlabel("Half")
+        ax.set_ylabel("Number of Goals")
+        ax.set_title("First Half vs. Second Half Goals - Home Team")
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels)
+        ax.legend()
+
+        st.pyplot(fig25)
+
+    with col2:
+        # Plot goals scored per minute for the away team
+        st.markdown(f"##### Goals Scored per Minute for ***{selected_away}*** #####")
+        fig24, ax = plt.subplots(figsize=(10, 6))
+        goals_per_minute_away = count_goals(past_games_away['Goals_Minutes_Away'])
+        minutes = list(goals_per_minute_away.keys())
+        goals = list(goals_per_minute_away.values())
+
+        ax.bar(minutes, goals, color='orange')
+        ax.set_xlabel("Time Segment (minutes)")
+        ax.set_ylabel("Number of Goals")
+        ax.set_title(f"Goals Scored per Minute - {selected_away}")
+        ax.set_xticklabels(minutes, rotation=45)
+        st.pyplot(fig24)
+
+        # Plot first half vs. second half goals for the away team
+        st.markdown(f"##### First Half vs. Second Half Goals for ***{selected_away}*** #####")
+        fig26, ax = plt.subplots(figsize=(10, 6))
+
+        # Calculate first half and second half goals for the away team
+        away_first_half_goals = sum([goals_per_minute_away[segment] for segment in ['0-15', '15-30', '30-45']])
+        away_second_half_goals = sum([goals_per_minute_away[segment] for segment in ['45-60', '60-75', '75-90']])
+
+        # Plot the data
+        labels = ['First Half', 'Second Half']
+        away_goals = [away_first_half_goals, away_second_half_goals]
+
+        x = np.arange(len(labels))
+        width = 0.35
+
+        ax.bar(x, away_goals, width, label=selected_away, color='orange')
+
+        ax.set_xlabel("Half")
+        ax.set_ylabel("Number of Goals")
+        ax.set_title("First Half vs. Second Half Goals - Away Team")
+        ax.set_xticks(x)
+        ax.set_xticklabels(labels)
+        ax.legend()
+
+        st.pyplot(fig26)
 
 except Exception as e:
     st.error(f"General Error: {e}")
