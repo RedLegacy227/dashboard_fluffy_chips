@@ -81,7 +81,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -1218,3 +1218,117 @@ with tab_views[9]:
         st.dataframe(df_louro_jose[columns_to_display], use_container_width=True, hide_index=True)
     else:
         st.info("Nenhum jogo encontrado com os critérios especificados.")
+
+with tab_views[10]:
+    st.markdown('#### Best Teams ####')
+    if data is not None:
+        # Apply the extra filter conditions
+        flt_home_SFW = data[data['Perc_Scored_First_and_Won_H'] > 80]
+        flt_home_SFD = data[data['Perc_Scored_First_and_Draw_H'] > 80]
+        flt_home_SFL = data[data['Perc_Scored_First_and_Lost_H'] > 80]
+        flt_home_CFW = data[data['Perc_Conceded_First_and_Won_H'] > 80]
+        flt_home_CFD = data[data['Perc_Conceded_First_and_Draw_H'] > 80]
+        flt_home_CFL = data[data['Perc_Conceded_First_and_Lost_H'] > 80]
+        flt_home_DilV = data[data['Perc_Dilatou_Vantagem_1_Golo_H'] > 80]
+        flt_away_SFW = data[data['Perc_Scored_First_and_Won_A'] > 80]
+        flt_away_SFD = data[data['Perc_Scored_First_and_Draw_A'] > 80]
+        flt_away_SFL = data[data['Perc_Scored_First_and_Lost_A'] > 80]
+        flt_away_CFW = data[data['Perc_Conceded_First_and_Won_A'] > 80]
+        flt_away_CFD = data[data['Perc_Conceded_First_and_Draw_A'] > 80]
+        flt_away_CFL = data[data['Perc_Conceded_First_and_Lost_A'] > 80]
+        flt_away_DilV = data[data['Perc_Dilatou_Vantagem_1_Golo_A'] > 80]
+        
+        # Define columns to display
+        columns_to_display = [
+            'Time', 'League', 'Home', 'Away', 'CV_Match_Type', 'Perc_Home_Win_FT', 'Perc_Draw_Win_H_FT', 
+            'Perc_Draw_Win_A_FT', 'Perc_Away_Win_FT' ]
+        
+        # Check if columns exist in the DataFrame
+        columns_to_display = [col for col in columns_to_display if col in data.columns]
+        
+        # Display the final DataFrame
+        st.markdown('#### Home Scored First and Won ####')
+        if not flt_home_SFW.empty:
+            st.dataframe(flt_home_SFW[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Home Scored First and Draw ####')
+        if not flt_home_SFD.empty:
+            st.dataframe(flt_home_SFD[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Home Scored First and Lost ####')
+        if not flt_home_SFL.empty:
+            st.dataframe(flt_home_SFL[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Home Conceded First and Won ####')
+        if not flt_home_CFW.empty:
+            st.dataframe(flt_home_CFW[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Home Conceded First and Draw ####')
+        if not flt_home_CFD.empty:
+            st.dataframe(flt_home_CFD[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Home Conceded First and Lost ####')
+        if not flt_home_CFL.empty:
+            st.dataframe(flt_home_CFL[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Home After winning by one scored the second ####')
+        if not flt_home_DilV.empty:
+            st.dataframe(flt_home_DilV[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away Scored First and Won ####')
+        if not flt_away_SFW.empty:
+            st.dataframe(flt_away_SFW[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away Scored First and Draw ####')
+        if not flt_away_SFD.empty:
+            st.dataframe(flt_away_SFD[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away Scored First and Lost ####')
+        if not flt_away_SFL.empty:
+            st.dataframe(flt_away_SFL[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away Conceded First and Won ####')
+        if not flt_away_CFW.empty:
+            st.dataframe(flt_away_CFW[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away Conceded First and Draw ####')
+        if not flt_away_CFD.empty:
+            st.dataframe(flt_away_CFD[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away Conceded First and Lost ####')
+        if not flt_away_CFL.empty:
+            st.dataframe(flt_away_CFL[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+        
+        st.markdown('#### Away After winning by one scored the second ####')
+        if not flt_away_DilV.empty:
+            st.dataframe(flt_away_DilV[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No Games available with minimum stats.")
+    else:
+        st.info("No games found with the specified criteria.")
