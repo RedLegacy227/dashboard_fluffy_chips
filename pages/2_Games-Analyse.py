@@ -513,11 +513,12 @@ try:
         # Expected Goals (xG) calculation
         xg_home = home_goals_scored * attack_power_home / defense_power_away
         xg_away = away_goals_scored * attack_power_away / defense_power_home
-
-        st.divider()
-        st.markdown(f"#### Expected Goals (xG) ####")
-        st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
-        st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
+        
+        with col2:
+            st.divider()
+            st.markdown(f"#### Expected Goals (xG) ####")
+            st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
+            st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
 
     else:
         st.error("League statistics not found for the selected league.")
