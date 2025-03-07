@@ -522,8 +522,7 @@ try:
 
     else:
         st.error("League statistics not found for the selected league.")
-    st.divider()
-    st.markdown(f"#### Average Stats on the Last 7 Games ####")
+    
     # Load additional statistics for the teams
     team_data = data[
         (data['Home'] == selected_home) |
@@ -553,6 +552,8 @@ try:
         stats_red_cards_away = team_data['Avg_Red_Cards_A'].values[0]
         
         with col1:
+            st.divider()
+            st.markdown(f"#### Average Stats on the Last 7 Games ####")
             st.markdown(f"🎯 Shots On Target In Favor ***{selected_home}*** ➡️ ***{stats_shots_ot_IF_home:.2f}***")
             st.markdown(f"🎯 Shots On Target Against ***{selected_home}*** ➡️ ***{stats_shots_ot_Ag_home:.2f}***")
             st.markdown(f"🎯 Shots On Target In Favor ***{selected_away}*** ➡️ ***{stats_shots_ot_IF_away:.2f}***")
@@ -566,6 +567,8 @@ try:
             st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_home:.2f}***")
             st.markdown(f"🟨 Yellow Cards Taken ***{selected_home}*** ➡️ ***{stats_yellow_cards_away:.2f}***")
         with col2:
+            st.divider()
+            st.markdown(f"#### Average Stats on the Last 7 Games ####")
             st.divider()
             st.markdown(f"🥅 Goal Attempt per Goal In Favor ***{selected_home}*** ➡️ ***{stats_G_Attempts_pG_IF_home:.2f}***")
             st.markdown(f"🥅 Goal Attempt per Goal Against ***{selected_home}*** ➡️ ***{stats_G_Attempts_pG_Ag_home:.2f}***")
