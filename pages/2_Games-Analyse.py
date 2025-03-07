@@ -499,16 +499,17 @@ try:
         defense_power_away = away_goals_conceded / league_avg_gs_away
 
         # Display the results
-        st.divider()
-        st.markdown(f"#### Power Strength Analysis ####")
-        st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
-        st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
-        st.markdown(f'Power of Defense > 1: The Team has an Inferior Defense than the League Average (Weak Defense)')
-        st.markdown(f'Power of Defense < 1: The Team has a Superior Defense than the League Average (Strong Defense)')
-        st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ ***{attack_power_home:.2f}***")
-        st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
-        st.markdown(f"🛡️ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
-        st.markdown(f"🛡️ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
+        with col2:
+            st.divider()
+            st.markdown(f"#### Power Strength Analysis ####")
+            st.markdown(f'Power of Attack > 1: The Team has a Superior Attack than the League Average (Strong Attack)')
+            st.markdown(f'Power of Attack < 1: The Team has an Inferior Attack than the League Average (Weak Attack)')
+            st.markdown(f'Power of Defense > 1: The Team has an Inferior Defense than the League Average (Weak Defense)')
+            st.markdown(f'Power of Defense < 1: The Team has a Superior Defense than the League Average (Strong Defense)')
+            st.markdown(f"⚽ Power of Attack for ***{selected_home}*** ➡️ ***{attack_power_home:.2f}***")
+            st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
+            st.markdown(f"🛡️ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
+            st.markdown(f"🛡️ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
 
         # Expected Goals (xG) calculation
         xg_home = home_goals_scored * attack_power_home / defense_power_away
