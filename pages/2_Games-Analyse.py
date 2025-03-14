@@ -279,9 +279,6 @@ try:
     else:
         st.info(f"No past games found between {selected_home} and {selected_away} in the same home field.")
         
-    st.divider()
-    
-    st.markdown(f"#### Detailed Analysis of Odds for ***{selected_home}*** and ***{selected_away}*** ####")
     try:
         def calculate_avg_and_cv(data, column):
             avg = data[column].mean()
@@ -362,11 +359,15 @@ try:
                 (historical_data['Away'] == selected_away)
             ]
             with col1:
+                st.divider()
+                st.markdown(f"#### Detailed Analysis of Odds for ***{selected_home}*** and ***{selected_away}*** ####")
                 # Analysis 1: Last 11 games
                 last_11_games = league_data.tail(11)
                 display_analysis(last_11_games, "Analysis 1 - Last 11 Games")
                 
             with col2:
+                st.divider()
+                st.markdown(f"#### Detailed Analysis of Odds for ***{selected_home}*** and ***{selected_away}*** ####")
                 # Analysis 2: Last 7 games
                 last_7_games = league_data.tail(7)
                 display_analysis(last_7_games, "Analysis 2 - Last 7 Games")
