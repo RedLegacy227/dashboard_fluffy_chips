@@ -108,10 +108,10 @@ if not data.empty:
                 (historical_data["Home"] == row["Home"]) &
                 (historical_data["Away"] == row["Away"]) &
                 (historical_data["League"] == row["League"]) &
-                (historical_data["FT_Odd_H"] == row["FT_Odd_H"]) &
-                (historical_data["FT_Odd_D"] == row["FT_Odd_D"]) &
-                (historical_data["FT_Odd_A"] == row["FT_Odd_A"]) &
-                (historical_data["FT_Odd_Over15"] == row["FT_Odd_Over15"]) 
+                (historical_data["FT_Goals_H"] == row["FT_Goals_H"]) &
+                (historical_data["FT_Goals_A"] == row["FT_Goals_A"]) &
+                (historical_data["FT_Odd_Over15"] == row["FT_Odd_Over15"])
+                
             ]
             if not match.empty:
                 goals = match["FT_Goals_H"].values[0] + match["FT_Goals_A"].values[0]
