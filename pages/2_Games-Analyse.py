@@ -364,7 +364,7 @@ try:
         
             # Analysis 1: Last 15 games
             last_15_games = league_data.tail(15)
-            display_analysis(last_15_games, "Analysis 1 - Last 15 Games")
+            display_analysis(last_15_games, "### Analysis 1 - Last 15 Games ###")
         
             # Analysis 2: Last 11 games
             last_11_games = league_data.tail(11)
