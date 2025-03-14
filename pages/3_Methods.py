@@ -1071,7 +1071,7 @@ with tab_views[7]:
             (data["FT_Odd_Over25"] < 1.65)
         ]
         lay_1x1_home_flt = lay_1x1_home_flt0.sort_values(by='Time', ascending=True)
-        lay_1x1_home_flt = lay_1x1_home_flt[(lay_1x1_home_flt["Perc_1x1_H"] <= 10) & (lay_1x1_home_flt["Perc_1x1_A"] <= 10)]
+        lay_1x1_home_flt = lay_1x1_home_flt[(lay_1x1_home_flt["Perc_1x1_H"] <= 10)]
         # Selecionar apenas as colunas desejadas
         lay_1x1_home_flt = lay_1x1_home_flt[required_columns]
         
