@@ -89,13 +89,13 @@ if not data.empty:
         (data["CV_Avg_G_Conceded_A_FT"] < 1)
     ]
     # Debugging: Print the filtered data
-    st.write("Filtered Data:", filtered_data.head())
+    st.write(f"Filtered Data (Length: {len(filtered_data)}):", filtered_data.head())
 
     # Load historical data
     try:
         historical_data = pd.read_csv(historical_data_url)
         # Debugging: Print the historical data
-        st.write("Historical Data:", historical_data.head())
+        st.write(f"Historical Data (Length: {len(historical_data)}):", historical_data.head())
     except Exception as e:
         st.error(f"Error loading historical data: {e}")
         historical_data = pd.DataFrame()
@@ -107,7 +107,11 @@ if not data.empty:
                 (historical_data["Date"] == row["Date"]) &
                 (historical_data["Home"] == row["Home"]) &
                 (historical_data["Away"] == row["Away"]) &
-                (historical_data["League"] == row["League"])
+                (historical_data["League"] == row["League"]) &
+                (historical_data["FT_Odd_H"] == row["FT_Odd_H"]) &
+                (historical_data["FT_Odd_D"] == row["FT_Odd_D"]) &
+                (historical_data["FT_Odd_A"] == row["FT_Odd_A"]) &
+                (historical_data["FT_Odd_Over15"] == row["FT_Odd_Over15"]) 
             ]
             if not match.empty:
                 goals = match["FT_Goals_H"].values[0] + match["FT_Goals_A"].values[0]
