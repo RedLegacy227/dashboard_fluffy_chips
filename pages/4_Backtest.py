@@ -90,10 +90,9 @@ if not data.empty:
     except Exception as e:
         st.error(f"Error loading historical data: {e}")
         historical_data = pd.DataFrame()
-        
-        
-        historical_data_flt = historical_data[['Date', 'League', 'Home', 'Away', 'FT_Goals_H', 'FT_Goals_A', 'HT_Odd_Over05', 'FT_Odd_Over15', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Odd_BTTS_No']]
-        
+
+    historical_data_flt = historical_data[['Date', 'League', 'Home', 'Away', 'FT_Goals_H', 'FT_Goals_A', 'HT_Odd_Over05', 'FT_Odd_Over15', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Odd_BTTS_No']]
+
     if not historical_data_flt.empty:
         # Check for games with 2 or more goals
         def check_goals(row):
