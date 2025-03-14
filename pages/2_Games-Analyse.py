@@ -302,14 +302,20 @@ try:
             
             return home_fav, home_equals, home_not_fav, away_fav, away_equals, away_not_fav
         
-        def display_analysis(data, title):
+        def display_analysis_home(data, title):
             st.markdown(f"### 💹 {title} ###")
             home_wins, away_wins, draws = calculate_results(data)
-            home_fav, home_equals, home_not_fav, away_fav, away_equals, away_not_fav = calculate_favorites(data)
+            home_fav, home_equals, home_not_fav = calculate_favorites(data)
             
             st.markdown(f"* {selected_home} was Fav {home_fav} Times")
             st.markdown(f"* {selected_home} was Equals {home_equals} Times")
             st.markdown(f"* {selected_home} was not Fav {home_not_fav} Times")
+        
+        def display_analysis_away(data, title):
+            st.markdown(f"### 💹 {title} ###")
+            home_wins, away_wins, draws = calculate_results(data)
+            away_fav, away_equals, away_not_fav = calculate_favorites(data)
+            
             st.markdown(f"* {selected_away} was Fav {away_fav} Times")
             st.markdown(f"* {selected_away} was Equals {away_equals} Times")
             st.markdown(f"* {selected_away} was not Fav {away_not_fav} Times")
@@ -368,19 +374,19 @@ try:
                 st.markdown(f"#### Detailed Analysis of Odds for ***{selected_home}*** ####")
                 # Analysis 1: Last 11 games for home team
                 last_11_games_home = home_league_data.tail(11)
-                display_analysis(last_11_games_home, "Analysis 2 - Last 11 Games (Home)")
+                display_analysis_home(last_11_games_home, "Analysis 2 - Last 11 Games (Home)")
                 # Analysis 2: Last 7 games for home team
                 last_7_games_home = home_league_data.tail(7)
-                display_analysis(last_7_games_home, "Analysis 3 - Last 7 Games (Home)")
+                display_analysis_home(last_7_games_home, "Analysis 3 - Last 7 Games (Home)")
                 
             with col2:
                 st.divider()
                 st.markdown(f"#### Detailed Analysis of Odds for ***{selected_away}*** ####")
                 last_11_games_away = away_league_data.tail(11)
-                display_analysis(last_11_games_away, "Analysis 2 - Last 11 Games (Home)")
+                display_analysis_away(last_11_games_away, "Analysis 2 - Last 11 Games (Home)")
                 # Analysis 2: Last 7 games for home team
                 last_7_games_away = away_league_data.tail(7)
-                display_analysis(last_7_games_away, "Analysis 3 - Last 7 Games (Home)")
+                display_analysis_away(last_7_games_away, "Analysis 3 - Last 7 Games (Home)")
                 
         
         except Exception as e:
