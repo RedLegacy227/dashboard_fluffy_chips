@@ -60,7 +60,7 @@ def load_and_concatenate_csv_files(base_url, csv_files):
         except Exception as e:
             st.error(f"Error loading {url}: {e}")
     if dataframes:
-        return pd.concat(dataframes, ignore_index=False)
+        return pd.concat(dataframes, ignore_index=True)
     else:
         return pd.DataFrame()
 
