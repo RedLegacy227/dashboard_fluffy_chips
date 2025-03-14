@@ -463,41 +463,41 @@ try:
     leagues_data = load_data(leagues_url)
     if leagues_data is None:
         st.stop()  # Stop the app if league data loading fails
-
+    
     if "League" in historical_data.columns:
         selected_league = historical_data["League"].iloc[0]
         league_stats = leagues_data[leagues_data["League"] == selected_league]
-
+    
     if not league_stats.empty:
         # Average goals scored and conceded for the league
         league_avg_gm_home = league_stats["Avg_G_Scored_Home_Teams"].iloc[0]
         league_avg_gs_away = league_stats["Avg_G_Conceded_Home_Teams"].iloc[0]
         league_avg_gm_away = league_stats["Avg_G_Scored_Away_Teams"].iloc[0]
         league_avg_gs_home = league_stats["Avg_G_Conceded_Away_Teams"].iloc[0]
-
-        # Filter historical data for the home team
+    
+        # Filter historical data for the home team playing at home in the same league
         home_league_data = historical_data[
             (historical_data["League"] == selected_league) &
             (historical_data["Home"] == selected_home)
         ]
         home_goals_scored = home_league_data["FT_Goals_H"].mean()
         home_goals_conceded = home_league_data["FT_Goals_A"].mean()
-
-        # Filter historical data for the away team
+    
+        # Filter historical data for the away team playing away in the same league
         away_league_data = historical_data[
             (historical_data["League"] == selected_league) &
             (historical_data["Away"] == selected_away)
         ]
         away_goals_scored = away_league_data["FT_Goals_A"].mean()
         away_goals_conceded = away_league_data["FT_Goals_H"].mean()
-
+    
         # Calculate attack and defense powers
         attack_power_home = home_goals_scored / league_avg_gm_home
         defense_power_home = home_goals_conceded / league_avg_gs_home
-
+    
         attack_power_away = away_goals_scored / league_avg_gm_away
         defense_power_away = away_goals_conceded / league_avg_gs_away
-
+    
         # Display the results
         with col2:
             st.divider()
@@ -510,26 +510,26 @@ try:
             st.markdown(f"⚽ Power of Attack for ***{selected_away}*** ➡️ ***{attack_power_away:.2f}***")
             st.markdown(f"🛡️ Power of Defense for ***{selected_home}*** ➡️ ***{defense_power_home:.2f}***")
             st.markdown(f"🛡️ Power of Defense for ***{selected_away}*** ➡️ ***{defense_power_away:.2f}***")
-
+    
         # Expected Goals (xG) calculation
         xg_home = home_goals_scored * attack_power_home / defense_power_away
         xg_away = away_goals_scored * attack_power_away / defense_power_home
-        
+    
         # Replace infinite values with 0
         if math.isinf(xg_home):
             xg_home = 0
         if math.isinf(xg_away):
             xg_away = 0
-            
+    
         # Limit the maximum number to 4
         xg_home = min(xg_home, 4)
         xg_away = min(xg_away, 4)
-        
+    
         with col2:
             st.markdown(f"#### Expected Goals (xG) ####")
             st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
             st.markdown(f"🥅 Expected Goals for ***{selected_away}*** ➡️ ***{xg_away:.2f}***")
-
+    
     else:
         st.error("League statistics not found for the selected league.")
     
