@@ -305,7 +305,7 @@ try:
         def display_analysis_home(data, title):
             st.markdown(f"### 💹 {title} ###")
             home_wins, away_wins, draws = calculate_results(data)
-            home_fav, home_equals, home_not_fav = calculate_favorites(data)
+            home_fav, home_equals, home_not_fav, away_fav, away_equals, away_not_fav = calculate_favorites(data)
             
             st.markdown(f"* {selected_home} was Fav {home_fav} Times")
             st.markdown(f"* {selected_home} was Equals {home_equals} Times")
@@ -314,7 +314,7 @@ try:
         def display_analysis_away(data, title):
             st.markdown(f"### 💹 {title} ###")
             home_wins, away_wins, draws = calculate_results(data)
-            away_fav, away_equals, away_not_fav = calculate_favorites(data)
+            home_fav, home_equals, home_not_fav, away_fav, away_equals, away_not_fav = calculate_favorites(data)
             
             st.markdown(f"* {selected_away} was Fav {away_fav} Times")
             st.markdown(f"* {selected_away} was Equals {away_equals} Times")
