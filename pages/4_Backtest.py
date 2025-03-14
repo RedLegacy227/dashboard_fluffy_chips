@@ -72,7 +72,7 @@ data = load_and_concatenate_csv_files(github_base_url, csv_files)
 
 if not data.empty:
     # Filter data based on given conditions
-    filtered_data = data[
+    filtered_data0 = data[
         ((data["Perc_Over15FT_Home"] + data["Perc_Over15FT_Away"]) / 2 > 65) &
         ((data["Perc_BTTS_Yes_FT_Home"] + data["Perc_BTTS_Yes_FT_Away"]) / 2 > 65) &
         (data["Avg_G_Scored_H_FT"] > 1) &
@@ -92,6 +92,9 @@ if not data.empty:
         historical_data = pd.DataFrame()
 
     historical_data_flt = historical_data[['Date', 'League', 'Home', 'Away', 'FT_Goals_H', 'FT_Goals_A', 'HT_Odd_Over05', 'FT_Odd_Over15', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Odd_BTTS_No']]
+    
+    
+    filtered_data_final= pd.merge(filtered_data0, historical_data_flt, on=['Date', 'League', 'Home', 'Away'], how='left')
 
     if not historical_data_flt.empty:
         # Check for games with 2 or more goals
@@ -108,10 +111,10 @@ if not data.empty:
                 return (row["FT_Odd_Over15"] - 1) if goals >= 2 else -1
             else:
                 return -1
-        st.write("Filtered Data:", filtered_data.tail())
-        filtered_data["Profit"] = filtered_data.apply(check_goals, axis=1)
+        st.write("Filtered Data:", filtered_data_final.tail())
+        filtered_data_final["Profit"] = filtered_data_final.apply(check_goals, axis=1)
         # Debugging: Print the filtered data with profit
-        st.write("Filtered Data with Profit:", filtered_data.tail())
+        st.write("Filtered Data with Profit:", filtered_data_final.tail())
     
         # Plot accumulated profit
         def plot_profit_acu(dataframe, title_text):
