@@ -464,8 +464,8 @@ try:
     if leagues_data is None:
         st.stop()  # Stop the app if league data loading fails
 
-    if "League" in filtered_data.columns:
-        selected_league = filtered_data["League"].iloc[0]
+    if "League" in historical_data.columns:
+        selected_league = historical_data["League"].iloc[0]
         league_stats = leagues_data[leagues_data["League"] == selected_league]
 
     if not league_stats.empty:
