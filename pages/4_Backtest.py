@@ -96,10 +96,10 @@ if not data.empty:
         # Check for games with 2 or more goals
         def check_goals(row):
             match = historical_data[
-                (historical_data["date"] == row["date"]) &
-                (historical_data["home"] == row["home"]) &
-                (historical_data["away"] == row["away"]) &
-                (historical_data["league"] == row["league"])
+                (historical_data["Date"] == row["Hate"]) &
+                (historical_data["Home"] == row["Home"]) &
+                (historical_data["Away"] == row["Away"]) &
+                (historical_data["League"] == row["League"])
             ]
             if not match.empty:
                 goals = match["FT_Goals_H"].values[0] + match["FT_Goals_A"].values[0]
