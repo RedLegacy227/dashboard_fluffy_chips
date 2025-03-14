@@ -515,6 +515,16 @@ try:
         xg_home = home_goals_scored * attack_power_home / defense_power_away
         xg_away = away_goals_scored * attack_power_away / defense_power_home
         
+        # Replace infinite values with 0
+        if math.isinf(xg_home):
+            xg_home = 0
+        if math.isinf(xg_away):
+            xg_away = 0
+            
+        # Limit the maximum number to 4
+        xg_home = min(xg_home, 4)
+        xg_away = min(xg_away, 4)
+        
         with col2:
             st.markdown(f"#### Expected Goals (xG) ####")
             st.markdown(f"🥅 Expected Goals for ***{selected_home}*** ➡️ ***{xg_home:.2f}***")
