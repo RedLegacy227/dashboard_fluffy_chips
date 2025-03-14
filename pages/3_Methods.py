@@ -1063,17 +1063,28 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type","Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away", "Perc_1x1_H", "Perc_1x1_A"]
         
         # Aplicar os filtros
         lay_1x1_home_flt = data[
             (data["FT_Odd_H"] < 1.75) &
-            (data["FT_Odd_Over25"] < 1.65)
+            (data["FT_Odd_Over25"] < 1.65) &
+            (data["Perc_1x1_H"] < 10) &
+            (data["Perc_1x1_A"] < 10)
         ]
         lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
         
+        # Aplicar a função para calcular 'h2h_lay_1x1'
+        lay_1x1_home_flt["h2h_lay_1x1"] = lay_1x1_home_flt.apply(
+            lambda row: check_h2h_lay_1x1(row["Home"], row["Away"], historical_data),
+            axis=1
+        )
+        
+        # Adicionar a coluna com a soma de 'h2h_lay_1x1'
+        lay_1x1_home_flt["sum_h2h_lay_1x1"] = lay_1x1_home_flt["h2h_lay_1x1"].sum()
+        
         # Selecionar apenas as colunas desejadas
-        lay_1x1_home_flt = lay_1x1_home_flt[required_columns]
+        lay_1x1_home_flt = lay_1x1_home_flt[required_columns + ["h2h_lay_1x1", "sum_h2h_lay_1x1"]]
         
         # Exibir os dados filtrados sem o índice
         if not lay_1x1_home_flt.empty:
@@ -1086,7 +1097,7 @@ with tab_views[7]:
     
     if data is not None:
         # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away", "Perc_1x1_H", "Perc_1x1_A"]
         
         # Aplicar os filtros
         lay_1x1_away_flt = data[
@@ -1097,8 +1108,17 @@ with tab_views[7]:
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
         
+        # Aplicar a função para calcular 'h2h_lay_1x1'
+        lay_1x1_away_flt["h2h_lay_1x1"] = lay_1x1_away_flt.apply(
+            lambda row: check_h2h_lay_1x1(row["Home"], row["Away"], historical_data),
+            axis=1
+        )
+        
+        # Adicionar a coluna com a soma de 'h2h_lay_1x1'
+        lay_1x1_away_flt["sum_h2h_lay_1x1"] = lay_1x1_away_flt["h2h_lay_1x1"].sum()
+        
         # Selecionar apenas as colunas desejadas
-        lay_1x1_away_flt = lay_1x1_away_flt[required_columns]
+        lay_1x1_away_flt = lay_1x1_away_flt[required_columns + ["h2h_lay_1x1", "sum_h2h_lay_1x1"]]
         
         # Exibir os dados filtrados sem o índice
         if not lay_1x1_away_flt.empty:
