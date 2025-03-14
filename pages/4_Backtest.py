@@ -66,13 +66,9 @@ def load_and_concatenate_csv_files(base_url, csv_files):
 
 # Get the list of CSV files
 csv_files = get_csv_files(github_api_url)
-# Debugging: Print the list of CSV files
-st.write("CSV Files:", csv_files)
 
 # Load and concatenate all CSV files
 data = load_and_concatenate_csv_files(github_base_url, csv_files)
-# Debugging: Print the loaded data and its length
-st.write(f"Loaded Data (Length: {len(data)}):", data.tail())
 
 if not data.empty:
     # Filter data based on given conditions
@@ -88,19 +84,17 @@ if not data.empty:
         (data["Avg_G_Conceded_A_FT"] > 1) &
         (data["CV_Avg_G_Conceded_A_FT"] < 1)
     ]
-    # Debugging: Print the filtered data
-    st.write(f"Filtered Data (Length: {len(filtered_data)}):", filtered_data.tail())
-
     # Load historical data
     try:
         historical_data = pd.read_csv(historical_data_url)
-        # Debugging: Print the historical data
-        st.write(f"Historical Data (Length: {len(historical_data)}):", historical_data.tail())
     except Exception as e:
         st.error(f"Error loading historical data: {e}")
         historical_data = pd.DataFrame()
-
-    if not historical_data.empty:
+        
+        
+        historical_data_flt = historical_data['Date', 'League', 'Home', 'Away', 'FT_Goals_H', 'FT_Goals_A', 'HT_Odd_Over05', 'FT_Odd_Over15', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Odd_BTTS_No']
+        
+    if not historical_data_flt.empty:
         # Check for games with 2 or more goals
         def check_goals(row):
             match = historical_data[
