@@ -3,7 +3,6 @@ import numpy as np
 import streamlit as st
 from PIL import Image
 import os
-import base64
 import requests
 from datetime import datetime
 from auth import logout
@@ -35,20 +34,21 @@ st.divider()
 # URLs for CSV Files
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
 historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/main/df_base_original.csv"
+github_api_url = "https://api.github.com/repos/RedLegacy227/jogos_do_dia_com_variaveis/contents/"
 
-# Function to get all CSV files from the GitHub repository
-def get_csv_files(base_url):
-    response = requests.get(base_url)
+# Function to get all CSV files from the GitHub repository using the GitHub API
+def get_csv_files(api_url):
+    response = requests.get(api_url)
     if response.status_code == 200:
-        files = response.text.split('\n')
-        csv_files = [file for file in files if file.endswith('.csv')]
+        files = response.json()
+        csv_files = [file['name'] for file in files if file['name'].endswith('.csv')]
         return csv_files
     else:
         st.error("Error fetching file list from GitHub repository.")
         return []
 
 # Get the list of CSV files
-csv_files = get_csv_files(github_base_url)
+csv_files = get_csv_files(github_api_url)
 
 # Load and concatenate all CSV files
 dataframes = []
