@@ -70,6 +70,7 @@ def check_h2h_lay_0x1(home_team, away_team, historical_data):
     ]
     return int(any((h2h_games['FT_Goals_H'] == 0) & (h2h_games['FT_Goals_A'] == 1)))
 
+# Function to check head-to-head results for Lay 1x1
 def check_h2h_lay_1x1(home_team, away_team, historical_data):
     h2h_games = historical_data[
         (historical_data['Home'] == home_team) & (historical_data['Away'] == away_team)
@@ -1081,8 +1082,11 @@ with tab_views[7]:
         # Add a column with the sum of 'h2h_lay_1x1'
         lay_1x1_home_flt["sum_h2h_lay_1x1"] = lay_1x1_home_flt["h2h_lay_1x1"].sum()
         
+        # Filter the final result where sum_h2h_lay_1x1 < 3
+        lay_1x1_home_flt = lay_1x1_home_flt[lay_1x1_home_flt["sum_h2h_lay_1x1"] < 3]
+        
         # Select only the desired columns
-        lay_1x1_home_flt = lay_1x1_home_flt[required_columns + ["sum_h2h_lay_1x1"]]
+        lay_1x1_home_flt = lay_1x1_home_flt[required_columns + ["h2h_lay_1x1", "sum_h2h_lay_1x1"]]
         
         # Display the filtered data without the index
         if not lay_1x1_home_flt.empty:
@@ -1113,8 +1117,11 @@ with tab_views[7]:
         # Add a column with the sum of 'h2h_lay_1x1'
         lay_1x1_away_flt["sum_h2h_lay_1x1"] = lay_1x1_away_flt["h2h_lay_1x1"].sum()
         
+        # Filter the final result where sum_h2h_lay_1x1 < 3
+        lay_1x1_away_flt = lay_1x1_away_flt[lay_1x1_away_flt["sum_h2h_lay_1x1"] < 3]
+        
         # Select only the desired columns
-        lay_1x1_away_flt = lay_1x1_away_flt[required_columns + ["sum_h2h_lay_1x1"]]
+        lay_1x1_away_flt = lay_1x1_away_flt[required_columns + ["h2h_lay_1x1", "sum_h2h_lay_1x1"]]
         
         # Display the filtered data without the index
         if not lay_1x1_away_flt.empty:
