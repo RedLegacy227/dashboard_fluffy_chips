@@ -600,14 +600,16 @@ try:
     # Load data for the last 21 games of the home team
     past_games_home = historical_data[
         (historical_data['Home'] == selected_home) &
+        (historical_data['League'] == selected_league) &
         (historical_data['Date'] < pd.to_datetime(selected_date))
-    ].tail(21)
+    ].tail(15)
     
     # Load data for the last 21 games of the away team
     past_games_away = historical_data[
         (historical_data['Away'] == selected_away) &
+        (historical_data['League'] == selected_league) &
         (historical_data['Date'] < pd.to_datetime(selected_date))
-    ].tail(21)
+    ].tail(15)
     
     # Function to summarize goals in time segments
     def summarize_half_goals(goals, half_segments):
@@ -631,7 +633,7 @@ try:
     
     # Plot goal distribution for the home team
     st.divider()
-    st.markdown(f"#### Time of Goals of ***{selected_home}*** and ***{selected_away}*** on the last 21 Games ####")
+    st.markdown(f"#### Time of Goals of ***{selected_home}*** and ***{selected_away}*** on the last 15 Games ####")
     home_goals_scored = count_goals(past_games_home['Goals_Minutes_Home'])
     home_goals_conceded = count_goals(past_games_home['Goals_Minutes_Away'])
     fig_home = plot_goal_distribution(selected_home, home_goals_scored, home_goals_conceded)
@@ -690,7 +692,7 @@ try:
     ax.grid(axis="y", linestyle="--", alpha=0.7)
     
     with col1:
-        st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 21 Games ####")
+        st.markdown(f"#### First Half & Second Half Goals Distribution on the Last 15 Games ####")
         # Display the plot
         st.pyplot(fig22)
     
@@ -715,11 +717,11 @@ try:
     
     # Configure the labels of the chart
     ax.set_ylabel("Number of Times")
-    ax.set_title("First Goal Occurrences in the Last 21 Games")
+    ax.set_title("First Goal Occurrences in the Last 15 Games")
     ax.grid(axis="y", linestyle="--", alpha=0.7)
     
     with col2:
-        st.markdown(f"#### Who Scored and Conceded First in the Last 21 Games? ####")
+        st.markdown(f"#### Who Scored and Conceded First in the Last 15 Games? ####")
         # Display the chart in Streamlit
         st.pyplot(fig27)
 
