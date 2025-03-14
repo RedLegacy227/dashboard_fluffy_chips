@@ -36,22 +36,33 @@ st.divider()
 github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
 historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/main/df_base_original.csv"
 
-# Get the current date and format it
-current_date = datetime.now()
-formatted_date = current_date.strftime('%Y-%m-%d')
+# Function to get all CSV files from the GitHub repository
+def get_csv_files(base_url):
+    response = requests.get(base_url)
+    if response.status_code == 200:
+        files = response.text.split('\n')
+        csv_files = [file for file in files if file.endswith('.csv')]
+        return csv_files
+    else:
+        st.error("Error fetching file list from GitHub repository.")
+        return []
 
-# Construct the CSV File URL
-csv_file_name = f'df_jogos_do_dia_{formatted_date}.csv'
-csv_file_url = github_base_url + csv_file_name
+# Get the list of CSV files
+csv_files = get_csv_files(github_base_url)
 
-# Load the CSV file
-try:
-    data = pd.read_csv(csv_file_url)
-except Exception as e:
-    st.error(f"Error loading {csv_file_url}: {e}")
-    data = pd.DataFrame()
+# Load and concatenate all CSV files
+dataframes = []
+for file in csv_files:
+    url = github_base_url + file
+    try:
+        df = pd.read_csv(url)
+        dataframes.append(df)
+    except Exception as e:
+        st.error(f"Error loading {url}: {e}")
 
-if not data.empty:
+if dataframes:
+    data = pd.concat(dataframes, ignore_index=True)
+
     # Filter data based on given conditions
     filtered_data = data[
         ((data["Perc_Over15FT_Home"] + data["Perc_Over15FT_Away"]) / 2 > 65) &
@@ -75,7 +86,7 @@ if not data.empty:
 
     if not historical_data.empty:
         # Check for games with 2 or more goals
-        filtered_data = filtered_data.merge(historical_data, on="game_id")  # Adjust merge key as needed
+        filtered_data = filtered_data.merge(historical_data, on=["date", "home", "away", "league"], how="left")
         filtered_data["Profit"] = np.where(
             (filtered_data["FT_Goals_H"] + filtered_data["FT_Goals_A"]) >= 2,
             filtered_data["FT_Odd_Over15"] - 1,
