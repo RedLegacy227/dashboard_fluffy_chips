@@ -63,6 +63,13 @@ def load_data(url):
         st.error(f"Error loading data: {e}")
         return None
 
+# Function to check head-to-head results
+def check_h2h_lay_0x1(home_team, away_team, historical_data):
+    h2h_games = historical_data[
+        (historical_data['Home'] == home_team) & (historical_data['Away'] == away_team)
+    ]
+    return int(any((h2h_games['FT_Goals_H'] == 0) & (h2h_games['FT_Goals_A'] == 1)))
+
 # Load Data
 with st.spinner("Fetching data..."):
     data = load_data(csv_file_url)
@@ -657,6 +664,12 @@ with tab_views[0]:
                 axis=1
             )
     
+            # Aplicar a função para calcular 'h2h_lay_0x1'
+            filtered_data["h2h_lay_0x1"] = filtered_data.apply(
+                lambda row: check_h2h_lay_0x1(row["Home"], row["Away"], historical_data),
+                axis=1
+            )
+    
             # Adicionar os jogos filtrados à lista
             all_games.append(filtered_data)
     
@@ -666,9 +679,15 @@ with tab_views[0]:
             final_df = final_df.sort_values(by='Time', ascending=True)  # Ordenar por 'Time'
             final_df = drop_reset_index(final_df)
     
+            # Adicionar a coluna com a soma de 'h2h_lay_0x1'
+            final_df["sum_h2h_lay_0x1"] = final_df["h2h_lay_0x1"].sum()
+    
             # Exibir o DataFrame final
             st.dataframe(final_df[[
-                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away']], use_container_width=True, hide_index=True)
+                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'sum_h2h_lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
+                'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
+                'h2h_lay_0x1', 
+            ]], use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
