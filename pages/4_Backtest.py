@@ -134,15 +134,15 @@ if not data.empty:
             ax.set_xlabel('Entradas')
             ax.set_ylabel('Stakes')
     
-            print("Metodo:", title_text)
-            print("Profit:", profit, "stakes em", n_apostas, "jogos")
-            print("ROI:", ROI, "%")
-            print("Drawdown Maximo Acumulado:", drawdown_maximo)
-            print("Winrate Medio:", winrate_medio, "%")
-            print("Desvio Padrao:", desvio_padrao)
-            print("")
+            st.write("Metodo:", title_text)
+            st.write("Profit:", profit, "stakes em", n_apostas, "jogos")
+            st.write("ROI:", ROI, "%")
+            st.write("Drawdown Maximo Acumulado:", drawdown_maximo)
+            st.write("Winrate Medio:", winrate_medio, "%")
+            st.write("Desvio Padrao:", desvio_padrao)
+            st.write("")
     
-            plt.show()
+            st.pyplot(plt)
     
         plot_profit_acu(filtered_data_final, "Profit Acumulado - Estratégia Over 1.5 FT")
     else:
