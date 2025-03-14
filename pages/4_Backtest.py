@@ -94,13 +94,21 @@ if not data.empty:
 
     if not historical_data.empty:
         # Check for games with 2 or more goals
-        filtered_data = filtered_data.merge(historical_data, on=["date", "home", "away", "league"], how="left")
-        filtered_data["Profit"] = np.where(
-            (filtered_data["FT_Goals_H"] + filtered_data["FT_Goals_A"]) >= 2,
-            filtered_data["FT_Odd_Over15"] - 1,
-            -1
-        )
-
+        def check_goals(row):
+            match = historical_data[
+                (historical_data["date"] == row["date"]) &
+                (historical_data["home"] == row["home"]) &
+                (historical_data["away"] == row["away"]) &
+                (historical_data["league"] == row["league"])
+            ]
+            if not match.empty:
+                goals = match["FT_Goals_H"].values[0] + match["FT_Goals_A"].values[0]
+                return (row["FT_Odd_Over15"] - 1) if goals >= 2 else -1
+            else:
+                return -1
+    
+        filtered_data["Profit"] = filtered_data.apply(check_goals, axis=1)
+    
         # Plot accumulated profit
         def plot_profit_acu(dataframe, title_text):
             dataframe['Profit_acu'] = dataframe.Profit.cumsum()
@@ -113,12 +121,12 @@ if not data.empty:
             drawdown_maximo = round(drawdown.min(), 2)
             winrate_medio = round((dataframe['Profit'] > 0).mean() * 100, 2)
             desvio_padrao = round(dataframe['Profit'].std(), 2)
-
+    
             ax = dataframe.Profit_acu.plot(title=title_text, xlabel='Entradas', ylabel='Stakes')
             ax.set_title(title_text)
             ax.set_xlabel('Entradas')
             ax.set_ylabel('Stakes')
-
+    
             print("Metodo:", title_text)
             print("Profit:", profit, "stakes em", n_apostas, "jogos")
             print("ROI:", ROI, "%")
@@ -126,11 +134,9 @@ if not data.empty:
             print("Winrate Medio:", winrate_medio, "%")
             print("Desvio Padrao:", desvio_padrao)
             print("")
-
+    
             plt.show()
-
+    
         plot_profit_acu(filtered_data, "Profit Acumulado - Estratégia Over 1.5 FT")
     else:
         st.warning("Historical data is empty. Cannot proceed with profit calculation.")
-else:
-    st.warning("No data loaded. Cannot proceed with filtering and profit calculation.")
