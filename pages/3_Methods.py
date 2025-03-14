@@ -1071,7 +1071,7 @@ with tab_views[7]:
             (data["FT_Odd_Over25"] < 1.65)
         ]
         lay_1x1_home_flt = lay_1x1_home_flt0.sort_values(by='Time', ascending=True)
-        lay_1x1_home_flt = lay_1x1_home_flt[(lay_1x1_home_flt["Perc_1x1_H"] <= 10)]
+        lay_1x1_home_flt = lay_1x1_home_flt[(lay_1x1_home_flt["Perc_1x1_H"] < 10)]
         # Selecionar apenas as colunas desejadas
         lay_1x1_home_flt = lay_1x1_home_flt[required_columns]
         
@@ -1094,7 +1094,7 @@ with tab_views[7]:
             (data["FT_Odd_Over25"] < 1.65)
         ]
         lay_1x1_away_flt = lay_1x1_away_flt0.sort_values(by='Time', ascending=True)
-        lay_1x1_away_flt = lay_1x1_away_flt[(lay_1x1_away_flt["Perc_1x1_A"] <= 10)]
+        lay_1x1_away_flt = lay_1x1_away_flt[(lay_1x1_away_flt["Perc_1x1_A"] < 10)]
         
         # Selecionar apenas as colunas desejadas
         lay_1x1_away_flt = lay_1x1_away_flt[required_columns]
@@ -1181,11 +1181,12 @@ with tab_views[8]:
         # Exibir os resultados
         st.subheader('Lay any Other Home Win')
         if home_win_games:
-            home_win_games = home_win_games[(home_win_games['Perc_goleada_home'] < 10)]
+            
             # Filtrar as colunas desejadas
             home_win_df = pd.DataFrame(home_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
+            home_win_df = home_win_df[(home_win_df['Perc_goleada_home'] < 10)]
             
             # Exibir o DataFrame sem o índice
             st.dataframe(home_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
@@ -1194,11 +1195,12 @@ with tab_views[8]:
         
         st.subheader('Lay any Other Away Win')
         if away_win_games:
-            away_win_games = away_win_games[(away_win_games['Perc_goleada_away'] < 10)]
+            
             # Filtrar as colunas desejadas
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home"]
             ]
+            away_win_df = away_win_df[(away_win_df['Perc_goleada_away'] < 10)]
             
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
