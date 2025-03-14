@@ -37,6 +37,7 @@ historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_
 github_api_url = "https://api.github.com/repos/RedLegacy227/jogos_do_dia_com_variaveis/contents/"
 
 # Function to get all CSV files from the GitHub repository using the GitHub API
+@st.cache_data
 def get_csv_files(api_url):
     response = requests.get(api_url)
     if response.status_code == 200:
@@ -47,22 +48,29 @@ def get_csv_files(api_url):
         st.error("Error fetching file list from GitHub repository.")
         return []
 
+# Function to load and concatenate all CSV files
+@st.cache_data
+def load_and_concatenate_csv_files(base_url, csv_files):
+    dataframes = []
+    for file in csv_files:
+        url = base_url + file
+        try:
+            df = pd.read_csv(url)
+            dataframes.append(df)
+        except Exception as e:
+            st.error(f"Error loading {url}: {e}")
+    if dataframes:
+        return pd.concat(dataframes, ignore_index=True)
+    else:
+        return pd.DataFrame()
+
 # Get the list of CSV files
 csv_files = get_csv_files(github_api_url)
 
 # Load and concatenate all CSV files
-dataframes = []
-for file in csv_files:
-    url = github_base_url + file
-    try:
-        df = pd.read_csv(url)
-        dataframes.append(df)
-    except Exception as e:
-        st.error(f"Error loading {url}: {e}")
+data = load_and_concatenate_csv_files(github_base_url, csv_files)
 
-if dataframes:
-    data = pd.concat(dataframes, ignore_index=True)
-
+if not data.empty:
     # Filter data based on given conditions
     filtered_data = data[
         ((data["Perc_Over15FT_Home"] + data["Perc_Over15FT_Away"]) / 2 > 65) &
@@ -85,43 +93,48 @@ if dataframes:
         historical_data = pd.DataFrame()
 
     if not historical_data.empty:
-        # Check for games with 2 or more goals
-        filtered_data = filtered_data.merge(historical_data, on=["date", "home", "away", "league"], how="left")
-        filtered_data["Profit"] = np.where(
-            (filtered_data["FT_Goals_H"] + filtered_data["FT_Goals_A"]) >= 2,
-            filtered_data["FT_Odd_Over15"] - 1,
-            -1
-        )
+        # Ensure the columns used for merging exist in both DataFrames
+        required_columns = ["date", "home", "away", "league"]
+        if all(col in filtered_data.columns for col in required_columns) and all(col in historical_data.columns for col in required_columns):
+            # Check for games with 2 or more goals
+            merged_data = pd.merge(filtered_data, historical_data, on=required_columns, how="left")
+            merged_data["Profit"] = np.where(
+                (merged_data["FT_Goals_H"] + merged_data["FT_Goals_A"]) >= 2,
+                merged_data["FT_Odd_Over15"] - 1,
+                -1
+            )
 
-        # Plot accumulated profit
-        def plot_profit_acu(dataframe, title_text):
-            dataframe['Profit_acu'] = dataframe.Profit.cumsum()
-            dataframe['Investimento'] = 1
-            n_apostas = dataframe.shape[0]
-            profit = round(dataframe.Profit_acu.tail(1).item(), 2)
-            dataframe['Investimento_acu'] = dataframe.Investimento.cumsum()
-            ROI = round(((dataframe.Profit_acu.tail(1) / dataframe.Investimento_acu.tail(1)) * 100).item(), 2)
-            drawdown = dataframe['Profit_acu'] - dataframe['Profit_acu'].cummax()
-            drawdown_maximo = round(drawdown.min(), 2)
-            winrate_medio = round((dataframe['Profit'] > 0).mean() * 100, 2)
-            desvio_padrao = round(dataframe['Profit'].std(), 2)
+            # Plot accumulated profit
+            def plot_profit_acu(dataframe, title_text):
+                dataframe['Profit_acu'] = dataframe.Profit.cumsum()
+                dataframe['Investimento'] = 1
+                n_apostas = dataframe.shape[0]
+                profit = round(dataframe.Profit_acu.tail(1).item(), 2)
+                dataframe['Investimento_acu'] = dataframe.Investimento.cumsum()
+                ROI = round(((dataframe.Profit_acu.tail(1) / dataframe.Investimento_acu.tail(1)) * 100).item(), 2)
+                drawdown = dataframe['Profit_acu'] - dataframe['Profit_acu'].cummax()
+                drawdown_maximo = round(drawdown.min(), 2)
+                winrate_medio = round((dataframe['Profit'] > 0).mean() * 100, 2)
+                desvio_padrao = round(dataframe['Profit'].std(), 2)
 
-            ax = dataframe.Profit_acu.plot(title=title_text, xlabel='Entradas', ylabel='Stakes')
-            ax.set_title(title_text)
-            ax.set_xlabel('Entradas')
-            ax.set_ylabel('Stakes')
+                ax = dataframe.Profit_acu.plot(title=title_text, xlabel='Entradas', ylabel='Stakes')
+                ax.set_title(title_text)
+                ax.set_xlabel('Entradas')
+                ax.set_ylabel('Stakes')
 
-            print("Metodo:", title_text)
-            print("Profit:", profit, "stakes em", n_apostas, "jogos")
-            print("ROI:", ROI, "%")
-            print("Drawdown Maximo Acumulado:", drawdown_maximo)
-            print("Winrate Medio:", winrate_medio, "%")
-            print("Desvio Padrao:", desvio_padrao)
-            print("")
+                print("Metodo:", title_text)
+                print("Profit:", profit, "stakes em", n_apostas, "jogos")
+                print("ROI:", ROI, "%")
+                print("Drawdown Maximo Acumulado:", drawdown_maximo)
+                print("Winrate Medio:", winrate_medio, "%")
+                print("Desvio Padrao:", desvio_padrao)
+                print("")
 
-            plt.show()
+                plt.show()
 
-        plot_profit_acu(filtered_data, "Profit Acumulado - Estratégia Over 1.5 FT")
+            plot_profit_acu(merged_data, "Profit Acumulado - Estratégia Over 1.5 FT")
+        else:
+            st.error("Required columns for merging are missing in one of the DataFrames.")
     else:
         st.warning("Historical data is empty. Cannot proceed with profit calculation.")
 else:
