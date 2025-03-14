@@ -1079,8 +1079,8 @@ with tab_views[7]:
             axis=1
         )
         
-        # Add a column with the cumulative sum of 'h2h_lay_1x1'
-        lay_1x1_home_flt["sum_h2h_lay_1x1"] = lay_1x1_home_flt["h2h_lay_1x1"].cumsum()
+        # Group by 'Home' and 'Away' and calculate the sum of 'h2h_lay_1x1' for each group
+        lay_1x1_home_flt["sum_h2h_lay_1x1"] = lay_1x1_home_flt.groupby(['Home', 'Away'])['h2h_lay_1x1'].transform('sum')
         
         # Filter the final result where sum_h2h_lay_1x1 < 3
         lay_1x1_home_flt = lay_1x1_home_flt[lay_1x1_home_flt["sum_h2h_lay_1x1"] < 3]
@@ -1114,8 +1114,8 @@ with tab_views[7]:
             axis=1
         )
         
-        # Add a column with the cumulative sum of 'h2h_lay_1x1'
-        lay_1x1_away_flt["sum_h2h_lay_1x1"] = lay_1x1_away_flt["h2h_lay_1x1"].cumsum()
+        # Group by 'Home' and 'Away' and calculate the sum of 'h2h_lay_1x1' for each group
+        lay_1x1_away_flt["sum_h2h_lay_1x1"] = lay_1x1_away_flt.groupby(['Home', 'Away'])['h2h_lay_1x1'].transform('sum')
         
         # Filter the final result where sum_h2h_lay_1x1 < 3
         lay_1x1_away_flt = lay_1x1_away_flt[lay_1x1_away_flt["sum_h2h_lay_1x1"] < 3]
