@@ -380,6 +380,7 @@ try:
                 # Analysis 1: Last 11 games for home team
                 last_11_games_home = home_league_data.tail(11)
                 display_analysis(last_11_games_home, "Analysis 1 - Last 11 Games (Home)", selected_home, True)
+                st.divider()
                 # Analysis 2: Last 7 games for home team
                 last_7_games_home = home_league_data.tail(7)
                 display_analysis(last_7_games_home, "Analysis 2 - Last 7 Games (Home)", selected_home, True)
@@ -390,6 +391,7 @@ try:
                 # Analysis 1: Last 11 games for away team
                 last_11_games_away = away_league_data.tail(11)
                 display_analysis(last_11_games_away, "Analysis 1 - Last 11 Games (Away)", selected_away, False)
+                st.divider()
                 # Analysis 2: Last 7 games for away team
                 last_7_games_away = away_league_data.tail(7)
                 display_analysis(last_7_games_away, "Analysis 2 - Last 7 Games (Away)", selected_away, False)
