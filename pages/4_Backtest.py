@@ -66,9 +66,13 @@ def load_and_concatenate_csv_files(base_url, csv_files):
 
 # Get the list of CSV files
 csv_files = get_csv_files(github_api_url)
+# Debugging: Print the list of CSV files
+st.write("CSV Files:", csv_files)
 
 # Load and concatenate all CSV files
 data = load_and_concatenate_csv_files(github_base_url, csv_files)
+# Debugging: Print the loaded data
+st.write("Loaded Data:", data.head())
 
 if not data.empty:
     # Filter data based on given conditions
@@ -84,10 +88,14 @@ if not data.empty:
         (data["Avg_G_Conceded_A_FT"] > 1) &
         (data["CV_Avg_G_Conceded_A_FT"] < 1)
     ]
+    # Debugging: Print the filtered data
+    st.write("Filtered Data:", filtered_data.head())
 
     # Load historical data
     try:
         historical_data = pd.read_csv(historical_data_url)
+        # Debugging: Print the historical data
+        st.write("Historical Data:", historical_data.head())
     except Exception as e:
         st.error(f"Error loading historical data: {e}")
         historical_data = pd.DataFrame()
@@ -108,6 +116,8 @@ if not data.empty:
                 return -1
     
         filtered_data["Profit"] = filtered_data.apply(check_goals, axis=1)
+        # Debugging: Print the filtered data with profit
+        st.write("Filtered Data with Profit:", filtered_data.head())
     
         # Plot accumulated profit
         def plot_profit_acu(dataframe, title_text):
