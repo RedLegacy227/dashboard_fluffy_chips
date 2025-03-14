@@ -686,8 +686,8 @@ with tab_views[0]:
             final_df = final_df.sort_values(by='Time', ascending=True)  # Ordenar por 'Time'
             final_df = drop_reset_index(final_df)
     
-            # Adicionar a coluna com a soma de 'h2h_lay_0x1'
-            final_df["sum_h2h_lay_0x1"] = final_df["h2h_lay_0x1"].sum()
+            # Adicionar a coluna com a soma de 'h2h_lay_0x1' para cada grupo de 'Home' e 'Away'
+            final_df["sum_h2h_lay_0x1"] = final_df.groupby(['Home', 'Away'])['h2h_lay_0x1'].transform('sum')
     
             # Exibir o DataFrame final
             st.dataframe(final_df[[
