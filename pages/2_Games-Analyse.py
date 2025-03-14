@@ -276,10 +276,48 @@ try:
             st.markdown("Most Frequent Scores:")
             for score, count in top_scores.items():
                 st.markdown(f"- **{score}**: **{count}** times")
-
     else:
         st.info(f"No past games found between {selected_home} and {selected_away} in the same home field.")
-
+        
+    st.divider()
+    
+    st.markdown(f"#### Detailed Analysis of Odds for ***{selected_home}*** and ***{selected_away}*** ####")
+    try:
+        def calculate_avg_and_cv(data, column):
+            avg = data[column].mean()
+            cv = data[column].std() / avg if avg != 0 else 0
+            return avg, cv
+    
+        def display_analysis(data, title):
+            st.markdown(f"#### {title} ####")
+            for column in ['FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']:
+                avg, cv = calculate_avg_and_cv(data, column)
+                st.markdown(f"**{column}**: Average = **{avg:.2f}**, CV = **{cv:.2f}**")
+    
+        # Filter data for the same league and teams playing Home at home and Away as Away
+        league_data = historical_data[
+            (historical_data['League'] == selected_league) &
+            (historical_data['Home'] == selected_home) &
+            (historical_data['Away'] == selected_away)
+        ]
+    
+        # Analysis 1: Last 15 games
+        last_15_games = league_data.tail(15)
+        display_analysis(last_15_games, "Analysis 1 - Last 15 Games")
+    
+        # Analysis 2: Last 11 games
+        last_11_games = league_data.tail(11)
+        display_analysis(last_11_games, "Analysis 2 - Last 11 Games")
+    
+        # Analysis 3: Last 7 games
+        last_7_games = league_data.tail(7)
+        display_analysis(last_7_games, "Analysis 3 - Last 7 Games")
+    
+    except Exception as e:
+        st.error(f"Error in analysis: {e}")
+        
+    st.divider()
+    
     # Load data for the last 7 games of the home team
     home_last_7 = historical_data[
         (historical_data["Home"] == selected_home) &
