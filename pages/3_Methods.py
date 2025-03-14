@@ -1066,14 +1066,12 @@ with tab_views[7]:
         required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type","Perc_Over25FT_Home", "Perc_Over25FT_Away"]
         
         # Aplicar os filtros
-        lay_1x1_home_flt = data[
+        lay_1x1_home_flt0 = data[
             (data["FT_Odd_H"] < 1.75) &
             (data["FT_Odd_Over25"] < 1.65)
-            (data["Perc_1x1_H"] < 10) &
-            (data["Perc_1x1_A"] < 10)
         ]
-        lay_1x1_home_flt = lay_1x1_home_flt.sort_values(by='Time', ascending=True)
-        
+        lay_1x1_home_flt = lay_1x1_home_flt0.sort_values(by='Time', ascending=True)
+        lay_1x1_home_flt = lay_1x1_home_flt[(lay_1x1_home_flt["Perc_1x1_H"] < 10) & (lay_1x1_home_flt["Perc_1x1_A"] < 10)]
         # Selecionar apenas as colunas desejadas
         lay_1x1_home_flt = lay_1x1_home_flt[required_columns]
         
