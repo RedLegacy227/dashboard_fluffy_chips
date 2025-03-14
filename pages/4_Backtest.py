@@ -8,6 +8,7 @@ import requests
 from datetime import datetime
 from auth import logout
 from sidebar_menu import show_role_features
+import matplotlib.pyplot as plt
 
 # Streamlit App Title and Headers
 st.set_page_config(page_title="BackTest - Fluffy Chips Web Analyser", page_icon="📈", layout="wide")
@@ -30,3 +31,67 @@ else:
     st.warning("Image not found. Please check the file path.")
 
 st.divider()
+
+# URLs for CSV Files
+github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
+historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/main/df_base_original.csv"
+
+# Load and merge CSV files from github_base_url
+csv_files = ["file1.csv", "file2.csv", "file3.csv"]  # Replace with actual file names
+dataframes = [pd.read_csv(github_base_url + file) for file in csv_files]
+data = pd.concat(dataframes, ignore_index=True)
+
+# Filter data based on given conditions
+filtered_data = data[
+    ((data["Perc_Over15FT_Home"] + data["Perc_Over15FT_Away"]) / 2 > 65) &
+    ((data["Perc_BTTS_Yes_FT_Home"] + data["Perc_BTTS_Yes_FT_Away"]) / 2 > 65) &
+    (data["Avg_G_Scored_H_FT"] > 1) &
+    (data["CV_Avg_G_Scored_H_FT"] < 1) &
+    (data["Avg_G_Scored_A_FT"] > 1) &
+    (data["CV_Avg_G_Scored_A_FT"] < 1) &
+    (data["Avg_G_Conceded_H_FT"] > 1) &
+    (data["CV_Avg_G_Conceded_H_FT"] < 1) &
+    (data["Avg_G_Conceded_A_FT"] > 1) &
+    (data["CV_Avg_G_Conceded_A_FT"] < 1)
+]
+
+# Load historical data
+historical_data = pd.read_csv(historical_data_url)
+
+# Check for games with 2 or more goals
+filtered_data = filtered_data.merge(historical_data, on="game_id")  # Adjust merge key as needed
+filtered_data["Profit"] = np.where(
+    (filtered_data["FT_Goals_H"] + filtered_data["FT_Goals_A"]) >= 2,
+    filtered_data["FT_Odd_Over15"] - 1,
+    -1
+)
+
+# Plot accumulated profit
+def plot_profit_acu(dataframe, title_text):
+    dataframe['Profit_acu'] = dataframe.Profit.cumsum()
+    dataframe['Investimento'] = 1
+    n_apostas = dataframe.shape[0]
+    profit = round(dataframe.Profit_acu.tail(1).item(), 2)
+    dataframe['Investimento_acu'] = dataframe.Investimento.cumsum()
+    ROI = round(((dataframe.Profit_acu.tail(1) / dataframe.Investimento_acu.tail(1)) * 100).item(), 2)
+    drawdown = dataframe['Profit_acu'] - dataframe['Profit_acu'].cummax()
+    drawdown_maximo = round(drawdown.min(), 2)
+    winrate_medio = round((dataframe['Profit'] > 0).mean() * 100, 2)
+    desvio_padrao = round(dataframe['Profit'].std(), 2)
+
+    ax = dataframe.Profit_acu.plot(title=title_text, xlabel='Entradas', ylabel='Stakes')
+    ax.set_title(title_text)
+    ax.set_xlabel('Entradas')
+    ax.set_ylabel('Stakes')
+
+    print("Metodo:", title_text)
+    print("Profit:", profit, "stakes em", n_apostas, "jogos")
+    print("ROI:", ROI, "%")
+    print("Drawdown Maximo Acumulado:", drawdown_maximo)
+    print("Winrate Medio:", winrate_medio, "%")
+    print("Desvio Padrao:", desvio_padrao)
+    print("")
+
+    plt.show()
+
+plot_profit_acu(filtered_data, "Profit Acumulado - Estratégia Over 1.5 FT")
