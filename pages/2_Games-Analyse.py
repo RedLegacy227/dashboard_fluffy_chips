@@ -319,7 +319,7 @@ try:
             
             for column in ['FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A']:
                 avg, cv = calculate_avg_and_cv(data, column)
-                st.markdown(f"### **{column}**: Average = **{avg:.2f}**, CV = **{cv:.2f}** ###")
+                st.markdown(f"#### **{column}**: Average = **{avg:.2f}**, CV = **{cv:.2f}** ####")
                 
                 if column == 'FT_Odd_H':
                     st.markdown(f"* {selected_home} was Fav and Won {len(data[(data['FT_Odd_H'] < data['FT_Odd_A'] - 1.00) & (data['FT_Goals_H'] > data['FT_Goals_A'])])} Games")
