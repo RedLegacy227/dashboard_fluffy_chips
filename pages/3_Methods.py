@@ -1062,20 +1062,29 @@ with tab_views[7]:
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     
     if data is not None:
-        # Verificar se as colunas existem no DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type","Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        # Check if the required columns exist in the DataFrame
+        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
         
-        # Aplicar os filtros
+        # Apply filters for Lay 1x1 based on Home Team
         lay_1x1_home_flt0 = data[
-            (data["FT_Odd_H"] < 1.75) &
-            (data["FT_Odd_Over25"] < 1.65)
+            (data["FT_Odd_H"] < 1.75) &  # Home team odds less than 1.75
+            (data["FT_Odd_Over25"] < 1.65)  # Over 2.5 goals odds less than 1.65
         ]
         lay_1x1_home_flt = lay_1x1_home_flt0.sort_values(by='Time', ascending=True)
-        lay_1x1_home_flt = lay_1x1_home_flt[(lay_1x1_home_flt["Perc_1x1_H"] < 10)]
-        # Selecionar apenas as colunas desejadas
-        lay_1x1_home_flt = lay_1x1_home_flt[required_columns]
         
-        # Exibir os dados filtrados sem o índice
+        # Apply function to calculate 'h2h_lay_1x1'
+        lay_1x1_home_flt["h2h_lay_1x1"] = lay_1x1_home_flt.apply(
+            lambda row: check_h2h_lay_1x1(row["Home"], row["Away"], historical_data),
+            axis=1
+        )
+        
+        # Add a column with the sum of 'h2h_lay_1x1'
+        lay_1x1_home_flt["sum_h2h_lay_1x1"] = lay_1x1_home_flt["h2h_lay_1x1"].sum()
+        
+        # Select only the desired columns
+        lay_1x1_home_flt = lay_1x1_home_flt[required_columns + ["sum_h2h_lay_1x1"]]
+        
+        # Display the filtered data without the index
         if not lay_1x1_home_flt.empty:
             st.dataframe(lay_1x1_home_flt, use_container_width=True, hide_index=True)
         else:
@@ -1085,21 +1094,29 @@ with tab_views[7]:
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
     
     if data is not None:
-        # Verificar se as colunas existem no DataFrame
+        # Check if the required columns exist in the DataFrame
         required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
         
-        # Aplicar os filtros
+        # Apply filters for Lay 1x1 based on Away Team
         lay_1x1_away_flt0 = data[
-            (data["FT_Odd_A"] < 1.75) &
-            (data["FT_Odd_Over25"] < 1.65)
+            (data["FT_Odd_A"] < 1.75) &  # Away team odds less than 1.75
+            (data["FT_Odd_Over25"] < 1.65)  # Over 2.5 goals odds less than 1.65
         ]
         lay_1x1_away_flt = lay_1x1_away_flt0.sort_values(by='Time', ascending=True)
-        lay_1x1_away_flt = lay_1x1_away_flt[(lay_1x1_away_flt["Perc_1x1_A"] < 10)]
         
-        # Selecionar apenas as colunas desejadas
-        lay_1x1_away_flt = lay_1x1_away_flt[required_columns]
+        # Apply function to calculate 'h2h_lay_1x1'
+        lay_1x1_away_flt["h2h_lay_1x1"] = lay_1x1_away_flt.apply(
+            lambda row: check_h2h_lay_1x1(row["Home"], row["Away"], historical_data),
+            axis=1
+        )
         
-        # Exibir os dados filtrados sem o índice
+        # Add a column with the sum of 'h2h_lay_1x1'
+        lay_1x1_away_flt["sum_h2h_lay_1x1"] = lay_1x1_away_flt["h2h_lay_1x1"].sum()
+        
+        # Select only the desired columns
+        lay_1x1_away_flt = lay_1x1_away_flt[required_columns + ["sum_h2h_lay_1x1"]]
+        
+        # Display the filtered data without the index
         if not lay_1x1_away_flt.empty:
             st.dataframe(lay_1x1_away_flt, use_container_width=True, hide_index=True)
         else:
