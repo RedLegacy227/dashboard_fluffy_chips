@@ -1215,9 +1215,9 @@ with tab_views[9]:
     if data is not None:
         # Apply the extra filter conditions
         conditions = [
-            (data['Avg_G_Scored_H_ST'] > 0.9) & (data['Avg_G_Conceded_A_ST'] > 1),
-            (data['Avg_G_Scored_A_ST'] > 0.9) & (data['Avg_G_Conceded_H_ST'] > 1),
-            (data['Avg_G_Scored_H_ST'] > 0.9) & (data['Avg_G_Scored_A_ST'] > 0.9),
+            (data['Avg_G_Scored_H_ST'] > 1) & (data['Avg_G_Conceded_A_ST'] > 1),
+            (data['Avg_G_Scored_A_ST'] > 1) & (data['Avg_G_Conceded_H_ST'] > 1),
+            (data['Avg_G_Scored_H_ST'] > 1) & (data['Avg_G_Scored_A_ST'] > 1),
             (data['Avg_G_Conceded_H_ST'] > 1) & (data['Avg_G_Conceded_A_ST'] > 1)
         ]
         
