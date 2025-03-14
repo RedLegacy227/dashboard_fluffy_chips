@@ -108,7 +108,7 @@ if not data.empty:
                 return (row["FT_Odd_Over15"] - 1) if goals >= 2 else -1
             else:
                 return -1
-    
+        st.write("Filtered Data:", filtered_data.tail())
         filtered_data["Profit"] = filtered_data.apply(check_goals, axis=1)
         # Debugging: Print the filtered data with profit
         st.write("Filtered Data with Profit:", filtered_data.tail())
