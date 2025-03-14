@@ -37,7 +37,7 @@ historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_
 github_api_url = "https://api.github.com/repos/RedLegacy227/jogos_do_dia_com_variaveis/contents/"
 
 # Function to get all CSV files from the GitHub repository using the GitHub API
-@st.cache
+@st.cache_data
 def get_csv_files(api_url):
     response = requests.get(api_url)
     if response.status_code == 200:
