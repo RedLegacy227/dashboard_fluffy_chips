@@ -144,6 +144,6 @@ if not data.empty:
     
             plt.show()
     
-        plot_profit_acu(filtered_data, "Profit Acumulado - Estratégia Over 1.5 FT")
+        plot_profit_acu(filtered_data_final, "Profit Acumulado - Estratégia Over 1.5 FT")
     else:
         st.warning("Historical data is empty. Cannot proceed with profit calculation.")
