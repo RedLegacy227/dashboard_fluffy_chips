@@ -71,8 +71,8 @@ st.write("CSV Files:", csv_files)
 
 # Load and concatenate all CSV files
 data = load_and_concatenate_csv_files(github_base_url, csv_files)
-# Debugging: Print the loaded data
-st.write("Loaded Data:", data.head())
+# Debugging: Print the loaded data and its length
+st.write(f"Loaded Data (Length: {len(data)}):", data.head())
 
 if not data.empty:
     # Filter data based on given conditions
