@@ -1086,7 +1086,7 @@ with tab_views[7]:
         lay_1x1_home_flt = lay_1x1_home_flt[lay_1x1_home_flt["sum_h2h_lay_1x1"] < 3]
         
         # Select only the desired columns
-        lay_1x1_home_flt = lay_1x1_home_flt[required_columns + ["h2h_lay_1x1", "sum_h2h_lay_1x1"]]
+        lay_1x1_home_flt = lay_1x1_home_flt[required_columns + ["sum_h2h_lay_1x1"]]
         
         # Display the filtered data without the index
         if not lay_1x1_home_flt.empty:
@@ -1121,7 +1121,7 @@ with tab_views[7]:
         lay_1x1_away_flt = lay_1x1_away_flt[lay_1x1_away_flt["sum_h2h_lay_1x1"] < 3]
         
         # Select only the desired columns
-        lay_1x1_away_flt = lay_1x1_away_flt[required_columns + ["h2h_lay_1x1", "sum_h2h_lay_1x1"]]
+        lay_1x1_away_flt = lay_1x1_away_flt[required_columns + ["sum_h2h_lay_1x1"]]
         
         # Display the filtered data without the index
         if not lay_1x1_away_flt.empty:
