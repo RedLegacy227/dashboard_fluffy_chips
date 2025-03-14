@@ -362,17 +362,13 @@ try:
                 (historical_data['Away'] == selected_away)
             ]
         
-            # Analysis 1: Last 15 games
-            last_15_games = league_data.tail(15)
-            display_analysis(last_15_games, "Analysis 1 - Last 15 Games")
-        
             # Analysis 2: Last 11 games
             last_11_games = league_data.tail(11)
-            display_analysis(last_11_games, "Analysis 2 - Last 11 Games")
+            display_analysis(last_11_games, "Analysis 1 - Last 11 Games")
         
             # Analysis 3: Last 7 games
             last_7_games = league_data.tail(7)
-            display_analysis(last_7_games, "Analysis 3 - Last 7 Games")
+            display_analysis(last_7_games, "Analysis 2 - Last 7 Games")
         
         except Exception as e:
             st.error(f"Error in analysis: {e}")
