@@ -1186,7 +1186,8 @@ with tab_views[8]:
             home_win_df = pd.DataFrame(home_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
             ]
-            home_win_df = home_win_df[(home_win_df['Perc_goleada_home'] < 10)]
+            home_win_df = home_win_df[(home_win_df['Perc_goleada_casa_H'] < 10) & (home_win_df['Perc_goleada_casa_A'] < 10)]
+            
             
             # Exibir o DataFrame sem o índice
             st.dataframe(home_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
@@ -1200,7 +1201,7 @@ with tab_views[8]:
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home"]
             ]
-            away_win_df = away_win_df[(away_win_df['Perc_goleada_away'] < 10)]
+            away_win_df = away_win_df[(away_win_df['Perc_goleada_away_A'] < 10) & (away_win_df['Perc_goleada_away_H'] < 10)]
             
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
