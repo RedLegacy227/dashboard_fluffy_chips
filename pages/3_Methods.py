@@ -70,6 +70,12 @@ def check_h2h_lay_0x1(home_team, away_team, historical_data):
     ]
     return int(any((h2h_games['FT_Goals_H'] == 0) & (h2h_games['FT_Goals_A'] == 1)))
 
+def check_h2h_lay_1x1(home_team, away_team, historical_data):
+    h2h_games = historical_data[
+        (historical_data['Home'] == home_team) & (historical_data['Away'] == away_team)
+    ]
+    return int(any((h2h_games['FT_Goals_H'] == 1) & (h2h_games['FT_Goals_A'] == 1)))
+
 # Load Data
 with st.spinner("Fetching data..."):
     data = load_data(csv_file_url)
@@ -1085,7 +1091,9 @@ with tab_views[7]:
         # Aplicar os filtros
         lay_1x1_away_flt = data[
             (data["FT_Odd_A"] < 1.75) &
-            (data["FT_Odd_Over25"] < 1.65)
+            (data["FT_Odd_Over25"] < 1.65) &
+            (data["Perc_1x1_H"] < 10) &
+            (data["Perc_1x1_A"] < 10)
         ]
         lay_1x1_away_flt = lay_1x1_away_flt.sort_values(by='Time', ascending=True)
         
@@ -1104,8 +1112,6 @@ with tab_views[8]:
     st.markdown(f'#### Teste of Lay Any Other Win Score ####')
     
     if data is not None and historical_data is not None:
-        # Apply the extra filter condition
-        data = data[(data['Perc_0x1_H'] < 10) & (data['Perc_0x1_A'] < 10)]
         
         # Filtrar os times da data selecionada
         home_teams = data['Home'].unique()
@@ -1176,6 +1182,7 @@ with tab_views[8]:
         # Exibir os resultados
         st.subheader('Lay any Other Home Win')
         if home_win_games:
+            home_win_games = home_win_games[(home_win_games['Perc_goleada_home'] < 10)]
             # Filtrar as colunas desejadas
             home_win_df = pd.DataFrame(home_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
@@ -1188,6 +1195,7 @@ with tab_views[8]:
         
         st.subheader('Lay any Other Away Win')
         if away_win_games:
+            away_win_games = away_win_games[(away_win_games['Perc_goleada_away'] < 10)]
             # Filtrar as colunas desejadas
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home"]
