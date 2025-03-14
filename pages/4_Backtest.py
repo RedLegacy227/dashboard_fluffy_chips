@@ -74,6 +74,8 @@ data = load_and_concatenate_csv_files(github_base_url, csv_files)
 # Debugging: Print the loaded data and its length
 st.write(f"Loaded Data (Length: {len(data)}):", data.head())
 
+filtered_data = data.copy()
+
 if not data.empty:
     # Filter data based on given conditions
     filtered_data = data[
@@ -107,10 +109,7 @@ if not data.empty:
                 (historical_data["Date"] == row["Date"]) &
                 (historical_data["Home"] == row["Home"]) &
                 (historical_data["Away"] == row["Away"]) &
-                (historical_data["League"] == row["League"]) &
-                (historical_data["FT_Goals_H"] == row["FT_Goals_H"]) &
-                (historical_data["FT_Goals_A"] == row["FT_Goals_A"]) &
-                (historical_data["FT_Odd_Over15"] == row["FT_Odd_Over15"])
+                (historical_data["League"] == row["League"]) 
                 
             ]
             if not match.empty:
