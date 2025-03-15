@@ -81,3 +81,13 @@ df_base = drop_reset_index(df_base)
 if df_base is not None:
     st.success("Historical Data loaded successfully!")
     
+# List of strategies
+strategies = [
+    'Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Lay any Other Win Home', 'Lay any Other Win Home','Louro José'
+]
+
+# Select strategy
+selected_strategy = st.selectbox("Choose a strategy:", strategies)
+
+# Display selected strategy
+st.write(f"Selected Strategy: **{selected_strategy}**")
