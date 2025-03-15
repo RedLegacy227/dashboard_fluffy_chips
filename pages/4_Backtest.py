@@ -482,8 +482,8 @@ def adjust_rankings(df):
     """
     Adjust and round the final rankings.
     """
-    df['Value_Power_Ranking_Home'] = (df['Power_Ranking_Home'] * df['p_A']).round(4)
-    df['Value_Power_Ranking_Away'] = (df['Power_Ranking_Away'] * df['p_H']).round(4)
+    df['Value_Power_Ranking_Home'] = (df['Power_Ranking_Home']).round(4)
+    df['Value_Power_Ranking_Away'] = (df['Power_Ranking_Away']).round(4)
     return df
 
 # Main function to execute the pipeline
