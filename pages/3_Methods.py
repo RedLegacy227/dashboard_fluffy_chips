@@ -1405,7 +1405,7 @@ with tab_views[11]:
     columns_to_display = [
         'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
         'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
-    if data is not None:
+    if data_Ov25_FT is not None:
         CG02_data_Ov25_FT = data_Ov25_FT[(data_Ov25_FT['Perc_Over25FT_Home'] > 50) & (data_Ov25_FT['Perc_Over25FT_Away'] > 50) &
                             (data_Ov25_FT['Perc_BTTS_Yes_FT_Home']> 50) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 50) &
                             (data_Ov25_FT['Avg_CG_Scored_H_02'] > 1) & (data_Ov25_FT['Avg_CG_Scored_A_02'] > 1) &
@@ -1425,7 +1425,7 @@ with tab_views[11]:
     columns_to_display = [
         'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
         'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
-    if data is not None:
+    if data_Ov25_FT is not None:
         avg_data_Ov25_FT = data_Ov25_FT[(data_Ov25_FT['Perc_Over25FT_Home'] > 50) & (data_Ov25_FT['Perc_Over25FT_Away'] > 50) &
                             (data_Ov25_FT['Perc_BTTS_Yes_FT_Home']> 50) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 50) &
                             (data_Ov25_FT['Avg_G_Scored_H_FT_Value'] > 1) & (data_Ov25_FT['Avg_G_Scored_A_FT_Value'] > 1) &
