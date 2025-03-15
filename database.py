@@ -19,3 +19,7 @@ def get_users_collection():
     db = get_database()
     return db["users"]
 
+# Get the users collection
+def get_users_collection():
+    db = get_database()
+    return db["variables_games"]
