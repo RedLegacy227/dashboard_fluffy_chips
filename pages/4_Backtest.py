@@ -429,7 +429,7 @@ def calculate_final_rankings(df, weights):
 
     return df
 
-df_liga = calculate_final_rankings(df_base, weights)
+df_base = calculate_final_rankings(df_base, weights)
 
 st.write(df_base)
     
