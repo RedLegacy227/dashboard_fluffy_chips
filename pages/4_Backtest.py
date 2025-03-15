@@ -285,6 +285,90 @@ df_base['CG_G_Scored_A_02'] = ((df_base['FT_Goals_A'] / 2) + (df_base['p_A'] / 2
 df_base['CG_G_Conceded_H_02'] = ((df_base['FT_Goals_A'] / 2) + (df_base['p_H'] / 2)).round(4)
 df_base['CG_G_Conceded_A_02'] = ((df_base['FT_Goals_H'] / 2) + (df_base['p_A'] / 2)).round(4)
 
+#Shots in Favor
+df_base['Shots_H'] = (df_base['Shots off Goal_Home'])
+df_base['Shots_A'] = (df_base['Shots off Goal_Away'])
+
+#Shots Against Value
+df_base['Shots_Against_H'] = (df_base['Shots off Goal_Away'])
+df_base['Shots_Against_A'] = (df_base['Shots off Goal_Home'])
+
+#Shots on Target in Favor Value
+df_base['Shots_OT_H'] = (df_base['Shots on Goal_Home'])
+df_base['Shots_OT_A'] = (df_base['Shots on Goal_Away'])
+
+#Shots on Target Against Value
+df_base['Shots_OT_Against_H'] = (df_base['Shots on Goal_Away'])
+df_base['Shots_OT_Against_A'] = (df_base['Shots on Goal_Home'])
+
+#Shots in Favour per Goal
+df_base['Shots_per_Goal_H'] = (df_base['Shots off Goal_Home'] / df_base['FT_Goals_H'].replace(0, float('nan')))
+df_base['Shots_per_Goal_A'] = (df_base['Shots off Goal_Away'] / df_base['FT_Goals_A'].replace(0, float('nan'))).round(4)
+
+#Shots Against per Goal
+df_base['Shots_per_Goal_Against_H'] = (df_base['Shots off Goal_Away'] / df_base['FT_Goals_A'].replace(0, float('nan'))).round(4)
+df_base['Shots_per_Goal_Against_A'] = (df_base['Shots off Goal_Home'] / df_base['FT_Goals_H'].replace(0, float('nan'))).round(4)
+
+#Shots on Target in Favor per Goal
+df_base['Shots_OT_per_Goal_H'] = (df_base['Shots on Goal_Home'] / df_base['FT_Goals_H'].replace(0, float('nan'))).round(4)
+df_base['Shots_OT_per_Goal_A'] = (df_base['Shots on Goal_Away'] / df_base['FT_Goals_A'].replace(0, float('nan'))).round(4)
+
+#Shots on Target Against per Goal
+df_base['Shots_OT_per_Goal_Against_H'] = (df_base['Shots on Goal_Away'] / df_base['FT_Goals_A'].replace(0, float('nan'))).round(4).fillna(0)
+df_base['Shots_OT_per_Goal_Against_A'] = (df_base['Shots on Goal_Home'] / df_base['FT_Goals_H'].replace(0, float('nan'))).round(4).fillna(0)
+
+#Goal Attempts in Favor Value
+df_base['Goal_Attempt_H'] = (df_base['Goal Attempts_Home'])
+df_base['Goal_Attempt_A'] = (df_base['Goal Attempts_Away'])
+
+#Goal Attempts Against Value
+df_base['Goal_Attempt_Against_H'] = (df_base['Goal Attempts_Away'])
+df_base['Goal_Attempt_Against_A'] = (df_base['Goal Attempts_Home'])
+
+#Goal Attempts in Favor per Goal
+df_base['Goal_Attempts_per_Goal_H'] = (df_base['Goal Attempts_Home'] / df_base['FT_Goals_H'].replace(0, float('nan'))).round(4)
+df_base['Goal_Attempts_per_Goal_A'] = (df_base['Goal Attempts_Away'] / df_base['FT_Goals_A'].replace(0, float('nan'))).round(4)
+
+#Goal Attempts Against per Goal
+df_base['Goal_Attempts_per_Goal_Against_H'] = (df_base['Goal Attempts_Away'] / df_base['FT_Goals_A'].replace(0, float('nan'))).round(4)
+df_base['Goal_Attempts_per_Goal_Against_A'] = (df_base['Goal Attempts_Home'] / df_base['FT_Goals_H'].replace(0, float('nan'))).round(4)
+
+#Ball Possession in Favor Value
+df_base['Ball_Possession_H'] = (df_base['Ball Possession_Home'])
+df_base['Ball_Possession_A'] = (df_base['Ball Possession_Away'])
+
+#Ball Possession Against Value
+df_base['Ball_Possession_Against_H'] = (df_base['Ball Possession_Away'])
+df_base['Ball_Possession_Against_A'] = (df_base['Ball Possession_Home'])
+
+#Corners in Favor Value
+df_base['Corners_H'] = (df_base['Corner Kicks_Home'])
+df_base['Corners_A'] = (df_base['Corner Kicks_Away'])
+
+#Corners Against Value
+df_base['Corners_Against_H'] = (df_base['Corner Kicks_Away'])
+df_base['Corners_Against_A'] = (df_base['Corner Kicks_Home'])
+
+#Yellow Cards 
+df_base['Yellow_Cards_H'] = (df_base['Yellow Cards_Home'])
+df_base['Yellow_Cards_A'] = (df_base['Yellow Cards_Away'])
+
+#Yellow Cards 
+df_base['Red_Cards_H'] = (df_base['Red Cards_Home'])
+df_base['Red_Cards_A'] = (df_base['Red Cards_Away'])
+
+#RPS Match Odds - Lower than 0,33 Tendency - Above Asymmetry
+df_base['RPS_MO'] = np.where(df_base['Result_FT'] == "H", 0.5 * ((1 / df_base['FT_Odd_H'] - 1)**2 + (1 / df_base['FT_Odd_D'])**2 + (1 / df_base['FT_Odd_A'])**2), np.where(df_base['Result_FT'] == "D", 0.5 * ((1 / df_base['FT_Odd_H'])**2 + (1 / df_base['FT_Odd_D'] - 1)**2 + (1 / df_base['FT_Odd_A'])**2), 0.5 * ((1 / df_base['FT_Odd_H'])**2 + (1 / df_base['FT_Odd_D'])**2 + (1 / df_base['FT_Odd_A'] - 1)**2)))
+df_base['RPS_MO'] = df_base['RPS_MO'].round(4)
+
+#RPS Over/Under - Lower than 0,50 Tendency - Above Asymmetry
+df_base['RPS_OV_UN'] = np.where(df_base['Result_Goals'] == "OV",(1 / df_base['FT_Odd_Over25'] - 1)**2 + (1 / df_base['FT_Odd_Under25'])**2,(1 / df_base['FT_Odd_Over25'])**2 + (1 / df_base['FT_Odd_Under25'] - 1)**2)
+df_base['RPS_OV_UN'] = df_base['RPS_OV_UN'].round(4)
+
+#RPS BTTS - Lower than 0,50 Tendency - Above Asymmetry
+df_base['RPS_BTTS'] = np.where(df_base['BTTS_FT'] == "Yes",(1 / df_base['Odd_BTTS_Yes'] - 1)**2 + (1 / df_base['Odd_BTTS_No'])**2,(1 / df_base['Odd_BTTS_Yes'])**2 + (1 / df_base['Odd_BTTS_No'] - 1)**2)
+df_base['RPS_BTTS'] = df_base['RPS_BTTS'].round(4)
+
 # Define weights
 weights = {
     "w_saldo_golos": 30,       # Goal difference (most important)
