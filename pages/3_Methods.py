@@ -95,7 +95,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams', 'Over 2,5 FT']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -1396,3 +1396,47 @@ with tab_views[10]:
             st.info("No Games available with minimum stats.")
     else:
         st.info("No games found with the specified criteria.")
+        
+with tab_views[11]:
+    st.markdown(f'#### Over 2,5 FT - Teste ####')
+    st.markdown(f'#### Cost of Goal 2.0 ####')
+    data_Ov25_FT = data.copy()
+    # Define columns to display
+    columns_to_display = [
+        'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
+        'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
+    if data is not None:
+        CG02_data_Ov25_FT = data_Ov25_FT[(data_Ov25_FT['Perc_Over25FT_Home'] > 50) & (data_Ov25_FT['Perc_Over25FT_Away'] > 50) &
+                            (data_Ov25_FT['Perc_BTTS_Yes_FT_Home']> 50) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 50) &
+                            (data_Ov25_FT['Avg_CG_Scored_H_02'] > 1) & (data_Ov25_FT['Avg_CG_Scored_A_02'] > 1) &
+                            (data_Ov25_FT['Avg_CG_Conceded_H_02'] > 1) & (data_Ov25_FT['Avg_CG_Conceded_A_02'] > 1)
+                            (data_Ov25_FT['CV_Avg_CG_Scored_H_02'] < 1) & (data_Ov25_FT['CV_Avg_CG_Scored_A_02'] < 1) &
+                            (data_Ov25_FT['CV_Avg_CG_Conceded_H_02'] < 1) & (data_Ov25_FT['CV_Avg_CG_Conceded_A_02'] < 1)]
+        
+        # Display the final DataFrame
+        if not CG02_data_Ov25_FT.empty:
+            st.dataframe(CG02_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No games found with the specified criteria.")
+        
+    st.markdown(f'#### Normal Average ####')
+        
+    # Define columns to display
+    columns_to_display = [
+        'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
+        'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
+    if data is not None:
+        avg_data_Ov25_FT = data_Ov25_FT[(data_Ov25_FT['Perc_Over25FT_Home'] > 50) & (data_Ov25_FT['Perc_Over25FT_Away'] > 50) &
+                            (data_Ov25_FT['Perc_BTTS_Yes_FT_Home']> 50) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 50) &
+                            (data_Ov25_FT['Avg_G_Scored_H_FT_Value'] > 1) & (data_Ov25_FT['Avg_G_Scored_A_FT_Value'] > 1) &
+                            (data_Ov25_FT['Avg_G_Conceded_H_FT_Value'] > 1) & (data_Ov25_FT['Avg_G_Conceded_A_FT_Value'] > 1)
+                            (data_Ov25_FT['CV_Avg_G_Scored_H_FT_Value'] < 1) & (data_Ov25_FT['CV_Avg_G_Scored_A_FT_Value'] < 1) &
+                            (data_Ov25_FT['CV_Avg_G_Conceded_H_FT_Value'] < 1) & (data_Ov25_FT['CV_Avg_G_Conceded_A_FT_Value'] < 1)]
+        
+        # Display the final DataFrame
+        if not avg_data_Ov25_FT.empty:
+            st.dataframe(avg_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No games found with the specified criteria.")
+    else:
+        st.info("Data is empty.")
