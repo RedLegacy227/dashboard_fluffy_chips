@@ -691,9 +691,8 @@ with tab_views[0]:
     
             # Exibir o DataFrame final
             st.dataframe(final_df[[
-                'Time', 'League', 'Home', 'Away', 'Odd_Justa_Lay_0x1', 'sum_h2h_lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
-                'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
-                'h2h_lay_0x1', 
+                'Time', 'League', 'Home', 'Away', 'Round', 'Odd_Justa_Lay_0x1', 'sum_h2h_lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
+                'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 'Perc_BTTS_Yes_Home', 'Perc_BTTS_Yes_Away'
             ]], use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
@@ -800,7 +799,7 @@ with tab_views[1]:
 
                 # Verificar se há resultados antes de exibir
                 if results:
-                    df_results = pd.DataFrame(results, columns=["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"])
+                    df_results = pd.DataFrame(results, columns=["League", "Time","Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away", "Perc_goleada_casa_H", "Perc_goleada_casa_A"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True, hide_index=True)
                 else:
@@ -833,6 +832,10 @@ with tab_views[2]:
             (data["CV_Avg_G_Conceded_A_FT"] < 1)
         ]
         over_15_ft_flt = over_15_ft_flt.sort_values(by='Time', ascending=True)
+
+        # Selecionar apenas as colunas desejadas
+        selected_columns = ["League", "Time", "Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over15FT_Home", "Perc_Over15FT_Away", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        over_15_ft_flt = over_15_ft_flt[selected_columns]
 
         # Exibir os dados filtrados
         if not over_15_ft_flt.empty:
@@ -877,7 +880,7 @@ with tab_views[3]:
             
             # Exibir dados filtrados
             if not lay_home_flt.empty:
-                st.dataframe(lay_home_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
+                st.dataframe(lay_home_flt[['League', 'Time', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -920,7 +923,7 @@ with tab_views[4]:
             
             # Exibir dados filtrados
             if not lay_away_flt.empty:
-                st.dataframe(lay_away_flt[['Time', 'League', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
+                st.dataframe(lay_away_flt[['League', 'Time', 'Round', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
                 st.info("Nenhum jogo encontrado.")
         except Exception as e:
@@ -1064,7 +1067,7 @@ with tab_views[7]:
     
     if data is not None:
         # Check if the required columns exist in the DataFrame
-        required_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        required_columns = ["League", "Time", "Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
         
         # Apply filters for Lay 1x1 based on Home Team
         lay_1x1_home_flt0 = data[
@@ -1222,7 +1225,7 @@ with tab_views[8]:
             
             # Filtrar as colunas desejadas e aplicar os filtros adicionais
             away_win_df = pd.DataFrame(away_win_games)[
-                ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home", "Perc_goleada_away_A", "Perc_goleada_away_H"]
+                ["League", "Time", "Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home", "Perc_goleada_away_A", "Perc_goleada_away_H"]
             ]
             away_win_df = away_win_df[(away_win_df['Perc_goleada_away_A'] < 10) & (away_win_df['Perc_goleada_away_H'] < 10)]
             
@@ -1258,7 +1261,7 @@ with tab_views[9]:
         
         # Define columns to display
         columns_to_display = [
-            'Time', 'League', 'Home', 'Away', 'FT_Odd_Over25', 'FT_Odd_BTTS_Yes', 'CV_Match_Type',
+            'League', 'Time', 'Round', 'Home', 'Away', 'FT_Odd_Over25', 'FT_Odd_BTTS_Yes', 'CV_Match_Type',
             'CV_Avg_G_Scored_H_ST', 'CV_Avg_G_Scored_A_ST', 'Perc_Over15ST_Home', 'Perc_Over15ST_Away', 
             'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away'
         ]
@@ -1292,7 +1295,7 @@ with tab_views[10]:
         
         # Define columns to display
         columns_to_display = [
-            'Time', 'League', 'Home', 'Away', 'CV_Match_Type', 'Perc_Home_Win_FT', 'Perc_Draw_Win_H_FT', 
+            'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Home_Win_FT', 'Perc_Draw_Win_H_FT', 
             'Perc_Draw_Win_A_FT', 'Perc_Away_Win_FT' ]
         
         # Check if columns exist in the DataFrame
