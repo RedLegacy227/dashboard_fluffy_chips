@@ -685,15 +685,21 @@ with tab_views[0]:
             final_df = pd.concat(all_games, ignore_index=True)
             final_df = final_df.sort_values(by='Time', ascending=True)  # Ordenar por 'Time'
             final_df = drop_reset_index(final_df)
-    
+        
             # Adicionar a coluna com a soma de 'h2h_lay_0x1' para cada grupo de 'Home' e 'Away'
             final_df["sum_h2h_lay_0x1"] = final_df.groupby(['Home', 'Away'])['h2h_lay_0x1'].transform('sum')
-    
-            # Exibir o DataFrame final
-            st.dataframe(final_df[[
+        
+            # List of columns to display
+            columns_to_display = [
                 'Time', 'League', 'Home', 'Away', 'Round', 'Odd_Justa_Lay_0x1', 'sum_h2h_lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
-                'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 'Perc_BTTS_Yes_Home', 'Perc_BTTS_Yes_Away','h2h_lay_0x1'
-            ]], use_container_width=True, hide_index=True)
+                'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 'Perc_BTTS_Yes_Home', 'Perc_BTTS_Yes_Away', 'h2h_lay_0x1'
+            ]
+        
+            # Ensure all columns exist in final_df
+            columns_to_display = [col for col in columns_to_display if col in final_df.columns]
+        
+            # Exibir o DataFrame final
+            st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
         else:
             st.info("Nenhum jogo encontrado com os critérios especificados.")
     else:
