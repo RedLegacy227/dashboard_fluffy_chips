@@ -285,6 +285,152 @@ df_base['CG_G_Scored_A_02'] = ((df_base['FT_Goals_A'] / 2) + (df_base['p_A'] / 2
 df_base['CG_G_Conceded_H_02'] = ((df_base['FT_Goals_A'] / 2) + (df_base['p_H'] / 2)).round(4)
 df_base['CG_G_Conceded_A_02'] = ((df_base['FT_Goals_H'] / 2) + (df_base['p_A'] / 2)).round(4)
 
+# Define weights
+weights = {
+    "w_saldo_golos": 30,       # Goal difference (most important)
+    "w_shots_on_goal": 20,     # Shots on target
+    "w_shots_off_goal": 15,    # Shots off target
+    "w_points": 10,            # Points
+    "w_corners": 7,            # Corners
+    "w_possession": 5,         # Possession
+    "penalty_no_goals": 50,    # Penalty for not scoring
+    "penalty_draw_goals": 60,  # Penalty for a draw with goals
+    "penalty_draw_no_goals": 70,  # Penalty for a goalless draw
+    "penalty_advantage_loss_to_draw": 80,  # Penalty for losing a lead to a draw
+    "penalty_advantage_loss_to_lost": 120,  # Penalty for losing a lead to a loss
+    "recover_advantage_loss_to_draw": 75,  # Reward for recovering from a loss to a draw
+    "recover_advantage_loss_to_win": 115,  # Reward for recovering from a loss to a win
+}
+
+def calculate_penalties(df, weights):
+    """
+    Calculate penalties and rewards for home and away teams.
+    """
+    # Penalty for not scoring
+    df['Goal_Penalty_Home'] = np.where(df['FT_Goals_H'] == 0, weights['penalty_no_goals'], 0)
+    df['Goal_Penalty_Away'] = np.where(df['FT_Goals_A'] == 0, weights['penalty_no_goals'], 0)
+
+    # Penalty for draws
+    df['Draw_Penalty_Home'] = np.where(
+        df['FT_Goals_H'] == df['FT_Goals_A'],
+        np.where(df['FT_Goals_H'] > 0, weights['penalty_draw_goals'], weights['penalty_draw_no_goals']),
+        0
+    )
+    df['Draw_Penalty_Away'] = df['Draw_Penalty_Home']
+
+    # Penalty for losing a lead to a draw
+    df['Advantage_Loss_Penalty_Home_Draw'] = np.where(
+        (df['HT_Goals_H'] > df['HT_Goals_A']) & (df['FT_Goals_H'] == df['FT_Goals_A']),
+        (df['HT_Goals_H'] - df['HT_Goals_A']) * weights['penalty_advantage_loss_to_draw'],
+        0
+    )
+
+    # Penalty for losing a lead to a loss
+    df['Advantage_Loss_Penalty_Home_Lost'] = np.where(
+        (df['HT_Goals_H'] > df['HT_Goals_A']) & (df['FT_Goals_H'] < df['FT_Goals_A']),
+        (df['HT_Goals_H'] - df['HT_Goals_A']) * weights['penalty_advantage_loss_to_lost'],
+        0
+    )
+
+    # Reward for recovering from a disadvantage to a draw
+    df['Disadvantage_Recovery_Away_Draw'] = df['Advantage_Loss_Penalty_Home_Draw'] * (
+        weights['recover_advantage_loss_to_draw'] / weights['penalty_advantage_loss_to_draw']
+    )
+
+    # Reward for recovering from a disadvantage to a win
+    df['Disadvantage_Recovery_Away_Win'] = df['Advantage_Loss_Penalty_Home_Lost'] * (
+        weights['recover_advantage_loss_to_win'] / weights['penalty_advantage_loss_to_lost']
+    )
+
+    # Reward for a comeback (Home and Away)
+    df['Reviravolta_Home'] = np.where(
+        (df['HT_Goals_H'] < df['HT_Goals_A']) & (df['FT_Goals_H'] > df['FT_Goals_A']),
+        (df['HT_Goals_A'] - df['HT_Goals_H']) * weights['recover_advantage_loss_to_win'],
+        0
+    )
+    df['Reviravolta_Away'] = np.where(
+        (df['HT_Goals_A'] < df['HT_Goals_H']) & (df['FT_Goals_A'] > df['FT_Goals_H']),
+        (df['HT_Goals_H'] - df['HT_Goals_A']) * weights['recover_advantage_loss_to_win'],
+        0
+    )
+
+    return df
+
+def calculate_power_ranking(df, weights):
+    """
+    Calculate Power Ranking for home and away teams.
+    """
+    # Home Power Ranking
+    df['Power_Ranking_Home'] = (
+        100 +
+        weights['w_saldo_golos'] * df['Value_G_Diff_H_FT'] +
+        weights['w_shots_on_goal'] * (df['Shots_OT_H'] - df['Shots_OT_Against_H']) +
+        weights['w_shots_off_goal'] * (df['Shots_H'] - df['Shots_Against_H']) +
+        weights['w_points'] * df['Value_Points_H'] +
+        weights['w_corners'] * (df['Corners_H'] - df['Corners_Against_H']) +
+        weights['w_possession'] * (df['Ball_Possession_H'] - df['Ball_Possession_Against_H']) -
+        df['Goal_Penalty_Home'] -
+        df['Draw_Penalty_Home'] -
+        df['Advantage_Loss_Penalty_Home_Draw'] -
+        df['Advantage_Loss_Penalty_Home_Lost'] +
+        df['Reviravolta_Home']
+    )
+
+    # Away Power Ranking
+    df['Power_Ranking_Away'] = (
+        100 +
+        weights['w_saldo_golos'] * df['Value_G_Diff_A_FT'] +
+        weights['w_shots_on_goal'] * (df['Shots_OT_A'] - df['Shots_OT_Against_A']) +
+        weights['w_shots_off_goal'] * (df['Shots_A'] - df['Shots_Against_A']) +
+        weights['w_points'] * df['Value_Points_A'] +
+        weights['w_corners'] * (df['Corners_A'] - df['Corners_Against_A']) +
+        weights['w_possession'] * (df['Ball_Possession_A'] - df['Ball_Possession_Against_A']) -
+        df['Goal_Penalty_Away'] -
+        df['Draw_Penalty_Away'] -
+        df['Disadvantage_Recovery_Away_Draw'] -
+        df['Disadvantage_Recovery_Away_Win'] +
+        df['Reviravolta_Away']
+    )
+
+    return df
+
+def adjust_rankings(df):
+    """
+    Adjust and round the final rankings.
+    """
+    df['Value_Power_Ranking_Home'] = (df['Power_Ranking_Home'] * df['p_A']).round(4)
+    df['Value_Power_Ranking_Away'] = (df['Power_Ranking_Away'] * df['p_H']).round(4)
+    return df
+
+# Main function to execute the pipeline
+def calculate_final_rankings(df, weights):
+    """
+    Calculate final Power Rankings for home and away teams.
+    """
+    # Check for missing columns
+    required_columns = [
+        'FT_Goals_H', 'FT_Goals_A', 'HT_Goals_H', 'HT_Goals_A',
+        'Value_G_Diff_H_FT', 'Value_G_Diff_A_FT', 'Shots_OT_H', 'Shots_OT_A',
+        'Shots_H', 'Shots_A', 'Value_Points_H', 'Value_Points_A',
+        'Corners_H', 'Corners_A', 'Ball_Possession_H',
+        'Ball_Possession_A', 'p_A', 'p_H'
+    ]
+    if not all(column in df.columns for column in required_columns):
+        raise ValueError("Input DataFrame is missing required columns.")
+
+    # Calculate penalties and rewards
+    df = calculate_penalties(df, weights)
+
+    # Calculate Power Rankings
+    df = calculate_power_ranking(df, weights)
+
+    # Adjust and round rankings
+    df = adjust_rankings(df)
+
+    return df
+
+df_liga = calculate_final_rankings(df_base, weights)
+
 st.write(df_base)
     
 # List of strategies
