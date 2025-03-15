@@ -515,7 +515,7 @@ def calculate_final_rankings(df, weights):
 
 df_base = calculate_final_rankings(df_base, weights)
 
-st.write(df_base)
+st.write(df_base.tail(20))
     
 # List of strategies
 strategies = [
