@@ -795,12 +795,15 @@ with tab_views[1]:
                             # Adicionar todos os dados necessários à lista de resultados
                             results.append([
                                 league, match_time, home, away,
+                                row.get("Round", None),
                                 row.get("FT_Odd_H", None),  # Usar .get() para evitar erros se a coluna não existir
                                 row.get("FT_Odd_D", None),
                                 row.get("FT_Odd_A", None),
                                 row.get("CV_Match_Type", None),
                                 row.get("Perc_Over25FT_Home", None),
-                                row.get("Perc_Over25FT_Away", None)
+                                row.get("Perc_Over25FT_Away", None),
+                                row.get("Perc_goleada_casa_H", None),
+                                row.get("Perc_goleada_casa_A", None)
                             ])
 
                 # Verificar se há resultados antes de exibir
