@@ -31,119 +31,53 @@ else:
 
 st.divider()
 
+def drop_reset_index(df):
+    df = df.dropna()
+    df = df.reset_index(drop=True)
+    df.index += 1
+    return df
+
+def plot_profit_acu(dataframe, title_text):
+    dataframe['Profit_acu'] = dataframe.Profit.cumsum()
+    n_apostas = dataframe.shape[0]
+    profit = round(dataframe.Profit_acu.tail(1).item(), 2)
+    ROI = round((dataframe.Profit_acu.tail(1) / n_apostas * 100).item(), 2)
+    drawdown = dataframe['Profit_acu'] - dataframe['Profit_acu'].cummax()
+    drawdown_maximo = round(drawdown.min(), 2)
+    winrate_medio = round((dataframe['Profit'] > 0).mean() * 100, 2)
+    desvio_padrao = round(dataframe['Profit'].std(), 2)
+    dataframe.Profit_acu.plot(title=title_text, xlabel='Entradas', ylabel='Stakes')
+    print("Metodo:",title_text)
+    print("Profit:", profit, "stakes em", n_apostas, "jogos")
+    print("ROI:", ROI, "%")
+    print("Drawdown Maximo Acumulado:", drawdown_maximo)
+    print("Winrate Medio:", winrate_medio, "%")
+    print("Desvio Padrao:", desvio_padrao)
+    print("")
+
 # URLs for CSV Files
-github_base_url = "https://raw.githubusercontent.com/RedLegacy227/jogos_do_dia_com_variaveis/main/"
 historical_data_url = "https://raw.githubusercontent.com/RedLegacy227/main_data_base/main/df_base_original.csv"
-github_api_url = "https://api.github.com/repos/RedLegacy227/jogos_do_dia_com_variaveis/contents/"
+    
+# Select Date
+selected_date = st.date_input("Select a date:", value=datetime.today())
+formatted_date = selected_date.strftime("%Y-%m-%d")
 
-# Function to get all CSV files from the GitHub repository using the GitHub API
-@st.cache_data
-def get_csv_files(api_url):
-    response = requests.get(api_url)
-    if response.status_code == 200:
-        files = response.json()
-        csv_files = [file['name'] for file in files if file['name'].endswith('.csv')]
-        return csv_files
-    else:
-        st.error("Error fetching file list from GitHub repository.")
-        return []
-
-# Function to load and concatenate all CSV files
-@st.cache_data
-def load_and_concatenate_csv_files(base_url, csv_files):
-    dataframes = []
-    for file in csv_files:
-        url = base_url + file
-        try:
-            df = pd.read_csv(url)
-            dataframes.append(df)
-        except Exception as e:
-            st.error(f"Error loading {url}: {e}")
-    if dataframes:
-        return pd.concat(dataframes, ignore_index=True)
-    else:
-        return pd.DataFrame()
-
-# Get the list of CSV files
-csv_files = get_csv_files(github_api_url)
-
-# Load and concatenate all CSV files
-data = load_and_concatenate_csv_files(github_base_url, csv_files)
-
-if not data.empty:
-    # Filter data based on given conditions
-    filtered_data0 = data[
-        ((data["Perc_Over15FT_Home"] + data["Perc_Over15FT_Away"]) / 2 > 65) &
-        ((data["Perc_BTTS_Yes_FT_Home"] + data["Perc_BTTS_Yes_FT_Away"]) / 2 > 65) &
-        (data["Avg_G_Scored_H_FT"] > 1) &
-        (data["CV_Avg_G_Scored_H_FT"] < 1) &
-        (data["Avg_G_Scored_A_FT"] > 1) &
-        (data["CV_Avg_G_Scored_A_FT"] < 1) &
-        (data["Avg_G_Conceded_H_FT"] > 1) &
-        (data["CV_Avg_G_Conceded_H_FT"] < 1) &
-        (data["Avg_G_Conceded_A_FT"] > 1) &
-        (data["CV_Avg_G_Conceded_A_FT"] < 1)
-    ]
-    # Load historical data
+@st.cache_data(ttl=0)
+def load_data(url):
     try:
-        historical_data = pd.read_csv(historical_data_url)
+        response = requests.get(url)
+        if response.status_code == 200:
+            return pd.read_csv(url)
+        else:
+            st.error(f"File not found: {url}")
+            return None
     except Exception as e:
-        st.error(f"Error loading historical data: {e}")
-        historical_data = pd.DataFrame()
+        st.error(f"Error loading data: {e}")
+        return None
 
-    historical_data_flt = historical_data[['Date', 'League', 'Home', 'Away', 'FT_Goals_H', 'FT_Goals_A', 'HT_Odd_Over05', 'FT_Odd_Over15', 'FT_Odd_Over25', 'Odd_BTTS_Yes', 'Odd_BTTS_No']]
+df_base0 = load_data(historical_data_url)
+df_base = df_base0.Date < str(selected_date)
+df_base = drop_reset_index(df_base)
+if df_base is not None:
+    st.success("Historical Data loaded successfully!")
     
-    
-    filtered_data_final= pd.merge(filtered_data0, historical_data_flt, on=['Date', 'League', 'Home', 'Away'], how='left')
-
-    if not historical_data_flt.empty:
-        # Check for games with 2 or more goals
-        def check_goals(row):
-            match = historical_data_flt[
-                (historical_data_flt["Date"] == row["Date"]) &
-                (historical_data_flt["Home"] == row["Home"]) &
-                (historical_data_flt["Away"] == row["Away"]) &
-                (historical_data_flt["League"] == row["League"]) 
-                
-            ]
-            if not match.empty:
-                goals = match["FT_Goals_H"].values[0] + match["FT_Goals_A"].values[0]
-                return (row["FT_Odd_Over15"] - 1) if goals >= 2 else -1
-            else:
-                return -1
-        st.write("Filtered Data:", filtered_data_final.tail())
-        filtered_data_final["Profit"] = filtered_data_final.apply(check_goals, axis=1)
-        # Debugging: Print the filtered data with profit
-        st.write("Filtered Data with Profit:", filtered_data_final.tail())
-    
-        # Plot accumulated profit
-        def plot_profit_acu(dataframe, title_text):
-            dataframe['Profit_acu'] = dataframe.Profit.cumsum()
-            dataframe['Investimento'] = 1
-            n_apostas = dataframe.shape[0]
-            profit = round(dataframe.Profit_acu.tail(1).item(), 2)
-            dataframe['Investimento_acu'] = dataframe.Investimento.cumsum()
-            ROI = round(((dataframe.Profit_acu.tail(1) / dataframe.Investimento_acu.tail(1)) * 100).item(), 2)
-            drawdown = dataframe['Profit_acu'] - dataframe['Profit_acu'].cummax()
-            drawdown_maximo = round(drawdown.min(), 2)
-            winrate_medio = round((dataframe['Profit'] > 0).mean() * 100, 2)
-            desvio_padrao = round(dataframe['Profit'].std(), 2)
-    
-            ax = dataframe.Profit_acu.plot(title=title_text, xlabel='Entradas', ylabel='Stakes')
-            ax.set_title(title_text)
-            ax.set_xlabel('Entradas')
-            ax.set_ylabel('Stakes')
-    
-            st.write("Metodo:", title_text)
-            st.write("Profit:", profit, "stakes em", n_apostas, "jogos")
-            st.write("ROI:", ROI, "%")
-            st.write("Drawdown Maximo Acumulado:", drawdown_maximo)
-            st.write("Winrate Medio:", winrate_medio, "%")
-            st.write("Desvio Padrao:", desvio_padrao)
-            st.write("")
-    
-            st.pyplot(plt)
-    
-        plot_profit_acu(filtered_data_final, "Profit Acumulado - Estratégia Over 1.5 FT")
-    else:
-        st.warning("Historical data is empty. Cannot proceed with profit calculation.")
