@@ -169,6 +169,122 @@ average_BTTS = df_base[['p_BTTS_Yes_FT', 'p_BTTS_No_FT']].mean(axis=1)
 CV_BTTS = desvpad_BTTS / average_BTTS
 df_base['CV_BTTS_FT'] = CV_BTTS.round(4)
 
+#Creating the Final Result Column
+def Result_FT(FT_Goals_H, FT_Goals_A):
+    if FT_Goals_H > FT_Goals_A:
+        return 'H'
+    elif FT_Goals_H == FT_Goals_A:
+        return 'D'
+    else:
+        return 'A'
+
+#Creating the Ov or Un Column
+def Result_Goals(Total_Goals_FT):
+    if Total_Goals_FT > 2:
+        return 'Ov'
+    else:
+        return 'Un'
+    
+#Creating the BTTS Column
+def BTTS(FT_Goals_H, FT_Goals_A):
+    if FT_Goals_H > 0 and FT_Goals_A > 0:
+        return 'Yes'
+    else:
+        return 'No'
+
+#Applying functions to the dataframe
+df_base['Result_FT'] = df_base.apply(lambda row: Result_FT(row['FT_Goals_H'], row['FT_Goals_A']), axis=1)
+df_base['Result_Goals'] = df_base.apply(lambda row: Result_Goals(row['FT_Goals_H'] + row['FT_Goals_A']), axis=1)
+df_base['BTTS_FT'] = df_base.apply(lambda row: BTTS(row['FT_Goals_H'], row['FT_Goals_A']), axis=1)
+
+#PPM
+df_base['PPM_Home'] = (df_base['p_H'] * 3) + (df_base['p_D'] * 1).round(4)
+df_base['PPM_Away'] = (df_base['p_A'] * 3) + (df_base['p_D'] * 1).round(4)
+
+#Total Goals
+df_base["Total_Goals_HT"] = df_base["HT_Goals_H"] + df_base["HT_Goals_A"]
+
+#Goal Difference
+df_base['G_Diff_H_HT'] = df_base['HT_Goals_H'] - df_base['HT_Goals_A']
+df_base['G_Diff_A_HT'] = df_base['HT_Goals_A'] - df_base['HT_Goals_H']
+
+#Value of Goal Diference
+df_base['Value_G_Diff_H_HT'] = (df_base['G_Diff_H_HT'] * df_base['p_A']).round(4)
+df_base['Value_G_Diff_A_HT'] = (df_base['G_Diff_A_HT'] * df_base['p_H']).round(4)
+
+#Value of Scored Goals
+df_base['Value_G_Scored_H_HT'] = (df_base['HT_Goals_H'] * df_base['p_A']).round(4)
+df_base['Value_G_Scored_A_HT'] = (df_base['HT_Goals_A'] * df_base['p_H']).round(4)
+
+#Value of Conceded Goals
+df_base['Value_G_Conceded_H_HT'] = (df_base['HT_Goals_A'] * df_base['p_A']).round(4)
+df_base['Value_G_Conceded_A_HT'] = (df_base['HT_Goals_H'] * df_base['p_H']).round(4)
+
+df_base["ST_Goals_H"] = df_base["FT_Goals_H"] - df_base["HT_Goals_H"]
+df_base["ST_Goals_A"] = df_base["FT_Goals_A"] - df_base["HT_Goals_A"]
+
+#Total Goals
+df_base["Total_Goals_ST"] = df_base["ST_Goals_H"] + df_base["ST_Goals_A"]
+
+#Goal Difference
+df_base['G_Diff_H_ST'] = df_base['ST_Goals_H'] - df_base['ST_Goals_A']
+df_base['G_Diff_A_ST'] = df_base['ST_Goals_A'] - df_base['ST_Goals_H']
+
+#Value of Goal Diference
+df_base['Value_G_Diff_H_ST'] = (df_base['G_Diff_H_ST'] * df_base['p_A']).round(4)
+df_base['Value_G_Diff_A_ST'] = (df_base['G_Diff_A_ST'] * df_base['p_H']).round(4)
+
+#Value of Scored Goals
+df_base['Value_G_Scored_H_ST'] = (df_base['ST_Goals_H'] * df_base['p_A']).round(4)
+df_base['Value_G_Scored_A_ST'] = (df_base['ST_Goals_A'] * df_base['p_H']).round(4)
+
+#Value of Conceded Goals
+df_base['Value_G_Conceded_H_ST'] = (df_base['ST_Goals_A'] * df_base['p_A']).round(4)
+df_base['Value_G_Conceded_A_ST'] = (df_base['ST_Goals_H'] * df_base['p_H']).round(4)
+
+#Total Goals
+df_base["Total_Goals_FT"] = df_base["FT_Goals_H"] + df_base["FT_Goals_A"]
+
+#Creating the Calculation of Points
+df_base['Points_H'] = np.where(df_base['FT_Goals_H'] >  df_base['FT_Goals_A'], 3, np.where(df_base['FT_Goals_H'] == df_base['FT_Goals_A'], 1, 0))
+df_base['Points_A'] = np.where(df_base['FT_Goals_A'] > df_base['FT_Goals_H'], 3, np.where(df_base['FT_Goals_H'] == df_base['FT_Goals_A'], 1, 0))
+
+#Points Value
+df_base['Value_Points_H'] = (df_base['Points_H'] * df_base['p_A']).round(4)
+df_base['Value_Points_A'] = (df_base['Points_A'] * df_base['p_H']).round(4)
+
+#Goal Difference
+df_base['G_Diff_H_FT'] = df_base['FT_Goals_H'] - df_base['FT_Goals_A']
+df_base['G_Diff_A_FT'] = df_base['FT_Goals_A'] - df_base['FT_Goals_H']
+
+#Value of Goal Diference
+df_base['Value_G_Diff_H_FT'] = (df_base['G_Diff_H_FT'] * df_base['p_A']).round(4)
+df_base['Value_G_Diff_A_FT'] = (df_base['G_Diff_A_FT'] * df_base['p_H']).round(4)
+
+#Value of Scored Goals
+df_base['Value_G_Scored_H_FT'] = (df_base['FT_Goals_H'] * df_base['p_A']).round(4)
+df_base['Value_G_Scored_A_FT'] = (df_base['FT_Goals_A'] * df_base['p_H']).round(4)
+
+#Value of Conceded Goals
+df_base['Value_G_Conceded_H_FT'] = (df_base['FT_Goals_A'] * df_base['p_A']).round(4)
+df_base['Value_G_Conceded_A_FT'] = (df_base['FT_Goals_H'] * df_base['p_H']).round(4)
+
+#Cost Of Goal Scored 1.0
+df_base['CG_G_Scored_H_01'] = (df_base['FT_Goals_H'] / df_base['p_H']).round(4)
+df_base['CG_G_Scored_A_01'] = (df_base['FT_Goals_A'] / df_base['p_A']).round(4)
+
+#Cost Of Goal Conceded 1.0
+df_base['CG_G_Conceded_H_01'] = (df_base['FT_Goals_A'] / df_base['p_H']).round(4)
+df_base['CG_G_Conceded_A_01'] = (df_base['FT_Goals_H'] / df_base['p_A']).round(4)
+
+#Cost Of Goal Scored 2.0
+df_base['CG_G_Scored_H_02'] = ((df_base['FT_Goals_H'] / 2) + (df_base['p_H'] / 2)).round(4)
+df_base['CG_G_Scored_A_02'] = ((df_base['FT_Goals_A'] / 2) + (df_base['p_A'] / 2)).round(4)
+
+#Cost Of Goal Conceded 2.0
+df_base['CG_G_Conceded_H_02'] = ((df_base['FT_Goals_A'] / 2) + (df_base['p_H'] / 2)).round(4)
+df_base['CG_G_Conceded_A_02'] = ((df_base['FT_Goals_H'] / 2) + (df_base['p_A'] / 2)).round(4)
+
 st.write(df_base)
     
 # List of strategies
