@@ -76,9 +76,9 @@ def load_data(url):
         return None
 
 df_base0 = load_data(historical_data_url)
-st.write(df_base0)
+
 df_base = df_base0[df_base0['Date'] < str(selected_date)]
-st.write(df_base)
+
 if df_base is not None:
     st.success("Historical Data loaded successfully!")
 #Odds Regression to find Double Chance Odds or Lay Odds
