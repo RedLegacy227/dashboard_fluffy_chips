@@ -1412,8 +1412,8 @@ with tab_views[11]:
             (data_Ov25_FT['Perc_BTTS_Yes_FT_Home'] > 50) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 50) &
             (data_Ov25_FT['Avg_CG_Scored_H_02'] >= 0.8) & (data_Ov25_FT['Avg_CG_Scored_A_02'] >= 0.8) &
             (data_Ov25_FT['Avg_CG_Conceded_H_02'] >= 0.8) & (data_Ov25_FT['Avg_CG_Conceded_A_02'] > 0.8) &
-            (data_Ov25_FT['CV_Avg_CG_Scored_H_02'] <= 1) & (data_Ov25_FT['CV_Avg_CG_Scored_A_02'] < 1) &
-            (data_Ov25_FT['CV_Avg_CG_Conceded_H_02'] <= 1) & (data_Ov25_FT['CV_Avg_CG_Conceded_A_02'] <= 1)
+            (data_Ov25_FT['CV_Avg_CG_Scored_H_02'] <= 0.8) & (data_Ov25_FT['CV_Avg_CG_Scored_A_02'] < 0.8) &
+            (data_Ov25_FT['CV_Avg_CG_Conceded_H_02'] <= 0.8) & (data_Ov25_FT['CV_Avg_CG_Conceded_A_02'] <= 0.8)
             ]
     
     # Display the final DataFrame
