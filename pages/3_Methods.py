@@ -1402,10 +1402,6 @@ with tab_views[11]:
     st.markdown(f'#### Over 2,5 FT - Teste ####')
     st.markdown(f'#### Cost of Goal 2.0 ####')
     
-    # Define columns to display
-    columns_to_display = [
-        'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
-        'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
     if data_Ov25_FT is not None:
         CG02_data_Ov25_FT = data_Ov25_FT[
             (data_Ov25_FT['Perc_Over25FT_Home'] >= 60) & (data_Ov25_FT['Perc_Over25FT_Away'] > 60) &
@@ -1418,6 +1414,10 @@ with tab_views[11]:
     
     # Display the final DataFrame
         if not CG02_data_Ov25_FT.empty:
+            # Define columns to display
+            columns_to_display = [
+                'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
+                'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
             st.dataframe(CG02_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
         else:
             st.info("No games found with the specified criteria.")
@@ -1436,6 +1436,10 @@ with tab_views[11]:
     
     # Display the final DataFrame
         if not avg_data_Ov25_FT.empty:
+            # Define columns to display
+            columns_to_display = [
+                'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
+                'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
             st.dataframe(avg_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
         else:
             st.info("No games found with the specified criteria.")
