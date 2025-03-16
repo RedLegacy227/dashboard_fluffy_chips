@@ -1408,12 +1408,12 @@ with tab_views[11]:
         'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
     if data_Ov25_FT is not None:
         CG02_data_Ov25_FT = data_Ov25_FT[
-            (data_Ov25_FT['Perc_Over25FT_Home'] > 50) & (data_Ov25_FT['Perc_Over25FT_Away'] > 50) &
-            (data_Ov25_FT['Perc_BTTS_Yes_FT_Home'] > 50) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 50) &
+            (data_Ov25_FT['Perc_Over25FT_Home'] >= 60) & (data_Ov25_FT['Perc_Over25FT_Away'] > 60) &
+            (data_Ov25_FT['Perc_BTTS_Yes_FT_Home'] >= 60) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] >= 60) &
             (data_Ov25_FT['Avg_CG_Scored_H_02'] >= 0.8) & (data_Ov25_FT['Avg_CG_Scored_A_02'] >= 0.8) &
             (data_Ov25_FT['Avg_CG_Conceded_H_02'] >= 0.8) & (data_Ov25_FT['Avg_CG_Conceded_A_02'] > 0.8) &
-            (data_Ov25_FT['CV_Avg_CG_Scored_H_02'] <= 0.8) & (data_Ov25_FT['CV_Avg_CG_Scored_A_02'] < 0.8) &
-            (data_Ov25_FT['CV_Avg_CG_Conceded_H_02'] <= 0.8) & (data_Ov25_FT['CV_Avg_CG_Conceded_A_02'] <= 0.8)
+            (data_Ov25_FT['CV_Avg_CG_Scored_H_02'] <= 0.7) & (data_Ov25_FT['CV_Avg_CG_Scored_A_02'] < 0.7) &
+            (data_Ov25_FT['CV_Avg_CG_Conceded_H_02'] <= 0.7) & (data_Ov25_FT['CV_Avg_CG_Conceded_A_02'] <= 0.7)
             ]
     
     # Display the final DataFrame
