@@ -1428,10 +1428,10 @@ with tab_views[11]:
         avg_data_Ov25_FT = data_Ov25_FT[
             (data_Ov25_FT['Perc_Over25FT_Home'] > 59) & (data_Ov25_FT['Perc_Over25FT_Away'] > 59) &
             (data_Ov25_FT['Perc_BTTS_Yes_FT_Home'] > 59) & (data_Ov25_FT['Perc_BTTS_Yes_FT_Away'] > 59) &
-            (data_Ov25_FT['Avg_G_Scored_H_FT_Value'] > 1.1) & (data_Ov25_FT['Avg_G_Scored_A_FT_Value'] > 1.1) &
-            (data_Ov25_FT['Avg_G_Conceded_H_FT_Value'] > 1.1) & (data_Ov25_FT['Avg_G_Conceded_A_FT_Value'] > 1.1) &
-            (data_Ov25_FT['CV_Avg_G_Scored_H_FT_Value'] < 0.9) & (data_Ov25_FT['CV_Avg_G_Scored_A_FT_Value'] < 0.9) &
-            (data_Ov25_FT['CV_Avg_G_Conceded_H_FT_Value'] < 0.9) & (data_Ov25_FT['CV_Avg_G_Conceded_A_FT_Value'] < 0.9)
+            (data_Ov25_FT['Avg_G_Scored_H_FT_Value'] > 1) & (data_Ov25_FT['Avg_G_Scored_A_FT_Value'] > 1) &
+            (data_Ov25_FT['Avg_G_Conceded_H_FT_Value'] > 1) & (data_Ov25_FT['Avg_G_Conceded_A_FT_Value'] > 1) &
+            (data_Ov25_FT['CV_Avg_G_Scored_H_FT_Value'] < 0.8) & (data_Ov25_FT['CV_Avg_G_Scored_A_FT_Value'] < 0.8) &
+            (data_Ov25_FT['CV_Avg_G_Conceded_H_FT_Value'] < 0.8) & (data_Ov25_FT['CV_Avg_G_Conceded_A_FT_Value'] < 0.8)
             ]
     
     # Display the final DataFrame
