@@ -844,7 +844,8 @@ with tab_views[2]:
         over_15_ft_flt = over_15_ft_flt.sort_values(by='Time', ascending=True)
 
         # Selecionar apenas as colunas desejadas
-        selected_columns = ["League", "Time", "Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over15FT_Home", "Perc_Over15FT_Away", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        selected_columns = ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over15FT_Home", "Perc_Over15FT_Away", "Perc_Over25FT_Home", "Perc_Over25FT_Away"]
+        selected_columns = [col for col in selected_columns if col in over_15_ft_flt.columns]
         over_15_ft_flt = over_15_ft_flt[selected_columns]
 
         # Exibir os dados filtrados
