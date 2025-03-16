@@ -83,6 +83,7 @@ with st.spinner("Fetching data..."):
     historical_data = load_data(historical_data_url)
     leagues_data = load_data(leagues_url)
     elo_tilt_data = load_data(elo_tilt_url)
+    data_Ov25_FT = data.copy()
 
 # Display Success Messages
 if data is not None:
@@ -1400,7 +1401,7 @@ with tab_views[10]:
 with tab_views[11]:
     st.markdown(f'#### Over 2,5 FT - Teste ####')
     st.markdown(f'#### Cost of Goal 2.0 ####')
-    data_Ov25_FT = data.copy()
+    
     # Define columns to display
     columns_to_display = [
         'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
