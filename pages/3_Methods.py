@@ -84,6 +84,7 @@ with st.spinner("Fetching data..."):
     leagues_data = load_data(leagues_url)
     elo_tilt_data = load_data(elo_tilt_url)
     data_Ov25_FT = data.copy()
+    data_btts = data.copy() 
 
 # Display Success Messages
 if data is not None:
@@ -96,7 +97,7 @@ if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 
 # Create Tabs
-tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams', 'Over 2,5 FT']
+tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams', 'Over 2,5 FT', ' BTTS']
 tab_views = st.tabs(tabs)
 
 # Exibir dados para cada liga
@@ -1442,6 +1443,30 @@ with tab_views[11]:
                 'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
                 'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
             st.dataframe(avg_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
+        else:
+            st.info("No games found with the specified criteria.")
+    else:
+        st.info("Data is empty.")
+        
+with tab_views[12]:
+    st.markdown(f'#### Games with High Probability for BTTS Yes ####')
+    
+    if data_btts is not None:
+        base_btts = data_btts[
+            (((data_btts['Avg_G_Scored_H_FT'] + data_btts['Avg_G_Conceded_H_FT']) + (data_btts['Avg_G_Scored_A_FT'] + data_btts['Avg_G_Conceded_A_FT'])) / 2 >= 2.70) &
+            ((data_btts['Avg_G_Scored_H_FT'] + data_btts['Avg_G_Conceded_A_FT']) /2 > 1.42) & 
+            ((data_btts['Avg_G_Scored_A_FT'] + data_btts['Avg_G_Conceded_H_FT']) /2 > 1.42) &
+            (data_btts['Perc_BTTS_Yes_FT_Home'] > 55) & (data_btts['Perc_BTTS_Yes_FT_Away'] > 55) & 
+            (data_btts['Perc_Over25FT_Home'] > 55) & (data_btts['Perc_Over25FT_Away'] > 55)
+            ]
+        
+    # Display the final DataFrame
+        if not base_btts.empty:
+            # Define columns to display
+            columns_to_display = [
+                'League', 'Time', 'Round', 'Home', 'Away', 'CV_Match_Type', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 
+                'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
+            st.dataframe(base_btts[columns_to_display], use_container_width=True, hide_index=True)
         else:
             st.info("No games found with the specified criteria.")
     else:
