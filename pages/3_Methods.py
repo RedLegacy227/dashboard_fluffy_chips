@@ -57,7 +57,7 @@ def load_data(url):
         if response.status_code == 200:
             return pd.read_csv(url)
         else:
-            st.error(f"File not found: {url}")
+            st.error(f"No Games Available for the Chosen Date: {formatted_date}")
             return None
     except Exception as e:
         st.error(f"Error loading data: {e}")
@@ -84,14 +84,20 @@ with st.spinner("Fetching data..."):
         if data is not None:
             data_Ov25_FT = data.copy()
             data_btts = data.copy()
+            lay_home = data.copy()
+            lay_away = data.copy()
         else:
             data_Ov25_FT = None
             data_btts = None
+            lay_home = None
+            lay_away = None
     except Exception as e:
         st.warning("No Data Available for the Chosen Date")
         data = None
         data_Ov25_FT = None
         data_btts = None
+        lay_home = None
+        lay_away = None
 
     try:
         historical_data = load_data(historical_data_url)
@@ -895,7 +901,6 @@ with tab_views[2]:
 
 with tab_views[3]:
     st.subheader("Todays Games for Lay Home")
-    lay_home = data.copy()
     lay_home['VAR1'] = np.sqrt((lay_home['FT_Odd_H'] - lay_home['FT_Odd_A'])**2)
     lay_home['VAR2'] = np.degrees(np.arctan((lay_home['FT_Odd_A'] - lay_home['FT_Odd_H']) / 2))
     lay_home['VAR3'] = np.degrees(np.arctan((lay_home['FT_Odd_D'] - lay_home['FT_Odd_A']) / 2))
@@ -938,7 +943,6 @@ with tab_views[3]:
 
 with tab_views[4]:
     st.subheader("Todays Games for Lay Away")
-    lay_away = data.copy()
     lay_away['VAR1'] = np.sqrt((lay_away['FT_Odd_H'] - lay_away['FT_Odd_A'])**2)
     lay_away['VAR2'] = np.degrees(np.arctan((lay_away['FT_Odd_A'] - lay_away['FT_Odd_H']) / 2))
     lay_away['VAR3'] = np.degrees(np.arctan((lay_away['FT_Odd_D'] - lay_away['FT_Odd_A']) / 2))
