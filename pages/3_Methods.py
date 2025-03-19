@@ -89,6 +89,8 @@ with st.spinner("Fetching data..."):
 # Display Success Messages
 if data is not None:
     st.success("Jogos do Dia loaded successfully!")
+else:
+    st.error("No Games Available for the chosen Date.")
 if historical_data is not None:
     st.success("Historical Data loaded successfully!")
 if leagues_data is not None:
