@@ -79,24 +79,58 @@ def check_h2h_lay_1x1(home_team, away_team, historical_data):
 
 # Load Data
 with st.spinner("Fetching data..."):
-    data = load_data(csv_file_url)
-    historical_data = load_data(historical_data_url)
-    leagues_data = load_data(leagues_url)
-    elo_tilt_data = load_data(elo_tilt_url)
-    data_Ov25_FT = data.copy()
-    data_btts = data.copy() 
+    try:
+        data = load_data(csv_file_url)
+        if data is not None:
+            data_Ov25_FT = data.copy()
+            data_btts = data.copy()
+        else:
+            data_Ov25_FT = None
+            data_btts = None
+    except Exception as e:
+        st.warning("No Data Available for the Chosen Date")
+        data = None
+        data_Ov25_FT = None
+        data_btts = None
+
+    try:
+        historical_data = load_data(historical_data_url)
+    except Exception as e:
+        st.warning("No Historical Data Available for the Chosen Date")
+        historical_data = None
+
+    try:
+        leagues_data = load_data(leagues_url)
+    except Exception as e:
+        st.warning("No Leagues Data Available for the Chosen Date")
+        leagues_data = None
+
+    try:
+        elo_tilt_data = load_data(elo_tilt_url)
+    except Exception as e:
+        st.warning("No Elo & Tilt Data Available for the Chosen Date")
+        elo_tilt_data = None
 
 # Display Success Messages
 if data is not None:
     st.success("Jogos do Dia loaded successfully!")
 else:
-    st.error("No Games Available for the chosen Date.")
+    st.warning("No Data Available for the Chosen Date")
+
 if historical_data is not None:
     st.success("Historical Data loaded successfully!")
+else:
+    st.warning("No Historical Data Available for the Chosen Date")
+
 if leagues_data is not None:
     st.success("Leagues Data loaded successfully!")
+else:
+    st.warning("No Leagues Data Available for the Chosen Date")
+
 if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
+else:
+    st.warning("No Elo & Tilt Data Available for the Chosen Date")
 
 # Create Tabs
 tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams', 'Over 2,5 FT', ' BTTS']
