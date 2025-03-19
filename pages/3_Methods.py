@@ -1502,8 +1502,8 @@ with tab_views[12]:
             (((data_btts['Avg_G_Scored_H_FT'] + data_btts['Avg_G_Conceded_H_FT']) + (data_btts['Avg_G_Scored_A_FT'] + data_btts['Avg_G_Conceded_A_FT'])) / 2 >= 2.70) &
             ((data_btts['Avg_G_Scored_H_FT'] + data_btts['Avg_G_Conceded_A_FT']) /2 > 1.42) & 
             ((data_btts['Avg_G_Scored_A_FT'] + data_btts['Avg_G_Conceded_H_FT']) /2 > 1.42) &
-            (data_btts['Perc_BTTS_Yes_FT_Home'] > 55) & (data_btts['Perc_BTTS_Yes_FT_Away'] > 55) & 
-            (data_btts['Perc_Over25FT_Home'] > 55) & (data_btts['Perc_Over25FT_Away'] > 55)
+            (data_btts['Perc_BTTS_Yes_FT_Home'] > 50) & (data_btts['Perc_BTTS_Yes_FT_Away'] > 50) & 
+            (data_btts['Perc_Over25FT_Home'] > 50) & (data_btts['Perc_Over25FT_Away'] > 50)
             ]
         
     # Display the final DataFrame
