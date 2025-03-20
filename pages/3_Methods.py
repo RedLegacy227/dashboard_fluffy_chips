@@ -1514,6 +1514,6 @@ with tab_views[12]:
                 'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
             st.dataframe(base_btts[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
         st.info("Data is empty.")
