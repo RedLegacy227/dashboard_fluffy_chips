@@ -92,7 +92,7 @@ with st.spinner("Fetching data..."):
             lay_home = None
             lay_away = None
     except Exception as e:
-        st.warning("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
         data = None
         data_Ov25_FT = None
         data_btts = None
@@ -102,41 +102,41 @@ with st.spinner("Fetching data..."):
     try:
         historical_data = load_data(historical_data_url)
     except Exception as e:
-        st.warning("No Historical Data Available for the Chosen Date")
+        st.error("No Historical Data Available for the Chosen Date")
         historical_data = None
 
     try:
         leagues_data = load_data(leagues_url)
     except Exception as e:
-        st.warning("No Leagues Data Available for the Chosen Date")
+        st.error("No Leagues Data Available for the Chosen Date")
         leagues_data = None
 
     try:
         elo_tilt_data = load_data(elo_tilt_url)
     except Exception as e:
-        st.warning("No Elo & Tilt Data Available for the Chosen Date")
+        st.error("No Elo & Tilt Data Available for the Chosen Date")
         elo_tilt_data = None
 
 # Display Success Messages
 if data is not None:
     st.success("Jogos do Dia loaded successfully!")
 else:
-    st.warning("No Data Available for the Chosen Date")
+    st.error("No Data Available for the Chosen Date")
 
 if historical_data is not None:
     st.success("Historical Data loaded successfully!")
 else:
-    st.warning("No Historical Data Available for the Chosen Date")
+    st.error("No Historical Data Available for the Chosen Date")
 
 if leagues_data is not None:
     st.success("Leagues Data loaded successfully!")
 else:
-    st.warning("No Leagues Data Available for the Chosen Date")
+    st.error("No Leagues Data Available for the Chosen Date")
 
 if elo_tilt_data is not None:
     st.success("Elo & Tilt Data loaded successfully!")
 else:
-    st.warning("No Elo & Tilt Data Available for the Chosen Date")
+    st.error("No Elo & Tilt Data Available for the Chosen Date")
 
 # Create Tabs
 tabs = ['Lay 0 x 1', 'Goleada Home', 'Over 1,5 FT', 'Lay Home', 'Lay Away', 'Under 1,5 FT', 'Back Home', 'Lay 1x1', 'Any Other Win', 'Louro José', 'Best Teams', 'Over 2,5 FT', ' BTTS']
@@ -745,9 +745,9 @@ with tab_views[0]:
             # Exibir o DataFrame final
             st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
 
 with tab_views[1]:
     st.subheader('Todays Games for Lay Any Other Home Win')
@@ -856,7 +856,7 @@ with tab_views[1]:
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True, hide_index=True)
                 else:
-                    st.info("No games found with the specified criteria.")
+                    st.warning("No games found with the specified criteria.")
 
             except KeyError as e:
                 st.error(f"No Data Available for the Chosen Date): {e}")
@@ -865,7 +865,7 @@ with tab_views[1]:
         LayGoleada(df_LGP, historical_data)
 
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
 
 with tab_views[2]:
     st.subheader('Todays Games for Over 1,5 FT')
@@ -895,9 +895,9 @@ with tab_views[2]:
         if not over_15_ft_flt.empty:
             st.dataframe(over_15_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
 
 with tab_views[3]:
     st.subheader("Todays Games for Lay Home")
@@ -938,11 +938,11 @@ with tab_views[3]:
             if not lay_home_flt.empty:
                 st.dataframe(lay_home_flt[['League', 'Time', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
-                st.info("No games found with the specified criteria.")
+                st.warning("No games found with the specified criteria.")
         except Exception as e:
             st.error(f"Erro ao carregar ou processar os dados para Back Home: {e}")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
 
 with tab_views[4]:
     st.subheader("Todays Games for Lay Away")
@@ -983,11 +983,11 @@ with tab_views[4]:
             if not lay_away_flt.empty:
                 st.dataframe(lay_away_flt[['League', 'Time', 'Round', 'Home', 'Away', 'FT_Odd_H', 'FT_Odd_A', 'FT_Odd_D', 'Odd_Home_Justa', 'Odd_Away_Justa', 'Avg_Points_Home_FT', 'PPJ_Home', 'CV_Avg_Points_Home_FT', 'Avg_Points_Away_FT', 'PPJ_Away', 'CV_Avg_Points_Away_FT', 'CV_Match_Type', 'Elo_Home', 'Tilt_Home', 'Elo_Away', 'Tilt_Away', 'Elo_Difference', 'Avg_Power_Ranking_H', 'CV_Avg_Power_Ranking_H', 'Avg_Power_Ranking_A', 'CV_Avg_Power_Ranking_A']], use_container_width=True, hide_index=True)
             else:
-                st.info("No games found with the specified criteria.")
+                st.warning("No games found with the specified criteria.")
         except Exception as e:
             st.error(f"No Data Available for the Chosen Date: {e}")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[5]:
     st.subheader('Todays Games for Under 1,5 FT')
@@ -1009,9 +1009,9 @@ with tab_views[5]:
         if not under_15_croatia_01_ft_flt.empty:
             st.dataframe(under_15_croatia_01_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("Dados indisponíveis para a data selecionada.")
+        st.error("Dados indisponíveis para a data selecionada.")
     st.markdown('Croatia Method 2')
     if data is not None:
         # Aplicar os filtros
@@ -1030,9 +1030,9 @@ with tab_views[5]:
         if not under_15_croatia_02_ft_flt.empty:
             st.dataframe(under_15_croatia_02_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
     st.markdown('Croatia Method 3')
     if data is not None:
         # Aplicar os filtros
@@ -1051,9 +1051,9 @@ with tab_views[5]:
         if not under_15_croatia_03_ft_flt.empty:
             st.dataframe(under_15_croatia_03_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[6]:
     st.subheader('Todays Games for Back_Home')
@@ -1073,9 +1073,9 @@ with tab_views[6]:
         if not back_home_Port_01_01_ft_flt.empty:
             st.dataframe(back_home_Port_01_01_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
     st.markdown('Portugal - Liga Portugal 1 - Method 2')
     if data is not None:
         # Aplicar os filtros
@@ -1094,9 +1094,9 @@ with tab_views[6]:
         if not back_home_Port_01_02_ft_flt.empty:
             st.dataframe(back_home_Port_01_02_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
     st.markdown('Portugal - Liga Portugal 1 - Method 3')
     if data is not None:
         # Aplicar os filtros
@@ -1115,9 +1115,9 @@ with tab_views[6]:
         if not back_home_Port_01_03_ft_flt.empty:
             st.dataframe(back_home_Port_01_03_ft_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[7]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
@@ -1153,7 +1153,7 @@ with tab_views[7]:
         if not lay_1x1_home_flt.empty:
             st.dataframe(lay_1x1_home_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
             
     st.subheader('Todays Games for Lay 1x1 Based on Away Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
@@ -1188,9 +1188,9 @@ with tab_views[7]:
         if not lay_1x1_away_flt.empty:
             st.dataframe(lay_1x1_away_flt, use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[8]:
     st.markdown(f'#### Teste of Lay Any Other Win Score ####')
@@ -1276,7 +1276,7 @@ with tab_views[8]:
             # Exibir o DataFrame sem o índice
             st.dataframe(home_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
         
         st.subheader('Lay any Other Away Win')
         if away_win_games:
@@ -1290,9 +1290,9 @@ with tab_views[8]:
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No Data Available for the Chosen Date")
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[9]:
     st.markdown('#### Best Teams for Louro José ####')
@@ -1330,7 +1330,7 @@ with tab_views[9]:
         # Display the final DataFrame
         st.dataframe(df_louro_jose[columns_to_display], use_container_width=True, hide_index=True)
     else:
-        st.info("No games found with the specified criteria.")
+        st.warning("No games found with the specified criteria.")
 
 with tab_views[10]:
     st.markdown(f'#### Best Teams with > 60% Probability - Last 11 Games ####')
@@ -1364,87 +1364,87 @@ with tab_views[10]:
         if not flt_home_SFW.empty:
             st.dataframe(flt_home_SFW[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Home Scored First and Draw ####')
         if not flt_home_SFD.empty:
             st.dataframe(flt_home_SFD[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Home Scored First and Lost ####')
         if not flt_home_SFL.empty:
             st.dataframe(flt_home_SFL[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Home Conceded First and Won ####')
         if not flt_home_CFW.empty:
             st.dataframe(flt_home_CFW[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Home Conceded First and Draw ####')
         if not flt_home_CFD.empty:
             st.dataframe(flt_home_CFD[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Home Conceded First and Lost ####')
         if not flt_home_CFL.empty:
             st.dataframe(flt_home_CFL[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Home After winning by one scored the second ####')
         if not flt_home_DilV.empty:
             st.dataframe(flt_home_DilV[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away Scored First and Won ####')
         if not flt_away_SFW.empty:
             st.dataframe(flt_away_SFW[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away Scored First and Draw ####')
         if not flt_away_SFD.empty:
             st.dataframe(flt_away_SFD[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away Scored First and Lost ####')
         if not flt_away_SFL.empty:
             st.dataframe(flt_away_SFL[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away Conceded First and Won ####')
         if not flt_away_CFW.empty:
             st.dataframe(flt_away_CFW[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away Conceded First and Draw ####')
         if not flt_away_CFD.empty:
             st.dataframe(flt_away_CFD[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away Conceded First and Lost ####')
         if not flt_away_CFL.empty:
             st.dataframe(flt_away_CFL[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
         
         st.markdown('#### Away After winning by one scored the second ####')
         if not flt_away_DilV.empty:
             st.dataframe(flt_away_DilV[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No Games available with minimum stats.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("No games found with the specified criteria.")
+        st.error("Data is empty.")
         
 with tab_views[11]:
     st.markdown(f'#### Over 2,5 FT - Teste ####')
@@ -1468,7 +1468,7 @@ with tab_views[11]:
                 'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
             st.dataframe(CG02_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
         
     st.markdown(f'#### Normal Average ####')
     
@@ -1490,9 +1490,9 @@ with tab_views[11]:
                 'Perc_BTTS_Yes_FT_Home', 'Perc_BTTS_Yes_FT_Away' ]
             st.dataframe(avg_data_Ov25_FT[columns_to_display], use_container_width=True, hide_index=True)
         else:
-            st.info("No games found with the specified criteria.")
+            st.warning("No games found with the specified criteria.")
     else:
-        st.info("Data is empty.")
+        st.error("Data is empty.")
         
 with tab_views[12]:
     st.markdown(f'#### Games with High Probability for BTTS Yes ####')
@@ -1516,4 +1516,4 @@ with tab_views[12]:
         else:
             st.warning("No games found with the specified criteria.")
     else:
-        st.info("Data is empty.")
+        st.error("Data is empty.")
