@@ -1163,6 +1163,24 @@ with tab_views[6]:
     else:
         st.error("No Data Available for the Chosen Date")
         
+    st.markdown('UEFA - Nations League - Method Automatic Pivot Table')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_nacleague_01_01_ft_flt = data[
+            (data["League"] == 'AUSTRALIA - A-LEAGUE') &
+            (data["PPJ_Away"] >= 0.52) &
+            (data["PPJ_Away"] <= 1.12) 
+        ]
+        back_home_nacleague_01_01_ft_flt = back_home_nacleague_01_01_ft_flt.sort_values(by='Time', ascending=True)
+        
+        # Exibir os dados filtrados
+        if not back_home_nacleague_01_01_ft_flt.empty:
+            st.dataframe(back_home_nacleague_01_01_ft_flt, use_container_width=True, hide_index=True)
+        else:
+            st.warning("No games found with the specified criteria.")
+    else:
+        st.error("No Data Available for the Chosen Date")
+        
 with tab_views[7]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
