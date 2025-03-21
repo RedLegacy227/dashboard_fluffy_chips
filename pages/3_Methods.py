@@ -1167,7 +1167,7 @@ with tab_views[6]:
     if data is not None:
         # Aplicar os filtros
         back_home_nacleague_01_01_ft_flt = data[
-            (data["League"] == 'AUSTRALIA - A-LEAGUE') &
+            (data["League"] == 'EUROPE - UEFA NATIONS LEAGUE') &
             (data["PPJ_Away"] >= 0.52) &
             (data["PPJ_Away"] <= 1.12) 
         ]
