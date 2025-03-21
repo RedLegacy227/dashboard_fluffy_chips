@@ -1119,6 +1119,50 @@ with tab_views[6]:
     else:
         st.error("No Data Available for the Chosen Date")
         
+    st.markdown('Portugal - Liga Portugal - Method Automatic Pivot Table')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_Port_01_04_ft_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["Poisson_GS_H_0"] >= 0.50) &
+            (data["Poisson_GS_H_0"] <= 0.55) &
+            (data["Poisson_GS_H_2"] >= 0.10) &
+            (data["Poisson_GS_H_2"] <= 0.13)
+        ]
+        back_home_Port_01_04_ft_flt = back_home_Port_01_04_ft_flt.sort_values(by='Time', ascending=True)
+        
+        # Exibir os dados filtrados
+        if not back_home_Port_01_04_ft_flt.empty:
+            st.dataframe(back_home_Port_01_04_ft_flt, use_container_width=True, hide_index=True)
+        else:
+            st.warning("No games found with the specified criteria.")
+    else:
+        st.error("No Data Available for the Chosen Date")
+        
+    st.markdown('Austrália - A-League - Method Automatic Pivot Table')
+    if data is not None:
+        # Aplicar os filtros
+        back_home_Australia_01_01_ft_flt = data[
+            (data["League"] == 'AUSTRALIA - A-LEAGUE') &
+            (data["Avg_CG_Conceded_H_02"] >= 0.98) &
+            (data["Avg_CG_Conceded_H_02"] <= 1.06) &
+            (data["Avg_G_Scored_H_ST_Value"] >= 0.15) &
+            (data["Avg_G_Scored_H_ST_Value"] <= 0.70) &
+            (data["Avg_G_Conceded_H_ST_Value"] >= 0.15) &
+            (data["Avg_G_Conceded_H_ST_Value"] <= 0.70) &
+            (data["Poisson_GM_H_4"] >= 0.02) &
+            (data["Poisson_GM_H_4"] <= 0.03)
+        ]
+        back_home_Australia_01_01_ft_flt = back_home_Australia_01_01_ft_flt.sort_values(by='Time', ascending=True)
+        
+        # Exibir os dados filtrados
+        if not back_home_Australia_01_01_ft_flt.empty:
+            st.dataframe(back_home_Australia_01_01_ft_flt, use_container_width=True, hide_index=True)
+        else:
+            st.warning("No games found with the specified criteria.")
+    else:
+        st.error("No Data Available for the Chosen Date")
+        
 with tab_views[7]:
     st.subheader('Todays Games for Lay 1x1 Based on Home Team')
     st.markdown('Keep The Operation until Green or close at 60 min. At Half Time if you have Profit Close the Operation')
