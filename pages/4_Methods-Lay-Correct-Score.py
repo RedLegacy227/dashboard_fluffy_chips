@@ -858,7 +858,7 @@ with tab_views[2]:
             ft_odd_h = float(ft_odd_h) if not pd.isna(ft_odd_h) else None
 
             if cv_mo_ft is None or ft_odd_h is None:
-                return None, None  # Se os valores estiverem ausentes, retorna None
+                return "N/A", "N/A"  # Se os valores estiverem ausentes, retorna "N/A"
 
             # Determinar a linha correta baseada no intervalo de CV_Match_Odds
             linha = None
@@ -870,7 +870,7 @@ with tab_views[2]:
                     break
 
             if linha is None:
-                return None, None  # Caso não encontre um intervalo correspondente
+                return "N/A", "N/A"  # Caso não encontre um intervalo correspondente
 
             # Determinar a coluna correta baseada no intervalo de FT_Odd_H
             for coluna in df_referencias.columns:
@@ -883,10 +883,10 @@ with tab_views[2]:
                     odd_justa, win_rate = df_referencias.iloc[linha][coluna]  # Extrair tupla
                     return odd_justa, win_rate
 
-            return None, None  # Retorna None se não houver correspondência
+            return "N/A", "N/A"  # Retorna "N/A" se não houver correspondência
         except Exception as e:
             st.error(f"Erro ao obter referência: {e}")
-            return None, None
+            return "N/A", "N/A"
 
     # Configurações de ligas e seus filtros
     leagues_config = {
