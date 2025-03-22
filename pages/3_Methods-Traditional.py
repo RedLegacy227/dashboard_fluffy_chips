@@ -226,7 +226,7 @@ with tab_views[0]:
         filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
         
         back_home_uefa_nacleague_01_ft_flt = data[
-            (data["League"] == 'ARGENTINA - TORNEO BETANO') &
+            (data["League"] == 'EUROPE - UEFA NATIONS LEAGUE') &
             (data["Final_Avg_G_Conceded_H_ST"] >= 7.54) &
             (data["Final_Avg_G_Conceded_H_ST"] <= 13.63) &
             (data["H_BTTSY"] >= 0.56) &
