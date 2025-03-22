@@ -143,7 +143,7 @@ tabs = ['Back Home', 'Back Away', 'Lay Home', 'Lay Away', 'Over 1,5 FT', 'Under 
 tab_views = st.tabs(tabs)
 
 with tab_views[0]:
-    st.subheader(f'#### Todays Games for Back_Home - Method Automatic Pivot Table ####')
+    st.markdown(f'#### Todays Games for Back_Home - Method Automatic Pivot Table ####')
 
     # List of columns to display
     columns_to_display = [
@@ -292,7 +292,7 @@ with tab_views[1]:
         st.error("No Data Available for the Chosen Date")
         
 with tab_views[2]:
-    st.subheader("Todays Games for Lay Home")
+    st.markdown(f"#### Todays Games for Lay Home ####")
     try:
         lay_home['VAR1'] = np.sqrt((lay_home['FT_Odd_H'] - lay_home['FT_Odd_A'])**2)
         lay_home['VAR2'] = np.degrees(np.arctan((lay_home['FT_Odd_A'] - lay_home['FT_Odd_H']) / 2))
@@ -337,7 +337,7 @@ with tab_views[2]:
         st.error("No Data Available for the Chosen Date")
 
 with tab_views[3]:
-    st.subheader("Todays Games for Lay Away")
+    st.markdown(f"#### Todays Games for Lay Away ####")
     try:
         lay_away['VAR1'] = np.sqrt((lay_away['FT_Odd_H'] - lay_away['FT_Odd_A'])**2)
         lay_away['VAR2'] = np.degrees(np.arctan((lay_away['FT_Odd_A'] - lay_away['FT_Odd_H']) / 2))
@@ -382,7 +382,7 @@ with tab_views[3]:
         st.error("No Data Available for the Chosen Date")
 
 with tab_views[4]:
-    st.subheader('Todays Games for Over 1,5 FT')
+    st.markdown(f'#### Todays Games for Over 1,5 FT ####')
     st.markdown('If the Odd is less than 1.45, you must wait for it to reach minimum 1.45')
     if data is not None:
         # Aplicar os filtros
@@ -414,7 +414,7 @@ with tab_views[4]:
         st.error("No Data Available for the Chosen Date")
 
 with tab_views[5]:
-    st.subheader('Todays Games for Under 1,5 FT')
+    st.markdown(f'#### Todays Games for Under 1,5 FT ####')
     st.markdown('Croatia Method 1')
     if data is not None:
         # Aplicar os filtros
