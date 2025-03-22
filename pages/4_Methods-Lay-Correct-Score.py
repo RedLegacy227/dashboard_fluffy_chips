@@ -754,9 +754,10 @@ with tab_views[0]:
             columns_to_display = [col for col in columns_to_display if col in final_df.columns]
         
             # Exibir o DataFrame final
-            st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
+            if not final_df.empty:
+                st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
+            else:
+                st.warning("No games found with the specified criteria.")
     else:
         st.error("No Data Available for the Chosen Date")
         
@@ -893,11 +894,11 @@ with tab_views[2]:
                 ("Poisson_GM_A_3", "<=", 0.15)
             ],
             "df_referencias": pd.DataFrame({
-                "Intervalo CV": ["<=0.4500", "0.4501 - 0.6000", ">=0.6001"],
-                "<=1.4500": ["0 - 50%", "0 - 20%", "<60"],
-                "1.4501 - 1.6000": ["0", "<19", "<40"],
-                "1.6001 - 1.7500": ["<29", "<17", "0"],
-                ">=1.7501": ["<34", "0", "0"]
+                "Intervalo CV": ["<=0.2500", "0.2501 - 0.6000", ">=0.6001"],
+                "<=1.3500": ["0 - 0%", "0 - 0%", "<1000 - 100%"],
+                "1.3501 - 1.6000": ["0 - 0%", "<49 - 98,06%", "<73 - 100%"],
+                "1.9001 - 2.1500": ["<45 - 97,87%", "<50 - 98,08%", "0 - 0%"],
+                ">=2.1501": ["<40 - 97,63%", "<40 - 100%", "0 - 0%"]
                 }).set_index("Intervalo CV")
         },
     }
