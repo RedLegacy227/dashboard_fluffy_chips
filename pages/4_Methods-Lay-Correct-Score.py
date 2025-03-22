@@ -838,7 +838,7 @@ with tab_views[2]:
     def parse_interval(interval):
         """Converte uma string de intervalo ('<=X', '>=X', 'A - B') para um par de valores numéricos."""
         interval = interval.strip().replace(" ", "")  # Remover espaços extras
-    
+
         if interval.startswith("<="):
             return (-float('inf'), float(interval[2:]))  # Exemplo: '<=0.2000' → (-inf, 0.2000)
         elif interval.startswith(">="):
@@ -848,7 +848,7 @@ with tab_views[2]:
             return (limites[0], limites[1])  # Exemplo: '0.2001 - 0.4000' → (0.2001, 0.4000)
         else:
             raise ValueError(f"Formato de intervalo desconhecido: {interval}")
-    
+
     # Função para obter referência
     def obter_referencia(cv_mo_ft, ft_odd_h, df_referencias):
         """Determina a referência com base nos intervalos de CV_Match_Odds e FT_Odd_H."""
@@ -856,38 +856,38 @@ with tab_views[2]:
             # Garantir que os valores sejam numéricos
             cv_mo_ft = float(cv_mo_ft) if not pd.isna(cv_mo_ft) else None
             ft_odd_h = float(ft_odd_h) if not pd.isna(ft_odd_h) else None
-    
+
             if cv_mo_ft is None or ft_odd_h is None:
                 return None, None  # Se os valores estiverem ausentes, retorna None
-    
+
             # Determinar a linha correta baseada no intervalo de CV_Match_Odds
             linha = None
             for i, intervalo in enumerate(df_referencias.index):
                 min_val, max_val = parse_interval(intervalo)
-    
+
                 if min_val <= cv_mo_ft <= max_val:
                     linha = i
                     break
-    
+
             if linha is None:
                 return None, None  # Caso não encontre um intervalo correspondente
-    
+
             # Determinar a coluna correta baseada no intervalo de FT_Odd_H
             for coluna in df_referencias.columns:
                 if coluna == "Intervalo CV":
                     continue  # Pular a coluna de Intervalo CV
-    
+
                 min_val, max_val = parse_interval(coluna)
-    
+
                 if min_val <= ft_odd_h <= max_val:
                     odd_justa, win_rate = df_referencias.iloc[linha][coluna]  # Extrair tupla
                     return odd_justa, win_rate
-    
+
             return None, None  # Retorna None se não houver correspondência
         except Exception as e:
             st.error(f"Erro ao obter referência: {e}")
             return None, None
-    
+
     # Configurações de ligas e seus filtros
     leagues_config = {
         "PORTUGAL - LIGA PORTUGAL": {
@@ -905,30 +905,30 @@ with tab_views[2]:
             }).set_index("Intervalo CV")
         },
     }
-    
+
     # Configuração do Streamlit
     st.subheader("Today's Games for Lay 1X3 - Fluffy Method")
-    
-    if lay_1x3 is not None:
+
+    if data is not None:
         all_games = []  # Lista para armazenar todos os jogos filtrados
-    
+
         for league, config in leagues_config.items():
             prob_filter_col, prob_filter_val = config["prob_filter"]
             df_referencias = config["df_referencias"]
-    
+
             # Aplicar filtros
-            filtered_data = lay_1x3[lay_1x3["League"] == league]
+            filtered_data = data[data["League"] == league]
             filtered_data = filtered_data[filtered_data[prob_filter_col] == prob_filter_val]
-    
+
             # Aplicar filtro adicional para '0x1_H' e '0x1_A'
             filtered_data = filtered_data[(filtered_data['Perc_1x3_H'] < 10) & (filtered_data['Perc_1x3_A'] < 10)]
-    
+
             for col, op, val in config["additional_filters"]:
                 if op == ">=":
                     filtered_data = filtered_data[filtered_data[col] >= val]
                 elif op == "<=":
                     filtered_data = filtered_data[filtered_data[col] <= val]
-    
+
             # Aplicar a função para calcular 'Odd_Justa_Lay_1x3' e 'Win_Rate_Lay_1x3'
             results = filtered_data.apply(
                 lambda row: pd.Series(obter_referencia(row["CV_MO_FT"], row["FT_Odd_H"], df_referencias)),
@@ -936,34 +936,33 @@ with tab_views[2]:
             )
             results.columns = ["Odd_Justa_Lay_1x3", "Win_Rate_Lay_1x3"]
             filtered_data = pd.concat([filtered_data, results], axis=1)
-    
+
             # Adicionar os jogos filtrados à lista
             all_games.append(filtered_data)
-    
+
         # Concatenar todos os DataFrames da lista em um único DataFrame
         if all_games:
             final_df = pd.concat(all_games, ignore_index=True)
             final_df = final_df.sort_values(by='Time', ascending=True)  # Ordenar por 'Time'
-    
+
             # Adicionar a coluna com a soma de 'h2h_lay_1x3' para cada grupo de 'Home' e 'Away'
             final_df["sum_h2h_lay_1x3"] = final_df.groupby(['Home', 'Away'])['h2h_lay_1x3'].transform('sum')
-    
+
             # List of columns to display
             columns_to_display = [
                 'Time', 'League', 'Home', 'Away', 'Round', 'Odd_Justa_Lay_1x3', 'Win_Rate_Lay_1x3', 'sum_h2h_lay_1x3', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
                 'Perc_1x3_H', 'Perc_1x3_A', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 'Perc_BTTS_Yes_Home', 'Perc_BTTS_Yes_Away', 'h2h_lay_1x3'
             ]
-    
+
             # Ensure all columns exist in final_df
             columns_to_display = [col for col in columns_to_display if col in final_df.columns]
-    
+
             # Exibir o DataFrame final
             st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
         else:
             st.warning("No games found with the specified criteria.")
     else:
-        st.error("No Data Available for the Chosen Date")
-        
+        st.error("No Data Available for the Chosen Date")        
         
 with tab_views[3]:
     st.subheader('Todays Games for Lay Any Other Home Win')
