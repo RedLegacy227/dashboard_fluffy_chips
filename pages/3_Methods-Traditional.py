@@ -143,10 +143,18 @@ tabs = ['Back Home', 'Back Away', 'Lay Home', 'Lay Away', 'Over 1,5 FT', 'Under 
 tab_views = st.tabs(tabs)
 
 with tab_views[0]:
-    st.subheader('Todays Games for Back_Home')
-    st.markdown('Portugal - Liga Portugal 1 - Method 1')
+    st.subheader(f'#### Todays Games for Back_Home - Method Automatic Pivot Table ####')
+
+    # List of columns to display
+    columns_to_display = [
+        'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Favorite', 'Perc_Home_Win_FT', 'Perc_Draw_Win_H_FT', 'Perc_Draw_Win_A_FT', 'Perc_Away_Win_FT'
+    ]
+
     if data is not None:
-        # Aplicar os filtros 
+        # Create a list to hold all filtered dataframes
+        filtered_dataframes = []
+
+        # Apply filters for each league and method
         back_home_Port_01_01_ft_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Home_Score_Take"] == 'No') &
@@ -154,18 +162,8 @@ with tab_views[0]:
             (data["Avg_G_Diff_A_FT_Value"] > -0.0900) &
             (data["Avg_G_Diff_A_FT_Value"] < 0.0250)
         ]
-        back_home_Port_01_01_ft_flt = back_home_Port_01_01_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_home_Port_01_01_ft_flt.empty:
-            st.dataframe(back_home_Port_01_01_ft_flt, use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
-    else:
-        st.error("No Data Available for the Chosen Date")
-    st.markdown('Portugal - Liga Portugal 1 - Method 2')
-    if data is not None:
-        # Aplicar os filtros
+        filtered_dataframes.append(back_home_Port_01_01_ft_flt)
+
         back_home_Port_01_02_ft_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Home_Score_Take"] == 'No') &
@@ -175,18 +173,8 @@ with tab_views[0]:
             (data["Avg_Points_Away_FT"] > 0.9780) &
             (data["Avg_Points_Away_FT"] < 1.6950)
         ]
-        back_home_Port_01_02_ft_flt = back_home_Port_01_02_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_home_Port_01_02_ft_flt.empty:
-            st.dataframe(back_home_Port_01_02_ft_flt, use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
-    else:
-        st.error("No Data Available for the Chosen Date")
-    st.markdown('Portugal - Liga Portugal 1 - Method 3')
-    if data is not None:
-        # Aplicar os filtros
+        filtered_dataframes.append(back_home_Port_01_02_ft_flt)
+
         back_home_Port_01_03_ft_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["Home_Score_Take"] == 'No') &
@@ -196,112 +184,110 @@ with tab_views[0]:
             (data["Avg_G_Conceded_A_FT_Value"] > 1.5120) &
             (data["Avg_G_Conceded_A_FT_Value"] < 4.0670)
         ]
-        back_home_Port_01_03_ft_flt = back_home_Port_01_03_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_home_Port_01_03_ft_flt.empty:
-            st.dataframe(back_home_Port_01_03_ft_flt, use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
-    else:
-        st.error("No Data Available for the Chosen Date")
-        
-    st.markdown('Portugal - Liga Portugal - Method Automatic Pivot Table')
-    if data is not None:
-        # Aplicar os filtros
+        filtered_dataframes.append(back_home_Port_01_03_ft_flt)
+
         back_home_Port_01_04_ft_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["DifPer_HomeDraw"] >= 6.46) &
+            (data["DifPer_HomeDraw"] <= 9.28) &
             (data["Poisson_GS_H_0"] >= 0.50) &
             (data["Poisson_GS_H_0"] <= 0.55) &
+            (data["H_BTTSN"] >= 1.12) &
+            (data["H_BTTSN"] <= 1.22) &
             (data["Poisson_GS_H_2"] >= 0.10) &
-            (data["Poisson_GS_H_2"] <= 0.13)
+            (data["Poisson_GS_H_2"] <= 0.13) &
+            (data["Final_Avg_RPS_MO_A"] >= 3.94) & 
+            (data["Final_Avg_RPS_MO_A"] <= 4.39)
         ]
-        back_home_Port_01_04_ft_flt = back_home_Port_01_04_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_home_Port_01_04_ft_flt.empty:
-            st.dataframe(back_home_Port_01_04_ft_flt, use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
-    else:
-        st.error("No Data Available for the Chosen Date")
-        
-    st.markdown('Austrália - A-League - Method Automatic Pivot Table')
-    if data is not None:
-        # Aplicar os filtros
-        back_home_Australia_01_01_ft_flt = data[
-            (data["League"] == 'AUSTRALIA - A-LEAGUE') &
-            (data["Avg_CG_Conceded_H_02"] >= 0.98) &
-            (data["Avg_CG_Conceded_H_02"] <= 1.06) &
-            (data["Avg_G_Scored_H_ST_Value"] >= 0.15) &
-            (data["Avg_G_Scored_H_ST_Value"] <= 0.70) &
-            (data["Avg_G_Conceded_H_ST_Value"] >= 0.15) &
-            (data["Avg_G_Conceded_H_ST_Value"] <= 0.70) &
-            (data["Poisson_GM_H_4"] >= 0.02) &
-            (data["Poisson_GM_H_4"] <= 0.03)
-        ]
-        back_home_Australia_01_01_ft_flt = back_home_Australia_01_01_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_home_Australia_01_01_ft_flt.empty:
-            st.dataframe(back_home_Australia_01_01_ft_flt, use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
-    else:
-        st.error("No Data Available for the Chosen Date")
-        
-    st.markdown('UEFA - Nations League - Method Automatic Pivot Table')
-    if data is not None:
-        # Aplicar os filtros
+        filtered_dataframes.append(back_home_Port_01_04_ft_flt)
+
         back_home_nacleague_01_01_ft_flt = data[
             (data["League"] == 'EUROPE - UEFA NATIONS LEAGUE') &
-            (data["PPJ_Away"] >= 0.52) &
-            (data["PPJ_Away"] <= 1.12) 
+            (data["Angle_HomeAway"] >= -14.63) &
+            (data["Angle_HomeAway"] <= -10.23) &
+            (data["A_Un"] >= 0.20) &
+            (data["A_Un"] <= 0.33) &
+            (data["DifAbs_HomeDraw"] >= 0.28) &
+            (data["DifAbs_HomeDraw"] <= 0.40) &
+            (data["D_A"] >= 1.57) &
+            (data["D_A"] <= 1.92) 
         ]
-        back_home_nacleague_01_01_ft_flt = back_home_nacleague_01_01_ft_flt.sort_values(by='Time', ascending=True)
+        filtered_dataframes.append(back_home_nacleague_01_01_ft_flt)
         
-        # Exibir os dados filtrados
-        if not back_home_nacleague_01_01_ft_flt.empty:
-            st.dataframe(back_home_nacleague_01_01_ft_flt, use_container_width=True, hide_index=True)
+        back_home_argentina_01_01_ft_flt = data[
+            (data["League"] == 'ARGENTINA - TORNEO BETANO') &
+            (data["Final_Avg_G_Conceded_H_ST"] >= 7.54) &
+            (data["Final_Avg_G_Conceded_H_ST"] <= 13.63) &
+            (data["H_BTTSY"] >= 0.56) &
+            (data["H_BTTSY"] <= 0.76) &
+            (data["BTTSY_BTTSN"] >= 0.60) &
+            (data["BTTSY_BTTSN"] <= 0.70) 
+        ]
+        filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
+        
+        back_home_argentina_01_01_ft_flt = data[
+            (data["League"] == 'ARGENTINA - TORNEO BETANO') &
+            (data["Final_Avg_G_Conceded_H_ST"] >= 7.54) &
+            (data["Final_Avg_G_Conceded_H_ST"] <= 13.63) &
+            (data["H_BTTSY"] >= 0.56) &
+            (data["H_BTTSY"] <= 0.76) &
+            (data["BTTSY_BTTSN"] >= 0.60) &
+            (data["BTTSY_BTTSN"] <= 0.70) 
+        ]
+        filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
+
+        # Concatenate all filtered dataframes
+        df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
+
+        # Sort by 'Time' and select only the desired columns
+        df_ligas_back_home = df_ligas_back_home[columns_to_display].sort_values(by='Time', ascending=True)
+
+        # Display the final dataframe
+        if not df_ligas_back_home.empty:
+            st.dataframe(df_ligas_back_home, use_container_width=True, hide_index=True)
         else:
             st.warning("No games found with the specified criteria.")
     else:
         st.error("No Data Available for the Chosen Date")
         
 with tab_views[1]:
-    st.markdown(f'#### Back Away ####')
-    st.markdown('ARGENTINA - Torneo Betano - Method Automatic Pivot Table')
+    st.markdown(f'#### Back Away - Method Automatic Pivot Table ####')
+
+    # List of columns to display
+    columns_to_display = [
+        'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Favorite', 'Perc_Home_Win_FT', 'Perc_Draw_Win_H_FT', 'Perc_Draw_Win_A_FT', 'Perc_Away_Win_FT'
+    ]
+
     if data is not None:
-        # Aplicar os filtros
+        # Create a list to hold all filtered dataframes
+        filtered_dataframes = []
+
+        # Apply filters for each league and method
         back_away_argentina01_ft_flt = data[
             (data["League"] == 'ARGENTINA - TORNEO BETANO') &
             (data["Poisson_GS_A_1"] >= 0.20) &
-            (data["Poisson_GS_A_1"] <= 0.27) 
+            (data["Poisson_GS_A_1"] <= 0.27)
         ]
-        back_away_argentina01_ft_flt = back_away_argentina01_ft_flt.sort_values(by='Time', ascending=True)
-        
-        # Exibir os dados filtrados
-        if not back_away_argentina01_ft_flt.empty:
-            st.dataframe(back_away_argentina01_ft_flt, use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
-    else:
-        st.error("No Data Available for the Chosen Date")
-        
-    st.markdown('PORTUGAL - Liga Portugal - Method Automatic Pivot Table')
-    if data is not None:
+        filtered_dataframes.append(back_away_argentina01_ft_flt)
+
         back_away_portugal01_ft_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["DifAbs_DrawAway"] >= 0.17) &
-            (data["DifAbs_DrawAway"] <= 0.25) 
+            (data["DifAbs_DrawAway"] <= 0.25)
         ]
-        back_away_portugal01_ft_flt = back_away_portugal01_ft_flt.sort_values(by='Time', ascending=True)   
-    
-        if not back_away_portugal01_ft_flt.empty:
-            st.dataframe(back_away_portugal01_ft_flt, use_container_width=True, hide_index=True)    
-        
+        filtered_dataframes.append(back_away_portugal01_ft_flt)
+
+        # Concatenate all filtered dataframes
+        df_ligas_back_away = pd.concat(filtered_dataframes, ignore_index=True)
+
+        # Sort by 'Time' and select only the desired columns
+        df_ligas_back_away = df_ligas_back_away[columns_to_display].sort_values(by='Time', ascending=True)
+
+        # Display the final dataframe
+        if not df_ligas_back_away.empty:
+            st.dataframe(df_ligas_back_away, use_container_width=True, hide_index=True)
         else:
-            st.warning("No games found with the specified criteria.") 
+            st.warning("No games found with the specified criteria.")
     else:
         st.error("No Data Available for the Chosen Date")
         
