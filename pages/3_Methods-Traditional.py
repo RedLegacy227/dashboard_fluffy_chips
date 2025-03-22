@@ -216,8 +216,10 @@ with tab_views[0]:
         
         back_home_argentina_01_01_ft_flt = data[
             (data["League"] == 'ARGENTINA - TORNEO BETANO') &
-            (data["Final_Avg_G_Conceded_H_ST"] >= 7.54) &
-            (data["Final_Avg_G_Conceded_H_ST"] <= 13.63) &
+            (data["Final_Avg_G_Conceded_H_ST"] >= 0.04) &
+            (data["Final_Avg_G_Conceded_H_ST"] <= 0.33) &
+            (data["Final_Avg_RPS_BTTS_A"] >= 7.54) &
+            (data["Final_Avg_RPS_BTTS_A"] <= 12.63) &
             (data["H_BTTSY"] >= 0.56) &
             (data["H_BTTSY"] <= 0.76) &
             (data["BTTSY_BTTSN"] >= 0.60) &
@@ -225,17 +227,6 @@ with tab_views[0]:
         ]
         filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
         
-        back_home_uefa_nacleague_01_ft_flt = data[
-            (data["League"] == 'EUROPE - UEFA NATIONS LEAGUE') &
-            (data["Final_Avg_G_Conceded_H_ST"] >= 7.54) &
-            (data["Final_Avg_G_Conceded_H_ST"] <= 13.63) &
-            (data["H_BTTSY"] >= 0.56) &
-            (data["H_BTTSY"] <= 0.76) &
-            (data["BTTSY_BTTSN"] >= 0.60) &
-            (data["BTTSY_BTTSN"] <= 0.70) 
-        ]
-        filtered_dataframes.append(back_home_uefa_nacleague_01_ft_flt)
-
         # Concatenate all filtered dataframes
         df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
 
