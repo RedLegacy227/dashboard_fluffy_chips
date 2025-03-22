@@ -236,6 +236,27 @@ with tab_views[0]:
         ]
         filtered_dataframes.append(back_home_austria02_ft_flt)
         
+        back_home_brasil01_ft_flt = data[
+            (data["League"] == 'BRASIL - SERIE A BETANO') &
+            (data["CV_OvUn_FT"] == 0.25) &
+            (data["Final_Avg_RPS_MO_H"] <= 4.95) &
+            (data["Final_Avg_RPS_MO_H"] >= 5.85) &
+            (data["Poisson_GM_A_0"] <= 0.12) &
+            (data["Poisson_GM_A_0"] >= 0.19) &
+            (data["Poisson_GM_H_4"] <= 0.06) &
+            (data["Poisson_GM_H_4"] >= 0.10)
+        ]
+        filtered_dataframes.append(back_home_brasil01_ft_flt)
+        
+        back_home_brasil02_ft_flt = data[
+            (data["League"] == 'BRASIL - SERIE A BETANO') &
+            (data["DifPer_HomeDraw"] == 1.40) &
+            (data["DifPer_HomeDraw"] <= 1.80) &
+            (data["Final_Avg_CG_Conceded_H_02"] >= 4.07) &
+            (data["Final_Avg_CG_Conceded_H_02"] <= 7.06)
+        ]
+        filtered_dataframes.append(back_home_brasil02_ft_flt)
+        
         # Concatenate all filtered dataframes
         df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
 
@@ -294,6 +315,15 @@ with tab_views[1]:
             (data["Poisson_GM_H_0"] <= 0.56) 
         ]
         filtered_dataframes.append(back_away_austria01_ft_flt)
+        
+        back_away_brasil02_ft_flt = data[
+            (data["League"] == 'BRASIL - SERIE B') &
+            (data["Final_Avg_RPS_MO_A"] >= 9.40) &
+            (data["Final_Avg_RPS_MO_A"] <= 10.32) &
+            (data["Poisson_GM_H_1"] >= 0.33) &
+            (data["Poisson_GM_H_1"] <= 0.34) 
+        ]
+        filtered_dataframes.append(back_away_brasil02_ft_flt)
         
         # Concatenate all filtered dataframes
         df_ligas_back_away = pd.concat(filtered_dataframes, ignore_index=True)
