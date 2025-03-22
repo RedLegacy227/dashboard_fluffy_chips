@@ -934,7 +934,7 @@ with tab_views[2]:
                 lambda row: pd.Series(obter_referencia(row["CV_MO_FT"], row["FT_Odd_H"], df_referencias)),
                 axis=1
             )
-            #results.columns = ["Odd_Justa_Lay_1x3", "Win_Rate_Lay_1x3"]
+            results.columns = df_referencias["Odd_Justa_Lay_1x3", "Win_Rate_Lay_1x3"]
             filtered_data = pd.concat([filtered_data, results], axis=1)
 
             # Adicionar os jogos filtrados à lista
