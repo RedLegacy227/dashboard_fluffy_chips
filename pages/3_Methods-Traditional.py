@@ -272,15 +272,19 @@ with tab_views[1]:
     st.markdown(f'#### Back Away ####')
     st.markdown('ARGENTINA - Torneo Betano - Method Automatic Pivot Table')
     if data is not None:
-        back_away_argentina01_ft = data[
+        # Aplicar os filtros
+        back_away_argentina01_ft_flt = data[
             (data["League"] == 'ARGENTINA - TORNEO BETANO') &
             (data["Poisson_GS_A_1"] >= 0.20) &
             (data["Poisson_GS_A_1"] <= 0.27) 
         ]
-    back_away_argentina01_ft = back_away_argentina01_ft.sort_values(by='Time', ascending=True)   
-    
-    if not back_away_argentina01_ft.empty:
-        st.dataframe(back_away_argentina01_ft, use_container_width=True, hide_index=True)     
+        back_away_argentina01_ft_flt = back_away_argentina01_ft_flt.sort_values(by='Time', ascending=True)
+        
+        # Exibir os dados filtrados
+        if not back_away_argentina01_ft_flt.empty:
+            st.dataframe(back_away_argentina01_ft_flt, use_container_width=True, hide_index=True)
+        else:
+            st.warning("No games found with the specified criteria.")
     else:
         st.error("No Data Available for the Chosen Date")
         
