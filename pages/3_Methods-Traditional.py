@@ -290,15 +290,18 @@ with tab_views[1]:
         
     st.markdown('PORTUGAL - Liga Portugal - Method Automatic Pivot Table')
     if data is not None:
-        back_away_portugal01_ft = data[
+        back_away_portugal01_ft_flt = data[
             (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
             (data["DifAbs_DrawAway"] >= 0.17) &
             (data["DifAbs_DrawAway"] <= 0.25) 
         ]
-    back_away_portugal01_ft = back_away_portugal01_ft.sort_values(by='Time', ascending=True)   
+        back_away_portugal01_ft_flt = back_away_portugal01_ft_flt.sort_values(by='Time', ascending=True)   
     
-    if not back_away_portugal01_ft.empty:
-        st.dataframe(back_away_portugal01_ft, use_container_width=True, hide_index=True)     
+        if not back_away_portugal01_ft_flt.empty:
+            st.dataframe(back_away_portugal01_ft_flt, use_container_width=True, hide_index=True)    
+        
+        else:
+            st.warning("No games found with the specified criteria.") 
     else:
         st.error("No Data Available for the Chosen Date")
         
