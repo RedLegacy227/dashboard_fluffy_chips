@@ -903,12 +903,7 @@ with tab_views[2]:
     }
     
     # Configuração do Streamlit
-    st.subheader("Today's Games for Lay 1X3 - Fluffy Method")
-    
-    # Suponha que `data` e `historical_data` já estejam definidos e carregados
-    data = None  # Substitua por seu DataFrame de dados
-    historical_data = None  # Substitua por seu DataFrame de dados históricos
-    
+    st.subheader("Today's Games for Lay 1X3 - Fluffy Method")    
     if data is not None:
         all_games = []  # Lista para armazenar todos os jogos filtrados
     
