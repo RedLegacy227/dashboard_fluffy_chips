@@ -962,7 +962,7 @@ with tab_views[2]:
         else:
             st.warning("No games found with the specified criteria.")
     else:
-        st.error("No Data Available for the Chosen Date")        
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[3]:
     st.subheader('Todays Games for Lay Any Other Home Win')
