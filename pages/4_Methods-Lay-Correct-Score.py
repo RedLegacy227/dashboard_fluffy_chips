@@ -93,11 +93,14 @@ with st.spinner("Fetching data..."):
             data_btts = data.copy()
             lay_home = data.copy()
             lay_away = data.copy()
+            lay_1x3 = data.copy()
         else:
             data_Ov25_FT = None
             data_btts = None
             lay_home = None
             lay_away = None
+            lay_1x3 = None
+            
     except Exception as e:
         st.error("No Data Available for the Chosen Date")
         data = None
@@ -105,6 +108,7 @@ with st.spinner("Fetching data..."):
         data_btts = None
         lay_home = None
         lay_away = None
+        lay_1x3 = None
 
     try:
         historical_data = load_data(historical_data_url)
@@ -905,11 +909,7 @@ with tab_views[2]:
     # Configuração do Streamlit
     st.subheader("Today's Games for Lay 1X3 - Fluffy Method")
     
-    # Suponha que `data` e `historical_data` já estejam definidos e carregados
-    data = None  # Substitua por seu DataFrame de dados
-    historical_data = None  # Substitua por seu DataFrame de dados históricos
-    
-    if data is not None:
+    if lay_1x3 is not None:
         all_games = []  # Lista para armazenar todos os jogos filtrados
     
         for league, config in leagues_config.items():
@@ -917,7 +917,7 @@ with tab_views[2]:
             df_referencias = config["df_referencias"]
     
             # Aplicar filtros
-            filtered_data = data[data["League"] == league]
+            filtered_data = lay_1x3[lay_1x3["League"] == league]
             filtered_data = filtered_data[filtered_data[prob_filter_col] == prob_filter_val]
     
             # Aplicar filtro adicional para '0x1_H' e '0x1_A'
