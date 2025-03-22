@@ -227,6 +227,15 @@ with tab_views[0]:
         ]
         filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
         
+        back_home_austria02_ft_flt = data[
+            (data["League"] == 'AUSTRIA - 2. LIGA') &
+            (data["DifAbs_HomeDraw"] >= 0.14) &
+            (data["DifAbs_HomeDraw"] <= 0.19) &
+            (data["D_Ov"] >= 0.51) &
+            (data["D_Ov"] <= 0.59)  
+        ]
+        filtered_dataframes.append(back_home_austria02_ft_flt)
+        
         # Concatenate all filtered dataframes
         df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
 
@@ -267,7 +276,25 @@ with tab_views[1]:
             (data["DifAbs_DrawAway"] <= 0.25)
         ]
         filtered_dataframes.append(back_away_portugal01_ft_flt)
-
+        
+        back_away_austria02_ft_flt = data[
+            (data["League"] == 'AUSTRIA - 2. LIGA') &
+            (data["D_A"] >= 0.92) &
+            (data["D_A"] <= 1.17) &
+            (data["Final_Avg_G_Conceded_A_ST"] >= 0.03) &
+            (data["Final_Avg_G_Conceded_A_ST"] <= 0.30) &
+            (data["DifPer_HomeAway"] >= 0.58) &
+            (data["DifPer_HomeAway"] <= 1.71)  
+        ]
+        filtered_dataframes.append(back_away_austria02_ft_flt)
+        
+        back_away_austria01_ft_flt = data[
+            (data["League"] == 'AUSTRIA - BUNDESLIGA') &
+            (data["Poisson_GM_H_0"] >= 0.20) &
+            (data["Poisson_GM_H_0"] <= 0.56) 
+        ]
+        filtered_dataframes.append(back_away_austria01_ft_flt)
+        
         # Concatenate all filtered dataframes
         df_ligas_back_away = pd.concat(filtered_dataframes, ignore_index=True)
 
