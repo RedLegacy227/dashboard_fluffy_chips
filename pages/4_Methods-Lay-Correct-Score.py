@@ -904,6 +904,11 @@ with tab_views[2]:
     
     # Configuração do Streamlit
     st.subheader("Today's Games for Lay 1X3 - Fluffy Method")
+    
+    # Suponha que `data` e `historical_data` já estejam definidos e carregados
+    data = None  # Substitua por seu DataFrame de dados
+    historical_data = None  # Substitua por seu DataFrame de dados históricos
+    
     if data is not None:
         all_games = []  # Lista para armazenar todos os jogos filtrados
     
@@ -925,10 +930,12 @@ with tab_views[2]:
                     filtered_data = filtered_data[filtered_data[col] <= val]
     
             # Aplicar a função para calcular 'Odd_Justa_Lay_1x3' e 'Win_Rate_Lay_1x3'
-            filtered_data[["Odd_Justa_Lay_1x3", "Win_Rate_Lay_1x3"]] = filtered_data.apply(
+            results = filtered_data.apply(
                 lambda row: pd.Series(obter_referencia(row["CV_MO_FT"], row["FT_Odd_H"], df_referencias)),
                 axis=1
             )
+            results.columns = ["Odd_Justa_Lay_1x3", "Win_Rate_Lay_1x3"]
+            filtered_data = pd.concat([filtered_data, results], axis=1)
     
             # Adicionar os jogos filtrados à lista
             all_games.append(filtered_data)
@@ -956,7 +963,8 @@ with tab_views[2]:
             st.warning("No games found with the specified criteria.")
     else:
         st.error("No Data Available for the Chosen Date")
-
+        
+        
 with tab_views[3]:
     st.subheader('Todays Games for Lay Any Other Home Win')
     st.markdown('If you Get 2 Goals on the First Half, You must Exit the Operation')
