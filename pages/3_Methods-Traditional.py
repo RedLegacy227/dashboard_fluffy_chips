@@ -225,7 +225,7 @@ with tab_views[0]:
         ]
         filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
         
-        back_home_argentina_01_01_ft_flt = data[
+        back_home_uefa_nacleague_01_ft_flt = data[
             (data["League"] == 'ARGENTINA - TORNEO BETANO') &
             (data["Final_Avg_G_Conceded_H_ST"] >= 7.54) &
             (data["Final_Avg_G_Conceded_H_ST"] <= 13.63) &
@@ -234,7 +234,7 @@ with tab_views[0]:
             (data["BTTSY_BTTSN"] >= 0.60) &
             (data["BTTSY_BTTSN"] <= 0.70) 
         ]
-        filtered_dataframes.append(back_home_argentina_01_01_ft_flt)
+        filtered_dataframes.append(back_home_uefa_nacleague_01_ft_flt)
 
         # Concatenate all filtered dataframes
         df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
