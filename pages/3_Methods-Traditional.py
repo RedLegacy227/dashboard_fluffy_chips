@@ -270,11 +270,33 @@ with tab_views[0]:
         
 with tab_views[1]:
     st.markdown(f'#### Back Away ####')
-    # if data is not None:
-    #     back_away_argentina01_ft = data['']
+    st.markdown('ARGENTINA - Torneo Betano - Method Automatic Pivot Table')
+    if data is not None:
+        back_away_argentina01_ft = data[
+            (data["League"] == 'ARGENTINA - TORNEO BETANO') &
+            (data["Poisson_GS_A_1"] >= 0.20) &
+            (data["Poisson_GS_A_1"] <= 0.27) 
+        ]
+    back_away_argentina01_ft = back_away_argentina01_ft.sort_values(by='Time', ascending=True)   
+    
+    if not back_away_argentina01_ft.empty:
+        st.dataframe(back_away_argentina01_ft, use_container_width=True, hide_index=True)     
+    else:
+        st.error("No Data Available for the Chosen Date")
         
-    # else:
-    #     st.error("No Data Available for the Chosen Date")
+    st.markdown('PORTUGAL - Liga Portugal - Method Automatic Pivot Table')
+    if data is not None:
+        back_away_portugal01_ft = data[
+            (data["League"] == 'PORTUGAL - LIGA PORTUGAL') &
+            (data["DifAbs_DrawAway"] >= 0.17) &
+            (data["DifAbs_DrawAway"] <= 0.25) 
+        ]
+    back_away_portugal01_ft = back_away_portugal01_ft.sort_values(by='Time', ascending=True)   
+    
+    if not back_away_portugal01_ft.empty:
+        st.dataframe(back_away_portugal01_ft, use_container_width=True, hide_index=True)     
+    else:
+        st.error("No Data Available for the Chosen Date")
         
 with tab_views[2]:
     st.subheader("Todays Games for Lay Home")
