@@ -270,11 +270,11 @@ with tab_views[0]:
         
 with tab_views[1]:
     st.markdown(f'#### Back Away ####')
-    if data is not None:
-        back_away_argentina01_ft = data['']
+    # if data is not None:
+    #     back_away_argentina01_ft = data['']
         
-    else:
-        st.error("No Data Available for the Chosen Date")
+    # else:
+    #     st.error("No Data Available for the Chosen Date")
         
 with tab_views[2]:
     st.subheader("Todays Games for Lay Home")
