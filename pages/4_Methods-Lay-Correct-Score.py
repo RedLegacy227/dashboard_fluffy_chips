@@ -959,9 +959,10 @@ with tab_views[2]:
             columns_to_display = [col for col in columns_to_display if col in final_df.columns]
         
             # Exibir o DataFrame final
-            st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
-        else:
-            st.warning("No games found with the specified criteria.")
+            if not final_df.empty:
+                st.dataframe(final_df[columns_to_display], use_container_width=True, hide_index=True)
+            else:
+                st.warning("No games found with the specified criteria.")
     else:
         st.error("No Data Available for the Chosen Date")
         
