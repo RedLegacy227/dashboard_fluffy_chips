@@ -250,12 +250,37 @@ with tab_views[0]:
         
         back_home_brasil02_ft_flt = data[
             (data["League"] == 'BRASIL - SERIE A BETANO') &
-            (data["DifPer_HomeDraw"] == 1.40) &
+            (data["DifPer_HomeDraw"] >= 1.40) &
             (data["DifPer_HomeDraw"] <= 1.80) &
             (data["Final_Avg_CG_Conceded_H_02"] >= 4.07) &
             (data["Final_Avg_CG_Conceded_H_02"] <= 7.06)
         ]
         filtered_dataframes.append(back_home_brasil02_ft_flt)
+        
+        back_home_croatia01_ft_flt = data[
+            (data["League"] == 'CROATIA - HNL') &
+            (data["Final_Avg_prob_H"] >= 2.43) &
+            (data["Final_Avg_prob_H"] <= 7.52) &
+            (data["Final_Avg_CG_Scored_A_02"] >= 12.95) &
+            (data["Final_Avg_CG_Scored_A_02"] <= 18.33)
+        ]
+        filtered_dataframes.append(back_home_croatia01_ft_flt)
+        
+        back_home_colombia01_ft_flt = data[
+            (data["League"] == 'COLOMBIA - PRIMERA A') &
+            (data["Poisson_GM_A_0"] >= 0.23) &
+            (data["Poisson_GM_A_0"] <= 0.27) 
+        ]
+        filtered_dataframes.append(back_home_colombia01_ft_flt)
+        
+        back_home_colombia02_ft_flt = data[
+            (data["League"] == 'COLOMBIA - PRIMERA B') &
+            (data["DifAbs_HomeDraw"] >= 0.46) &
+            (data["DifAbs_HomeDraw"] <= 0.54) &
+            (data["Angle_HomeDraw"] >= -15.06) &
+            (data["Angle_HomeDraw"] <= -13.07) 
+        ]
+        filtered_dataframes.append(back_home_colombia01_ft_flt)
         
         # Concatenate all filtered dataframes
         df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
@@ -324,6 +349,15 @@ with tab_views[1]:
             (data["Poisson_GM_H_1"] <= 0.34) 
         ]
         filtered_dataframes.append(back_away_brasil02_ft_flt)
+        
+        back_away_portugal03_ft_flt = data[
+            (data["League"] == 'PORTUGAL - LIGA 3') &
+            (data["D_BTTSN"] >= 0.64) &
+            (data["D_BTTSN"] <= 0.70) &
+            (data["H_Un"] >= 1.05) &
+            (data["H_Un"] <= 1.33)
+        ]
+        filtered_dataframes.append(back_away_portugal03_ft_flt)
         
         # Concatenate all filtered dataframes
         df_ligas_back_away = pd.concat(filtered_dataframes, ignore_index=True)
