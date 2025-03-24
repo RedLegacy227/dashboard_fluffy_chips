@@ -139,7 +139,7 @@ else:
     st.error("No Elo & Tilt Data Available for the Chosen Date")
 
 # Create Tabs
-tabs = ['Back Home', 'Back Away', 'Lay Home', 'Lay Away', 'Over 1,5 FT', 'Under 1,5 FT', 'Over 2,5 FT', ' BTTS', 'Louro José', 'Best Teams']
+tabs = ['Back Home', 'Back Away', 'Lay Home', 'Lay Away', 'Over 0,5 HT', 'Over 1,5 FT', 'Under 1,5 FT', 'Over 2,5 FT', ' BTTS', 'Louro José', 'Best Teams']
 tab_views = st.tabs(tabs)
 
 with tab_views[0]:
@@ -462,8 +462,46 @@ with tab_views[3]:
             st.error(f"No Data Available for the Chosen Date: {e}")
     else:
         st.error("No Data Available for the Chosen Date")
-
+        
 with tab_views[4]:
+    st.markdown(f'#### Over 0,5 HT - Method Automatic Pivot Table ####')
+
+    # List of columns to display
+    columns_to_display = [
+        'Time', 'League', 'Home', 'Away', 'Round', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 'Favorite', 'Perc_Over05HT_Home', 'Perc_Over05HT_Away'
+    ]
+
+    if data is not None:
+        # Create a list to hold all filtered dataframes
+        filtered_dataframes = []
+
+        # Apply filters for each league and method
+        back_over05_argentina01_ht_flt = data[
+            (data["League"] == 'WORLD - WORLD CHAMPIONSHIP') &
+            (data["BTTSN_BTTSY"] >= 3.00) &
+            (data["BTTSN_BTTSY"] <= 3.81) &
+            (data["H_BTTSY"] >= 3.30) &
+            (data["H_BTTSY"] <= 4.29) 
+        ]
+        filtered_dataframes.append(back_over05_argentina01_ht_flt)
+
+        
+        
+        # Concatenate all filtered dataframes
+        df_ligas_over05_ht = pd.concat(filtered_dataframes, ignore_index=True)
+
+        # Sort by 'Time' and select only the desired columns
+        df_ligas_over05_ht = df_ligas_over05_ht[columns_to_display].sort_values(by='Time', ascending=True)
+
+        # Display the final dataframe
+        if not df_ligas_over05_ht.empty:
+            st.dataframe(df_ligas_over05_ht, use_container_width=True, hide_index=True)
+        else:
+            st.warning("No games found with the specified criteria.")
+    else:
+        st.error("No Data Available for the Chosen Date")
+
+with tab_views[5]:
     st.markdown(f'#### Todays Games for Over 1,5 FT ####')
     st.markdown('If the Odd is less than 1.45, you must wait for it to reach minimum 1.45')
     if data is not None:
@@ -495,7 +533,7 @@ with tab_views[4]:
     else:
         st.error("No Data Available for the Chosen Date")
 
-with tab_views[5]:
+with tab_views[6]:
     st.markdown(f'#### Todays Games for Under 1,5 FT ####')
     st.markdown('Croatia Method 1')
     if data is not None:
@@ -561,7 +599,7 @@ with tab_views[5]:
     else:
         st.error("No Data Available for the Chosen Date")
         
-with tab_views[6]:
+with tab_views[7]:
     st.markdown(f'#### Over 2,5 FT ####')
     st.markdown(f'#### Cost of Goal 2.0 ####')
     
@@ -609,7 +647,7 @@ with tab_views[6]:
     else:
         st.error("Data is empty.")
         
-with tab_views[7]:
+with tab_views[8]:
     st.markdown(f'#### Games with High Probability for BTTS Yes ####')
     
     if data_btts is not None:
@@ -671,7 +709,7 @@ with tab_views[8]:
     else:
         st.warning("No games found with the specified criteria.")
 
-with tab_views[9]:
+with tab_views[10]:
     st.markdown(f'#### Best Teams with > 60% Probability - Last 11 Games ####')
     if data is not None:
         # Apply the extra filter conditions
