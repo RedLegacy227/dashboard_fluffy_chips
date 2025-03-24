@@ -139,7 +139,7 @@ else:
     st.error("No Elo & Tilt Data Available for the Chosen Date")
 
 # Create Tabs
-tabs = ['Back Home', 'Back Away', 'Lay Home', 'Lay Away', 'Over 0,5 HT', 'Under 0,5 HT' 'Over 1,5 FT', 'Under 1,5 FT', 'Over 2,5 FT', ' BTTS', 'Louro José', 'Best Teams']
+tabs = ['Back Home', 'Back Away', 'Lay Home', 'Lay Away', 'Over 0,5 HT', 'Under 0,5 HT', 'Over 1,5 FT', 'Under 1,5 FT', 'Over 2,5 FT', ' BTTS', 'Louro José', 'Best Teams']
 tab_views = st.tabs(tabs)
 
 with tab_views[0]:
