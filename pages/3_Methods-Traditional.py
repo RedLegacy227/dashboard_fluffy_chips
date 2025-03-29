@@ -280,7 +280,7 @@ with tab_views[0]:
             (data["Angle_HomeDraw"] >= -15.06) &
             (data["Angle_HomeDraw"] <= -13.07) 
         ]
-        filtered_dataframes.append(back_home_colombia01_ft_flt)
+        filtered_dataframes.append(back_home_colombia02_ft_flt)
         
         # Concatenate all filtered dataframes
         df_ligas_back_home = pd.concat(filtered_dataframes, ignore_index=True)
