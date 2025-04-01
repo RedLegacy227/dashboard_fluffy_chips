@@ -169,7 +169,7 @@ try:
     historical_data['Date'] = pd.to_datetime(historical_data["Date"])
 
     # Filter historical data by date and league
-    filtered_data = filter_data(historical_data, selected_date, selected_league)
+    filtered_data = filter_data(historical_data, formatted_date, selected_league)
     if filtered_data is None:
         st.stop()  # Stop the app if filtering fails
 
@@ -408,7 +408,7 @@ try:
     home_last_7 = historical_data[
         (historical_data["Home"] == selected_home) &
         (historical_data['League'] == selected_league) &
-        (historical_data["Date"] <= pd.to_datetime(selected_date))
+        (historical_data["Date"] <= pd.to_datetime(formatted_date))
     ].sort_values(by="Date", ascending=False).head(7)
 
     if not home_last_7.empty:
@@ -497,7 +497,7 @@ try:
     away_last_7 = historical_data[
         (historical_data["Away"] == selected_away) &
         (historical_data['League'] == selected_league) &
-        (historical_data["Date"] <= pd.to_datetime(selected_date))
+        (historical_data["Date"] <= pd.to_datetime(formatted_date))
     ].sort_values(by="Date", ascending=False).head(7)
 
     if not away_last_7.empty:
@@ -725,14 +725,14 @@ try:
     past_games_home = historical_data[
         (historical_data['Home'] == selected_home) &
         (historical_data['League'] == selected_league) &
-        (historical_data['Date'] < pd.to_datetime(selected_date))
+        (historical_data['Date'] < pd.to_datetime(formatted_date))
     ].tail(21)
     
     # Load data for the last 21 games of the away team
     past_games_away = historical_data[
         (historical_data['Away'] == selected_away) &
         (historical_data['League'] == selected_league) &
-        (historical_data['Date'] < pd.to_datetime(selected_date))
+        (historical_data['Date'] < pd.to_datetime(formatted_date))
     ].tail(21)
     
     # Function to summarize goals in time segments
