@@ -726,14 +726,14 @@ try:
         (historical_data['Home'] == selected_home) &
         (historical_data['League'] == selected_league) &
         (historical_data['Date'] < pd.to_datetime(formatted_date))
-    ].tail(21)
+    ].tail(15)
     
     # Load data for the last 21 games of the away team
     past_games_away = historical_data[
         (historical_data['Away'] == selected_away) &
         (historical_data['League'] == selected_league) &
         (historical_data['Date'] < pd.to_datetime(formatted_date))
-    ].tail(21)
+    ].tail(15)
     
     # Function to summarize goals in time segments
     def summarize_half_goals(goals, half_segments):
