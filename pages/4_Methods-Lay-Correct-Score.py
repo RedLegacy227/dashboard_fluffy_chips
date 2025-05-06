@@ -771,8 +771,8 @@ with tab_views[1]:
         
         # Apply filters for Lay 1x1 based on Home Team
         lay_1x1_home_flt0 = data[
-            (data["FT_Odd_H"] < 1.75) &  # Home team odds less than 1.75
-            (data["FT_Odd_Over25"] < 1.65)  # Over 2.5 goals odds less than 1.65
+            (data["FT_Odd_H"] < 1.80) &  # Home team odds less than 1.75
+            (data["FT_Odd_Over25"] < 1.70)  # Over 2.5 goals odds less than 1.65
         ]
         lay_1x1_home_flt = lay_1x1_home_flt0.sort_values(by='Time', ascending=True)
         
@@ -806,8 +806,8 @@ with tab_views[1]:
         
         # Apply filters for Lay 1x1 based on Away Team
         lay_1x1_away_flt0 = data[
-            (data["FT_Odd_A"] < 1.75) &  # Away team odds less than 1.75
-            (data["FT_Odd_Over25"] < 1.65)  # Over 2.5 goals odds less than 1.65
+            (data["FT_Odd_A"] < 1.80) &  # Away team odds less than 1.75
+            (data["FT_Odd_Over25"] < 1.70)  # Over 2.5 goals odds less than 1.65
         ]
         lay_1x1_away_flt = lay_1x1_away_flt0.sort_values(by='Time', ascending=True)
         
@@ -978,8 +978,8 @@ with tab_views[3]:
         
         # Aplicar filtros
         flt = (
-            (data["FT_Odd_H"] >= 1.50) & 
-            (data["FT_Odd_Over25"] >= 1.50) & 
+            (data["FT_Odd_H"] >= 2.00) & 
+            (data["FT_Odd_Over25"] >= 1.60) & 
             (data["FT_Odd_BTTS_Yes"] <= 2.50) &
             (data["Perc_goleada_casa_H"] < 10) &
             (data["Perc_goleada_casa_A"] < 10)
@@ -1164,7 +1164,7 @@ with tab_views[4]:
             home_win_df = pd.DataFrame(home_win_games)[
                 ["League", "Time", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away", "Perc_goleada_casa_H", "Perc_goleada_casa_A"]
             ]
-            home_win_df = home_win_df[(home_win_df['Perc_goleada_casa_H'] < 10) & (home_win_df['Perc_goleada_casa_A'] < 10)]
+            home_win_df = home_win_df[(home_win_df['Perc_goleada_casa_H'] < 10) & (home_win_df['Perc_goleada_casa_A'] < 10) & (home_win_df['FT_Odd_H'] > 1.80)]
             
             # Exibir o DataFrame sem o índice
             st.dataframe(home_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
@@ -1178,7 +1178,7 @@ with tab_views[4]:
             away_win_df = pd.DataFrame(away_win_games)[
                 ["League", "Time", "Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Away", "Perc_Over25FT_Home", "Perc_goleada_away_A", "Perc_goleada_away_H"]
             ]
-            away_win_df = away_win_df[(away_win_df['Perc_goleada_away_A'] < 10) & (away_win_df['Perc_goleada_away_H'] < 10)]
+            away_win_df = away_win_df[(away_win_df['Perc_goleada_away_A'] < 10) & (away_win_df['Perc_goleada_away_H'] < 10) & (away_win_df['FT_Odd_A'] > 1.80)]
             
             # Exibir o DataFrame sem o índice
             st.dataframe(away_win_df, use_container_width=True, hide_index=True)  # Use hide_index para remover o índice
