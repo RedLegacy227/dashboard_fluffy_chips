@@ -170,8 +170,8 @@ with tab_views[0]:
             (data["Away_Score_Take"] == 'Yes') &
             (data["Poisson_GS_A_2"] > 0.2520) &
             (data["Poisson_GS_A_2"] < 0.2710) &
-            (data["Avg_Points_Away_FT"] > 0.9780) &
-            (data["Avg_Points_Away_FT"] < 1.6950)
+            (data["Avg_Points_A"] > 0.9780) &
+            (data["Avg_Points_A"] < 1.6950)
         ]
         filtered_dataframes.append(back_home_Port_01_02_ft_flt)
 
