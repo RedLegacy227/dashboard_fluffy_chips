@@ -1057,7 +1057,6 @@ with tab_views[3]:
                             # Adicionar todos os dados necessários à lista de resultados
                             results.append([
                                 league, match_time, home, away,
-                                row.get("Round", None),
                                 row.get("FT_Odd_H", None),  # Usar .get() para evitar erros se a coluna não existir
                                 row.get("FT_Odd_D", None),
                                 row.get("FT_Odd_A", None),
@@ -1070,7 +1069,7 @@ with tab_views[3]:
 
                 # Verificar se há resultados antes de exibir
                 if results:
-                    df_results = pd.DataFrame(results, columns=["League", "Time","Round", "Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away", "Perc_goleada_casa_H", "Perc_goleada_casa_A"])
+                    df_results = pd.DataFrame(results, columns=["League", "Time","Home", "Away", "FT_Odd_H", "FT_Odd_D", "FT_Odd_A", "CV_Match_Type", "Perc_Over25FT_Home", "Perc_Over25FT_Away", "Perc_goleada_casa_H", "Perc_goleada_casa_A"])
                     df_results = df_results.sort_values(by="Time").reset_index(drop=True)
                     st.dataframe(df_results, use_container_width=True, hide_index=True)
                 else:
