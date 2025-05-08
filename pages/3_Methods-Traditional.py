@@ -216,8 +216,8 @@ with tab_views[0]:
         
         back_home_argentina_01_01_ft_flt = data[
             (data["League"] == 'ARGENTINA - TORNEO BETANO') &
-            (data["Final_Avg_G_Conceded_H_ST"] >= 0.04) &
-            (data["Final_Avg_G_Conceded_H_ST"] <= 0.33) &
+            (data["Final_Avg_G_Conceded_H_SH"] >= 0.04) &
+            (data["Final_Avg_G_Conceded_H_SH"] <= 0.33) &
             (data["Final_Avg_RPS_BTTS_A"] >= 7.54) &
             (data["Final_Avg_RPS_BTTS_A"] <= 12.63) &
             (data["H_BTTSY"] >= 0.56) &
