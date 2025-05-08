@@ -327,8 +327,8 @@ with tab_views[1]:
             (data["League"] == 'AUSTRIA - 2. LIGA') &
             (data["D_A"] >= 0.92) &
             (data["D_A"] <= 1.17) &
-            (data["Final_Avg_G_Conceded_A_ST"] >= 0.03) &
-            (data["Final_Avg_G_Conceded_A_ST"] <= 0.30) &
+            (data["Final_Avg_G_Conceded_A_SH"] >= 0.03) &
+            (data["Final_Avg_G_Conceded_A_SH"] <= 0.30) &
             (data["DifPer_HomeAway"] >= 0.58) &
             (data["DifPer_HomeAway"] <= 1.71)  
         ]
