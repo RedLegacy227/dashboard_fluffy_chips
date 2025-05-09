@@ -376,7 +376,7 @@ with tab_views[0]:
                 ">=1.7901": ["< 30", "0", "0"]
                 }).set_index("Intervalo CV")
         },
-        "GERMANY - 2. BUNDESLIGA": {
+        "Germany 2. Bundesliga": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
                 ("prob_D", "<=", 0.3000),
