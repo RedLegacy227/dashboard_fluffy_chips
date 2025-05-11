@@ -265,6 +265,20 @@ with tab_views[0]:
                 ">=1.9001": ["G-189 <12 - 92,06%", "0", "0"]
                 }).set_index("Intervalo CV")
         },
+        "Brazil Serie B": {
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
+            "additional_filters": [
+                ("prob_A", "<=", 0.3000),
+                ("prob_H", ">=", 0.5001)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.4000", "0.4001 - 0.5500", ">=0.5501"],
+                "<=1.5000": ["0", "G-1 <15 - 99,00%", "G-140 <46 - 97,86%"],
+                "1.5001 - 1.6500": ["0", "G-122 <15 - 93,44%", "G-40 <19 - 95,00%"],
+                "1.6501 - 1.8000": ["G-40 <15 - 95,00%", "G-121 <11 - 91,74%", "G-40 <19 - 95,00%"],
+                ">=1.8001": ["G-156 <17 - 94,23%", "G-13 <16 - 99,00%", "0"]
+                }).set_index("Intervalo CV")
+        },
         "Old_Croatia Druga HNL": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
