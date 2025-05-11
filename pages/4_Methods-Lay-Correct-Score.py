@@ -279,6 +279,20 @@ with tab_views[0]:
                 ">=1.8001": ["G-156 <17 - 94,23%", "G-13 <16 - 99,00%", "0"]
                 }).set_index("Intervalo CV")
         },
+        "Belarus Vysheyshaya Liga": {
+            "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+            "additional_filters": [
+                ("prob_Over_15_FT", ">=", 0.7501),
+                ("Poisson_GS_H_3", "<=", 0.1500)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.3000", "0.3001 - 0.6000", ">=0.6001"],
+                "<=1.4000": ["0", "0", "G-114 <28 - 96,49%"],
+                "1.4001 - 1.7000": ["0", "G-72 <71 - 98,61%", "G-26 <12 - 92,31%"],
+                "1.7001 - 2.2500": ["G-58 <28 - 96,55%", "G-40 <6 - 85,00%", "0"],
+                ">=2.2501": ["G-81 <11 - 91,36%", "G-27 <13 - 92,59%", "G-6 <24 - 99,00%"]
+                }).set_index("Intervalo CV")
+        },
         "China Chinese Super League": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
