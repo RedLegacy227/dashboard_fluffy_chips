@@ -786,11 +786,11 @@ with tab_views[0]:
             final_df = drop_reset_index(final_df)
         
             # Adicionar a coluna com a soma de 'h2h_lay_0x1' para cada grupo de 'Home' e 'Away'
-            final_df["sum_h2h_lay_0x1"] = final_df.groupby(['Home', 'Away'])['h2h_lay_0x1'].transform('sum')
+            final_df["Total_H2H_0x1_FT"] = final_df.groupby(['Home', 'Away'])['h2h_lay_0x1'].transform('sum')
         
             # List of columns to display
             columns_to_display = [
-                'Time', 'League', 'Home', 'Away', 'Round', 'Odd_Justa_Lay_0x1', 'sum_h2h_lay_0x1', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
+                'Time', 'League', 'Home', 'Away', 'Round', 'Odd_Justa_Lay_0x1', 'Total_H2H_0x1_FT', 'FT_Odd_H', 'FT_Odd_D', 'FT_Odd_A', 'CV_Match_Type', 
                 'Perc_0x1_H', 'Perc_0x1_A', 'Perc_Over15FT_Home', 'Perc_Over15FT_Away', 'Perc_Over25FT_Home', 'Perc_Over25FT_Away', 'Perc_BTTS_Yes_Home', 'Perc_BTTS_Yes_Away', 'h2h_lay_0x1'
             ]
         
