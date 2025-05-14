@@ -221,6 +221,20 @@ with tab_views[0]:
                 ">=1.7001": ["<13", "0", "0"]
             }).set_index("Intervalo CV")
         },
+        "South America Copa Libertadores": {
+            "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+            "additional_filters": [
+                ("prob_H", ">=", 0.5501),
+                ("prob_BTTS_No_FT", ">=", 0.5501)
+            ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.6000", "0.6001 - 0.8000", ">=0.8001"],
+                "<=1.1500": ["0", "G-7 <22 - 99,00%", "G-38 < 100 - 99,00%"],
+                "1.1501 - 1.3000": ["G-10 <25 - 99,00%", "G-14 <19 - 99,0%", "G-42 <100 - 99,00%"],
+                "1.3001 - 1.5000": ["G-12 <24 - 99,00%", "G-43 <14 - 93,02%", "G-3 < 19 - 99,00%"],
+                ">=1.5001": ["G-54 <17 - 94,44%", "G-3 <19 - 99,00%", "0"]
+            }).set_index("Intervalo CV")
+        },
         "Argentina Primera División": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
