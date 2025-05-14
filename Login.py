@@ -50,95 +50,125 @@ else:
             
 st.markdown(f"#### Leagues Supported ####")
 st.markdown(f"""
-⚽ ARGENTINA - TORNEO BETANO ✔️  
-⚽ AUSTRALIA - A-LEAGUE ✔️  
-⚽ AUSTRIA - 2. LIGA ✔️  
-⚽ AUSTRIA - BUNDESLIGA ✔️  
-⚽ BELGIUM - CHALLENGER PRO LEAGUE ✔️  
-⚽ BELGIUM - JUPILER PRO LEAGUE ✔️  
-⚽ BOLIVIA - DIVISION PROFESIONAL ✔️  
-⚽ BRAZIL - SERIE A BETANO ✔️  
-⚽ BRAZIL - SERIE B ✔️  
-⚽ BULGARIA - PARVA LIGA ✔️  
-⚽ CANADA - CANADIAN PREMIER LEAGUE ✔️  
-⚽ CHILE - LIGA DE PRIMERA ✔️  
-⚽ CHINA - SUPER LEAGUE ✔️  
-⚽ COSTA RICA - PRIMERA DIVISION ✔️  
-⚽ CROATIA - HNL ✔️  
-⚽ CZECH REPUBLIC - CHANCE LIGA ✔️  
-⚽ DENMARK - 1ST DIVISION ✔️  
-⚽ DENMARK - SUPERLIGA ✔️  
-⚽ ECUADOR - LIGA PRO ✔️  
-⚽ EGYPT - PREMIER LEAGUE ✔️  
-⚽ ENGLAND - CHAMPIONSHIP ✔️  
-⚽ ENGLAND - LEAGUE ONE ✔️  
-⚽ ENGLAND - LEAGUE TWO ✔️  
-⚽ ENGLAND - NATIONAL LEAGUE ✔️  
-⚽ ENGLAND - PREMIER LEAGUE ✔️  
-⚽ ESTONIA - MEISTRILIIGA ✔️  
-⚽ EUROPE - CHAMPIONS LEAGUE ✔️  
-⚽ EUROPE - CONFERENCE LEAGUE ✔️  
-⚽ EUROPE - EUROPA LEAGUE ✔️  
-⚽ FINLAND - VEIKKAUSLIIGA ✔️  
-⚽ FRANCE - LIGUE 1 ✔️  
-⚽ FRANCE - LIGUE 2 ✔️  
-⚽ GERMANY - 2. BUNDESLIGA ✔️  
-⚽ GERMANY - 3. LIGA ✔️  
-⚽ GERMANY - BUNDESLIGA ✔️  
-⚽ GREECE - SUPER LEAGUE ✔️  
-⚽ HUNGARY - OTP BANK LIGA ✔️  
-⚽ ICELAND - BESTA DEILD KARLA ✔️  
-⚽ INDIA - ISL ✔️  
-⚽ INDONESIA - LIGA 1 ✔️  
-⚽ IRELAND - PREMIER DIVISION ✔️  
-⚽ ISRAEL - LIGAT HA'AL ✔️  
-⚽ ITALY - SERIE A ✔️  
-⚽ ITALY - SERIE B ✔️  
-⚽ JAPAN - J1 LEAGUE ✔️  
-⚽ JAPAN - J2 LEAGUE ✔️  
-⚽ KAZAKHSTAN - PREMIER LEAGUE ✔️  
-⚽ LATVIA - VIRSLIGA ✔️  
-⚽ LITHUANIA - A LYGA ✔️  
-⚽ MALAYSIA - SUPER LEAGUE ✔️  
-⚽ MEXICO - LIGA MX ✔️  
-⚽ MOROCCO - BOTOLA PRO ✔️  
-⚽ NETHERLANDS - EERSTE DIVISIE ✔️  
-⚽ NETHERLANDS - EREDIVISIE ✔️  
-⚽ NORTHERN IRELAND - NIFL PREMIERSHIP ✔️  
-⚽ NORWAY - ELITESERIEN ✔️  
-⚽ NORWAY - OBOS-LIGAEN ✔️  
-⚽ PARAGUAY - COPA DE PRIMERA ✔️  
-⚽ PERU - LIGA 1 ✔️  
-⚽ POLAND - EKSTRAKLASA ✔️  
-⚽ PORTUGAL - LIGA 3 ✔️  
-⚽ PORTUGAL - LIGA PORTUGAL ✔️  
-⚽ PORTUGAL - LIGA PORTUGAL 2 ✔️  
-⚽ QATAR - QSL ✔️  
-⚽ ROMANIA - SUPERLIGA ✔️  
-⚽ SAUDI ARABIA - SAUDI PROFESSIONAL LEAGUE ✔️  
-⚽ SCOTLAND - CHAMPIONSHIP ✔️  
-⚽ SCOTLAND - PREMIERSHIP ✔️  
-⚽ SERBIA - SUPER LIGA ✔️  
-⚽ SINGAPORE - PREMIER LEAGUE ✔️  
-⚽ SLOVAKIA - NIKE LIGA ✔️  
-⚽ SLOVENIA - PRVA LIGA ✔️  
-⚽ SOUTH AMERICA - COPA LIBERTADORES ✔️  
-⚽ SOUTH AMERICA - COPA SUDAMERICANA ✔️  
-⚽ SOUTH KOREA - K LEAGUE 1 ✔️  
-⚽ SOUTH KOREA - K LEAGUE 2 ✔️  
-⚽ SPAIN - LALIGA ✔️  
-⚽ SPAIN - LALIGA2 ✔️  
-⚽ SWEDEN - ALLSVENSKAN ✔️  
-⚽ SWEDEN - SUPERETTAN ✔️  
-⚽ SWITZERLAND - CHALLENGE LEAGUE ✔️  
-⚽ SWITZERLAND - SUPER LEAGUE ✔️  
-⚽ THAILAND - THAI LEAGUE 1 ✔️  
-⚽ TURKEY - 1. LIG ✔️  
-⚽ TURKEY - SUPER LIG ✔️  
-⚽ UKRAINE - PREMIER LEAGUE ✔️  
-⚽ URUGUAY - LIGA AUF URUGUAYA ✔️  
-⚽ USA - MLS ✔️  
-⚽ USA - USL CHAMPIONSHIP ✔️  
-⚽ VENEZUELA - LIGA FUTVE ✔️  
-⚽ WALES - CYMRU PREMIER ✔️  
+⚽ Algeria Ligue 1  
+⚽ Argentina Primera División  
+⚽ Australia A-League  
+⚽ Australia New South Wales NPL  
+⚽ Austria 2. Liga  
+⚽ Austria Bundesliga  
+⚽ Belarus Vysheyshaya Liga  
+⚽ Belgium First Division B  
+⚽ Belgium Pro League  
+⚽ Bosnia and Herzegovina Premier League of Bosnia  
+⚽ Brazil Serie A  
+⚽ Brazil Serie B  
+⚽ Brazil Serie C  
+⚽ Bulgaria First League  
+⚽ Canada Canadian Premier League  
+⚽ Chile Primera B  
+⚽ Chile Primera División  
+⚽ China China League One  
+⚽ China Chinese Super League  
+⚽ Croatia Druga HNL  
+⚽ Croatia Prva HNL  
+⚽ Czech Republic FNL  
+⚽ Czech Republic First League  
+⚽ Denmark Superliga  
+⚽ Egypt Egyptian Premier League  
+⚽ England Championship  
+⚽ England EFL League One  
+⚽ England EFL League Two  
+⚽ England Premier League  
+⚽ Estonia Meistriliiga  
+⚽ Europe UEFA Champions League  
+⚽ FYR Macedonia First Football League  
+⚽ Faroe Islands Faroe Islands Premier League  
+⚽ Finland Veikkausliiga  
+⚽ France Ligue 1  
+⚽ France Ligue 2  
+⚽ France National  
+⚽ Georgia Erovnuli Liga  
+⚽ Germany 2. Bundesliga  
+⚽ Germany 3. Liga  
+⚽ Germany Bundesliga  
+⚽ Greece Super League  
+⚽ Hungary NB I  
+⚽ Hungary NB II  
+⚽ Iceland Úrvalsdeild  
+⚽ Indonesia Liga 1  
+⚽ Iran Persian Gulf Pro League  
+⚽ Israel Israeli Premier League  
+⚽ Israel Liga Leumit  
+⚽ Italy Serie A  
+⚽ Italy Serie B  
+⚽ Jamaica Jamaica National Premier League  
+⚽ Japan J1 League  
+⚽ Japan J2 League  
+⚽ Jordan Jordanian Pro League  
+⚽ Kazakhstan Kazakhstan Premier League  
+⚽ Luxembourg National Division  
+⚽ Malaysia Super League  
+⚽ Montenegro Montenegrin First League  
+⚽ Morocco Botola Pro  
+⚽ Netherlands Eerste Divisie  
+⚽ Netherlands Eredivisie  
+⚽ Nigeria NPFL  
+⚽ Northern Ireland NIFL Premiership  
+⚽ Norway Eliteserien  
+⚽ Norway First Division  
+⚽ Norway Toppserien  
+⚽ Oman Professional League   
+⚽ Paraguay Division Profesional  
+⚽ Poland 1. Liga  
+⚽ Poland Ekstraklasa  
+⚽ Portugal Campeonato de Portugal Group A  
+⚽ Portugal Campeonato de Portugal Group B  
+⚽ Portugal Campeonato de Portugal Group C  
+⚽ Portugal Campeonato de Portugal Group D  
+⚽ Portugal Liga 3  
+⚽ Portugal Liga NOS  
+⚽ Portugal LigaPro  
+⚽ Qatar Stars League  
+⚽ Republic of Ireland First Division  
+⚽ Republic of Ireland Premier Division  
+⚽ Romania Liga I  
+⚽ Saudi Arabia Professional League  
+⚽ Scotland Championship  
+⚽ Scotland Premiership  
+⚽ Serbia Prva Liga  
+⚽ Serbia SuperLiga  
+⚽ Singapore S.League  
+⚽ Slovakia Super Liga  
+⚽ Slovenia PrvaLiga  
+⚽ South Africa Premier Soccer League  
+⚽ South America Copa Libertadores  
+⚽ South Korea K League 1  
+⚽ South Korea K League 2  
+⚽ Spain La Liga  
+⚽ Spain Primera Division RFEF Group 1  
+⚽ Spain Primera Division RFEF Group 2  
+⚽ Spain Segunda División  
+⚽ Spain Segunda División RFEF Group 2  
+⚽ Spain Segunda División RFEF Group 3  
+⚽ Spain Segunda División RFEF Group 4  
+⚽ Spain Segunda División RFEF Group 5  
+⚽ Sweden Allsvenskan  
+⚽ Sweden Damallsvenskan  
+⚽ Sweden Superettan  
+⚽ Switzerland Challenge League  
+⚽ Switzerland Super League  
+⚽ Taiwan Taiwan Football Premier League  
+⚽ Thailand Thai League T1  
+⚽ Tunisia Ligue 1  
+⚽ Turkey 1. Lig  
+⚽ Turkey Süper Lig  
+⚽ UAE Arabian Gulf League  
+⚽ USA MLS  
+⚽ USA MLS Next Pro  
+⚽ USA USL Championship  
+⚽ Ukraine Ukrainian Premier League  
+⚽ Uruguay Primera División  
+⚽ Uzbekistan Uzbekistan Super League  
+⚽ Vietnam V.League 1  
+⚽ Wales Welsh Premier League  
 """)
