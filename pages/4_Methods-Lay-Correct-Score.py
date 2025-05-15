@@ -293,6 +293,20 @@ with tab_views[0]:
                 ">=1.8001": ["G-156 <17 - 94,23%", "G-13 <16 - 99,00%", "0"]
                 }).set_index("Intervalo CV")
         },
+        "Brazil Serie C": {
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
+            "additional_filters": [
+                ("prob_Under_25_FT", ">=", 0.5501),
+                ("Poisson_GM_H_1", ">=", 0.3001)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.2000", "0.2001 - 0.3500", ">=0.3501"],
+                "<=1.7000": ["0", "0", "G-86 <42 - 97,67%"],
+                "1.7001 - 1.9000": ["0", "G-36 <17 - 94,44%", "G-60 <11 - 91,67%"],
+                "1.9001 - 2.1000": ["G-7 <18 - 99,00%", "G-105 <17 - 94,29%", "0"],
+                ">=2.1001": ["G-109 <17 - 94,50%", "G-6 <5 - 83,33%", "0"]
+                }).set_index("Intervalo CV")
+        },
         "Belarus Vysheyshaya Liga": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
