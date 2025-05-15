@@ -679,6 +679,20 @@ with tab_views[0]:
                 ">=2.2501": ["<13", "<11", "0"]
                 }).set_index("Intervalo CV")
         },
+        "South Korea K League 1": {
+            "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+            "additional_filters": [
+                ("Poisson_GS_A_3", ">=", 0.1001),
+                ("prob_H", ">=", 0.4001)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.2000", "0.2001 - 0.3500", ">=0.3501"],
+                "<=1.8000": ["0", "G-1 <15 - 99,00%", "G-103 <20 - 95,15%"],
+                "1.8001 - 2.0000": ["0", "G-67 <16 - 94,03%", "G-21 <20 - 95,24%"],
+                "2.0001 - 2.2000": ["G-26 <12 - 92,31%", "G-78 <7 - 88,46%", "0"],
+                ">=2.2001": ["G-99 <19 - 94,95%", "G-1 <15 - 99,00%", "0"]
+                }).set_index("Intervalo CV")
+        },
         "Old_Spain La Liga": {
             "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
