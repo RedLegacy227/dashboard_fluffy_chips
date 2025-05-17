@@ -391,18 +391,18 @@ with tab_views[0]:
                 ">=2.0001": ["<19", "0", "0"]
                 }).set_index("Intervalo CV")
         },
-        "Old_England EFL League One": {
-            "prob_filter": ("Probability_Away", "Avg_Bigger"),
+        "Finland Veikkausliiga": {
+            "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
-                ("prob_A", "<=", 0.30),
-                ("prob_D", "<=", 0.30)
+                ("prob_Under_25_FT", "<=", 0.6000),
+                ("Poisson_GS_H_1", ">=", 0.3001)
                 ],
             "df_referencias": pd.DataFrame({
-                "Intervalo CV": ["<=0.4000", "0.4001 - 0.5500", ">=0.5501"],
-                "<=1.5000": ["0", "0", "<35"],
-                "1.5001 - 1.6500": ["0", "<21", "<19"],
-                "1.6501 - 1.8000": ["<30", "<33", "0"],
-                ">=1.8001": ["<16", "0", "0"]
+                "Intervalo CV": ["<=0.2500", "0.2501 - 0.5000", ">=0.5001"],
+                "<=1.5500": ["0", "0", "G-98 <15 - 93,88%"],
+                "1.5501 - 1.8500": ["0", "G-81 <80 - 98,77%", "G-19 <18 - 94,74%"],
+                "1.8501 - 2.3000": ["G-53 <12 - 93,45%", "G-43 <25 - 99,00%", "0"],
+                ">=2.3001": ["G-73 <17 - 94,52%", "G-15 <4 - 80,00%", "G-6 <17 - 99,00%"]
                 }).set_index("Intervalo CV")
         },
         "Old_France Ligue 1": {
