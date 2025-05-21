@@ -663,19 +663,18 @@ with tab_views[0]:
                 ">=1.8001": ["<21", "0", "0"]
                 }).set_index("Intervalo CV")
         },
-        "Old_Saudi Arabia Professional LeagueE": {
-            "prob_filter": ("Scored_Goals", "Bigger_Home"),
+        "Sweden Allsvenskan": {
+            "prob_filter": ("Probability_Home", "p_Bigger"),
             "additional_filters": [
-                ("Poisson_GS_A_2", ">=", 0.1501),
-                ("Poisson_GS_A_2", "<=", 0.3000),
-                ("prob_H", ">=", 0.3001)
+                ("prob_Over_25_FT", ">=", 0.5001),
+                ("prob_A", "<=", 0.4000)
                 ],
             "df_referencias": pd.DataFrame({
-                "Intervalo CV": ["<=0.2000", "0.2001 - 0.5000", ">=0.5001"],
-                "<=1.4000": ["0", "0", "<48"],
-                "1.4001 - 1.8000": ["0", "<25", "<18"],
-                "1.8001 - 2.2500": ["<18", "<31", "0"],
-                ">=2.2501": ["<13", "<11", "0"]
+                "Intervalo CV": ["<=0.3500", "0.3501 - 0.6000", ">=0.6001"],
+                "<=1.4000": ["0", "0", "G-116 <37 - 97,41%"],
+                "1.4001 - 1.6500": ["0", "G-75 <36 - 97,33%", "G-44 <13 - 93,18%"],
+                "1.6501 - 1.9500": ["G-34 <16 - 94,12%", "G-84 <20 - 95,24%", "0"],
+                ">=1.9501": ["G-114 <18 - 94,74%", "0", "0"]
                 }).set_index("Intervalo CV")
         },
         "South Korea K League 1": {
