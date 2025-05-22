@@ -677,6 +677,21 @@ with tab_views[0]:
                 ">=1.9501": ["G-114 <18 - 94,74%", "0", "0"]
                 }).set_index("Intervalo CV")
         },
+        "Sweden Superettan": {
+            "prob_filter": ("Probability_Home", "Avg_Bigger"),
+            "additional_filters": [
+                ("Avg_CG_Conceded_A_02", ">=", 0.5501),
+                ("Avg_CG_Conceded_A_02", "<=", 1.1500),
+                ("Poisson_GS_H_1", ">=", 0.2001)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.1500", "0.1501 - 0.2500", ">=0.2501"],
+                "<=2.2500": ["G-1 <18 - 99,00%", "G-73 <17 - 94,52%", "G-44 <21 - 95,45%"],
+                "2.2501 - 2.5500": ["G-80 <12 - 92,50%", "G-26 <25 - 96,15%", "0"],
+                "2.5501 - 3.0000": ["G-73 <35 - 97,26%", "G-44 <7 - 88,64%", "0"],
+                ">=3.0001": ["0", "g-38 <17 - 99,00%", "G-75 <36 - 97,33%"]
+                }).set_index("Intervalo CV")
+        },
         "South Korea K League 1": {
             "prob_filter": ("Conceded_Goals", "Bigger_Away"),
             "additional_filters": [
