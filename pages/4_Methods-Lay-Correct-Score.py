@@ -335,18 +335,19 @@ with tab_views[0]:
                 ">=1.8501": ["G-118 <14 - 93,22%", "G-1 <19 - 99,00%", "0"]
                 }).set_index("Intervalo CV")
         },
-        "Old_COSTA RICA - PRIMERA DIVISION": {
-            "prob_filter": ("Conceded_Goals", "Bigger_Away"),
+        "Chile Primera División": {
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
-                ("prob_Under_25_FT", ">=", 0.5001),
-                ("prob_H", ">=", 0.4001)
+                ("Avg_CG_Scored_H_02", "<=", 1.2500),
+                ("prob_H", ">=", 0.3001),
+                ("prob_H", "<=", 0.7000)
                 ],
             "df_referencias": pd.DataFrame({
-                "Intervalo CV": ["<=0.3000", "0.3001 - 0.5500", ">=0.5501"],
-                "<=1.4500": ["0", "0", "<38"],
-                "1.4501 - 1.7000": ["0", "<23", "<35"],
-                "1.7001 - 2.0000": ["<19", "<31", "0"],
-                ">=2.0001": ["<17", "0", "0"]
+                "Intervalo CV": ["<=0.2500", "0.2501 - 0.4000", ">=0.4001"],
+                "<=1.7500": ["0", "G-11 <15 - 99,00%", "G-132 <13 - 93,18%"],
+                "1.7501 - 1.9500": ["0", "G-128 <20 - 95,31%", "G-7 <20 - 99,00%"],
+                "1.9501 - 2.2000": ["G-90 <14 - 93,33%", "G-38 <18 - 94,74%", "0"],
+                ">=2.2001": ["G-113 <36 - 97,35%", "0", "0"]
                 }).set_index("Intervalo CV")
         },
         "Old_Egypt Egyptian Premier League": {
