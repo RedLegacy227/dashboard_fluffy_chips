@@ -796,6 +796,20 @@ with tab_views[0]:
                 "1.7501 - 1.9000": ["G-49 <24 - 95,92%", "G-180 <35 - 97,22%", "0"],
                 ">=1.9001": ["G-222 <18 - 94,59%", "G-3 <24 - 99,00%", "0"]
                 }).set_index("Intervalo CV")
+        },
+        "USA USL Championship": {
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
+            "additional_filters": [
+                ("prob_H", "<=", 0.5001),
+                ("Poisson_GM_H_2", ">=", 0.1501)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.4000", "0.4001 - 0.5500", ">=0.5501"],
+                "<=1.4500": ["0", "G-1 <25 - 99,00%", "G-137 <44 - 97,81%"],
+                "1.4501 - 1.6000": ["0", "G-75 <11 - 92,00%", "G-47 <14 - 93,62%"],
+                "1.6001 - 1.7500": ["G-22 <21 - 95,45%", "G-112 <15 - 93,75%", "0"],
+                ">=1.7501": ["G-161 <22 - 95,65%", "G-2 <20 - 99,00%", "0"]
+                }).set_index("Intervalo CV")
         }
     }
     st.subheader("Today's Games for Lay 0X1 - Fluffy Method")
