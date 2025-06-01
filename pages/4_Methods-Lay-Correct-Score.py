@@ -349,6 +349,20 @@ with tab_views[0]:
                 ">=1.8501": ["G-118 <14 - 93,22%", "G-1 <19 - 99,00%", "0"]
                 }).set_index("Intervalo CV")
         },
+        "China China League One": {
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
+            "additional_filters": [
+                ("prob_H", ">=", 0.3501),
+                ("Poisson_GS_H_1", ">=", 0.3001),
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.4000", "0.4001 - 0.7000", ">=0.7001"],
+                "<=1.3000": ["0", "G-1 <22 - 99,00%", "G-102 <100 - 99,00%"],
+                "1.3001 - 1.5000": ["0", "G-62 <14 - 93,55%", "G-29 <28 - 96,55%"],
+                "1.5001 - 1.8500": ["G-22 <21 - 95,45%", "G-72 <23 - 95,83%", "0"],
+                ">=1.8501": ["G-100 <19 - 95,00%", "0", "0"]
+                }).set_index("Intervalo CV")
+        },
         "Chile Primera División": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
