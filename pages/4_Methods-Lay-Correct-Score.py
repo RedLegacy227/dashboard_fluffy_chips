@@ -364,6 +364,20 @@ with tab_views[0]:
                 ">=2.2001": ["G-113 <36 - 97,35%", "0", "0"]
                 }).set_index("Intervalo CV")
         },
+        "Chile Primera B": {
+            "prob_filter": ("Probability_Away", "Avg_Bigger"),
+            "additional_filters": [
+                ("prob_A", "<=", 0.3500),
+                ("Poisson_GM_H_3", "<=", 0.2000)
+                ],
+            "df_referencias": pd.DataFrame({
+                "Intervalo CV": ["<=0.2500", "0.2501 - 0.4000", ">=0.4001"],
+                "<=1.7500": ["0", "G-20 <3 - 75,00%", "G-105 <20 - 95,24%"],
+                "1.7501 - 1.9500": ["0", "G-99 <18 - 94,05%", "G-4 <20 - 99,00%"],
+                "1.9501 - 2.0500": ["G-55 <17 - 94,55%", "G-90 <17 - 94,44%", "0"],
+                ">=2.0501": ["G-142 <13 - 92,96%", "G-1 <14 - 99,00%", "0"]
+                }).set_index("Intervalo CV")
+        },
         "Old_Egypt Egyptian Premier League": {
             "prob_filter": ("Probability_Away", "Avg_Bigger"),
             "additional_filters": [
